@@ -1,0 +1,50 @@
+
+to run-people-activities
+  
+end
+
+to stack-people-activites
+  set myActivities list "death-prob" "find-new-wife"
+end
+
+
+to death-prob ;role_people context
+  set age age + 1
+   if 80  - (random age) <= 0 [
+    ask in-link-neighbors with[breed = actants][
+      ask in-link-neighbors [
+        die ; kill all roles
+      ]
+      die ; kill actant
+    ]
+  ]
+end
+
+to find-new-wife ;role_people context
+  ask in-link-neighbors with[breed = actants][
+    let _nb-wifes count in-link-neighbors with[breed = role_wifes]
+    if _nb-wifes < 4 [
+      show "wife?"
+      let _whoAMI [who] of self ; identity of the caller
+      let _patcheMyself one-of patches in-radius 2
+      let _Xcor [pxcor] of _patcheMyself
+      let _YCor [pycor] of _patcheMyself
+      hatch 1[
+        setxy _Xcor _YCor
+        let _whoAMIi [who] of self ; identity of the caller
+        let _patcheMyselfi one-of patches in-radius 2
+        let _Xcori [pxcor] of _patcheMyself
+        let _YCori [pycor] of _patcheMyself
+        ask role_wifes with [xcor = 1 AND ycor = 3] [
+          hatch 1 [
+            setxy _Xcori _YCori
+            create-link-with one-of turtles with[ who = _whoAMIi]
+            set whoisMyHusban _whoAMI
+            set marriedFrom 0
+            create-instance-role_people
+          ]
+        ]
+      ] 
+    ]
+  ]
+end

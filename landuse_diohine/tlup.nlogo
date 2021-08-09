@@ -1,3 +1,6 @@
+__includes [ "role_peoples.nls" "role_wifes.nls"]
+
+breed[actants actant]
 breed[role_peoples role_people]
 breed[role_farmers role_farmer]
 breed[role_wifes role_wife]
@@ -8,7 +11,12 @@ breed[role_patriarches role_patriarche]
 globals[
 
 ]
+
 turtles-own[
+ myActivities
+]
+
+actants-own[
   roles ; liste of all roles of out agent
   next-task
   task-stacked ;; liste of all task are stored and schedulled in that attribut
@@ -25,6 +33,7 @@ role_farmers-own[
 
 role_wifes-own[
   whoisMyHusban
+  marriedFrom ; married from X years
 ]
 
 role_patriarches-own [
@@ -36,39 +45,68 @@ to setup
   ; We create a template instance of rôles.
   create-role_peoples 1[
     setxy 1 1
+    set shape "box"
+    set color green
     set hidden? FALSE
   ]
   create-role_farmers 1[
     setxy 1 2
     set hidden? FALSE
   ]
-  create-turtles 10 [
-    ;set task-stacked list
+
+  create-role_wifes 1[
+    setxy 1 3
+    set hidden? FALSE
+  ]
+
+  ; create real agent how will acte
+  create-actants 10 [
+
     setxy random-xcor random-ycor
-    ;; create
-;    set roles list "people" "patriarche"
-;    if member? "people" roles [
-;      set age 50 + random 20
-;      set task-stacked list "death-prob" "createFamilly"
-;    ]
+    ;; create an instance of each my roles
+    create-instance-role_people
+    ask role_peoples [
+      set age 50 + random 20
+      stack-people-activites
+    ]
+
   ]
   reset-ticks
 end
 
 
 to go
-  ask turtles[
-   ;death-prob
-   run-task-stacked
+  ask actants[
+    let _role_order in-link-neighbors
+    if any? _role_order [
+      show [breed] of _role_order
+    ]
+   ;run-task-stacked
   ]
-  if not any? turtles [stop]
+  if not any? actants [stop]
   tick
 end
 
-to run-task-stacked
+to create-instance-role_people
+  let _whoAMI [who] of self ; identity of the caller
+  let _patcheMyself one-of patches in-radius 2
+  let _Xcor [pxcor] of _patcheMyself
+  let _YCor [pycor] of _patcheMyself
+
+  ask role_peoples with [xcor = 1 AND ycor = 1] [
+    hatch 1 [
+      setxy _Xcor _YCor
+      create-link-with one-of turtles with[ who = _whoAMI]
+    ]
+  ]
+end
+
+to run-task-stacked ; actant context
   ; la mise à jour de task-stacked doit se faire en tenant compte de
-  ; l'importance (priorité) imposer par les roles. par exemple les
-  ; turtle sont humain avant d'être patriarche
+  ; l'importance (priorité) imposer par les roles.
+  set task-stacked [myActivities] of in-link-neighbors
+  show task-stacked
+
   if not empty? task-stacked [
     set next-task first task-stacked
     run next-task
@@ -92,15 +130,6 @@ to createFamilly
 
 end
 
-to death-prob ; turtle context
-  set age age + 1
-  if member? "people" roles [
-   if 80  - (random age) <= 0 [
-     die
-    ]
-  ]
-
-end
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
