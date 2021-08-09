@@ -1,3 +1,9 @@
+breed[role_peoples role_people]
+breed[role_farmers role_farmer]
+breed[role_wifes role_wife]
+breed[role_patriarches role_patriarche]
+
+
 ; inspiration de "state machine exemple"
 globals[
 
@@ -6,24 +12,45 @@ turtles-own[
   roles ; liste of all roles of out agent
   next-task
   task-stacked ;; liste of all task are stored and schedulled in that attribut
+]
+
+role_peoples-own[
+  age
+]
+
+role_farmers-own[
   myplots ;a plot agentset of my own plots
   myFamillyPlots ; a plot agentset of my famillie plts
-  age
+]
+
+role_wifes-own[
+  whoisMyHusban
+]
+
+role_patriarches-own [
 
 ]
 
-
-
 to setup
   clear-all
+  ; We create a template instance of rôles.
+  create-role_peoples 1[
+    setxy 1 1
+    set hidden? FALSE
+  ]
+  create-role_farmers 1[
+    setxy 1 2
+    set hidden? FALSE
+  ]
   create-turtles 10 [
     ;set task-stacked list
     setxy random-xcor random-ycor
-    set roles list "people" "patriarche"
-    if member? "people" roles [
-      set age 50 + random 20
-      set task-stacked list "death-prob" "createFamilly"
-    ]
+    ;; create
+;    set roles list "people" "patriarche"
+;    if member? "people" roles [
+;      set age 50 + random 20
+;      set task-stacked list "death-prob" "createFamilly"
+;    ]
   ]
   reset-ticks
 end
@@ -32,32 +59,36 @@ end
 to go
   ask turtles[
    ;death-prob
-   updateRun-task-stacked
+   run-task-stacked
   ]
   if not any? turtles [stop]
   tick
 end
 
-to updateRun-task-stacked
+to run-task-stacked
   ; la mise à jour de task-stacked doit se faire en tenant compte de
   ; l'importance (priorité) imposer par les roles. par exemple les
   ; turtle sont humain avant d'être patriarche
-  if task-stacked not empty? [
+  if not empty? task-stacked [
     set next-task first task-stacked
-    run next-task ;ici il faut lire la proc. dans la même proc.
+    run next-task
     set task-stacked but-first task-stacked
   ]
 end
 
-to calculus
-  print smallCalul 3 who
-end
-
-to-report smallcalul [a b]
-  report a + b
-end
-
 to createFamilly
+  if count turtles with [member? "wife" roles] < 4[
+    let _mycolor [color] of self
+    show "wife?"
+    ask one-of patches in-radius 2 [
+     sprout 1 [
+       set roles list "people" "wife"
+       set shape "circle"
+       set color _mycolor
+      ]
+    ]
+  ]
+  ; find a wife
 
 end
 
@@ -88,10 +119,10 @@ GRAPHICS-WINDOW
 0
 0
 1
--50
-50
--50
-50
+0
+100
+0
+100
 0
 0
 1
