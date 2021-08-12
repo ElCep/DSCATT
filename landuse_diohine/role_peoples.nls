@@ -1,6 +1,12 @@
 
-to run-people-activities
-  
+to run-people-activities 
+  if myActivities not empty? [
+    while [myActivities] not empty? [ ;on depille toutes les activitées
+      set next-task first myActivities
+      run next-task ;ici il faut lire la proc. dans la même proc.
+      set myActivities but-first myActivities
+    ]
+  ]
 end
 
 to stack-people-activites

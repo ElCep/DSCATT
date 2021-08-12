@@ -48,6 +48,7 @@ to setup
     set shape "box"
     set color green
     set hidden? FALSE
+    stack-people-activites
   ]
   create-role_farmers 1[
     setxy 1 2
@@ -80,6 +81,11 @@ to go
     let _role_order in-link-neighbors
     if any? _role_order [
       show [breed] of _role_order
+      if any? _role_order with[ breed = role_peoples ][
+        ask _role_order with[ breed = role_peoples ][
+        run-people-activities
+        ]
+      ]
     ]
    ;run-task-stacked
   ]
@@ -87,7 +93,7 @@ to go
   tick
 end
 
-to create-instance-role_people
+to create-instance-role_people ;
   let _whoAMI [who] of self ; identity of the caller
   let _patcheMyself one-of patches in-radius 2
   let _Xcor [pxcor] of _patcheMyself
@@ -129,7 +135,6 @@ to createFamilly
   ; find a wife
 
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
