@@ -1,41 +1,103 @@
 breed [cuisine cuisines]
-cuisine-own [ taille domaine besoin]
-patches-own [ couvert  propriétaire fertilite ]
-
+cuisine-own [ taille domaine besoin bande-mil bande-arachide bande-jachere ]
+patches-own [ couvert  propriétaire fertilite cycle]
+globals [case-offset taille-bande]
 
 to setup
   ca
+  ;; taille initiale des bandes de culture
+  set case-offset 20
+  set taille-bande 10
+
+
 
   ask patch 5 25  [
  sprout-cuisine 1 [
       set taille  (random 30) + 1
-      set size taille
+      set size taille / 2 + 2
       set shape "house"
       set besoin calcul-besoin-mil taille
       ask patches with [  pycor <= 50]
       [
         set propriétaire myself
-        set pcolor [color] of myself - 1
+        set pcolor [color] of myself
       ]
+      set domaine patches with [pcolor = [color] of myself]
+
+      let ordre-couverts shuffle ["mil" "arachide" "jachere"]
+
+      foreach ordre-couverts [
+        x ->  ask domaine with [pxcor >= (position x ordre-couverts) * taille-bande + case-offset + 1 and pxcor <= (position x ordre-couverts + 1) * taille-bande  + case-offset ]
+        [
+          if x = "mil" [set couvert  "mil" sprout 1 [set shape "plant"  set color 65]]
+          if x = "arachide" [set couvert  "arachide" sprout 1 [set shape "bug"  set color 23 ]]
+          if x = "jachere" [ set couvert  "jachere" sprout 1 [set shape "square"  set color 45 ]]
+        ]
+      ];; foreach
     ]
+
   ]
 
   ask patch 5 75  [
   sprout-cuisine 1 [
-      set taille  (random 30) + 1
-      set size taille
+       set taille  (random 30) + 1
+      set size taille / 2 + 2
       set shape "house"
       set besoin calcul-besoin-mil taille
-      ask patches with [pycor > 50]
+      ask patches with [  pycor > 50]
       [
         set propriétaire myself
-        set pcolor [color] of myself - 1
+        set pcolor [color] of myself
       ]
+      set domaine patches with [pcolor = [color] of myself]
+
+      let ordre-couverts shuffle ["mil" "arachide" "jachere"]
+
+      foreach ordre-couverts [
+        x ->  ask domaine with [pxcor >= (position x ordre-couverts) * taille-bande + case-offset + 1 and pxcor <= (position x ordre-couverts + 1) * taille-bande  + case-offset ]
+        [
+          if x = "mil" [set couvert  "mil" sprout 1 [set shape "plant"  set color 65]]
+          if x = "arachide" [set couvert  "arachide" sprout 1 [set shape "bug"  set color 23 ]]
+          if x = "jachere" [ set couvert  "jachere" sprout 1 [set shape "square"  set color 45 ]]
+        ]
+      ];; fore
     ]
+
   ]
+
+ask patches [set pcolor black]
+end
+
+
+to cycle-rotation
+  ask patches with [couvert = "mil" and cycle = false]
+ [
+    set couvert "arachide"
+    ask turtles-here [set shape "bug"  set color 23]
+    set cycle true
+ ]
+  ask patches with [couvert = "arachide" and cycle = false]
+    [
+    set couvert "jachere"
+    ask turtles-here [set shape "square"  set color 45]
+      set cycle true
+  ]
+  ask patches with [couvert = "jachere" and cycle = false]
+ [
+    set couvert "mil"
+    ask turtles-here [set shape "plant"  set color 65]
+    set cycle true
+  ]
+
+  ask patches [set cycle  false]
 
 
 end
+
+to change-to-mil
+
+end
+
 
 to-report calcul-besoin-mil [my-taille ]
   ;; 1 personne consomme 66 kgs de mil par an
@@ -79,6 +141,23 @@ BUTTON
 161
 NIL
 setup
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+81
+191
+210
+224
+NIL
+cycle-rotation
 NIL
 1
 T
