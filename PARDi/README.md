@@ -1,6 +1,9 @@
 # Résultat des ateliers PARDI
 
-Data : 18 au 22 octobre
+Date : 18 au 22 octobre
+Participants : Paul, Idrissa, Marie Hélène, Marcel.
+
+auteurs : Paul, Romain et Etienne
 
 
 ## Quelques sorties de graphe
