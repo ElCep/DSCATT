@@ -1,7 +1,7 @@
 
 digraph g {
-  //node [shape=plaintext];
-  // Acteurs
+
+  /* Acteurs */
   "Sous-préfet" [color=@Col1];
   "Conseil Municipal" [color=@Col1];
   "Chef de village" [color=@Col1];
@@ -21,7 +21,7 @@ digraph g {
   "Petit ruminants" [color=@Col1];
   "Grand ruminants" [color=@Col1];
 
-  // Ressources
+  /* Ressources*/
   "Arbres à palabre" [color=@Col2];
   "Paix sociale" [color=@Col2];
   "Eau du forage" [color=@Col2];
@@ -49,7 +49,7 @@ digraph g {
   "Matière Organique" [color=@Col2];
   "Fertilité" [color=@Col2];
 
-  //Interactions
+  /* Interactions */
   "Cuisine (chef)" -> {"Eau du forage" "Eau des puis"} [label=Boivent][color=@Col3]
   "Travailleur Sortie" -> "Animaux" [label=confient][color=@Col3]
   "Cuisine (chef)" -> "Travailleur Sortie" [label=soutient][color=@Col3]
@@ -72,6 +72,8 @@ digraph g {
   "Agriculteur" -> "Cuisine (chef)" [label=constitue][color=@Col3]
   "Agriculteur" -> {"Revendeur d'engrais" "Revendeur de Semmence"} [label="s'approvisionne"][color=@Col3]
   "Agriculteur" -> "Engrais Chimique" [label="épandage"][color=@Col3]
+  "Agriculteur" -> "Paix sociale" [label=preserve][color=@Col3]
+  "Paix sociale" -> "Agriculteur" [label=asure][color=@Col3]
   "Engrais Chimique" -> "Parcelles"[label="épandage"][color=@Col3]
   "Eleveur" -> "Cuisine (chef)" [label=constitue][color=@Col3]
   "Agriculteur" -> "Animaux" [label="Contribut à l'allimentation"][color=@Col3]
@@ -88,7 +90,7 @@ digraph g {
   "Arbres" -> "Pluviometrie" [label="attire"][color=@Col3]
   "Arbres" -> "Fertilité" [label="améliore"][color=@Col3]
   "Animaux" -> "Parcelles" [label=enrichit][color=@Col3]
-  "Parcelles" -> "Animaux "[label=nourrit][color=@Col3]
+  "Parcelles" -> "Animaux"[label=nourrit][color=@Col3]
   "Animaux" -> {"Eau des Mares" "Eau du forage" "Eau des puis"} [label=boivent][color=@Col3]
   "Parcelles" -> "Paturage/Jachère"[label=repos][color=@Col3]
   "Paturage/Jachère" -> "Parcelles" [label=revitalise][color=@Col3]
@@ -96,5 +98,8 @@ digraph g {
   "Paturage/Jachère" -> "Matière Organique" [label=Dégrade][color=@Col3]
   "Matière Organique" -> "Parcelles" [label=transport][color=@Col3]
   "Parcelles" -> "Agriculteur" [label=transport][color=@Col3]
+
+  /* dynamique */
+  // Conflict agriculteur éleveur
 
 }
