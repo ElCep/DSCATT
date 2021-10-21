@@ -1,0 +1,105 @@
+
+digraph g {
+
+  /* Acteurs */
+  "Sous-préfet" [color=@Col1];
+  "Conseil Municipal" [color=@Col1];
+  "Chef de village" [color=@Col1];
+  "Notables" [color=@Col1];
+  "Chef de Consession" [color=@Col1];
+  "Cuisine (chef)" [color=@Col1];
+  "Travailleur Sortie" [color=@Col1];
+  "Agriculteur" [color=@Col1];
+  "Eleveur" [color=@Col1];
+  "Ecole" [color=@Col1];
+  "Banque de Céréale" [color=@Col1];
+  "Revendeur de Semmence" [color=@Col1];
+  "Revendeur d'engrais" [color=@Col1];
+  "Vieilles Maman" [color=@Col1];
+  "Saltigué" [color=@Col1];
+  "Animaux de trait" [color=@Col1];
+  "Petit ruminants" [color=@Col1];
+  "Grand ruminants" [color=@Col1];
+
+  /* Ressources*/
+  "Arbres à palabre" [color=@Col2];
+  "Paix sociale" [color=@Col2];
+  "Eau du forage" [color=@Col2];
+  "Eau des Mares" [color=@Col2];
+  "Eau des puis" [color=@Col2];
+  "Pluviometrie" [color=@Col2];
+  "Engrais Chimique" [color=@Col2];
+  "Arachide" [color=@Col2];
+  "Paille d'arachide" [color=@Col2];
+  "Céréale" [color=@Col2];
+  "Paille de Céréale" [color=@Col2];
+  "Tige de céréale" [color=@Col2];
+  "Bisape" [color=@Col2];
+  "Maraichage" [color=@Col2];
+  "Niebe" [color=@Col2];
+  "Paille de Niebe" [color=@Col2];
+  "Sorgo" [color=@Col2];
+  "Sol Dior (sableux)" [color=@Col2];
+  "Sol Dekk (argilleux)" [color=@Col2];
+  "Sol Dekk Dior" [color=@Col2];
+  "Parcelles" [color=@Col2];
+  "Tapis herbacé" [color=@Col2];
+  "Arbres" [color=@Col2];
+  "Paturage/Jachère" [color=@Col2];
+  "Matière Organique" [color=@Col2];
+  "Fertilité" [color=@Col2];
+
+  /* Interactions */
+  "Cuisine (chef)" -> {"Eau du forage" "Eau des puis"} [label=Boivent][color=@Col3]
+  "Travailleur Sortie" -> "Animaux" [label=confient][color=@Col3]
+  "Cuisine (chef)" -> "Travailleur Sortie" [label=soutient][color=@Col3]
+  "Cuisine (chef)" -> "Travailleur Sortie" [label=soutient][color=@Col3]
+  "Cuisine (chef)" -> "Arbres à palabre" [label=contribue][color=@Col3]
+  "Chef de village" -> "Arbres à palabre" [label=covoque][color=@Col3]
+  "Notables" -> "Arbres à palabre" [label=contribue][color=@Col3]
+  "Arbres à palabre" -> "Chef de village"[label=informe][color=@Col3]
+  "Notables" -> {"Chef de Consession" "Cuisine (chef)"} [label="bon office"][color=@Col3]
+  "Chef de Consession" -> "Cuisine (chef)" [label="Régule"][color=@Col3]
+  "Cuisine (chef)" ->  {"Chef de village" "Conseil Municipal"} [label="Plainte"][color=@Col3]
+  "Saltigué" -> {"Eleveur" "Agriculteur" "Pluviometrie" "Parcelles"} [label="Predit&Protège"][color=@Col3]
+  "Vieilles Maman" -> {"Eleveur" "Agriculteur" "Pluviometrie" "Parcelles"} [label="Predit&Protège"][color=@Col3]
+  "Eleveur" -> "Cuisine (chef)" [label=constitue][color=@Col3]
+  "Eleveur" -> "Paix sociale" [label=preserve][color=@Col3]
+  "Eleveur" -> "Animaux" [label=entretien][color=@Col3]
+  "Paix sociale" -> "Eleveur" [label=asure][color=@Col3]
+  "Animaux" -> "Eleveur" [label=usufruit][color=@Col3]
+  "Eleveur" -> "Ecole" [label=occupe][color=@Col3]
+  "Agriculteur" -> "Cuisine (chef)" [label=constitue][color=@Col3]
+  "Agriculteur" -> {"Revendeur d'engrais" "Revendeur de Semmence"} [label="s'approvisionne"][color=@Col3]
+  "Agriculteur" -> "Engrais Chimique" [label="épandage"][color=@Col3]
+  "Agriculteur" -> "Paix sociale" [label=preserve][color=@Col3]
+  "Paix sociale" -> "Agriculteur" [label=asure][color=@Col3]
+  "Engrais Chimique" -> "Parcelles"[label="épandage"][color=@Col3]
+  "Eleveur" -> "Cuisine (chef)" [label=constitue][color=@Col3]
+  "Agriculteur" -> "Animaux" [label="Contribut à l'allimentation"][color=@Col3]
+  "Agriculteur" -> "Parcelles" [label="Valorise entretien"][color=@Col3]
+  {"Sol Dior (sableux)" "Sol Dekk (argilleux)" "Sol Dekk Dior"} -> "Parcelles" [label="compose"][color=@Col3]
+  {"Arachide" "Paille d'arachide" "Céréale" "Paille de Céréale" "Tige de céréale"} -> "Sol Dior (sableux)" [label="s'addapte"][color=@Col3]
+  {"Bisape" "Maraichage" "Niebe", "Paille de Niebe"} -> {"Sol Dior (sableux)" "Sol Dekk (argilleux)" "Sol Dekk Dior"} [label="s'addapte"][color=@Col3]
+  "Sorgo" -> "Sol Dekk (argilleux)" [label="s'addapte"][color=@Col3]
+  "Tige de céréale" -> {"Agriculteur" "Eleveur"} [label="construit"][color=@Col3]
+  "Paille d'arachide" -> "Eleveur" [label="stock"][color=@Col3]
+  "Tapis herbacé" -> "Eleveur" [label="stock"][color=@Col3]
+  "Tapis herbacé" -> "Parcelles" [label="Pousse"][color=@Col3]
+  "Tapis herbacé" -> "Fertilité" [label="améliore"][color=@Col3]
+  "Arbres" -> "Pluviometrie" [label="attire"][color=@Col3]
+  "Arbres" -> "Fertilité" [label="améliore"][color=@Col3]
+  "Animaux" -> "Parcelles" [label=enrichit][color=@Col3]
+  "Parcelles" -> "Animaux"[label=nourrit][color=@Col3]
+  "Animaux" -> {"Eau des Mares" "Eau du forage" "Eau des puis"} [label=boivent][color=@Col3]
+  "Parcelles" -> "Paturage/Jachère"[label=repos][color=@Col3]
+  "Paturage/Jachère" -> "Parcelles" [label=revitalise][color=@Col3]
+  "Animaux" -> "Matière Organique" [label=produit][color=@Col3]
+  "Paturage/Jachère" -> "Matière Organique" [label=Dégrade][color=@Col3]
+  "Matière Organique" -> "Parcelles" [label=transport][color=@Col3]
+  "Parcelles" -> "Agriculteur" [label=transport][color=@Col3]
+
+  /* dynamique */
+  // Conflict agriculteur éleveur
+
+}
