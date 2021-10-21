@@ -1,0 +1,63 @@
+
+digraph g {
+  //node [shape=plaintext];
+  // Acteurs
+  "Sous-préfet" [color=red];
+  "Conseil Municipal" [color=red];
+  "Chef de village" [color=red];
+  "Notables" [color=red];
+  "Chef de Consession" [color=red];
+  "Cuisine (chef)" [color=red];
+  "Travailleur Sortie" [color=red];
+  "Agriculteur" [color=red];
+  "Eleveur" [color=red];
+  "Ecole" [color=red];
+  "Banque de Céréale" [color=red];
+  "Revendeur de Semmence" [color=red];
+  "Revendeur d'engais" [color=red];
+  "Vieilles Maman" [color=red];
+  "Saligué" [color=red];
+  "Animaux de trait" [color=red];
+  "Petit ruminants" [color=red];
+  "Grand ruminants" [color=red];
+
+  // Ressources
+  "Arbres à palabre" [color=blue];
+  "Paix sociale" [color=blue];
+  "Eau du forage" [color=blue];
+  "Eau des Mares" [color=blue];
+  "Eau des puis" [color=blue];
+  "Pluviometrie" [color=blue];
+  "Engrais Chimique" [color=blue];
+  "Arachide" [color=blue];
+  "Paille d'arachide" [color=blue];
+  "Céréale" [color=blue];
+  "Paille de Céréale" [color=blue];
+  "Tige de céréale" [color=blue];
+  "Bisape" [color=blue];
+  "Maraichage" [color=blue];
+  "Niebe" [color=blue];
+  "Paille de Niebe" [color=blue];
+  "Sorgo" [color=blue];
+  "Sol Dior (sableux)" [color=blue];
+  "Sol Dekk (argilleux)" [color=blue];
+  "Sol Dekk Dior" [color=blue];
+  "Parcelles" [color=blue];
+  "Tapis herbacé" [color=blue];
+  "Arbres" [color=blue];
+  "Paturage/Jachère" [color=blue];
+  "Matière Organique" [color=blue];
+  "Fertilité" [color=blue];
+
+  //Interactions
+  "Eleveur" -> "Cuisine (chef)" [label=constitue][color=green]
+
+
+  "Conseillers Municipale" -> "sous préfet"  [label=informe];
+  "Chef de Village" -> "Conseillers Municipale" [label=informe];
+  "Cuisine" -> "Chef de concession" [label=Cooperer];
+  "Notable" -> "Chef de concession" [label="Bon office"];
+  "Chef de concession" -> "Arbre a palabre" [label="Consitue"];
+  "Chef de concession" -> "Chef de Village" [label="Informe"];
+  "Chef de Village" -> "Chef de concession" [label="Conseil"];
+}
