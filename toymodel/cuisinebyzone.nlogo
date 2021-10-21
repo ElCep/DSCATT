@@ -2,82 +2,145 @@ breed [cuisines cuisine]
 breed [couverts couvert]
 breed [betails betail]
 cuisines-own [ taille domaine besoin bande-mil bande-arachide bande-jachere famille ]
-patches-own [ couvert-type  propriétaire fertilite cycle]
-globals [case-offset taille-bande]
+patches-own [ zone couvert-type  propriétaire fertilite cycle ]
+globals [case-offset taille-bande cycle-jachere-courante]
 
 to setup
   ca
+
+  set cycle-jachere-courante 1
+
   ;; taille initiale des bandes de culture
-  set case-offset 20
-  set taille-bande 10
+  ask patches [
+    set propriétaire -99
+  ]
+
+  ask patches with [pxcor < 50 and pycor < 50]
+  [
+    set pcolor 6
+    set zone "case"
+
+  ]
+
+  ask patches with [pxcor > 50 and pycor < 50]
+  [
+    set zone "J1"
+    set cycle 1
+  ]
+
+  ask patches with [pxcor > 50 and pycor > 50]
+  [
+    set zone "J2"
+      set cycle 2
+  ]
+
+  ask patches with [pxcor < 50 and pycor > 50]
+  [
+    set zone "J3"
+    set cycle 3
+  ]
 
 
 
-
-
-
-
-
-  ask patch 5 25  [
- sprout-cuisines 1 [
+ ask n-of 3 patches with [zone = "case" and pxcor < 25 and pycor < 25]  [
+     set propriétaire "zone case"
+    sprout-cuisines 1 [
       set taille  (random 15) + 3
-      set famille "Diouf"
       set size taille / 2 + 2
       set shape "house"
-      set besoin calcul-besoin-mil taille
-      ask patches with [  pycor <= 50]
-      [
-        set propriétaire myself
-        set pcolor [color] of myself
-      ]
-      set domaine patches with [pcolor = [color] of myself]
-
-      let ordre-couvert-types shuffle ["mil" "arachide" "jachere"]
-
-      foreach ordre-couvert-types [
-        x ->  ask domaine with [pxcor >= (position x ordre-couvert-types) * [taille] of myself + case-offset + 1 and pxcor <= (position x ordre-couvert-types + 1) * [taille] of myself  + case-offset ]
-        [
-          if x = "mil" [set couvert-type  "mil" sprout-couverts 1 [set shape "plant"  set color 65 set size random 3 ]]
-          if x = "arachide" [set couvert-type  "arachide" sprout-couverts 1 [set shape "bug"  set color 23 set size random 3  ]]
-          if x = "jachere" [ set couvert-type  "jachere" sprout-couverts 1 [set shape "square"  set color 45 ]]
-        ]
-      ];; foreach
-
-
-    ] ;; sprout cuisine
-
-  ]
-
-  ask patch 5 75  [
-  sprout-cuisines 1 [
-       set taille  (random 15) + 3
-      set famille "Diop"
-      set size taille / 2 + 2
-      set shape "house"
-      set besoin calcul-besoin-mil taille
-      ask patches with [  pycor > 50]
-      [
-        set propriétaire myself
-        set pcolor [color] of myself
-      ]
-      set domaine patches with [pcolor = [color] of myself]
-
-      let ordre-couvert-types shuffle ["mil" "arachide" "jachere"]
-
-      foreach ordre-couvert-types [
-        x ->  ask domaine with [pxcor >= (position x ordre-couvert-types) * [taille] of myself + case-offset + 1 and pxcor <= (position x ordre-couvert-types + 1) * [taille] of myself + case-offset ]
-
-        [
-          if x = "mil" [set couvert-type  "mil" sprout-couverts 1 [set shape "plant"  set color 65 set size random 3]]
-          if x = "arachide" [set couvert-type  "arachide" sprout-couverts 1 [set shape "bug"  set color 23 set size random 3]]
-          if x = "jachere" [ set couvert-type  "jachere" sprout-couverts 1 [set shape "square"  set color 45 ]]
-        ]
-      ];; foreach
     ]
-
   ]
 
-ask patches [set pcolor black]
+  ;; attriubut des bordures de zones propriétaire =  bordure
+
+  ask patches with [ pxcor = 50 or pycor = 50 ]
+  [
+    set pcolor blue
+    set propriétaire "bordures"
+  ]
+
+  ;; attribut propriétaire de la zone de cases
+
+  ask patches with [pxcor <= 25 and pycor <= 25]
+  [
+    set propriétaire "zone case"
+  ]
+
+  partition-init
+  partition-iteration
+
+
+
+end
+
+
+to partition-init
+ask cuisines [
+    foreach [ "J1" "J2" "J3"][
+      x -> ask n-of (random 20 + 1) patches with [ zone = x]
+      [
+        set pcolor [color] of myself
+        set propriétaire myself
+      ]
+    ];; foreach
+
+    ;; champ de case hors des maisons
+    ask n-of (random 8 + 1) patches with [zone = "case" and pxcor > 25 and pycor > 25]
+    [
+      set pcolor [color] of myself
+      set propriétaire myself
+    ]
+  ]
+end ;; partition
+
+to partition-iteration
+  ask cuisines [
+  foreach [ "J1" "J2" "J3" "case"][
+      x -> ask patches with [ zone = x and propriétaire =  myself]
+      [
+        ask neighbors with [zone = x and  propriétaire = -99  and ( pxcor > 25 or pycor > 25)]
+        [
+          set pcolor [pcolor] of myself
+          set propriétaire [propriétaire] of myself
+        ]
+      ]
+  ];; foreach
+  ]
+
+  if any? patches with [propriétaire = -99]
+  [
+    partition-iteration
+  ]
+
+
+end
+
+
+to cycle-jachere
+
+  ask betails [die]
+
+  ask patches
+  [
+    set cycle (cycle + 1)
+  ]
+
+  ask patches with [cycle = 4]
+  [
+    set cycle 1
+  ]
+
+
+  ask n-of 15 patches with [cycle = 3]
+  [
+    sprout-betails 1 [ set shape "cow" set size 4 set color white ]
+  ]
+
+
+
+
+
+
 end
 
 
@@ -104,7 +167,6 @@ to cycle-rotation
   ask patches [set cycle  false]
 
   dessin-couvert
-
 end
 
 to dessin-couvert
@@ -112,19 +174,19 @@ to dessin-couvert
 
   ask patches with [couvert-type = "mil"]
   [
-    ask turtles-here [die]
+    ask couverts-here [die]
     sprout-couverts 1 [set shape "plant"  set color 65 set size random 3]
   ]
 
 ask patches with [couvert-type = "arachide"]
   [
-    ask turtles-here [die]
+    ask couverts-here [die]
     sprout-couverts 1 [set shape "bug"  set color 23 set size random 3]
   ]
 
 ask patches with [couvert-type = "jachere"]
   [
-    ask turtles-here [die]
+    ask couverts-here [die]
     sprout-couverts 1 [set shape "square"  set color 45 ]
   ]
 
@@ -166,13 +228,13 @@ to-report calcul-besoin-mil [my-taille ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-260
+210
 10
-756
-507
+723
+524
 -1
 -1
-4.832
+5.0
 1
 10
 1
@@ -193,11 +255,11 @@ ticks
 30.0
 
 BUTTON
-83
-139
-156
-172
-NIL
+39
+105
+112
+138
+setup
 setup
 NIL
 1
@@ -210,47 +272,13 @@ NIL
 1
 
 BUTTON
-81
-191
-210
-224
-NIL
-cycle-rotation
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-81
-247
-187
-280
-NIL
-init-pature
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-101
-318
+55
 199
-351
-paturage
-paturage
-T
+181
+232
+NIL
+cycle-jachere
+NIL
 1
 T
 OBSERVER
