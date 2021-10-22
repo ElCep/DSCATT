@@ -104,6 +104,8 @@ digraph g {
   "Parcelles" -> "Agriculteur" [label=transport][color=green]
   {"Paille d'arachide" "Paille de Céréale" "Paille de Niebe"} -> "Animaux" [label=nourrit][color=green]
   {"Paille d'arachide" "Paille de Céréale" "Paille de Niebe"} -> "Eleveur"[label=Stock][color=green]
+  "Fertilité" -> {"Agriculteur" "Cuisine (chef)" "Chef de Consession"} [label=connait][color=green]
+  "Fertilité" -> "Arbres à palabre" [label="diff. information"][color=green]
 
   /* dynamique */
   // Conflict agriculteur éleveur
