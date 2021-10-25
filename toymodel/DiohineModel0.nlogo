@@ -2,17 +2,49 @@ breed [cuisines cuisine]
 breed [couverts couvert]
 breed [betails betail]
 cuisines-own [ taille domaine besoin bande-mil bande-arachide bande-jachere famille ]
-patches-own [ zone couvert-type  propriétaire fertilite cycle ]
-globals [case-offset taille-bande cycle-jachere-courante]
+patches-own [ zone couvert-type  proprietaire fertilite cycle ]
+globals [case-offset taille-bande cycle-jachere-courante
+  fumier-par-tete
+  COS-champ-case-moy  COS-champ-case-sd
+  COS-champ-brousse-moy COS-champ-brousse-sd
+  surface-de-patch
+ betail-par-ha
+troupeau
+conso-carbone-culture]
 
 to setup
   ca
-
+  reset-ticks
   set cycle-jachere-courante 1
 
-  ;; taille initiale des bandes de culture
+  ;;no-display
+
+  ;; paramètre interne
+
+  ;; en m²
+  set surface-de-patch 10
+
+  ;; paramètres calibrés depuis les données
+
+  ;; fumier en kgs par tete par an
+  set fumier-par-tete 250
+
+  ;; en kg par m²
+  set COS-champ-case-moy 1.26
+  set COS-champ-case-sd 0.125
+  set COS-champ-brousse-moy 0.84
+  set COS-champ-brousse-sd  0.06
+
+  set conso-carbone-culture 0.5
+
+  ;; en tete par hectare
+  set betail-par-ha 1
+
+
+
+;; repartition des terres intiales
   ask patches [
-    set propriétaire -99
+    set proprietaire -99
   ]
 
   ask patches with [pxcor < 50 and pycor < 50]
@@ -42,45 +74,50 @@ to setup
 
 
 
- ask n-of 3 patches with [zone = "case" and pxcor < 25 and pycor < 25]  [
-     set propriétaire "zone case"
+ ask n-of 2 patches with [zone = "case" and pxcor < 25 and pycor < 25]  [
+     set proprietaire "zone cuisine"
     sprout-cuisines 1 [
-      set taille  (random 15) + 3
+      set taille  10
       set size taille / 2 + 2
       set shape "house"
     ]
   ]
 
-  ;; attriubut des bordures de zones propriétaire =  bordure
+  ;; attriubut des bordures de zones proprietaire =  bordure
 
   ask patches with [ pxcor = 50 or pycor = 50 ]
   [
     set pcolor blue
-    set propriétaire "bordures"
+    set proprietaire "bordures"
   ]
 
-  ;; attribut propriétaire de la zone de cases
+  ;; attribut proprietaire de la zone de cases
 
   ask patches with [pxcor <= 25 and pycor <= 25]
   [
-    set propriétaire "zone case"
+    set proprietaire "zone cuisine"
   ]
 
   partition-init
   partition-iteration
 
+  init-fertilite
 
 
+  set troupeau round (((surface-de-patch * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"]) / 10000 ) * betail-par-ha) + 1
+
+
+  ;;display
 end
 
 
 to partition-init
 ask cuisines [
     foreach [ "J1" "J2" "J3"][
-      x -> ask n-of (random 20 + 1) patches with [ zone = x]
+      x -> ask n-of (random 40 + 1) patches with [ zone = x]
       [
         set pcolor [color] of myself
-        set propriétaire myself
+        set proprietaire myself
       ]
     ];; foreach
 
@@ -88,7 +125,7 @@ ask cuisines [
     ask n-of (random 8 + 1) patches with [zone = "case" and pxcor > 25 and pycor > 25]
     [
       set pcolor [color] of myself
-      set propriétaire myself
+      set proprietaire myself
     ]
   ]
 end ;; partition init
@@ -96,18 +133,18 @@ end ;; partition init
 to partition-iteration
   ask cuisines [
   foreach [ "J1" "J2" "J3" "case"][
-      x -> ask patches with [ zone = x and propriétaire =  myself]
+      x -> ask patches with [ zone = x and proprietaire =  myself]
       [
-        ask neighbors with [zone = x and  propriétaire = -99  and ( pxcor > 25 or pycor > 25)]
+        ask neighbors with [zone = x and  proprietaire = -99  and ( pxcor > 25 or pycor > 25)]
         [
           set pcolor [pcolor] of myself
-          set propriétaire [propriétaire] of myself
+          set proprietaire [proprietaire] of myself
         ]
       ]
   ];; foreach
   ]
 
-  if any? patches with [propriétaire = -99]
+  if any? patches with [proprietaire = -99]
   [
     partition-iteration
   ]
@@ -116,9 +153,16 @@ end ;; partition iteration
 
 to cycle-jachere
 
+  ;; GUI cosmétique
   ask betails [die]
+   ask n-of 15 patches with [cycle = 3 and zone != "case" and proprietaire != "bordures"]
+  [
+    sprout-betails 1 [ set shape "cow" set size 4 set color white ]
+  ]
 
-  ask patches
+
+
+  ask patches with [ zone != "case" and proprietaire != "bordures" and proprietaire != "zone cuisine"]
   [
     set cycle (cycle + 1)
   ]
@@ -128,38 +172,12 @@ to cycle-jachere
     set cycle 1
   ]
 
-  ask n-of 15 patches with [cycle = 3 and zone != "case" and propriétaire != "bordures"]
-  [
-    sprout-betails 1 [ set shape "cow" set size 4 set color white ]
-  ]
 
+  MAJ-fertilite
+
+  tick
 end
 
-
-to cycle-rotation
-  ask patches with [couvert-type = "mil" and cycle = false]
- [
-    set couvert-type "arachide"
-  ;;  ask couvert-here [set shape "bug"  set color 23 set size random 5]
-    set cycle true
- ]
-  ask patches with [couvert-type = "arachide" and cycle = false]
-    [
-    set couvert-type "jachere"
-   ;; ask couvert-here [set shape "square"  set color 45 ]
-      set cycle true
-  ]
-  ask patches with [couvert-type = "jachere" and cycle = false]
- [
-    set couvert-type "mil"
-   ;; ask couvert-here [set shape "plant"  set color 65 set size random 5]
-    set cycle true
-  ]
-
-  ask patches [set cycle  false]
-
-  dessin-couvert
-end
 
 to dessin-couvert
 
@@ -191,7 +209,7 @@ to random-walk-betail
 
     ifelse can-move? 1
     [
-      ifelse [propriétaire] of patch-ahead 1  != "bordures"
+      ifelse [proprietaire] of patch-ahead 1  != "bordures"
       [
         fd 1
         set heading random 360
@@ -209,6 +227,50 @@ end
 
 
 
+
+to init-fertilite
+  let dist-max  max-pxcor * sqrt 2
+
+  ;; champs de case
+  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone = "case"]
+  [
+
+    ;; unité : kg de matiere organique, un patch fait 10m²
+    set fertilite surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
+
+
+   ]
+
+  ;; champs de brousse
+
+  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
+  [
+       ;; unité : kg de matiere organique, un patch fait 10m²
+    set fertilite surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
+
+   ]
+end
+
+to MAJ-fertilite
+
+  let nb-patches-Jach count patches with [cycle = 3]
+
+  ;; fumure dans les champs de brousse
+  ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ][
+    set fertilite fertilite + ((troupeau * fumier-par-tete) / nb-patches-Jach) * surface-de-patch
+    ]
+  ;; culture
+
+  ask patches with [cycle < 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case"][
+      set fertilite fertilite - (surface-de-patch *  conso-carbone-culture)
+  ]
+
+
+
+end
+
+
+
 to eclatement
 
   ask one-of cuisines [
@@ -217,16 +279,42 @@ to eclatement
       set taille  [taille] of myself * 0.5
       set size taille / 2 + 2
       set shape "house"
-
-
     ]
-
-
   ]
-
 end
 
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; VIEUX CODE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+to pousse-du-couvert
+  ask patches with [couvert-type = "mil" and cycle = false]
+ [
+    set couvert-type "arachide"
+  ;;  ask couvert-here [set shape "bug"  set color 23 set size random 5]
+    set cycle true
+ ]
+  ask patches with [couvert-type = "arachide" and cycle = false]
+    [
+    set couvert-type "jachere"
+   ;; ask couvert-here [set shape "square"  set color 45 ]
+      set cycle true
+  ]
+  ask patches with [couvert-type = "jachere" and cycle = false]
+ [
+    set couvert-type "mil"
+   ;; ask couvert-here [set shape "plant"  set color 65 set size random 5]
+    set cycle true
+  ]
+
+  ask patches [set cycle  false]
+
+  dessin-couvert
+end
 
 
 to-report calcul-besoin-mil [my-taille ]
@@ -282,13 +370,13 @@ NIL
 1
 
 BUTTON
-55
-199
-181
-232
+21
+161
+147
+194
 NIL
 cycle-jachere
-NIL
+T
 1
 T
 OBSERVER
@@ -299,10 +387,10 @@ NIL
 1
 
 BUTTON
-66
-261
-164
-294
+763
+13
+861
+46
 paturage
 random-walk-betail
 T
@@ -316,10 +404,10 @@ NIL
 1
 
 BUTTON
-53
-319
-166
-352
+750
+71
+863
+104
 NIL
 eclatement
 NIL
@@ -331,6 +419,53 @@ NIL
 NIL
 NIL
 1
+
+MONITOR
+771
+125
+872
+170
+fertilite totale
+sum [fertilite] of patches
+1
+1
+11
+
+PLOT
+814
+208
+1014
+358
+fertilité globale 
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches"
+
+PLOT
+986
+10
+1186
+160
+plot 1
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -16777216 true "" "histogram [fertilite] of patches with [proprietaire != \"bordures\" and proprietaire != \"zone case\" ]"
 
 @#$#@#$#@
 ## WHAT IS IT?
