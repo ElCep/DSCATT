@@ -91,7 +91,7 @@ ask cuisines [
       set propriétaire myself
     ]
   ]
-end ;; partition
+end ;; partition init
 
 to partition-iteration
   ask cuisines [
@@ -111,9 +111,7 @@ to partition-iteration
   [
     partition-iteration
   ]
-
-
-end
+end ;; partition iteration
 
 
 to cycle-jachere
@@ -130,16 +128,10 @@ to cycle-jachere
     set cycle 1
   ]
 
-
-  ask n-of 15 patches with [cycle = 3]
+  ask n-of 15 patches with [cycle = 3 and zone != "case" and propriétaire != "bordures"]
   [
     sprout-betails 1 [ set shape "cow" set size 4 set color white ]
   ]
-
-
-
-
-
 
 end
 
@@ -192,29 +184,47 @@ ask patches with [couvert-type = "jachere"]
 
 end
 
-to init-pature
-    ask n-of 30 patches  with [couvert-type = "jachere"]
-      [
-        sprout-betails 1 [ set shape "cow" set size 4 set color white ]
-      ]
-end
-
-
-to paturage
-
-  ask betails [ random-walk-betail]
-
-end
 
 
 to random-walk-betail
-  set heading towards one-of patches  with [couvert-type = "jachere"]
-  fd 1
+  ask betails [
+
+    ifelse can-move? 1
+    [
+      ifelse [propriétaire] of patch-ahead 1  != "bordures"
+      [
+        fd 1
+        set heading random 360
+      ]
+      [
+        rt 180
+        fd 1
+      ]
+
+    ]
+    [ rt 180 fd 1 ]
+  ]
+  wait 0.1
 end
 
 
 
+to eclatement
 
+  ask one-of cuisines [
+    hatch 1 [
+
+      set taille  [taille] of myself * 0.5
+      set size taille / 2 + 2
+      set shape "house"
+
+
+    ]
+
+
+  ]
+
+end
 
 
 
@@ -278,6 +288,40 @@ BUTTON
 232
 NIL
 cycle-jachere
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+66
+261
+164
+294
+paturage
+random-walk-betail
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+53
+319
+166
+352
+NIL
+eclatement
 NIL
 1
 T
