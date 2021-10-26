@@ -1,4 +1,4 @@
-extensions [table]
+__includes [ "plots.nls" "productivite.nls"]
 
 breed [cuisines cuisine]
 breed [couverts couvert]
@@ -237,11 +237,9 @@ to cycle-jachere
 
 
   MAJ-fertilite
+  updatePlots
 
-
-update-patchs-par-cuisine-plot
-
-calcul-bilan
+  calcul-bilan
 
   tick
 
@@ -320,38 +318,6 @@ to MAJ-fertilite
 
 end
 
-
-to update-patchs-par-cuisine-plot
-  set-current-plot "patchs par cuisine"
-  clear-plot
-
-
-
-
-;  foreach [ parcelle-id ] of patches with [ parcelle-id != 0] [
- ;   x -> count patches with [
-  ;]
-
-  let counts table:counts [ parcelle-id ] of patches with [ parcelle-id != 0]
-
-  let ids sort table:keys counts
-
-
-  let n length ids
-  set-plot-x-range 0 n
-  let step 0.05 ; tweak this to leave no gaps
-  (foreach ids range n [ [s i] ->
-    let y table:get counts s
-    let c hsb (i * 360 / n) 50 75
-    ;;create-temporary-plot-pen s
-    set-plot-pen-mode 1 ; bar mode
-   ;; set-plot-pen-color c
-    foreach (range 0 y step) [ _y -> plotxy i _y ]
-    set-plot-pen-color black
-    plotxy i y
-    ;;set-plot-pen-color c ; to get the right color in the legend
-  ])
-end
 
 
 
@@ -446,8 +412,6 @@ to calcul-bilan
 
 
 end
-
-
 
 @#$#@#$#@
 GRAPHICS-WINDOW

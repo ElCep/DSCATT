@@ -1,10 +1,10 @@
 ;; -22 quand pas de fumier  (dire d'acteur)
 ;; animaux qui mange quand le champs qui sont dans la jachère font perdre de la récole
 
-to update-culture
+to update-
   let patches-cultiv patches with[proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
   ask patches-cultiv with[cycle != 3][
-    ;; consomer de la MO 
+    ;; consomer de la MO  --> fertilite
   ]  
   
 end
