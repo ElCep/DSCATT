@@ -1,16 +1,24 @@
+extensions [table]
+
 breed [cuisines cuisine]
 breed [couverts couvert]
 breed [betails betail]
 cuisines-own [ taille domaine besoin bande-mil bande-arachide bande-jachere famille ]
-patches-own [ zone couvert-type  proprietaire fertilite cycle ]
+patches-own [ zone couvert-type  proprietaire fertilite cycle  parcelle-id]
 globals [case-offset taille-bande cycle-jachere-courante
   fumier-par-tete
   COS-champ-case-moy  COS-champ-case-sd
   COS-champ-brousse-moy COS-champ-brousse-sd
   surface-de-patch
  betail-par-ha
+  kg-mil-par-ha
+  kg-mil-par-patch
 troupeau
-conso-carbone-culture]
+conso-carbone-culture
+spl-champ-brousse-par-cuisine
+spl-champ-case-par-cuisine
+kg-nourriture-par-pers-jour
+]
 
 to setup
   ca
@@ -22,9 +30,18 @@ to setup
   ;; paramètre interne
 
   ;; en m²
-  set surface-de-patch 10
+  set surface-de-patch 100
 
+  ;;
+
+  set spl-champ-brousse-par-cuisine 10
+  set spl-champ-case-par-cuisine 30
+
+
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; paramètres calibrés depuis les données
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; fumier en kgs par tete par an
   set fumier-par-tete 250
@@ -35,10 +52,26 @@ to setup
   set COS-champ-brousse-moy 0.84
   set COS-champ-brousse-sd  0.06
 
-  set conso-carbone-culture 0.5
-
   ;; en tete par hectare
   set betail-par-ha 1
+
+
+  ;; paramètres libres pour modèle à l'équilibre
+  set conso-carbone-culture 0.05
+
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; paramètres calibrés depuis les acteurs
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+  set kg-mil-par-ha 600
+  set kg-mil-par-patch (kg-mil-par-ha *  (surface-de-patch / 10000))
+  set kg-nourriture-par-pers-jour 0.75
+
+
+
+
 
 
 
@@ -74,7 +107,7 @@ to setup
 
 
 
- ask n-of 2 patches with [zone = "case" and pxcor < 25 and pycor < 25]  [
+ ask n-of 20 patches with [zone = "case" and pxcor <= 25 and pycor <= 25]  [
      set proprietaire "zone cuisine"
     sprout-cuisines 1 [
       set taille  10
@@ -114,20 +147,39 @@ end
 to partition-init
 ask cuisines [
     foreach [ "J1" "J2" "J3"][
-      x -> ask n-of (random 40 + 1) patches with [ zone = x]
+      x -> ask n-of (random spl-champ-brousse-par-cuisine + 1) patches with [ zone = x and proprietaire != "bordures"]
       [
         set pcolor [color] of myself
         set proprietaire myself
+       sprout 1 [
+          ask patch-here [ set parcelle-id [who] of myself]
+          die
+        ]
       ]
     ];; foreach
 
+
+
     ;; champ de case hors des maisons
-    ask n-of (random 8 + 1) patches with [zone = "case" and pxcor > 25 and pycor > 25]
+    ask n-of (random spl-champ-case-par-cuisine + 1) patches with [zone = "case" and proprietaire != "bordures" and  (pxcor > 25 and pycor < 25) or (pxcor < 25 and pycor > 25) or (pxcor > 25 and pycor > 25) ]
     [
       set pcolor [color] of myself
       set proprietaire myself
+      sprout 1
+      [
+          ask patch-here [ set parcelle-id [who] of myself]
+        die
+      ]
+
     ]
+
+
+
   ]
+
+
+
+
 end ;; partition init
 
 to partition-iteration
@@ -139,6 +191,7 @@ to partition-iteration
         [
           set pcolor [pcolor] of myself
           set proprietaire [proprietaire] of myself
+          set parcelle-id [parcelle-id] of myself
         ]
       ]
   ];; foreach
@@ -148,6 +201,7 @@ to partition-iteration
   [
     partition-iteration
   ]
+
 end ;; partition iteration
 
 
@@ -175,30 +229,14 @@ to cycle-jachere
 
   MAJ-fertilite
 
+
+update-patchs-par-cuisine-plot
+
+
   tick
-end
 
 
-to dessin-couvert
 
-
-  ask patches with [couvert-type = "mil"]
-  [
-    ask couverts-here [die]
-    sprout-couverts 1 [set shape "plant"  set color 65 set size random 3]
-  ]
-
-ask patches with [couvert-type = "arachide"]
-  [
-    ask couverts-here [die]
-    sprout-couverts 1 [set shape "bug"  set color 23 set size random 3]
-  ]
-
-ask patches with [couvert-type = "jachere"]
-  [
-    ask couverts-here [die]
-    sprout-couverts 1 [set shape "square"  set color 45 ]
-  ]
 
 end
 
@@ -235,7 +273,7 @@ to init-fertilite
   ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone = "case"]
   [
 
-    ;; unité : kg de matiere organique, un patch fait 10m²
+    ;; unité : kg de matiere organique,
     set fertilite surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
 
 
@@ -245,7 +283,7 @@ to init-fertilite
 
   ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
   [
-       ;; unité : kg de matiere organique, un patch fait 10m²
+       ;; unité : kg de matiere organique, u
     set fertilite surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
 
    ]
@@ -257,17 +295,54 @@ to MAJ-fertilite
 
   ;; fumure dans les champs de brousse
   ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ][
-    set fertilite fertilite + ((troupeau * fumier-par-tete) / nb-patches-Jach) * surface-de-patch
+    set fertilite fertilite + ((troupeau * fumier-par-tete) / nb-patches-Jach)
     ]
+
+  ;;show word "fumure" ((troupeau * fumier-par-tete) / nb-patches-Jach)
   ;; culture
 
   ask patches with [cycle < 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case"][
-      set fertilite fertilite - (surface-de-patch *  conso-carbone-culture)
+      set fertilite fertilite -  (surface-de-patch * conso-carbone-culture)
   ]
 
+  ;;show word "culture" (surface-de-patch *  conso-carbone-culture)
 
 
 end
+
+
+to update-patchs-par-cuisine-plot
+  set-current-plot "patchs par cuisine"
+  clear-plot
+
+
+
+
+;  foreach [ parcelle-id ] of patches with [ parcelle-id != 0] [
+ ;   x -> count patches with [
+  ;]
+
+  let counts table:counts [ parcelle-id ] of patches with [ parcelle-id != 0]
+
+  let ids sort table:keys counts
+
+
+  let n length ids
+  set-plot-x-range 0 n
+  let step 0.05 ; tweak this to leave no gaps
+  (foreach ids range n [ [s i] ->
+    let y table:get counts s
+    let c hsb (i * 360 / n) 50 75
+    ;;create-temporary-plot-pen s
+    set-plot-pen-mode 1 ; bar mode
+   ;; set-plot-pen-color c
+    foreach (range 0 y step) [ _y -> plotxy i _y ]
+    set-plot-pen-color black
+    plotxy i y
+    ;;set-plot-pen-color c ; to get the right color in the legend
+  ])
+end
+
 
 
 
@@ -317,13 +392,54 @@ to pousse-du-couvert
 end
 
 
-to-report calcul-besoin-mil [my-taille ]
-  ;; 1 personne consomme 66 kgs de mil par an
-  ;; 1 an de mil pour une cuisine = taille * 66
-  let quantite-mil my-taille * 66
-  report quantite-mil
+
+to dessin-couvert
+
+
+  ask patches with [couvert-type = "mil"]
+  [
+    ask couverts-here [die]
+    sprout-couverts 1 [set shape "plant"  set color 65 set size random 3]
+  ]
+
+ask patches with [couvert-type = "arachide"]
+  [
+    ask couverts-here [die]
+    sprout-couverts 1 [set shape "bug"  set color 23 set size random 3]
+  ]
+
+ask patches with [couvert-type = "jachere"]
+  [
+    ask couverts-here [die]
+    sprout-couverts 1 [set shape "square"  set color 45 ]
+  ]
 
 end
+
+
+
+
+to-report calcul-besoin-nourriture [my-taille ]
+   report   my-taille * kg-nourriture-par-pers-jour * 365
+ end
+
+to-report calcul-besoin-patches
+
+  ask cuisines [
+
+    let besoin-nourriture calcul-besoin-nourriture  [taille] of myself
+
+    let nb-patch-dispo count patches with [cycle = 1 or cycle = 2 and proprietaire = myself]
+
+
+
+  ]
+
+
+end
+
+
+
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -449,12 +565,40 @@ false
 PENS
 "default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches"
 
+MONITOR
+772
+388
+844
+433
+NIL
+troupeau
+17
+1
+11
+
+BUTTON
+901
+395
+1086
+428
+incremente troupeau
+set troupeau troupeau + 1
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
 PLOT
-986
-10
-1186
-160
-plot 1
+1066
+214
+1266
+364
+patchs par cuisine
 NIL
 NIL
 0.0
@@ -465,7 +609,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 1 -16777216 true "" "histogram [fertilite] of patches with [proprietaire != \"bordures\" and proprietaire != \"zone case\" ]"
+"default" 1.0 0 -16777216 true "" ""
 
 @#$#@#$#@
 ## WHAT IS IT?

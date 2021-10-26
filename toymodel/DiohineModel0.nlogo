@@ -35,7 +35,7 @@ to setup
   set COS-champ-brousse-moy 0.84
   set COS-champ-brousse-sd  0.06
 
-  set conso-carbone-culture 0.5
+  set conso-carbone-culture 0.05
 
   ;; en tete par hectare
   set betail-par-ha 1
@@ -257,13 +257,18 @@ to MAJ-fertilite
 
   ;; fumure dans les champs de brousse
   ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ][
-    set fertilite fertilite + ((troupeau * fumier-par-tete) / nb-patches-Jach) * surface-de-patch
+    set fertilite fertilite + ((troupeau * fumier-par-tete) / nb-patches-Jach)
     ]
+  show word "fumure" (((troupeau * fumier-par-tete) / nb-patches-Jach))
+
+
   ;; culture
 
   ask patches with [cycle < 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case"][
       set fertilite fertilite - (surface-de-patch *  conso-carbone-culture)
   ]
+
+  show word "culture" (surface-de-patch *  conso-carbone-culture)
 
 
 
