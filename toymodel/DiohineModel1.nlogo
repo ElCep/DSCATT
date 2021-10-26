@@ -3,7 +3,7 @@ extensions [table]
 breed [cuisines cuisine]
 breed [couverts couvert]
 breed [betails betail]
-cuisines-own [ taille domaine besoin bande-mil bande-arachide bande-jachere famille ]
+cuisines-own [ taille  famille  besoin-nourriture nb-patch-dispo nourriture-autosuffisante bilan-nourriture]
 patches-own [ zone couvert-type  proprietaire fertilite cycle  parcelle-id]
 globals [case-offset taille-bande cycle-jachere-courante
   fumier-par-tete
@@ -13,7 +13,11 @@ globals [case-offset taille-bande cycle-jachere-courante
  betail-par-ha
   kg-mil-par-ha
   kg-mil-par-patch
+  kg-arachide-par-ha
+  kg-arachide-par-patch
+
 troupeau
+ transhumants
 conso-carbone-culture
 spl-champ-brousse-par-cuisine
 spl-champ-case-par-cuisine
@@ -67,6 +71,10 @@ to setup
 
   set kg-mil-par-ha 600
   set kg-mil-par-patch (kg-mil-par-ha *  (surface-de-patch / 10000))
+  set kg-arachide-par-ha 400
+  set kg-arachide-par-patch (kg-arachide-par-ha *  (surface-de-patch / 10000))
+
+
   set kg-nourriture-par-pers-jour 0.75
 
 
@@ -107,7 +115,7 @@ to setup
 
 
 
- ask n-of 20 patches with [zone = "case" and pxcor <= 25 and pycor <= 25]  [
+ ask n-of 10 patches with [zone = "case" and pxcor <= 25 and pycor <= 25]  [
      set proprietaire "zone cuisine"
     sprout-cuisines 1 [
       set taille  10
@@ -140,8 +148,9 @@ to setup
   set troupeau round (((surface-de-patch * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"]) / 10000 ) * betail-par-ha) + 1
 
 
-  ;;display
-end
+  calcul-bilan
+
+end ;; setup
 
 
 to partition-init
@@ -161,7 +170,7 @@ ask cuisines [
 
 
     ;; champ de case hors des maisons
-    ask n-of (random spl-champ-case-par-cuisine + 1) patches with [zone = "case" and proprietaire != "bordures" and  (pxcor > 25 and pycor < 25) or (pxcor < 25 and pycor > 25) or (pxcor > 25 and pycor > 25) ]
+    ask n-of (random spl-champ-case-par-cuisine + 1) patches with [zone = "case" and proprietaire != "bordures" and  proprietaire != "zone cuisine"]
     [
       set pcolor [color] of myself
       set proprietaire myself
@@ -232,6 +241,7 @@ to cycle-jachere
 
 update-patchs-par-cuisine-plot
 
+calcul-bilan
 
   tick
 
@@ -423,16 +433,15 @@ to-report calcul-besoin-nourriture [my-taille ]
    report   my-taille * kg-nourriture-par-pers-jour * 365
  end
 
-to-report calcul-besoin-patches
+to calcul-bilan
 
   ask cuisines [
 
-    let besoin-nourriture calcul-besoin-nourriture  [taille] of myself
+    set besoin-nourriture calcul-besoin-nourriture  [taille] of self
 
-    let nb-patch-dispo count patches with [cycle = 1 or cycle = 2 and proprietaire = myself]
-
-
-
+    set nb-patch-dispo count patches with [(cycle = 1 or cycle = 2 or zone = "case" ) and proprietaire = myself]
+    set nourriture-autosuffisante (nb-patch-dispo * surface-de-patch  /  10000) * kg-cereale-par-ha
+    set bilan-nourriture nourriture-autosuffisante - besoin-nourriture
   ]
 
 
@@ -492,7 +501,7 @@ BUTTON
 194
 NIL
 cycle-jachere
-T
+NIL
 1
 T
 OBSERVER
@@ -537,10 +546,10 @@ NIL
 1
 
 MONITOR
-771
-125
-872
-170
+1009
+434
+1110
+479
 fertilite totale
 sum [fertilite] of patches
 1
@@ -548,10 +557,10 @@ sum [fertilite] of patches
 11
 
 PLOT
-814
-208
-1014
-358
+865
+240
+1065
+390
 fertilité globale 
 NIL
 NIL
@@ -566,10 +575,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches"
 
 MONITOR
-772
-388
-844
+927
 433
+999
+478
 NIL
 troupeau
 17
@@ -610,6 +619,98 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" ""
+
+SLIDER
+873
+17
+1051
+50
+ratio-arachide-riz
+ratio-arachide-riz
+0
+2
+0.9
+.1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+1
+273
+186
+306
+kg-cereale-par-ha
+kg-cereale-par-ha
+100
+800
+410.0
+10
+1
+NIL
+HORIZONTAL
+
+PLOT
+938
+52
+1138
+202
+bilan nourriture global
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot sum [bilan-nourriture]  of cuisines"
+
+MONITOR
+756
+161
+866
+206
+besoins tot
+sum [besoin-nourriture] of cuisines
+1
+1
+11
+
+MONITOR
+752
+112
+927
+157
+surface tot. dispo
+sum [nb-patch-dispo] of cuisines
+0
+1
+11
+
+MONITOR
+745
+213
+854
+258
+production tot.
+sum [nourriture-autosuffisante] of cuisines
+0
+1
+11
+
+MONITOR
+758
+285
+851
+330
+bilan moyen
+mean [bilan-nourriture] of cuisines
+1
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
