@@ -582,7 +582,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" ""
+"default" 1.0 1 -16777216 true "" ""
 
 SLIDER
 873
