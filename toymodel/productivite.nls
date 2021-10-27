@@ -1,10 +1,59 @@
 ;; -22 quand pas de fumier  (dire d'acteur)
 ;; animaux qui mange quand le champs qui sont dans la jachère font perdre de la récole
 
-to update-
-  let patches-cultiv patches with[proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
-  ask patches-cultiv with[cycle != 3][
-    ;; consomer de la MO  --> fertilite
-  ]  
+
+to ordre-parcelles
+;; chaque cuisine doit mettre en culture ses parcelles pour nourrir ses membre.
+;; il faut donc avoir calculer le besoin de chaque cuisine
+;; 1 trouver les parcelles les plus proches, c.a.d. reordonnancer les id des parcelles par la distance
+  
+  ask cuisines [
+    let myParcelles [parcelle-id] of patches with [proprietaire = myself] ; liste des ID de toutes mes parcelles
+    ;; pour chaque parcelle je récupère la distance minimal
+    let patchDistance []
+    foreach myParcelles [
+      x -> let minDist min-one-of patches with[parcelle-id = x][distance myself] ;renvoie un patches qui a la plus petite distance
+      ask minDist [
+       set myDistFromCuisine distance myself 
+      ]
+    ]
+    
+    let mySmallPatches patches with[proprietaire = myself and myDistFromCuisine != 0]
+    let myParcellesSorted sort-by [[p1 p2]-> distance p1 < distance p2 ] mySmallPatches
+    set idmyParcellesSorted []
+    foreach myParcellesSorted [
+      x -> let _a [parcelle-id] of x
+      set  idmyParcellesSorted lput _a idmyParcellesSorted
+    ]
+    ]
+end
+
+to mise-en-culture
+; recupérer les surface des parcelles 
+; mettre en culture
+; mettre a jour mon besoin et mettre en culture temps que le les besoin ne sont pas 
+  ask couverts [die]
+  ask cuisines [
+    let actualBesoin besoin-nourriture
+    foreach  idmyParcellesSorted [
+      x -> let myactualParcelle patches with[parcelle-id = x and cycle < 3  ]
+      ifelse (actualBesoin > 0) [ ; temps que je n'ai pas assouvie mes besoin j'itère sur mes parcelles
+        let surface-parcelle count myactualParcelle
+        let besoin-assouvi-parcelle (surface-parcelle * surface-de-patch  /  10000) * kg-cereale-par-ha
+        set actualBesoin actualBesoin - besoin-assouvi-parcelle
+        ask myactualParcelle [
+          sprout-couverts 1 [
+           set shape "circle"
+            set color ([pcolor] of myself) - 5 
+          ]
+        ]
+      ][
+       set tropParcelles? TRUE 
+      ]
+    ]
+  ]
   
 end
+
+
+
