@@ -1,0 +1,13 @@
+
+
+to demographie
+  ;; taux de croissance du systeme
+  let taux 0.02
+  
+  ask cuisines [
+    let entrants sum(map [ t -> ifelse-value (random-float 1) < t [1] [0] ] (n-values taille [taux]))
+    set taille taille + entrants
+  ]
+end
+
+
