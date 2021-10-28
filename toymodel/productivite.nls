@@ -35,20 +35,30 @@ to mise-en-culture
   ask couverts [die]
   ask cuisines [
     let actualBesoin besoin-nourriture
+    let i length idmyParcellesSorted
+    show word "nombre de parcelle " i 
+    let iter 1
     foreach  idmyParcellesSorted [
       x -> let myactualParcelle patches with[parcelle-id = x and cycle < 3  ]
       ifelse (actualBesoin > 0) [ ; temps que je n'ai pas assouvie mes besoin j'itère sur mes parcelles
-        let surface-parcelle count myactualParcelle
-        let besoin-assouvi-parcelle (surface-parcelle * surface-de-patch  /  10000) * kg-cereale-par-ha
-        set actualBesoin actualBesoin - besoin-assouvi-parcelle
-        ask myactualParcelle [
-          sprout-couverts 1 [
-           set shape "circle"
-            set color ([pcolor] of myself) - 5 
+          let surface-parcelle count myactualParcelle
+          let besoin-assouvi-parcelle (surface-parcelle * surface-de-patch  /  10000) * kg-cereale-par-ha
+          set actualBesoin actualBesoin - besoin-assouvi-parcelle
+          ask myactualParcelle [
+            sprout-couverts 1 [
+              set shape "circle"
+              set color ([pcolor] of myself) - 5 
+            ]
           ]
+          set iter iter + 1
+        if (i = iter)[
+          set tropParcelles? FALSE
+          show "pas assez de parcelle"
         ]
+        
       ][
-       set tropParcelles? TRUE 
+       set tropParcelles? TRUE
+        show "tranquille"
       ]
     ]
   ]
