@@ -3,11 +3,13 @@
 to demographie[taux]
   ask cuisines [
     ifelse bilan-nourriture > 0 [
-      let entrants sum(map [ t -> ifelse-value (random-float 1) < t [1] [0] ] (n-values taille [taux]))
-      set taille taille + entrants
+      let entrants_ sum(map [ t -> ifelse-value (random-float 1) < t [1] [0] ] (n-values taille [taux]))
+      set taille taille + entrants_
+      set entrants entrants + entrants_
     ] [
-      let sortants abs(bilan-nourriture) / (kg-nourriture-par-pers-jour * 365)
-      set taille max list (taille - sortants) 0
+      let sortants_ abs(bilan-nourriture) / (kg-nourriture-par-pers-jour * 365)
+      set taille max list (taille - sortants_) 0
+      set sortants sortants + sortants_
     ]
   ]
 end
