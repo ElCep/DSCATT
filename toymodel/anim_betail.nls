@@ -1,0 +1,20 @@
+to random-walk-betail
+  ask betails [
+
+    ifelse can-move? 1
+    [
+      ifelse [proprietaire] of patch-ahead 1  != "bordures"
+      [
+        fd 1
+        set heading random 360
+      ]
+      [
+        rt 180
+        fd 1
+      ]
+
+    ]
+    [ rt 180 fd 1 ]
+  ]
+  wait 0.1
+end

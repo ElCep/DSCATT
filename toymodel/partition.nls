@@ -1,0 +1,157 @@
+
+to partition-init
+ask cuisines [
+    foreach [ "J1" "J2" "J3"][
+      x -> ask n-of (random spl-champ-brousse-par-cuisine + 1) patches with [ zone = x and proprietaire != "bordures"]
+      [
+        set pcolor [color] of myself
+        set proprietaire myself
+       sprout 1 [
+          ask patch-here [ set parcelle-id [who] of myself]
+          die
+        ]
+      ]
+    ];; foreach
+
+
+
+    ;; champ de case hors des maisons
+    ask n-of (random spl-champ-case-par-cuisine + 1) patches with [zone = "case" and proprietaire != "bordures" and  proprietaire != "zone cuisine"]
+    [
+      set pcolor [color] of myself
+      set proprietaire myself
+      sprout 1
+      [
+          ask patch-here [ set parcelle-id [who] of myself]
+        die
+      ]
+
+    ]
+
+  ]
+end ;; partition init
+
+to partition-iteration
+  ask cuisines [
+  foreach [ "J1" "J2" "J3" "case"][
+      x -> ask patches with [ zone = x and proprietaire =  myself]
+      [
+        ask neighbors with [zone = x and  proprietaire = -99  and ( pxcor > 25 or pycor > 25)]
+        [
+          set pcolor [pcolor] of myself
+          set proprietaire [proprietaire] of myself
+          set parcelle-id [parcelle-id] of myself
+        ]
+      ]
+  ];; foreach
+  ]
+
+  if any? patches with [proprietaire = -99]
+  [
+    partition-iteration
+  ]
+
+end ;; partition iteration
+
+
+
+
+to partition-iteration-to-gini
+  let gini-souhait 0.5
+  let gini-current calcul-gini
+
+  ask cuisines [
+    set gini-current calcul-gini
+    ask patches with [ proprietaire =  myself]
+      [
+
+        let to-revert patch-set neighbors with [  proprietaire = -99  and proprietaire != "zone cuisine"] 
+        ;; modif 
+       ;;ask neighbors with [  proprietaire = -99  and proprietaire != "zone cuisine"]
+        ask to-revert
+        [
+          set pcolor [pcolor] of myself
+          set proprietaire [proprietaire] of myself
+          set parcelle-id [parcelle-id] of myself
+        ]
+        
+        let gini-apres calcul-gini
+         let delta1 abs ( gini-current - gini-souhait)
+        let  delta2 abs (gini-apres - gini-souhait)
+        ;;si ça n'améliore pas le gini on revient en arrière
+        
+        
+        ifelse delta1 < delta2 and  ( random-float 1 >  exp  (- abs (delta1 - delta2) / temperature)   )
+        [
+      ;; defaire
+       ;;ask neighbors with [  proprietaire = myself and proprietaire != "zone cuisine" ]
+        ask to-revert [
+            set pcolor black
+            set proprietaire -99
+            set parcelle-id 0
+            ]
+          
+        ] ;; else
+        [
+          set gini-current gini-apres
+        ]
+      ]
+
+  ]
+
+  if any? patches with [proprietaire = -99]
+  [
+    partition-iteration-to-gini
+  ]
+
+end ;; partition iteration
+
+
+
+to equilibrage-vers-gini 
+  
+  let gini-souhait 0.3
+  let gini-current calcul-gini
+  let batch 10
+  
+  ask n-of batch patches with  [ 
+    proprietaire != "bordures" and proprietaire != "zone cuisine" and
+   [proprietaire] of one-of neighbors   !=  proprietaire and
+    not any?  neighbors with [proprietaire = "bordures"] and 
+    not any? neighbors with [proprietaire = "zone cuisine"] 
+  ]
+    
+  [
+  
+    let voisin one-of neighbors with [ proprietaire !=  [proprietaire] of myself]
+   
+    if voisin != nobody
+    [
+    ;; 
+    let pcolor-voisin [pcolor] of voisin
+    let proprietaire-voisin [proprietaire] of voisin 
+    let parcelle-id-voisin [parcelle-id] of voisin
+    
+    ;;échange des deux patches 
+    
+    ;; le patch voisin passe dans la parcelle de self
+    ask voisin [
+      set pcolor [pcolor] of myself
+      set proprietaire [proprietaire] of myself
+      set parcelle-id [parcelle-id] of myself 
+    ]
+    ;; self devient le patch voisin
+      set pcolor [pcolor] of voisin
+      set proprietaire [proprietaire] of voisin
+      set parcelle-id [parcelle-id] of voisin
+    ] ;; if voisin != nobody
+    
+    let gini-apres calcul-gini
+    let delta1 abs ( gini-current - gini-souhait)
+    let  delta2 abs (gini-apres - gini-souhait)
+        ;;si ça n'améliore pas le gini on revient en arrière
+        
+        
+ ]
+ 
+end

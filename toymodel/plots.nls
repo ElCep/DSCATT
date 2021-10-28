@@ -2,12 +2,32 @@ to updatePlots
   
   let l_surf_parcelle []
   let dada [parcelle-id] of patches
-  
+  let propri [[who] of proprietaire] of patches with [proprietaire != "bordures" and proprietaire != "zone cuisine"]
 
-  set-current-plot "patchs par cuisine"
+
+  
+  set-current-plot "patchs par parcelle"
   ;;pour réaliser un histogram on a besoin d'une liste
-  set-plot-x-range 0 ( (max dada) + 5)
+  set-plot-x-range 1 ( (max dada) + 5)
   set-histogram-num-bars 30
   histogram dada
   
+  set-current-plot "patchs par cuisine"
+  ;;pour réaliser un histogram on a besoin d'une liste
+  set-plot-x-range 0 ( (max propri) )
+  set-histogram-num-bars count cuisines
+  histogram propri 
+  
+  
 end
+
+to-report calcul-gini
+  
+let surfaces [] ; pour stocker les surfaces
+ask cuisines [
+  set surfaces lput count patches with [proprietaire != "bordures" and proprietaire != "zone cuisine" and proprietaire = myself] surfaces 
+  ]
+   
+  report gini.jar:gini surfaces
+end
+

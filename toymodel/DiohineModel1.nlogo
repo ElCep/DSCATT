@@ -1,4 +1,6 @@
-__includes [ "plots.nls" "productivite.nls"]
+__includes [ "plots.nls" "productivite.nls" "partition.nls"]
+
+extensions [gini.jar]
 
 breed [cuisines cuisine]
 breed [couverts couvert]
@@ -38,8 +40,8 @@ to setup
 
   ;;
 
-  set spl-champ-brousse-par-cuisine 10
-  set spl-champ-case-par-cuisine 30
+  set spl-champ-brousse-par-cuisine 5
+  set spl-champ-case-par-cuisine 5
 
 
 
@@ -140,7 +142,8 @@ to setup
   ]
 
   partition-init
-  partition-iteration
+ ;; partition-iteration-to-gini
+partition-iteration
 
   init-fertilite
 
@@ -153,65 +156,6 @@ to setup
 end ;; setup
 
 
-to partition-init
-ask cuisines [
-    foreach [ "J1" "J2" "J3"][
-      x -> ask n-of (random spl-champ-brousse-par-cuisine + 1) patches with [ zone = x and proprietaire != "bordures"]
-      [
-        set pcolor [color] of myself
-        set proprietaire myself
-       sprout 1 [
-          ask patch-here [ set parcelle-id [who] of myself]
-          die
-        ]
-      ]
-    ];; foreach
-
-
-
-    ;; champ de case hors des maisons
-    ask n-of (random spl-champ-case-par-cuisine + 1) patches with [zone = "case" and proprietaire != "bordures" and  proprietaire != "zone cuisine"]
-    [
-      set pcolor [color] of myself
-      set proprietaire myself
-      sprout 1
-      [
-          ask patch-here [ set parcelle-id [who] of myself]
-        die
-      ]
-
-    ]
-
-
-
-  ]
-
-
-
-
-end ;; partition init
-
-to partition-iteration
-  ask cuisines [
-  foreach [ "J1" "J2" "J3" "case"][
-      x -> ask patches with [ zone = x and proprietaire =  myself]
-      [
-        ask neighbors with [zone = x and  proprietaire = -99  and ( pxcor > 25 or pycor > 25)]
-        [
-          set pcolor [pcolor] of myself
-          set proprietaire [proprietaire] of myself
-          set parcelle-id [parcelle-id] of myself
-        ]
-      ]
-  ];; foreach
-  ]
-
-  if any? patches with [proprietaire = -99]
-  [
-    partition-iteration
-  ]
-
-end ;; partition iteration
 
 
 to cycle-jachere
@@ -240,6 +184,13 @@ to cycle-jachere
   updatePlots
 
   calcul-bilan
+
+  ask cuisine 1 [show word "besoin " besoin-nourriture]
+  ask cuisine 1 [show word "terre disponible  " nb-patch-dispo]
+  ask cuisine 1 [show word "nourriture produite  " nourriture-autosuffisante]
+  ask cuisine 1 [show word "bilan " bilan-nourriture]
+
+
 
   tick
 
@@ -412,7 +363,6 @@ to calcul-bilan
 
 
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -510,10 +460,10 @@ NIL
 1
 
 MONITOR
-1009
-434
-1110
-479
+108
+410
+209
+455
 fertilite totale
 sum [fertilite] of patches
 1
@@ -539,10 +489,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches"
 
 MONITOR
-927
-433
-999
-478
+26
+409
+98
+454
 NIL
 troupeau
 17
@@ -550,10 +500,10 @@ troupeau
 11
 
 BUTTON
-901
-395
-1086
-428
+0
+371
+185
+404
 incremente troupeau
 set troupeau troupeau + 1
 NIL
@@ -571,7 +521,7 @@ PLOT
 214
 1266
 364
-patchs par cuisine
+patchs par parcelle
 NIL
 NIL
 0.0
@@ -675,6 +625,85 @@ mean [bilan-nourriture] of cuisines
 1
 1
 11
+
+PLOT
+737
+385
+937
+535
+bilan cuisine 1
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"besoin 1" 1.0 0 -16777216 true "" "plot [bilan-nourriture] of cuisine 1"
+
+PLOT
+1064
+404
+1264
+554
+patchs par cuisine
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -16777216 true "" ""
+
+MONITOR
+972
+466
+1050
+511
+NIL
+calcul-gini
+4
+1
+11
+
+SLIDER
+33
+332
+205
+365
+temperature
+temperature
+0.0000001
+0.5
+0.0290001
+0.001
+1
+NIL
+HORIZONTAL
+
+BUTTON
+21
+212
+207
+245
+NIL
+equilibrage-vers-gini2
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
