@@ -1,4 +1,4 @@
-__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" ]
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" ]
 
 extensions [gini.jar]
 
@@ -166,7 +166,9 @@ end ;; setup
 
 
 
-to cycle-jachere
+to go
+  ordre-parcelles
+  mise-en-culture
 
   ;; GUI cosmétique
   ask betails [die]
@@ -330,7 +332,7 @@ BUTTON
 147
 194
 NIL
-cycle-jachere
+go
 NIL
 1
 T
