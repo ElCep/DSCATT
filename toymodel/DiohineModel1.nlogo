@@ -1,12 +1,20 @@
-__includes [ "plots.nls" "productivite.nls" "partition.nls"]
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" ]
 
 extensions [gini.jar]
 
 breed [cuisines cuisine]
 breed [couverts couvert]
 breed [betails betail]
-cuisines-own [ taille  famille  besoin-nourriture nb-patch-dispo nourriture-autosuffisante bilan-nourriture]
-patches-own [ zone couvert-type  proprietaire fertilite cycle  parcelle-id]
+cuisines-own [ taille  famille
+               besoin-nourriture
+               nb-patch-dispo
+               nourriture-autosuffisante
+               bilan-nourriture
+
+               idmyParcellesSorted
+               tropParcelles?]
+patches-own [ zone couvert-type  proprietaire fertilite cycle  parcelle-id myDistFromCuisine]
+
 globals [case-offset taille-bande cycle-jachere-courante
   fumier-par-tete
   COS-champ-case-moy  COS-champ-case-sd
@@ -201,26 +209,6 @@ end
 
 
 
-to random-walk-betail
-  ask betails [
-
-    ifelse can-move? 1
-    [
-      ifelse [proprietaire] of patch-ahead 1  != "bordures"
-      [
-        fd 1
-        set heading random 360
-      ]
-      [
-        rt 180
-        fd 1
-      ]
-
-    ]
-    [ rt 180 fd 1 ]
-  ]
-  wait 0.1
-end
 
 
 
@@ -270,78 +258,6 @@ to MAJ-fertilite
 end
 
 
-
-
-
-to eclatement
-
-  ask one-of cuisines [
-    hatch 1 [
-
-      set taille  [taille] of myself * 0.5
-      set size taille / 2 + 2
-      set shape "house"
-    ]
-  ]
-end
-
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; VIEUX CODE
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-to pousse-du-couvert
-  ask patches with [couvert-type = "mil" and cycle = false]
- [
-    set couvert-type "arachide"
-  ;;  ask couvert-here [set shape "bug"  set color 23 set size random 5]
-    set cycle true
- ]
-  ask patches with [couvert-type = "arachide" and cycle = false]
-    [
-    set couvert-type "jachere"
-   ;; ask couvert-here [set shape "square"  set color 45 ]
-      set cycle true
-  ]
-  ask patches with [couvert-type = "jachere" and cycle = false]
- [
-    set couvert-type "mil"
-   ;; ask couvert-here [set shape "plant"  set color 65 set size random 5]
-    set cycle true
-  ]
-
-  ask patches [set cycle  false]
-
-  dessin-couvert
-end
-
-
-
-to dessin-couvert
-
-
-  ask patches with [couvert-type = "mil"]
-  [
-    ask couverts-here [die]
-    sprout-couverts 1 [set shape "plant"  set color 65 set size random 3]
-  ]
-
-ask patches with [couvert-type = "arachide"]
-  [
-    ask couverts-here [die]
-    sprout-couverts 1 [set shape "bug"  set color 23 set size random 3]
-  ]
-
-ask patches with [couvert-type = "jachere"]
-  [
-    ask couverts-here [die]
-    sprout-couverts 1 [set shape "square"  set color 45 ]
-  ]
-
-end
 
 
 
