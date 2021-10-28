@@ -36,6 +36,10 @@ conso-carbone-culture
 spl-champ-brousse-par-cuisine
 spl-champ-case-par-cuisine
 kg-nourriture-par-pers-jour
+
+
+
+seuil-gini ;; tolérance entre gini souhaité et gini calculé
 ]
 
 to setup
@@ -50,6 +54,8 @@ to setup
   ;; en m²
   set surface-de-patch 100
 
+
+  set seuil-gini 0.01
   ;;
 
   set spl-champ-brousse-par-cuisine 5
@@ -265,6 +271,15 @@ end
 
 
 
+
+to-report calcul-gini
+let surfaces [] ; pour stocker les surfaces
+ask cuisines [
+  set surfaces lput count patches with [proprietaire != "bordures" and proprietaire != "zone cuisine" and proprietaire = myself] surfaces
+  ]
+
+  report gini.jar:gini surfaces
+end
 
 
 
@@ -598,14 +613,14 @@ calcul-gini
 SLIDER
 33
 332
-205
+295
 365
-temperature
-temperature
-0.0000001
-0.5
-0.0290001
-0.001
+gini-parcelles-souhait
+gini-parcelles-souhait
+0.0
+1
+0.1
+0.01
 1
 NIL
 HORIZONTAL
@@ -616,7 +631,7 @@ BUTTON
 198
 116
 NIL
-equilibrage-vers-gini2
+detecter-frontieres
 NIL
 1
 T
@@ -630,11 +645,11 @@ NIL
 BUTTON
 41
 153
-167
+197
 186
 NIL
-diffuse-tache\n
-NIL
+croissance-tache\n
+T
 1
 T
 OBSERVER
@@ -986,7 +1001,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.1
+NetLogo 6.2.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
