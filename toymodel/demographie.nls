@@ -10,7 +10,7 @@ to demographie
       set taille taille + entrants
     ] [
       let sortants abs(bilan-nourriture) / (kg-nourriture-par-pers-jour * 365)
-      set taille max(taille - sortants, 0)
+      set taille max list (taille - sortants) 0
     ]
   ]
 end
