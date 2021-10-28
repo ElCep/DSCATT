@@ -155,3 +155,48 @@ to equilibrage-vers-gini
  ]
  
 end
+
+
+
+to equilibrage-vers-gini2 
+  
+  let gini-souhait 0.3
+  let gini-current calcul-gini
+  let batch 10
+  
+  ask  patches with  [ 
+    proprietaire != "bordures" and proprietaire != "zone cuisine" and
+   ;;[proprietaire] of one-of neighbors4   !=  proprietaire and
+    
+    any?  neighbors with [proprietaire != [proprietaire] of myself] and
+    not any?  neighbors with [proprietaire = "bordures"] and 
+    not any? neighbors with [proprietaire = "zone cuisine"] 
+  ]
+    
+  [
+  
+   set pcolor black     
+        
+ ]
+ 
+end
+
+
+to diffuse-tache
+  
+  let une-parcelle one-of [parcelle-id] of patches
+  
+  ask patches with  [parcelle-id = une-parcelle and 
+    proprietaire != "bordures" and proprietaire != "zone cuisine" and
+   ;;[proprietaire] of one-of neighbors4   !=  proprietaire and
+    
+    any?  neighbors with [proprietaire != [proprietaire] of myself] and
+    not any?  neighbors with [proprietaire = "bordures"] and 
+    not any? neighbors with [proprietaire = "zone cuisine"] 
+  ]
+  [
+      set pcolor white
+  ]
+end
+
+

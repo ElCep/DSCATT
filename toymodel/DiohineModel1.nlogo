@@ -314,10 +314,10 @@ ticks
 30.0
 
 BUTTON
-39
-105
-112
-138
+15
+14
+88
+47
 setup
 setup
 NIL
@@ -331,10 +331,10 @@ NIL
 1
 
 BUTTON
-21
-161
-147
-194
+13
+48
+139
+81
 NIL
 go
 NIL
@@ -611,12 +611,29 @@ NIL
 HORIZONTAL
 
 BUTTON
-21
-212
-207
-245
+12
+83
+198
+116
 NIL
 equilibrage-vers-gini2
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+41
+153
+167
+186
+NIL
+diffuse-tache\n
 NIL
 1
 T
