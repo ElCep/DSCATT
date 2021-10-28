@@ -1,18 +1,22 @@
-__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" ]
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" ]
 
 extensions [gini.jar]
 
 breed [cuisines cuisine]
 breed [couverts couvert]
 breed [betails betail]
-cuisines-own [ taille  famille
-               besoin-nourriture
-               nb-patch-dispo
-               nourriture-autosuffisante
-               bilan-nourriture
+cuisines-own [
+  taille
+  entrants
+  sortants
+  famille
+  besoin-nourriture
+  nb-patch-dispo
+  nourriture-autosuffisante
+  bilan-nourriture
+  idmyParcellesSorted
+  tropParcelles?]
 
-               idmyParcellesSorted
-               tropParcelles?]
 patches-own [ zone couvert-type  proprietaire fertilite cycle  parcelle-id myDistFromCuisine]
 
 globals [case-offset taille-bande cycle-jachere-courante
@@ -965,7 +969,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.0
+NetLogo 6.2.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
