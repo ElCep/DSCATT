@@ -470,7 +470,7 @@ kg-cereale-par-ha
 kg-cereale-par-ha
 100
 800
-360.0
+420.0
 10
 1
 NIL
@@ -624,9 +624,9 @@ SLIDER
 245
 croissance-demographique
 croissance-demographique
--1
-1
-0.36
+0
+1.0
+0.02
 0.01
 1
 NIL
@@ -673,9 +673,9 @@ SLIDER
 malus-fertilite
 malus-fertilite
 0
-0.01
-0.01
 1
+0.15
+0.01
 1
 NIL
 HORIZONTAL
