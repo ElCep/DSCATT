@@ -705,6 +705,23 @@ malus-in-jachere
 NIL
 HORIZONTAL
 
+BUTTON
+88
+14
+151
+47
+NIL
+go
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
 @#$#@#$#@
 ## WHAT IS IT?
 
