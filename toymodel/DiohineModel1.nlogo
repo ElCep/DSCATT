@@ -181,7 +181,7 @@ to setup
   partition-iteration
   etalement-parcelle
 
-  init-fertilite
+  init-fertilite-a-la-parcelle
   ordre-parcelles
 
   ;; troupeau pour mettre à l'équilibre probablement faux
@@ -669,7 +669,7 @@ troupeau
 troupeau
 count cuisines
 200
-130.0
+180.0
 10
 1
 NIL

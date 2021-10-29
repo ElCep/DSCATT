@@ -208,7 +208,7 @@ Avant c'est l'aînesse qui prévalait .
 
 > «Supprimer la jachère sera difficile car il y a toujours les animaux»
 
-De plus : si la jachère disparait, il y aura une épuisement du sol
+De plus : si la jachère disparaît, il y aura une épuisement du sol
 
 C'est un paradoxe car le lessivement du sol par les engrais chimique est mal compris [par les villageois dans leur ensemble] car on ne voit pas les effets délétères à long terme. 
 les acteurs de la session en sont conscients mais pas tous leurs collègues.

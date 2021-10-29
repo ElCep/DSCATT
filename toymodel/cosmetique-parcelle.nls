@@ -1,0 +1,19 @@
+
+to init-fertilite-a-la-parcelle
+ask cuisines [
+     let myParcelles [parcelle-id] of patches with [proprietaire = myself] ; liste des ID de toutes mes parcelles
+     
+    foreach myParcelles [
+      x -> ask patches with[parcelle-id = x][
+      
+      
+      ]    
+    
+  ]
+  
+  
+  
+  
+  
+  
+end
