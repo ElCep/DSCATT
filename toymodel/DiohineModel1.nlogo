@@ -1,6 +1,6 @@
 __includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls"]
 
-extensions [gini.jar profiler fp.jar]
+extensions [gini.jar profiler fp.jar set.jar]
 
 ;; on utilise l'extension fp (fonctionnal programming) https://github.com/NetLogo/FP-Extension
 
@@ -208,8 +208,9 @@ to go
   update-cuisine-size
   update-inti-tick
   ordre-parcelles
+  planif-culture
+  chercher-parcelles
   mise-en-culture
-
   ;; GUI cosmétique
   ask betails [die]
    ask n-of 15 patches with [cycle = 3 and zone != "case" and proprietaire != "bordures"]
@@ -625,7 +626,7 @@ croissance-demographique
 croissance-demographique
 -1
 1
-0.1
+0.36
 0.01
 1
 NIL

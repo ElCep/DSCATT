@@ -35,25 +35,19 @@ end
 
 to MAJ-fertilite
 
-  let nb-patches-Jach count patches with [cycle = 3]
-
+  let nb-patches-Jach count patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and not cultived?  ]
   ;; fumure dans les champs de brousse
-  ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ][
+  ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and not cultived?  ][
     set fertilite fertilite + ((troupeau * COS-par-tete) / nb-patches-Jach)
   ]
 
-  ;;show word "fumure" ((troupeau * fumier-par-tete) / nb-patches-Jach)
-  ;; culture
-  ask patches with [cycle < 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and cultived?][
-    set fertilite fertilite -  (surface-de-patch * conso-carbone-culture)
-  ]
-
-  ;;show word "culture" (surface-de-patch *  conso-carbone-culture)
-
   ask cuisines [
-    foreach idmyParcellesCultive[
-  ;;    x-> ask patches with [parcelle-id = x][]
-    ]
+    foreach idmyParcellesCultive [
+      ;; la fertilite des champs de case est fixe (pour le moment)
+      x -> ask patches with [parcelle-id = x and zone != "case" ][
+            set fertilite  fertilite -  (surface-de-patch * conso-carbone-culture)
+          ]
+    ];; foreach
   ]
 
 end
