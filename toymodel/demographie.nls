@@ -9,7 +9,7 @@ to demographie
       set taille taille + entrants_
       set entrants entrants + entrants_
     ] [
-      let sortants_ abs(bilan-nourriture) / (kg-nourriture-par-pers-jour * 365)
+      let sortants_ ceiling (abs(bilan-nourriture) / (kg-nourriture-par-pers-jour * 365))
       ifelse taille - sortants_ < min-taille-cuisine [
         let cuisine-absorbe one-of other cuisines 
         absorbe-cuisine cuisine-absorbe self

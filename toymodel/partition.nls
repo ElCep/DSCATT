@@ -172,32 +172,25 @@ to etalement-parcelle
   ] ;; 
   
   let gini-apres calcul-gini
-  show gini-apres
   let delta1 abs ( gini-current - gini-parcelles)
   let  delta2 abs (gini-apres - gini-parcelles)
    
   
   ;;si ça n'améliore pas le gini on revient en arrière
   ;; ajout dans la condition pour stochastique si besoin de controle par la temperature : ;:and  ( random-float 1 >  exp  (- abs (delta1 - delta2) / temperature)   )
-   ifelse delta1 < delta2 
-        [
-          show "degradation"
-      ;; defaire
-          ask patch-set to-revert-patch[
-            let idxself (position self to-revert-patch)
-            set pcolor  item  idxself  to-revert-pcolor   
-            set proprietaire  item  idxself  to-revert-proprietaire
-            set parcelle-id  item  idxself  to-revert-parcelle-id
-          ]   
-  
-  ]
-  [
-    
-    
+   if delta1 < delta2 
+   [
+     ;; defaire
+     ask patch-set to-revert-patch[
+       let idxself (position self to-revert-patch)
+       set pcolor  item  idxself  to-revert-pcolor   
+       set proprietaire  item  idxself  to-revert-proprietaire
+       set parcelle-id  item  idxself  to-revert-parcelle-id
+     ]   
   ]
   
   if min (list delta1 delta2) > seuil-gini [
-   etalement-parcelle
+    etalement-parcelle
   ]
    
 end
