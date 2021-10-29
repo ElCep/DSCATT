@@ -160,8 +160,8 @@ to setup
   ]
 
   partition-init
- ;; partition-iteration-to-gini
-partition-iteration
+  partition-iteration
+  etalement-parcelle
 
   init-fertilite
 
@@ -613,13 +613,13 @@ calcul-gini
 SLIDER
 33
 332
-295
+199
 365
-gini-parcelles-souhait
-gini-parcelles-souhait
+gini-parcelles
+gini-parcelles
 0.0
 1
-0.1
+0.31
 0.01
 1
 NIL
@@ -633,23 +633,6 @@ BUTTON
 NIL
 detecter-frontieres
 NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-41
-153
-197
-186
-NIL
-croissance-tache\n
-T
 1
 T
 OBSERVER

@@ -56,56 +56,6 @@ end ;; partition iteration
 
 
 
-to partition-iteration-to-gini
-  let gini-souhait 0.5
-  let gini-current calcul-gini
-
-  ask cuisines [
-    set gini-current calcul-gini
-    ask patches with [ proprietaire =  myself]
-      [
-
-        let to-revert patch-set neighbors with [  proprietaire = -99  and proprietaire != "zone cuisine"] 
-        ;; modif 
-       ;;ask neighbors with [  proprietaire = -99  and proprietaire != "zone cuisine"]
-        ask to-revert
-        [
-          set pcolor [pcolor] of myself
-          set proprietaire [proprietaire] of myself
-          set parcelle-id [parcelle-id] of myself
-        ]
-        
-        let gini-apres calcul-gini
-         let delta1 abs ( gini-current - gini-souhait)
-        let  delta2 abs (gini-apres - gini-souhait)
-        ;;si ça n'améliore pas le gini on revient en arrière
-        
-        
-        ifelse delta1 < delta2 and  ( random-float 1 >  exp  (- abs (delta1 - delta2) / temperature)   )
-        [
-      ;; defaire
-       ;;ask neighbors with [  proprietaire = myself and proprietaire != "zone cuisine" ]
-        ask to-revert [
-            set pcolor black
-            set proprietaire -99
-            set parcelle-id 0
-            ]
-          
-        ] ;; else
-        [
-          set gini-current gini-apres
-        ]
-      ]
-
-  ]
-
-  if any? patches with [proprietaire = -99]
-  [
-    partition-iteration-to-gini
-  ]
-
-end ;; partition iteration
-
 
 
 to equilibrage-vers-gini 
@@ -182,7 +132,7 @@ to detecter-frontieres
 end
 
 
-to croissance-tache
+to etalement-parcelle
   
   
   let to-revert-patch []
@@ -222,12 +172,13 @@ to croissance-tache
   ] ;; 
   
   let gini-apres calcul-gini
-  let delta1 abs ( gini-current - gini-parcelles-souhait)
-  let  delta2 abs (gini-apres - gini-parcelles-souhait)
+  let delta1 abs ( gini-current - gini-parcelles)
+  let  delta2 abs (gini-apres - gini-parcelles)
    
   
   ;;si ça n'améliore pas le gini on revient en arrière
-   ifelse delta1 < delta2 and  ( random-float 1 >  exp  (- abs (delta1 - delta2) / temperature)   )
+  ;; ajout dans la condition pour stochastique si besoin de controle par la temperature : ;:and  ( random-float 1 >  exp  (- abs (delta1 - delta2) / temperature)   )
+   ifelse delta1 < delta2 
         [
           show "degradation"
       ;; defaire
@@ -240,12 +191,14 @@ to croissance-tache
   
   ]
   [
-    show "amelioration"
+    
     
   ]
   
-  
-  
+  if min (list delta1 delta2) > seuil-gini [
+   etalement-parcelle
+  ]
+   
 end
 
 
