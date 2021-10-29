@@ -162,6 +162,10 @@ to setup
 
   update-cuisine-size
 
+  ask cuisines [
+    set idmyParcellesCultive []
+  ]
+
   ;; attriubut des bordures de zones proprietaire =  bordure
 
   ask patches with [ pxcor = 50 or pycor = 50 ]
@@ -254,7 +258,7 @@ end
 
 
 
-to-report calcul-besoin-nourriture [my-taille ]
+to-report calcul-besoin-nourriture [my-taille]
    report my-taille * kg-nourriture-par-pers-jour * 365
  end
 
@@ -273,7 +277,10 @@ to calcul-bilan
   ask cuisines [
     set besoin-nourriture calcul-besoin-nourriture  [taille] of self
     let sumIdP sum countMyCultivetedPlots
-    set nourriture-autosuffisante (sumIdP * surface-de-patch  /  10000) * kg-cereale-par-ha
+    ;set nb-patch-dispo count patches with [(proprietaire = myself and parcelle-id =   or zone = "case" ) ] ;; selection sur la liste des parcelle cultive
+    ;;set nourriture-autosuffisante (sumIdP * surface-de-patch  /  10000) * kg-cereale-par-ha
+
+    set nourriture-autosuffisante production self
     set bilan-nourriture nourriture-autosuffisante - besoin-nourriture
   ]
 
@@ -421,23 +428,6 @@ troupeau
 1
 11
 
-BUTTON
-0
-371
-185
-404
-incremente troupeau
-set troupeau troupeau + 1
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
 PLOT
 1142
 52
@@ -480,7 +470,7 @@ kg-cereale-par-ha
 kg-cereale-par-ha
 100
 800
-360.0
+420.0
 10
 1
 NIL
@@ -604,7 +594,7 @@ gini-parcelles
 gini-parcelles
 0.0
 1
-0.19
+0.25
 0.01
 1
 NIL
@@ -634,9 +624,9 @@ SLIDER
 245
 croissance-demographique
 croissance-demographique
--1
-1
-0.36
+0
+1.0
+0.02
 0.01
 1
 NIL
@@ -669,8 +659,38 @@ troupeau
 troupeau
 count cuisines
 200
-180.0
+131.0
 10
+1
+NIL
+HORIZONTAL
+
+SLIDER
+13
+301
+200
+334
+malus-fertilite
+malus-fertilite
+0
+1
+0.15
+0.01
+1
+NIL
+HORIZONTAL
+
+SLIDER
+16
+341
+191
+374
+malus-in-jachere
+malus-in-jachere
+0
+1
+0.3
+0.01
 1
 NIL
 HORIZONTAL
