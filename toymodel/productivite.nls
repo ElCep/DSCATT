@@ -17,7 +17,7 @@ to-report production-parcelle[pid]
   let parcelle-fertilite sum [fertilite] of pp
   let raw-production count pp * surface-de-patch * kg-cereale-par-ha / 10000
   
-  let malus-f ifelse-value parcelle-fertilite < 0 [ malus-fertilite ] [0] 
+  let malus-f ifelse-value parcelle-fertilite <= 0 [ malus-fertilite ] [0] 
   let malus-j ifelse-value [ cycle ] of (one-of pp) = 3  [ malus-in-jachere ] [0]
   let malus malus-f + malus-j 
   
