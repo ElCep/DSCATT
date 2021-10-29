@@ -181,7 +181,7 @@ to setup
   partition-iteration
   etalement-parcelle
 
-  init-fertilite
+  init-fertilite-a-la-parcelle
   ordre-parcelles
 
   ;; troupeau pour mettre à l'équilibre probablement faux
