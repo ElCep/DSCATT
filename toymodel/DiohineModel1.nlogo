@@ -1,6 +1,6 @@
 __includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls"]
 
-extensions [gini.jar profiler fp.jar]
+extensions [gini.jar profiler fp.jar set.jar]
 
 ;; on utilise l'extension fp (fonctionnal programming) https://github.com/NetLogo/FP-Extension
 
@@ -204,8 +204,9 @@ to go
   update-cuisine-size
   update-inti-tick
   ordre-parcelles
+  planif-culture
+  chercher-parcelles
   mise-en-culture
-
   ;; GUI cosmétique
   ask betails [die]
    ask n-of 15 patches with [cycle = 3 and zone != "case" and proprietaire != "bordures"]
@@ -272,7 +273,6 @@ to calcul-bilan
   ask cuisines [
     set besoin-nourriture calcul-besoin-nourriture  [taille] of self
     let sumIdP sum countMyCultivetedPlots
-    ;set nb-patch-dispo count patches with [(proprietaire = myself and parcelle-id =   or zone = "case" ) ] ;; selection sur la liste des parcelle cultive
     set nourriture-autosuffisante (sumIdP * surface-de-patch  /  10000) * kg-cereale-par-ha
     set bilan-nourriture nourriture-autosuffisante - besoin-nourriture
   ]
@@ -604,7 +604,7 @@ gini-parcelles
 gini-parcelles
 0.0
 1
-0.02
+0.19
 0.01
 1
 NIL
@@ -636,7 +636,7 @@ croissance-demographique
 croissance-demographique
 -1
 1
-0.1
+0.36
 0.01
 1
 NIL

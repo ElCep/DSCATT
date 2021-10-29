@@ -28,7 +28,7 @@ to ordre-parcelles
     ]
 end
 
-to mise-en-culture
+to planif-culture
 ; recupérer les surface des parcelles 
 ; mettre en culture
 ; mettre a jour mon besoin et mettre en culture temps que le les besoin ne sont pas 
@@ -36,7 +36,6 @@ to mise-en-culture
   ask cuisines [
     let actualBesoin besoin-nourriture
     let i length idmyParcellesSorted
-    show word "nombre de parcelle " i 
     let iter 1
     foreach  idmyParcellesSorted [
       x -> let myactualParcelle patches with[parcelle-id = x and cycle < 3  ]
@@ -44,19 +43,13 @@ to mise-en-culture
         let surface-parcelle count myactualParcelle
         let besoin-assouvi-parcelle (surface-parcelle * surface-de-patch  /  10000) * kg-cereale-par-ha
         set actualBesoin actualBesoin - besoin-assouvi-parcelle
-        ask myactualParcelle [
-          sprout-couverts 1 [
-            set shape "plant"
-            set color ([pcolor] of myself) - 5 
-          ]
-          set cultived? TRUE
-        ]
-        set idmyParcellesCultive lput x idmyParcellesCultive
-        set iter iter + 1
+        set cultived? TRUE
+        set idmyParcellesCultive lput x idmyParcellesCultive  
         if (i = iter)[
           set tropParcelles? FALSE
           show "pas assez de parcelle"
         ]
+        set iter iter + 1
       ][
         set tropParcelles? TRUE
         show "tranquille"
@@ -80,3 +73,11 @@ to update-inti-tick
 end
 
 
+to mise-en-culture
+  show "paf ça plante"
+  ask patches with[cultived? = TRUE][
+          sprout-couverts 1 [
+            set shape "plant"
+          ]
+  ]
+end
