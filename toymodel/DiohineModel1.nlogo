@@ -17,6 +17,7 @@ cuisines-own [
   nourriture-autosuffisante
   bilan-nourriture
   idmyParcellesSorted
+  idmyParcellesCultive
   tropParcelles?]
 
 patches-own [
