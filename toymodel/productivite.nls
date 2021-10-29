@@ -1,6 +1,29 @@
 ;; -22 quand pas de fumier  (dire d'acteur)
 ;; animaux qui mange quand le champs qui sont dans la jachère font perdre de la récole
 
+to-report production [c]  
+ ;;show [ idmyParcellesCultive ] of c
+  let pids [ idmyParcellesCultive ] of c
+  let parcelles map [pid -> patches with [ parcelle-id = pid ]] pids
+  let prod map [ p -> production-parcelle p ] parcelles
+  report sum prod
+end
+
+to-report production-parcelle[pid]
+  let pp patches with [ parcelle-id = pid ]
+  
+  if not any? pp [ report 0 ]
+  
+  let parcelle-fertilite sum [fertilite] of pp
+  let raw-production count pp * surface-de-patch * kg-cereale-par-ha / 10000
+  
+  let malus-f ifelse-value parcelle-fertilite < 0 [ malus-fertilite ] [0] 
+  let malus-j ifelse-value [ cycle ] of (one-of pp) = 3  [ malus-in-jachere ] [0]
+  let malus malus-f + malus-j 
+  
+  report ifelse-value parcelle-fertilite > 0 [ raw-production ] [ raw-production - raw-production * malus]
+end
+
 
 to ordre-parcelles
 ;; chaque cuisine doit mettre en culture ses parcelles pour nourrir ses membre.
