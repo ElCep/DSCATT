@@ -40,6 +40,7 @@ kg-nourriture-par-pers-jour
 
 
 seuil-gini ;; tolérance entre gini souhaité et gini calculé
+  croissance-demographique
 ]
 
 to setup
@@ -83,6 +84,8 @@ to setup
   ;; paramètres libres pour modèle à l'équilibre
   set conso-carbone-culture 0.05
 
+  ;; croissance demographiuqe
+  set croissance-demographique 0.02
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; paramètres calibrés depuis les acteurs
@@ -178,6 +181,7 @@ end ;; setup
 
 
 to go
+  demographie
   ordre-parcelles
   mise-en-culture
 
@@ -620,7 +624,7 @@ gini-parcelles
 gini-parcelles
 0.0
 1
-0.31
+0.4
 0.01
 1
 NIL
