@@ -20,12 +20,12 @@ to MAJ-fertilite
 
   ;; fumure dans les champs de brousse
   ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ][
-    set fertilite fertilite + ((troupeau * fumier-par-tete) / nb-patches-Jach)
+    set fertilite fertilite + ((troupeau * COS-par-tete) / nb-patches-Jach)
   ]
 
   ;;show word "fumure" ((troupeau * fumier-par-tete) / nb-patches-Jach)
   ;; culture
-  ask patches with [cycle < 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case"][
+  ask patches with [cycle < 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and cultived?][
     set fertilite fertilite -  (surface-de-patch * conso-carbone-culture)
   ]
 

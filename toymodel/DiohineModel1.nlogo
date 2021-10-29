@@ -35,7 +35,7 @@ globals [
   case-offset
   taille-bande
   cycle-jachere-courante
-  fumier-par-tete
+  COS-par-tete
   COS-champ-case-moy
   COS-champ-case-sd
   COS-champ-brousse-moy
@@ -47,7 +47,6 @@ globals [
   kg-arachide-par-ha
   kg-arachide-par-patch
 
-  troupeau
   transhumants
   conso-carbone-culture
   spl-champ-brousse-par-cuisine
@@ -86,7 +85,7 @@ to setup
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; fumier en kgs par tete par an
-  set fumier-par-tete 250
+  set COS-par-tete 250
 
   ;; en kg par m²
   set COS-champ-case-moy 1.26
@@ -99,7 +98,9 @@ to setup
 
 
   ;; paramètres libres pour modèle à l'équilibre
-  set conso-carbone-culture 0.05
+
+  ;; en kg de COS par m²
+  set conso-carbone-culture 0.39 / 3 ;; source : simulation de chapitre 8 de "carbone des sols en afrique" tableau 2
 
 
 
@@ -183,7 +184,12 @@ to setup
   init-fertilite
   ordre-parcelles
 
-  set troupeau round (((surface-de-patch * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"]) / 10000 ) * betail-par-ha) + 1
+  ;; troupeau pour mettre à l'équilibre probablement faux
+  ;;set troupeau ceiling (((conso-carbone-culture * surface-de-patch) * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"] * 2 / 3 ) / COS-par-tete)
+
+  ;; équilibre empirique pour gini faible (0.02)
+  ;; set troupeau 130
+
 
 
   calcul-bilan
@@ -322,7 +328,7 @@ BUTTON
 151
 81
 NIL
-repeat 3 [ go ]
+repeat 9 [ go ]
 NIL
 1
 T
@@ -466,7 +472,7 @@ kg-cereale-par-ha
 kg-cereale-par-ha
 100
 800
-410.0
+360.0
 10
 1
 NIL
@@ -645,6 +651,21 @@ false
 "" ""
 PENS
 "default" 1.0 2 -16777216 true "" ""
+
+SLIDER
+12
+260
+199
+293
+troupeau
+troupeau
+count cuisines
+200
+130.0
+10
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
