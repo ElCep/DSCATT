@@ -136,11 +136,12 @@ to setup
 
 
  ask n-of 10 patches with [zone = "case" and pxcor <= 25 and pycor <= 25]  [
-     set proprietaire "zone cuisine"
+    set proprietaire "zone cuisine"
     sprout-cuisines 1 [
       set taille  10
       set size taille / 2 + 2
       set shape "house"
+      set color (who + 1) * 10 + 6
     ]
   ]
 
@@ -984,7 +985,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.0
+NetLogo 6.2.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
