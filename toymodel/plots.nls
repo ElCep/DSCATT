@@ -23,5 +23,12 @@ to updatePlots
     set-plot-pen-color color ;pour renvoyer la couleur du fermier
     plotxy ticks bilan-nourriture
     ]
+  
+  set-current-plot "emigration/immigration"
+  ask cuisines [
+    set-plot-pen-color color ;pour renvoyer la couleur du fermier
+    plotxy ticks (entrants - sortants)
+    ]
+  
 end
 

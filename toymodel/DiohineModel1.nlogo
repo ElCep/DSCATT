@@ -379,10 +379,10 @@ sum [fertilite] of patches
 11
 
 PLOT
-865
-240
-1065
-390
+934
+205
+1134
+355
 fertilité globale 
 NIL
 NIL
@@ -425,10 +425,10 @@ NIL
 1
 
 PLOT
-1066
-214
-1266
-364
+1142
+52
+1342
+202
 patchs par parcelle
 NIL
 NIL
@@ -550,13 +550,13 @@ true
 false
 "" ""
 PENS
-"besoin 1" 1.0 0 -16777216 true "" ""
+"besoin 1" 1.0 2 -16777216 true "" ""
 
 PLOT
-1064
-404
-1264
-554
+1139
+207
+1339
+357
 patchs par cuisine
 NIL
 NIL
@@ -590,7 +590,7 @@ gini-parcelles
 gini-parcelles
 0.0
 1
-0.4
+0.02
 0.01
 1
 NIL
@@ -627,6 +627,24 @@ croissance-demographique
 1
 NIL
 HORIZONTAL
+
+PLOT
+1081
+384
+1281
+534
+emigration/immigration
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 2 -16777216 true "" ""
 
 @#$#@#$#@
 ## WHAT IS IT?
