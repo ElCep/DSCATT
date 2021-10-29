@@ -51,6 +51,7 @@ to mise-en-culture
           ]
           set cultived? TRUE
         ]
+        set idmyParcellesCultive lput x idmyParcellesCultive
         set iter iter + 1
         if (i = iter)[
           set tropParcelles? FALSE
@@ -73,6 +74,7 @@ to update-inti-tick
   
   ask cuisines [
    set tropParcelles? FALSE
+    set idmyParcellesCultive []
   ]
   
 end
