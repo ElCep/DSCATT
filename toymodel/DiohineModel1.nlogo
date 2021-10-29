@@ -1,6 +1,8 @@
 __includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls"]
 
-extensions [gini.jar profiler]
+extensions [gini.jar profiler fp.jar]
+
+;; on utilise l'extension fp (fonctionnal programming) https://github.com/NetLogo/FP-Extension
 
 breed [cuisines cuisine]
 breed [couverts couvert]
@@ -178,7 +180,7 @@ to setup
   etalement-parcelle
 
   init-fertilite
-
+  ordre-parcelles
 
   set troupeau round (((surface-de-patch * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"]) / 10000 ) * betail-par-ha) + 1
 
@@ -292,8 +294,10 @@ to calcul-bilan
 
   ask cuisines [
     set besoin-nourriture calcul-besoin-nourriture  [taille] of self
-    set nb-patch-dispo count patches with [(cycle = 1 or cycle = 2 or zone = "case" ) ] ;; selection sur la liste des parcelle cultive
-    set nourriture-autosuffisante (nb-patch-dispo * surface-de-patch  /  10000) * kg-cereale-par-ha
+    let idP map [id -> count patches with[parcelle-id = id]] idmyParcellesSorted ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
+    let sumIdP  sum idP
+    ;set nb-patch-dispo count patches with [(proprietaire = myself and parcelle-id =   or zone = "case" ) ] ;; selection sur la liste des parcelle cultive
+    set nourriture-autosuffisante (sumIdP * surface-de-patch  /  10000) * kg-cereale-par-ha
     set bilan-nourriture nourriture-autosuffisante - besoin-nourriture
   ]
 
