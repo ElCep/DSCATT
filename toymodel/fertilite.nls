@@ -1,0 +1,39 @@
+
+to init-fertilite
+ 
+  ;; champs de case
+  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone = "case"]
+  [
+    ;; unité : kg de matiere organique,
+    set fertilite surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
+  ]
+
+  ;; champs de brousse
+
+  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
+  [
+    ;; unité : kg de matiere organique, u
+    set fertilite surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
+  ]
+end
+
+to MAJ-fertilite
+
+  let nb-patches-Jach count patches with [cycle = 3]
+
+  ;; fumure dans les champs de brousse
+  ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ][
+    set fertilite fertilite + ((troupeau * fumier-par-tete) / nb-patches-Jach)
+  ]
+
+  ;;show word "fumure" ((troupeau * fumier-par-tete) / nb-patches-Jach)
+  ;; culture
+  ask patches with [cycle < 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case"][
+    set fertilite fertilite -  (surface-de-patch * conso-carbone-culture)
+  ]
+
+  ;;show word "culture" (surface-de-patch *  conso-carbone-culture)
+
+
+end
+

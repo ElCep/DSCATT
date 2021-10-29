@@ -1,4 +1,4 @@
-__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls"]
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls"]
 
 extensions [gini.jar profiler fp.jar]
 
@@ -100,6 +100,8 @@ to setup
 
   ;; paramètres libres pour modèle à l'équilibre
   set conso-carbone-culture 0.05
+
+
 
   ;; croissance demographiuqe
   set min-taille-cuisine 3
@@ -230,46 +232,6 @@ end
 
 
 
-
-
-to init-fertilite
-  let dist-max  max-pxcor * sqrt 2
-
-  ;; champs de case
-  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone = "case"]
-  [
-    ;; unité : kg de matiere organique,
-    set fertilite surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
-  ]
-
-  ;; champs de brousse
-
-  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
-  [
-    ;; unité : kg de matiere organique, u
-    set fertilite surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
-  ]
-end
-
-to MAJ-fertilite
-
-  let nb-patches-Jach count patches with [cycle = 3]
-
-  ;; fumure dans les champs de brousse
-  ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ][
-    set fertilite fertilite + ((troupeau * fumier-par-tete) / nb-patches-Jach)
-  ]
-
-  ;;show word "fumure" ((troupeau * fumier-par-tete) / nb-patches-Jach)
-  ;; culture
-  ask patches with [cycle < 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case"][
-    set fertilite fertilite -  (surface-de-patch * conso-carbone-culture)
-  ]
-
-  ;;show word "culture" (surface-de-patch *  conso-carbone-culture)
-
-
-end
 
 
 
