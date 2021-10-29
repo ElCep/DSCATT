@@ -251,12 +251,21 @@ to-report calcul-besoin-nourriture [my-taille ]
    report my-taille * kg-nourriture-par-pers-jour * 365
  end
 
+to-report countMyCultivetedPlots ;cuisine context
+  let idP 0
+    ifelse ticks < 1 [
+      set idP map [id -> count patches with[parcelle-id = id]] idmyParcellesSorted ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
+    ][
+      set idP map [id -> count patches with[parcelle-id = id]] idmyParcellesCultive ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
+    ]
+  report idP
+end
+
 to calcul-bilan
 
   ask cuisines [
     set besoin-nourriture calcul-besoin-nourriture  [taille] of self
-    let idP map [id -> count patches with[parcelle-id = id]] idmyParcellesSorted ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
-    let sumIdP  sum idP
+    let sumIdP sum countMyCultivetedPlots
     ;set nb-patch-dispo count patches with [(proprietaire = myself and parcelle-id =   or zone = "case" ) ] ;; selection sur la liste des parcelle cultive
     set nourriture-autosuffisante (sumIdP * surface-de-patch  /  10000) * kg-cereale-par-ha
     set bilan-nourriture nourriture-autosuffisante - besoin-nourriture
@@ -264,7 +273,6 @@ to calcul-bilan
 
 
 end
-
 
 to update-cuisine-size
   ask cuisines [
