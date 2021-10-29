@@ -177,7 +177,6 @@ to setup
   partition-iteration
   etalement-parcelle
 
-  init-fermier-proprietaire
   init-fertilite
 
 

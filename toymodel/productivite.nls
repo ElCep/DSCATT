@@ -46,17 +46,17 @@ to mise-en-culture
         set actualBesoin actualBesoin - besoin-assouvi-parcelle
         ask myactualParcelle [
           sprout-couverts 1 [
-           set shape "plant"
-           set color ([pcolor] of myself) - 5 
+            set shape "plant"
+            set color ([pcolor] of myself) - 5 
           ]
-          set iter iter + 1
+        ]
+        set iter iter + 1
         if (i = iter)[
           set tropParcelles? FALSE
           show "pas assez de parcelle"
         ]
-        
       ][
-       set tropParcelles? TRUE
+        set tropParcelles? TRUE
         show "tranquille"
       ]
     ]
