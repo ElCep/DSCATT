@@ -1,37 +1,54 @@
-__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" ]
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" ]
 
 extensions [gini.jar]
 
 breed [cuisines cuisine]
 breed [couverts couvert]
 breed [betails betail]
-cuisines-own [ taille  famille
-               besoin-nourriture
-               nb-patch-dispo
-               nourriture-autosuffisante
-               bilan-nourriture
+cuisines-own [
+  taille
+  entrants
+  sortants
+  famille
+  besoin-nourriture
+  nb-patch-dispo
+  nourriture-autosuffisante
+  bilan-nourriture
+  idmyParcellesSorted
+  tropParcelles?]
 
-               idmyParcellesSorted
-               tropParcelles?]
 patches-own [ zone couvert-type  proprietaire fertilite cycle  parcelle-id myDistFromCuisine]
 
-globals [case-offset taille-bande cycle-jachere-courante
+globals [
+  case-offset
+  taille-bande
+  cycle-jachere-courante
   fumier-par-tete
-  COS-champ-case-moy  COS-champ-case-sd
-  COS-champ-brousse-moy COS-champ-brousse-sd
+  COS-champ-case-moy
+  COS-champ-case-sd
+  COS-champ-brousse-moy
+  COS-champ-brousse-sd
   surface-de-patch
- betail-par-ha
+  betail-par-ha
   kg-mil-par-ha
   kg-mil-par-patch
   kg-arachide-par-ha
   kg-arachide-par-patch
 
-troupeau
- transhumants
-conso-carbone-culture
-spl-champ-brousse-par-cuisine
-spl-champ-case-par-cuisine
-kg-nourriture-par-pers-jour
+  troupeau
+  transhumants
+  conso-carbone-culture
+  spl-champ-brousse-par-cuisine
+  spl-champ-case-par-cuisine
+  kg-nourriture-par-pers-jour
+
+
+
+  seuil-gini ;; tolérance entre gini souhaité et gini calculé
+
+  ;; demographie
+  croissance-demographique
+  min-taille-cuisine
 ]
 
 to setup
@@ -46,6 +63,8 @@ to setup
   ;; en m²
   set surface-de-patch 100
 
+
+  set seuil-gini 0.01
   ;;
 
   set spl-champ-brousse-par-cuisine 5
@@ -73,6 +92,9 @@ to setup
   ;; paramètres libres pour modèle à l'équilibre
   set conso-carbone-culture 0.05
 
+  ;; croissance demographiuqe
+  set croissance-demographique 0.02
+  set min-taille-cuisine 3
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; paramètres calibrés depuis les acteurs
@@ -126,13 +148,15 @@ to setup
 
 
  ask n-of 10 patches with [zone = "case" and pxcor <= 25 and pycor <= 25]  [
-     set proprietaire "zone cuisine"
+    set proprietaire "zone cuisine"
     sprout-cuisines 1 [
       set taille  10
-      set size taille / 2 + 2
       set shape "house"
+      set color (who + 1) * 10 + 6
     ]
   ]
+
+  update-cuisine-size
 
   ;; attriubut des bordures de zones proprietaire =  bordure
 
@@ -150,8 +174,8 @@ to setup
   ]
 
   partition-init
- ;; partition-iteration-to-gini
-partition-iteration
+  partition-iteration
+  etalement-parcelle
 
   init-fertilite
 
@@ -167,6 +191,8 @@ end ;; setup
 
 
 to go
+  demographie
+  update-cuisine-size
   ordre-parcelles
   mise-en-culture
 
@@ -195,18 +221,7 @@ to go
 
   calcul-bilan
 
-  ask cuisine 1 [show word "besoin " besoin-nourriture]
-  ask cuisine 1 [show word "terre disponible  " nb-patch-dispo]
-  ask cuisine 1 [show word "nourriture produite  " nourriture-autosuffisante]
-  ask cuisine 1 [show word "bilan " bilan-nourriture]
-
-
-
   tick
-
-
-
-
 end
 
 
@@ -262,6 +277,15 @@ end
 
 
 
+to-report calcul-gini
+let surfaces [] ; pour stocker les surfaces
+ask cuisines [
+  set surfaces lput count patches with [proprietaire != "bordures" and proprietaire != "zone cuisine" and proprietaire = myself] surfaces
+  ]
+
+  report gini.jar:gini surfaces
+end
+
 
 
 to-report calcul-besoin-nourriture [my-taille ]
@@ -280,6 +304,13 @@ to calcul-bilan
   ]
 
 
+end
+
+
+to update-cuisine-size
+  ask cuisines [
+    set size taille / 2 + 2
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -310,10 +341,10 @@ ticks
 30.0
 
 BUTTON
-39
-105
-112
-138
+15
+14
+88
+47
 setup
 setup
 NIL
@@ -327,10 +358,10 @@ NIL
 1
 
 BUTTON
-21
-161
-147
-194
+13
+48
+139
+81
 NIL
 go
 NIL
@@ -594,25 +625,25 @@ calcul-gini
 SLIDER
 33
 332
-205
+199
 365
-temperature
-temperature
-0.0000001
-0.5
-0.0290001
-0.001
+gini-parcelles
+gini-parcelles
+0.0
+1
+0.4
+0.01
 1
 NIL
 HORIZONTAL
 
 BUTTON
-21
-212
-207
-245
+12
+83
+198
+116
 NIL
-equilibrage-vers-gini2
+detecter-frontieres
 NIL
 1
 T
@@ -965,7 +996,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.0
+NetLogo 6.2.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

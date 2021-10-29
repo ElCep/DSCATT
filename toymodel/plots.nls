@@ -21,13 +21,3 @@ to updatePlots
   
 end
 
-to-report calcul-gini
-  
-let surfaces [] ; pour stocker les surfaces
-ask cuisines [
-  set surfaces lput count patches with [proprietaire != "bordures" and proprietaire != "zone cuisine" and proprietaire = myself] surfaces 
-  ]
-   
-  report gini.jar:gini surfaces
-end
-

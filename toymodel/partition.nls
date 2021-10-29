@@ -56,56 +56,6 @@ end ;; partition iteration
 
 
 
-to partition-iteration-to-gini
-  let gini-souhait 0.5
-  let gini-current calcul-gini
-
-  ask cuisines [
-    set gini-current calcul-gini
-    ask patches with [ proprietaire =  myself]
-      [
-
-        let to-revert patch-set neighbors with [  proprietaire = -99  and proprietaire != "zone cuisine"] 
-        ;; modif 
-       ;;ask neighbors with [  proprietaire = -99  and proprietaire != "zone cuisine"]
-        ask to-revert
-        [
-          set pcolor [pcolor] of myself
-          set proprietaire [proprietaire] of myself
-          set parcelle-id [parcelle-id] of myself
-        ]
-        
-        let gini-apres calcul-gini
-         let delta1 abs ( gini-current - gini-souhait)
-        let  delta2 abs (gini-apres - gini-souhait)
-        ;;si ça n'améliore pas le gini on revient en arrière
-        
-        
-        ifelse delta1 < delta2 and  ( random-float 1 >  exp  (- abs (delta1 - delta2) / temperature)   )
-        [
-      ;; defaire
-       ;;ask neighbors with [  proprietaire = myself and proprietaire != "zone cuisine" ]
-        ask to-revert [
-            set pcolor black
-            set proprietaire -99
-            set parcelle-id 0
-            ]
-          
-        ] ;; else
-        [
-          set gini-current gini-apres
-        ]
-      ]
-
-  ]
-
-  if any? patches with [proprietaire = -99]
-  [
-    partition-iteration-to-gini
-  ]
-
-end ;; partition iteration
-
 
 
 to equilibrage-vers-gini 
@@ -155,3 +105,101 @@ to equilibrage-vers-gini
  ]
  
 end
+
+
+
+to detecter-frontieres 
+  
+  let gini-souhait 0.3
+  let gini-current calcul-gini
+  let batch 10
+  
+  ask  patches with  [ 
+    proprietaire != "bordures" and proprietaire != "zone cuisine" and
+   ;;[proprietaire] of one-of neighbors4   !=  proprietaire and
+    
+    any?  neighbors with [proprietaire != [proprietaire] of myself] and
+    not any?  neighbors with [proprietaire = "bordures"] and 
+    not any? neighbors with [proprietaire = "zone cuisine"] 
+  ]
+    
+  [
+  
+   set pcolor black     
+        
+ ]
+ 
+end
+
+
+to etalement-parcelle
+  
+  
+  let to-revert-patch []
+  let to-revert-pcolor []
+  let to-revert-proprietaire[]
+  let to-revert-parcelle-id []
+  
+  
+  let gini-current calcul-gini
+  
+  
+  let une-id one-of [parcelle-id] of patches
+  let un-patch-de-parcelle one-of patches with  [parcelle-id = une-id]
+ 
+  ask patches with  [parcelle-id = une-id and 
+    proprietaire != "bordures" and proprietaire != "zone cuisine" and
+    any?  neighbors with [proprietaire != [proprietaire] of myself] and
+    not any?  neighbors with [proprietaire = "bordures"] and 
+    not any? neighbors with [proprietaire = "zone cuisine"] 
+  ]
+  [
+    
+      
+    ask neighbors [
+      ;; sauvegarde de l'état avant les modifs
+      set to-revert-patch lput self to-revert-patch
+      set to-revert-pcolor lput pcolor to-revert-pcolor 
+      set to-revert-proprietaire lput proprietaire to-revert-proprietaire 
+      set to-revert-parcelle-id  lput parcelle-id to-revert-parcelle-id
+  
+
+      
+      set pcolor [pcolor] of un-patch-de-parcelle
+      set proprietaire [proprietaire] of un-patch-de-parcelle
+      set parcelle-id [parcelle-id] of un-patch-de-parcelle
+    ]
+  ] ;; 
+  
+  let gini-apres calcul-gini
+  show gini-apres
+  let delta1 abs ( gini-current - gini-parcelles)
+  let  delta2 abs (gini-apres - gini-parcelles)
+   
+  
+  ;;si ça n'améliore pas le gini on revient en arrière
+  ;; ajout dans la condition pour stochastique si besoin de controle par la temperature : ;:and  ( random-float 1 >  exp  (- abs (delta1 - delta2) / temperature)   )
+   ifelse delta1 < delta2 
+        [
+          show "degradation"
+      ;; defaire
+          ask patch-set to-revert-patch[
+            let idxself (position self to-revert-patch)
+            set pcolor  item  idxself  to-revert-pcolor   
+            set proprietaire  item  idxself  to-revert-proprietaire
+            set parcelle-id  item  idxself  to-revert-parcelle-id
+          ]   
+  
+  ]
+  [
+    
+    
+  ]
+  
+  if min (list delta1 delta2) > seuil-gini [
+   etalement-parcelle
+  ]
+   
+end
+
+

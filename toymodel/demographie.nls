@@ -2,17 +2,35 @@
 
 to demographie
   ;; taux de croissance du systeme
-  let taux 0.02
   
   ask cuisines [
     ifelse bilan-nourriture > 0 [
-      let entrants sum(map [ t -> ifelse-value (random-float 1) < t [1] [0] ] (n-values taille [taux]))
-      set taille taille + entrants
+      let entrants_ sum(map [ t -> ifelse-value (random-float 1) < t [1] [0] ] (n-values taille [croissance-demographique]))
+      set taille taille + entrants_
+      set entrants entrants + entrants_
     ] [
-      let sortants abs(bilan-nourriture) / (kg-nourriture-par-pers-jour * 365)
-      set taille max(taille - sortants, 0)
+      let sortants_ abs(bilan-nourriture) / (kg-nourriture-par-pers-jour * 365)
+      ifelse taille - sortants_ < min-taille-cuisine [
+        let cuisine-absorbe one-of other cuisines 
+        absorbe-cuisine cuisine-absorbe self
+      ] [
+        set taille max list (taille - sortants_) 0
+        set sortants sortants + sortants_
+      ]
     ]
   ]
+end
+
+to absorbe-cuisine [cuisine-absorbe cuisine-disparait]
+  show word "hhhheauu " cuisine-absorbe cuisine-disparait
+  ask cuisine-absorbe [
+    set taille taille + [taille] of cuisine-disparait
+    ask patches with [ proprietaire = cuisine-disparait ] [
+      set proprietaire cuisine-absorbe
+      set pcolor [color] of myself 
+    ]
+  ]
+  ask cuisine-disparait [ die ]
 end
 
 
