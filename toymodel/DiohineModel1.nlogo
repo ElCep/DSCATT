@@ -21,7 +21,6 @@ patches-own [
   zone
   couvert-type
   proprietaire
-  fermier
   fertilite
   cycle
   parcelle-id
@@ -293,8 +292,7 @@ to calcul-bilan
 
   ask cuisines [
     set besoin-nourriture calcul-besoin-nourriture  [taille] of self
-
-    set nb-patch-dispo count patches with [(cycle = 1 or cycle = 2 or zone = "case" ) and fermier = myself]
+    set nb-patch-dispo count patches with [(cycle = 1 or cycle = 2 or zone = "case" ) ] ;; selection sur la liste des parcelle cultive
     set nourriture-autosuffisante (nb-patch-dispo * surface-de-patch  /  10000) * kg-cereale-par-ha
     set bilan-nourriture nourriture-autosuffisante - besoin-nourriture
   ]
