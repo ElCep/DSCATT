@@ -1,0 +1,21 @@
+;; Est-ce qu'il y a des gens qui ont sont en maque
+;; s'il y des manques on va aller voir les autres agents qui ont de la place
+
+to chercher-parcelles
+  ;; Dans productivite.nls on définit si les cuisine ont suffisement de parcelles pour répondre à leurs besoin
+  ;; Un atribut de cuisine tropParcelles? TRUE ou FALSE
+  ;; Dans ce processus on doit appeller les cuisine qui on des besoin et on va leurs demander négocier des parcelles avec ceux qui en on
+  let cuisines-en-diff cuisines with[tropParcelles? = FALSE]
+  let cuisines-bien cuisines with[tropParcelles? = TRUE]
+  ask cuisines-en-diff[
+      
+    ]
+end
+
+to-report calcul-besoin-tempo [myTaille whoOfMyself]; contexte de cuisine
+  let mes-besoin-actu myTaille * kg-nourriture-par-pers-jour * 365
+  show word "mes-besoin-actu " mes-besoin-actu
+  let mes-besoin-cultive ((count patches with[proprietaire = [who] of myself and cultived? = TRUE]) * surface-de-patch  /  10000) * kg-cereale-par-ha
+  show word "mes-besoin-cultive " mes-besoin-cultive
+  report mes-besoin-actu - mes-besoin-cultive
+ end
