@@ -669,7 +669,7 @@ troupeau
 troupeau
 count cuisines
 200
-130.0
+180.0
 10
 1
 NIL
