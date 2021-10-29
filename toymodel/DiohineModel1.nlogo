@@ -576,7 +576,7 @@ PLOT
 385
 937
 535
-bilan cuisine 1
+bilan cuisine
 NIL
 NIL
 0.0
@@ -587,7 +587,7 @@ true
 false
 "" ""
 PENS
-"besoin 1" 1.0 0 -16777216 true "" "plot [bilan-nourriture] of cuisine 1"
+"besoin 1" 1.0 0 -16777216 true "" ""
 
 PLOT
 1064
