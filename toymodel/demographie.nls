@@ -10,10 +10,27 @@ to demographie
       set entrants entrants + entrants_
     ] [
       let sortants_ abs(bilan-nourriture) / (kg-nourriture-par-pers-jour * 365)
-      set taille max list (taille - sortants_) 0
-      set sortants sortants + sortants_
+      ifelse taille - sortants_ < min-taille-cuisine [
+        let cuisine-absorbe one-of other cuisines 
+        absorbe-cuisine cuisine-absorbe self
+      ] [
+        set taille max list (taille - sortants_) 0
+        set sortants sortants + sortants_
+      ]
     ]
   ]
+end
+
+to absorbe-cuisine [cuisine-absorbe cuisine-disparait]
+  show word "hhhheauu " cuisine-absorbe cuisine-disparait
+  ask cuisine-absorbe [
+    set taille taille + [taille] of cuisine-disparait
+    ask patches with [ proprietaire = cuisine-disparait ] [
+      set proprietaire cuisine-absorbe
+      set pcolor [color] of myself 
+    ]
+  ]
+  ask cuisine-disparait [ die ]
 end
 
 

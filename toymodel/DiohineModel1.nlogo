@@ -19,28 +19,36 @@ cuisines-own [
 
 patches-own [ zone couvert-type  proprietaire fertilite cycle  parcelle-id myDistFromCuisine]
 
-globals [case-offset taille-bande cycle-jachere-courante
+globals [
+  case-offset
+  taille-bande
+  cycle-jachere-courante
   fumier-par-tete
-  COS-champ-case-moy  COS-champ-case-sd
-  COS-champ-brousse-moy COS-champ-brousse-sd
+  COS-champ-case-moy
+  COS-champ-case-sd
+  COS-champ-brousse-moy
+  COS-champ-brousse-sd
   surface-de-patch
- betail-par-ha
+  betail-par-ha
   kg-mil-par-ha
   kg-mil-par-patch
   kg-arachide-par-ha
   kg-arachide-par-patch
 
-troupeau
- transhumants
-conso-carbone-culture
-spl-champ-brousse-par-cuisine
-spl-champ-case-par-cuisine
-kg-nourriture-par-pers-jour
+  troupeau
+  transhumants
+  conso-carbone-culture
+  spl-champ-brousse-par-cuisine
+  spl-champ-case-par-cuisine
+  kg-nourriture-par-pers-jour
 
 
 
-seuil-gini ;; tolérance entre gini souhaité et gini calculé
+  seuil-gini ;; tolérance entre gini souhaité et gini calculé
+
+  ;; demographie
   croissance-demographique
+  min-taille-cuisine
 ]
 
 to setup
@@ -86,6 +94,7 @@ to setup
 
   ;; croissance demographiuqe
   set croissance-demographique 0.02
+  set min-taille-cuisine 3
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; paramètres calibrés depuis les acteurs
@@ -142,11 +151,12 @@ to setup
     set proprietaire "zone cuisine"
     sprout-cuisines 1 [
       set taille  10
-      set size taille / 2 + 2
       set shape "house"
       set color (who + 1) * 10 + 6
     ]
   ]
+
+  update-cuisine-size
 
   ;; attriubut des bordures de zones proprietaire =  bordure
 
@@ -182,6 +192,7 @@ end ;; setup
 
 to go
   demographie
+  update-cuisine-size
   ordre-parcelles
   mise-en-culture
 
@@ -210,18 +221,7 @@ to go
 
   calcul-bilan
 
-  ask cuisine 1 [show word "besoin " besoin-nourriture]
-  ask cuisine 1 [show word "terre disponible  " nb-patch-dispo]
-  ask cuisine 1 [show word "nourriture produite  " nourriture-autosuffisante]
-  ask cuisine 1 [show word "bilan " bilan-nourriture]
-
-
-
   tick
-
-
-
-
 end
 
 
@@ -304,6 +304,13 @@ to calcul-bilan
   ]
 
 
+end
+
+
+to update-cuisine-size
+  ask cuisines [
+    set size taille / 2 + 2
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
