@@ -18,15 +18,16 @@ end
 
 to init-fertilite-a-la-parcelle
 ask cuisines [
-  let myParcelles [parcelle-id] of patches with [proprietaire = myself] ; liste des ID de toutes mes parcelles
+  let myParcelles remove-duplicates [parcelle-id] of patches with [proprietaire = myself] ; liste des ID de toutes mes parcelles
      
   foreach myParcelles [
      x -> 
-      let fertilite-parcelle  ifelse-value zone = "case"
-                                           [surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd]
-                                           [surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd]
+      let fertilite-parcelle-case  surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
+      let fertilite-parcelle-brousse surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
+      
       ask patches with[parcelle-id = x][
-        set fertilite fertilite-parcelle
+        set fertilite ifelse-value zone = "case"  [fertilite-parcelle-case] [fertilite-parcelle-brousse]
+       
       ]    
   ]
 ]
@@ -46,6 +47,7 @@ to MAJ-fertilite
       ;; la fertilite des champs de case est fixe (pour le moment)
       x -> ask patches with [parcelle-id = x and zone != "case" ][
             set fertilite  fertilite -  (surface-de-patch * conso-carbone-culture)
+        if fertilite < 0 [set fertilite 0] 
           ]
     ];; foreach
   ]

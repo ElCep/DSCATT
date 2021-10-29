@@ -181,11 +181,20 @@ to setup
     set proprietaire "zone cuisine"
   ]
 
+
+  show "attribution des terre"
+
   partition-init
   partition-iteration
   etalement-parcelle
 
+
+  show "int fertilite "
   init-fertilite-a-la-parcelle
+
+
+  show "ordre parcelles"
+
   ordre-parcelles
 
   ;; troupeau pour mettre à l'équilibre probablement faux
@@ -195,6 +204,7 @@ to setup
   ;; set troupeau 130
 
 
+  show "calcul bilan"
 
   calcul-bilan
 
