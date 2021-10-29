@@ -56,7 +56,6 @@ globals [
   seuil-gini ;; tolérance entre gini souhaité et gini calculé
 
   ;; demographie
-  croissance-demographique
   min-taille-cuisine
 ]
 
@@ -102,7 +101,6 @@ to setup
   set conso-carbone-culture 0.05
 
   ;; croissance demographiuqe
-  set croissance-demographique 0.02
   set min-taille-cuisine 3
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -497,10 +495,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1
-273
-186
-306
+13
+126
+198
+159
 kg-cereale-par-ha
 kg-cereale-par-ha
 100
@@ -621,10 +619,10 @@ calcul-gini
 11
 
 SLIDER
-33
-332
-199
-365
+13
+169
+198
+202
 gini-parcelles
 gini-parcelles
 0.0
@@ -636,27 +634,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-12
-83
-198
-116
-NIL
-detecter-frontieres
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-88
-222
-165
-255
+13
+80
+90
+113
 profile
 profiler:start         ;; start profiling\nrepeat 3 [ go ]       ;; run something you want to measure\nprofiler:stop          ;; stop profiling\nprint profiler:report  ;; view the results\nprofiler:reset         ;; clear the data
 NIL
@@ -668,6 +649,21 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+13
+212
+200
+245
+croissance-demographique
+croissance-demographique
+-1
+1
+0.1
+0.01
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
