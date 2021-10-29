@@ -1,18 +1,15 @@
 
 to init-fertilite
- 
   ;; champs de case
   ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone = "case"]
   [
     ;; unité : kg de matiere organique,
     set fertilite surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
   ]
-
   ;; champs de brousse
-
   ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
   [
-    ;; unité : kg de matiere organique, u
+    ;; unité : kg de matiere organique, 
     set fertilite surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
   ]
 end

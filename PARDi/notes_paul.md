@@ -82,9 +82,9 @@ on prépare une bière de mil et on se souhaite bonne fête.
 
 De cette réunion ressort le **disponible** et **l'insuffisant**
 
-En cas d'insuffisance de terre dans sa cuisine , l' agriculteur va demander individuellement à un autre un prêt de terre.
+En cas d'insuffisance de terre dans sa cuisine , l' agriculteur va demander **individuellement** à un autre un prêt de terre. Cette transaction ne se montre pas 
 
-Le pâturage est affecté en premier : c'est l'hivernage (qui semble porter également le sens de l'affectation des pâturages
+Le pâturage est affecté en premier : c'est l'hivernage (qui débute par affectation des pâturages) 
 
 Point de vue divergent [Idi] : la pâture ne doit pas enfreindre sur l'agricole.
 > «On cultive pour vivre , c'est ça d'abord»
@@ -204,16 +204,24 @@ Avant c'est l'aînesse qui prévalait .
 
 ## retour sur la jachère
 
-[POV nous] divergence d'opinion en Idi et Paul, Paul est rpo jachère , Idi est plus productiviste.
+[POV nous] divergence d'opinion en Idi et Paul, Paul est pro jachère , Idi est plus productiviste.
 
 > «Supprimer la jachère sera difficile car il y a toujours les animaux»
 
+De plus : si la jachère disparait, il y aura une épuisement du sol
+
+C'est un paradoxe car le lessivement du sol par les engrais chimique est mal compris [par les villageois dans leur ensemble] car on ne voit pas les effets délétères à long terme. 
+les acteurs de la session en sont conscients mais pas tous leurs collègues.
 
 
 
+En 2000, suite à une importante attaque d'insectes,  le gouvernement donne 150kgs d'arachide par ménage. Cela provoque une perte de semence car le gouvernement a pioché dans les semences de réserve.
 
 
+En 1970 , sécheresse catastrophique : «les arbres et les herbes sont parties et breaucoup de flore basse a disparu»
 
+
+Les ovins et les caprins sont partis plus loin
 
 
 
