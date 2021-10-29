@@ -22,7 +22,6 @@ to demographie
 end
 
 to absorbe-cuisine [cuisine-absorbe cuisine-disparait]
-  show word "hhhheauu " cuisine-absorbe cuisine-disparait
   ask cuisine-absorbe [
     set taille taille + [taille] of cuisine-disparait
     ask patches with [ proprietaire = cuisine-disparait ] [

@@ -1,6 +1,6 @@
 __includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" ]
 
-extensions [gini.jar]
+extensions [gini.jar profiler]
 
 breed [cuisines cuisine]
 breed [couverts couvert]
@@ -17,7 +17,16 @@ cuisines-own [
   idmyParcellesSorted
   tropParcelles?]
 
-patches-own [ zone couvert-type  proprietaire fertilite cycle  parcelle-id myDistFromCuisine]
+patches-own [
+  zone
+  couvert-type
+  proprietaire
+  fermier
+  fertilite
+  cycle
+  parcelle-id
+  myDistFromCuisine
+]
 
 globals [
   case-offset
@@ -41,8 +50,6 @@ globals [
   spl-champ-brousse-par-cuisine
   spl-champ-case-par-cuisine
   kg-nourriture-par-pers-jour
-
-
 
   seuil-gini ;; tolérance entre gini souhaité et gini calculé
 
@@ -105,14 +112,7 @@ to setup
   set kg-mil-par-patch (kg-mil-par-ha *  (surface-de-patch / 10000))
   set kg-arachide-par-ha 400
   set kg-arachide-par-patch (kg-arachide-par-ha *  (surface-de-patch / 10000))
-
-
   set kg-nourriture-par-pers-jour 0.75
-
-
-
-
-
 
 
 ;; repartition des terres intiales
@@ -177,6 +177,7 @@ to setup
   partition-iteration
   etalement-parcelle
 
+  init-fermier-proprietaire
   init-fertilite
 
 
@@ -236,21 +237,17 @@ to init-fertilite
   ;; champs de case
   ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone = "case"]
   [
-
     ;; unité : kg de matiere organique,
     set fertilite surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
-
-
-   ]
+  ]
 
   ;; champs de brousse
 
   ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
   [
-       ;; unité : kg de matiere organique, u
+    ;; unité : kg de matiere organique, u
     set fertilite surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
-
-   ]
+  ]
 end
 
 to MAJ-fertilite
@@ -260,13 +257,12 @@ to MAJ-fertilite
   ;; fumure dans les champs de brousse
   ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ][
     set fertilite fertilite + ((troupeau * fumier-par-tete) / nb-patches-Jach)
-    ]
+  ]
 
   ;;show word "fumure" ((troupeau * fumier-par-tete) / nb-patches-Jach)
   ;; culture
-
   ask patches with [cycle < 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case"][
-      set fertilite fertilite -  (surface-de-patch * conso-carbone-culture)
+    set fertilite fertilite -  (surface-de-patch * conso-carbone-culture)
   ]
 
   ;;show word "culture" (surface-de-patch *  conso-carbone-culture)
@@ -278,9 +274,9 @@ end
 
 
 to-report calcul-gini
-let surfaces [] ; pour stocker les surfaces
-ask cuisines [
-  set surfaces lput count patches with [proprietaire != "bordures" and proprietaire != "zone cuisine" and proprietaire = myself] surfaces
+  let surfaces [] ; pour stocker les surfaces
+  ask cuisines [
+    set surfaces lput count patches with [proprietaire != "bordures" and proprietaire != "zone cuisine" and proprietaire = myself] surfaces
   ]
 
   report gini.jar:gini surfaces
@@ -289,16 +285,15 @@ end
 
 
 to-report calcul-besoin-nourriture [my-taille ]
-   report   my-taille * kg-nourriture-par-pers-jour * 365
+   report my-taille * kg-nourriture-par-pers-jour * 365
  end
 
 to calcul-bilan
 
   ask cuisines [
-
     set besoin-nourriture calcul-besoin-nourriture  [taille] of self
 
-    set nb-patch-dispo count patches with [(cycle = 1 or cycle = 2 or zone = "case" ) and proprietaire = myself]
+    set nb-patch-dispo count patches with [(cycle = 1 or cycle = 2 or zone = "case" ) and fermier = myself]
     set nourriture-autosuffisante (nb-patch-dispo * surface-de-patch  /  10000) * kg-cereale-par-ha
     set bilan-nourriture nourriture-autosuffisante - besoin-nourriture
   ]
@@ -360,10 +355,10 @@ NIL
 BUTTON
 13
 48
-139
+151
 81
 NIL
-go
+repeat 3 [ go ]
 NIL
 1
 T
@@ -644,6 +639,23 @@ BUTTON
 116
 NIL
 detecter-frontieres
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+88
+222
+165
+255
+profile
+profiler:start         ;; start profiling\nrepeat 3 [ go ]       ;; run something you want to measure\nprofiler:stop          ;; stop profiling\nprint profiler:report  ;; view the results\nprofiler:reset         ;; clear the data
 NIL
 1
 T
