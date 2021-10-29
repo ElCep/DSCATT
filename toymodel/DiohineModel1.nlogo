@@ -1,4 +1,4 @@
-__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" ]
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls"]
 
 extensions [gini.jar profiler]
 
@@ -26,6 +26,7 @@ patches-own [
   cycle
   parcelle-id
   myDistFromCuisine
+  cultived?
 ]
 
 globals [
@@ -193,6 +194,7 @@ end ;; setup
 to go
   demographie
   update-cuisine-size
+  update-inti-tick
   ordre-parcelles
   mise-en-culture
 

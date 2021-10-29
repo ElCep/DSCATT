@@ -49,6 +49,7 @@ to mise-en-culture
             set shape "plant"
             set color ([pcolor] of myself) - 5 
           ]
+          set cultived? TRUE
         ]
         set iter iter + 1
         if (i = iter)[
@@ -64,5 +65,16 @@ to mise-en-culture
   
 end
 
+
+to update-inti-tick
+  ask patches [
+    set cultived? FALSE
+  ]
+  
+  ask cuisines [
+   set tropParcelles? FALSE
+  ]
+  
+end
 
 
