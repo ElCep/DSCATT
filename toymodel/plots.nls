@@ -18,6 +18,10 @@ to updatePlots
   set-histogram-num-bars count cuisines
   histogram propri 
   
-  
+  set-current-plot "bilan cuisine"
+  ask cuisines [
+    set-plot-pen-color color ;pour renvoyer la couleur du fermier
+    plotxy ticks bilan-nourriture
+    ]
 end
 
