@@ -8,7 +8,7 @@ to ordre-parcelles
 ;; 1 trouver les parcelles les plus proches, c.a.d. reordonnancer les id des parcelles par la distance
   
   ask cuisines [
-    let myParcelles [parcelle-id] of patches with [proprietaire = myself] ; liste des ID de toutes mes parcelles
+    let myParcelles remove-duplicates [parcelle-id] of patches with [proprietaire = myself] ; liste des ID de toutes mes parcelles
     ;; pour chaque parcelle je récupère la distance minimal
     let patchDistance []
     foreach myParcelles [
@@ -38,12 +38,15 @@ to planif-culture
     let i length idmyParcellesSorted
     let iter 1
     foreach  idmyParcellesSorted [
-      x -> let myactualParcelle patches with[parcelle-id = x and cycle < 3  ]
+      x -> let myactualParcelle patches with[parcelle-id = x and cycle < 3 ]
       ifelse (actualBesoin > 0) [ ; temps que je n'ai pas assouvie mes besoin j'itère sur mes parcelles
         let surface-parcelle count myactualParcelle
         let besoin-assouvi-parcelle (surface-parcelle * surface-de-patch  /  10000) * kg-cereale-par-ha
         set actualBesoin actualBesoin - besoin-assouvi-parcelle
-        set cultived? TRUE
+        ask myactualParcelle [
+          set cultived? TRUE  
+        ]
+        
         set idmyParcellesCultive lput x idmyParcellesCultive  
         if (i = iter)[
           set tropParcelles? FALSE
