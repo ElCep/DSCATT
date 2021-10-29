@@ -1,4 +1,4 @@
-__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls"]
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls"]
 
 extensions [gini.jar profiler fp.jar]
 
@@ -35,7 +35,7 @@ globals [
   case-offset
   taille-bande
   cycle-jachere-courante
-  fumier-par-tete
+  COS-par-tete
   COS-champ-case-moy
   COS-champ-case-sd
   COS-champ-brousse-moy
@@ -47,7 +47,6 @@ globals [
   kg-arachide-par-ha
   kg-arachide-par-patch
 
-  troupeau
   transhumants
   conso-carbone-culture
   spl-champ-brousse-par-cuisine
@@ -86,7 +85,7 @@ to setup
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; fumier en kgs par tete par an
-  set fumier-par-tete 250
+  set COS-par-tete 250
 
   ;; en kg par m²
   set COS-champ-case-moy 1.26
@@ -99,7 +98,11 @@ to setup
 
 
   ;; paramètres libres pour modèle à l'équilibre
-  set conso-carbone-culture 0.05
+
+  ;; en kg de COS par m²
+  set conso-carbone-culture 0.39 / 3 ;; source : simulation de chapitre 8 de "carbone des sols en afrique" tableau 2
+
+
 
   ;; croissance demographiuqe
   set min-taille-cuisine 3
@@ -181,7 +184,12 @@ to setup
   init-fertilite
   ordre-parcelles
 
-  set troupeau round (((surface-de-patch * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"]) / 10000 ) * betail-par-ha) + 1
+  ;; troupeau pour mettre à l'équilibre probablement faux
+  ;;set troupeau ceiling (((conso-carbone-culture * surface-de-patch) * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"] * 2 / 3 ) / COS-par-tete)
+
+  ;; équilibre empirique pour gini faible (0.02)
+  ;; set troupeau 130
+
 
 
   calcul-bilan
@@ -232,46 +240,6 @@ end
 
 
 
-to init-fertilite
-  let dist-max  max-pxcor * sqrt 2
-
-  ;; champs de case
-  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone = "case"]
-  [
-    ;; unité : kg de matiere organique,
-    set fertilite surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
-  ]
-
-  ;; champs de brousse
-
-  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
-  [
-    ;; unité : kg de matiere organique, u
-    set fertilite surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
-  ]
-end
-
-to MAJ-fertilite
-
-  let nb-patches-Jach count patches with [cycle = 3]
-
-  ;; fumure dans les champs de brousse
-  ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ][
-    set fertilite fertilite + ((troupeau * fumier-par-tete) / nb-patches-Jach)
-  ]
-
-  ;;show word "fumure" ((troupeau * fumier-par-tete) / nb-patches-Jach)
-  ;; culture
-  ask patches with [cycle < 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case"][
-    set fertilite fertilite -  (surface-de-patch * conso-carbone-culture)
-  ]
-
-  ;;show word "culture" (surface-de-patch *  conso-carbone-culture)
-
-
-end
-
-
 
 
 to-report calcul-gini
@@ -289,12 +257,21 @@ to-report calcul-besoin-nourriture [my-taille ]
    report my-taille * kg-nourriture-par-pers-jour * 365
  end
 
+to-report countMyCultivetedPlots ;cuisine context
+  let idP 0
+    ifelse ticks < 1 [
+      set idP map [id -> count patches with[parcelle-id = id]] idmyParcellesSorted ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
+    ][
+      set idP map [id -> count patches with[parcelle-id = id]] idmyParcellesCultive ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
+    ]
+  report idP
+end
+
 to calcul-bilan
 
   ask cuisines [
     set besoin-nourriture calcul-besoin-nourriture  [taille] of self
-    let idP map [id -> count patches with[parcelle-id = id]] idmyParcellesSorted ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
-    let sumIdP  sum idP
+    let sumIdP sum countMyCultivetedPlots
     ;set nb-patch-dispo count patches with [(proprietaire = myself and parcelle-id =   or zone = "case" ) ] ;; selection sur la liste des parcelle cultive
     set nourriture-autosuffisante (sumIdP * surface-de-patch  /  10000) * kg-cereale-par-ha
     set bilan-nourriture nourriture-autosuffisante - besoin-nourriture
@@ -302,7 +279,6 @@ to calcul-bilan
 
 
 end
-
 
 to update-cuisine-size
   ask cuisines [
@@ -360,7 +336,7 @@ BUTTON
 151
 81
 NIL
-repeat 3 [ go ]
+repeat 9 [ go ]
 NIL
 1
 T
@@ -417,10 +393,10 @@ sum [fertilite] of patches
 11
 
 PLOT
-865
-240
-1065
-390
+934
+205
+1134
+355
 fertilité globale 
 NIL
 NIL
@@ -463,10 +439,10 @@ NIL
 1
 
 PLOT
-1066
-214
-1266
-364
+1142
+52
+1342
+202
 patchs par parcelle
 NIL
 NIL
@@ -504,7 +480,7 @@ kg-cereale-par-ha
 kg-cereale-par-ha
 100
 800
-410.0
+360.0
 10
 1
 NIL
@@ -588,13 +564,13 @@ true
 false
 "" ""
 PENS
-"besoin 1" 1.0 0 -16777216 true "" ""
+"besoin 1" 1.0 2 -16777216 true "" ""
 
 PLOT
-1064
-404
-1264
-554
+1139
+207
+1339
+357
 patchs par cuisine
 NIL
 NIL
@@ -628,7 +604,7 @@ gini-parcelles
 gini-parcelles
 0.0
 1
-0.4
+0.02
 0.01
 1
 NIL
@@ -662,6 +638,39 @@ croissance-demographique
 1
 0.1
 0.01
+1
+NIL
+HORIZONTAL
+
+PLOT
+1081
+384
+1281
+534
+emigration/immigration
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 2 -16777216 true "" ""
+
+SLIDER
+12
+260
+199
+293
+troupeau
+troupeau
+count cuisines
+200
+130.0
+10
 1
 NIL
 HORIZONTAL
