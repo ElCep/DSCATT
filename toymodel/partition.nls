@@ -172,6 +172,7 @@ to etalement-parcelle
   ] ;; 
   
   let gini-apres calcul-gini
+  show gini-apres
   let delta1 abs ( gini-current - gini-parcelles)
   let  delta2 abs (gini-apres - gini-parcelles)
    
