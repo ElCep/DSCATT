@@ -18,4 +18,4 @@ to-report calcul-besoin-tempo [myTaille whoOfMyself]; contexte de cuisine
   let mes-besoin-cultive ((count patches with[proprietaire = [who] of myself and cultived? = TRUE]) * surface-de-patch  /  10000) * kg-cereale-par-ha
   show word "mes-besoin-cultive " mes-besoin-cultive
   report mes-besoin-actu - mes-besoin-cultive
- end
+end
