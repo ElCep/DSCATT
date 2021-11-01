@@ -218,16 +218,137 @@ les acteurs de la session en sont conscients mais pas tous leurs collègues.
 En 2000, suite à une importante attaque d'insectes,  le gouvernement donne 150kgs d'arachide par ménage. Cela provoque une perte de semence car le gouvernement a pioché dans les semences de réserve.
 
 
-En 1970 , sécheresse catastrophique : «les arbres et les herbes sont parties et breaucoup de flore basse a disparu»
+En 1970 , sécheresse catastrophique : «les arbres et les herbes sont parties et beaucoup de flore basse a disparu et le vent favorise certaines plantes quand l'arbre est parti»
 
 
 Les ovins et les caprins sont partis plus loin
 
 
+### parenthèse sur l'éclatement des familles
 
-
+l'éclatement des familles a des conséquences négatives pour les agriculteurs 
+mais «on est resté soudés sur les pâturages» «on sait que c'est une obligation»
+«Certains quartiers ont quitté le groupe pro pâturage [pro jachère] 4 ans après, ils sont revenus»
 
  
+[à propos des engrais] «Les engrais chimiques si on en met une fois ou deux, après on est obligés d'en remettre sinon rien ne pousse» 
+
+
+
+
+A propos de l'entraide [cette partie  est confuse, sans doute ai-je manqué une partie de l'échange ]
+«Je demande à un propriétaire de troupeaux de passer dans mon champ»
+Question : Y a-t-il une contrepartie ? 
+«L'année prochaine je cultive le champ»
+
+
+### transhumants
+
+Les transhumants s'arrêtent quelques jours (~ 2 semaines) dans le village.
+Ils s'arrêtent à l'aller et au retour . 
+A l'aller les troupeaux mangent l'herbe, au retour , ils mangent la paille de mil.
+
+### association de culture 
+
+Nouvelle technique agraire, apparue suite à l'éclatement des terres  [consécutif à l'éclatement des familles] , c'est l'adaptation des paysans à l'évolution des parcelles. 
+Avant , ça se faisait, mais marginalement,  dans les champs de case, par exemple Mil - Sorgo.
+
+
+Jusqu'à 4 cultures au même endroit 
+Mil Sorgo Bissap (hibiscus)  Niébé (sorte de haricots)
+
+Les prélèvements montrent que l'épuisement du sol est moindre lorsqu'on fait de la monoculture que de la polyculture.
+
+
+
+## Éclatement des terres et des familles
+
+
+l'éclatement  **n'a pas** eu de **conséquences** sur l'orientation des pâturages, si la **disponibilité** des terres
+
+[POV moi] Surprenant, mais il fallait vérifier ! 
+
+
+«L'éclatement des familles a eu un effet positif, car avant, une grosse famille pouvait maintenir[garder] quelques tire-au-flanc »
+
+
+Avec de petites familles, chacun doit travailler pour nourrir la famille.
+Cela peut entraîner un surplus [de récolte] , qui est plus ou moins visible suivant la situation de chacun.
+
+
+Proverbe Cerrer : «Il n'y a pas toujours assez de nourriture»  [POV moi : ça veut tout dire sur leur sécurité alimentaire]
+
+
+Le surplus dure rarement car il y a toujours une personne dans le besoin, et la solidarité est une valeur cardinale de la société cerrer
+
+
+Question de nous :  Le rendement d'une famille est-elle une fonction croissante de sa taille ? 
+Réponse : pas directement . il y a des contraintes importantes sur l'équipement , le troupeau et les animaux de traits. [ fonction en escaliers, les animaux de trait sont un goulet, un cheval ne nécessite que 3 personnes par exemple]
+
+Mais il semble qu'il existe une économie d'échelle sur la taille de la main d'oeuvre pour la récolte. 
+
+
+
+«L'africain tentera tout pour éviter le morcellement»
+
+«[l'éclatement] c'est le dernier recours»
+
+Rarement , il peut y avoir des éclatements à l'amiable , en cas de décès par exemple.
+
+
+## Droit ancestral vs. droit moderne 
+
+
+
+En droit ancestral, le patrimoine est commun du côté de la mère.
+Son partage est équitable entre les garçons de la lignée maternelle. 
+le partage est sécurisé car tout homme a une mère et une famille maternelle.
+
+
+Le droit moderne ignore cet aspect du croit ancestral. Il y a des conflits qui ne pouvaient pas se régler à l'amiable.
+Désormais c'est orienté sur le père : le bien du père est le bien de ses enfants
+
+
+«Avant c'était le bien commun» , i.e. entre frères. Notamment pour constituer les dots.
+
+
+«Le changement du droit est trop brutal» 
+«la tradition était millénaire , on ne peut pas la changer si vite » 
+
+« ça se produit aussi sur les terres et ça nous bloque »
+
+
+Question de moi  : Je croyais que le droit moderne laissait la main au chef de village . Est-ce que c'est vrai ? I.e. le chef de village peut-il gérer à l'ancienne une situation moderne ? 
+
+[ Je n'ai pas de trace de la réponse à cette question dans mes notes] 
+
+
+
+Question de nous : Que se passe-t-il lors de la réunion diurne après la 1ère chasse ?
+
+
+Réponse : «Il y a du **disponible** et de **l'insuffisant**»
  
+
+
+Question de nous : Est-ce que l'info est centralisée par quelqu'un ? ou bien tout le monde est là et tout le monde sait tout [POV moi : ou alors broadcast sur un temps court ? ]
+
+
+Réponse : Les paysans ne disent pas à tout le monde qu'ils leur manquent de la terre , de l'espace. C'est à **lui** de demander, d'exprimer son besoin. 
+**mais tout le monde peut se douter** qu'un tel va avoir besoin de terres cette année, car tout le monde connait les limites de la jachère de l'année et l'emplacement des parcelles de chacun.
+
+
+Pour autant , l'état des relations sociales  pouvant changer , un paysan ne va pas toujours voir le même paysan pour lui demander le prêt d'une parcelle.
+
+Le prêt ne dure qu'un an car la **loi du domaine national** stipule que «si  tu cultives la même parcelle quelques années de suite, tu obtiens le droit d'usage [de la parcelle]» 
+
+
+«Ce n'est plus le chef de village qui tranche c'est le conseiller»
+
+«Souvent on essaye de régler les problèmes de propriété "socialement" mais si on abuse de la législation [loi du domaine national]  on peut s'emparer de terres [qui ne nous appartiennent pas] »
+
+«La loi [du domaine national] est arrivée trop vite, on a pas eu le temps d'adapter et d'informer»
+
+
 
 
