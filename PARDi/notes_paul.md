@@ -269,7 +269,7 @@ l'éclatement  **n'a pas** eu de **conséquences** sur l'orientation des pâtura
 [POV moi] Surprenant, mais il fallait vérifier ! 
 
 
-«L'éclatement des familles a eu un effet positif, car avant, une grosse famille pouvait maintenir[garder] quelques tire-au-flanc »
+>«L'éclatement des familles a eu un effet positif, car avant, une grosse famille pouvait maintenir[garder] quelques tire-au-flanc »
 
 
 Avec de petites familles, chacun doit travailler pour nourrir la famille.
@@ -289,9 +289,9 @@ Mais il semble qu'il existe une économie d'échelle sur la taille de la main d'
 
 
 
-«L'africain tentera tout pour éviter le morcellement»
+>«L'africain tentera tout pour éviter le morcellement»
 
-«[l'éclatement] c'est le dernier recours»
+>«[l'éclatement] c'est le dernier recours»
 
 Rarement , il peut y avoir des éclatements à l'amiable , en cas de décès par exemple.
 
@@ -309,13 +309,13 @@ Le droit moderne ignore cet aspect du croit ancestral. Il y a des conflits qui n
 Désormais c'est orienté sur le père : le bien du père est le bien de ses enfants
 
 
-«Avant c'était le bien commun» , i.e. entre frères. Notamment pour constituer les dots.
+>«Avant c'était le bien commun» , i.e. entre frères. Notamment pour constituer les dots.
 
 
-«Le changement du droit est trop brutal» 
-«la tradition était millénaire , on ne peut pas la changer si vite » 
+>«Le changement du droit est trop brutal» 
+>«la tradition était millénaire , on ne peut pas la changer si vite » 
 
-« ça se produit aussi sur les terres et ça nous bloque »
+>« ça se produit aussi sur les terres et ça nous bloque »
 
 
 Question de moi  : Je croyais que le droit moderne laissait la main au chef de village . Est-ce que c'est vrai ? I.e. le chef de village peut-il gérer à l'ancienne une situation moderne ? 
@@ -343,11 +343,69 @@ Pour autant , l'état des relations sociales  pouvant changer , un paysan ne va 
 Le prêt ne dure qu'un an car la **loi du domaine national** stipule que «si  tu cultives la même parcelle quelques années de suite, tu obtiens le droit d'usage [de la parcelle]» 
 
 
-«Ce n'est plus le chef de village qui tranche c'est le conseiller»
+>«Ce n'est plus le chef de village qui tranche c'est le conseiller»
 
-«Souvent on essaye de régler les problèmes de propriété "socialement" mais si on abuse de la législation [loi du domaine national]  on peut s'emparer de terres [qui ne nous appartiennent pas] »
+>«Souvent on essaye de régler les problèmes de propriété "socialement" mais si on abuse de la législation [loi du domaine national]  on peut s'emparer de terres [qui ne nous appartiennent pas] »
 
-«La loi [du domaine national] est arrivée trop vite, on a pas eu le temps d'adapter et d'informer»
+>«La loi [du domaine national] est arrivée trop vite, on a pas eu le temps d'adapter et d'informer»
+
+
+C'est arrivé à Marcel, qui a prêté des terres quelques années et les a perdues car les terres ont été exploitées suffisamment longtemps....
+
+
+Maintenant : tentative de concilier les deux (loi ancestrale et loi du domaine national) pour affecter les terres sans  détruire le **tissu social** du village [Rq moi: je mets en gras car c'est une des premières mentions du tissu social comme un commun à préserver] 
+
+
+La loi du domaine national fait que les terres des lignées maternelles ont disparu.
+Maintenant les terres se donnent de père en fils (en tout cas les terres neuves)
+
+
+
+## La solidarité 
+
+Question de romain : Comment se manifeste la solidarité en cas de manque de mil dans une cuisine ? (différent du manque de terre causé par la rotation de la jachère)
+
+
+Réponse : Prêter de la terre n'est pas la même chose que prêter du mil.
+
+
+>«Aider quelqu'un pour manger , il y a une croyance que ce sera rendu»
+
+
+Les cerrer aiment le secret, ils attendront la nuit pour donner de la nourriture et dépanner la cuisine.
+
+
+>«Les temps ont changé , on ne quittait pas le village avant, mais maintenant comme des gens de chaque famille sont à Dakar, ceux-ci ne voudraient pas que la famille ait à demander de l'aide au village et envoient de l'argent à la famille restée au village»
+
+
+
+[POV moi ] Il y a un achat symbolique du prêt de la terre, les acteurs parlent soit de "louer" , soit de "cadeau". Certainement une histoire de don à la Marcel Mauss 
+
+
+
+>«Il y a de la solidarité en face de l'insuffisance»
+En cas de maladie d'un paysan, le village se mobilise pour cultiver et récolter.
+De la nourriture est glissée sous la porte, les greniers sont remplis de nuit , sans le dire.
+**la discrétion est importante**
+
+
+
+Un ami de Marcel , lorsqu'il était parti , Marcel a pu lui donner du mil et de la semance d'arachide. En retour l'ami lui a donné [plutôt prêté] des terres quand Marcel en manquait.
+
+
+
+## La banque de céréales
+
+Il y a une **banque de céréales**.
+
+Chaque cuisine met 10kgs de quelque chose pour passer la soudure **période de l'année entre l'épuisement du stock de grain et la récolte**
+
+La banque prête des céréales contre une remboursement ultérieur , et vend des céréales.
+Elle est une forme d'institutionnalisation de la solidarité, [POV moi pour autant qu'elle soit vraiment locale et/ou gérée pour l'intérêt des paysans]
+
+
+Dans le passé , il y avait des **usuriers** de céréales , qui prêtaient à des taux de bâtards.
+
 
 
 
