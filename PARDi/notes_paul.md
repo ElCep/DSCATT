@@ -392,6 +392,14 @@ De la nourriture est glissée sous la porte, les greniers sont remplis de nuit ,
 
 Un ami de Marcel , lorsqu'il était parti , Marcel a pu lui donner du mil et de la semance d'arachide. En retour l'ami lui a donné [plutôt prêté] des terres quand Marcel en manquait.
 
+>«La solidarité est toujours là dans les évènements sociaux (mariages , funérailles) si on manque pour donner , des proches vont prêter»
+
+
+>«Il y a la parenté , la consanguinité [sans doute au sens de "partager le même sang"], la paix qu'on a trouvée»
+>«Tu sens pendant les mariages que tu es bien tenu»
+>«Pas facile de nous départager de la société»
+
+
 
 
 ## La banque de céréales
@@ -405,6 +413,355 @@ Elle est une forme d'institutionnalisation de la solidarité, [POV moi pour auta
 
 
 Dans le passé , il y avait des **usuriers** de céréales , qui prêtaient à des taux de bâtards.
+
+ 
+ Le taux d'intérêt de la banque du village (du remboursement) est environ de 10 % 
+
+
+Exemple de Marie Hélène : 
+
+Dans son village il y a une tontine.
+une femme du village était dans le besoin , elle voulait vendre une chèvre. À cette époque le "cours de la chèvre" était très bas : 10 kCFA. Marie Hélène lui a dit d'attendre pour vendre la chèvre et d'aller plutôt à la banque [ou à la tontine j'ai pas bien saisi] emprunter les  10 kCFA dont elle a besoin.
+2 mois après la femme vendait sa chèvre 30kCFA
+
+[POV moi: exemplification de fonction de buffer de la banque/tontine, mais également de l'activation du capital social : ici les conseils ]
+
+
+
+----
+
+
+Question d'Étienne : Comment les marginalisés s'insèrent dans la société ? 
+
+>«On peut pas exclure les usuriers»
+>«il existe des hypocrites, des gens qui n'ont cherché que le gain»
+
+
+Question : Coment est évaluée la fiabilité des gens ? 
+
+
+>«Vous savez on ne peut pas trop cacher les choses»
+
+
+
+## Famille émigrée et riz 
+
+Pendant la soudure , les problèmes sont réglés par la famille émigrée [partie en ville] qui envoie de l'argent. E.g. étudiantes vont faire des ménages à Dakar pour payer leurs études et fournir du riz à la famille restée au village.
+
+
+
+La consommation de riz a beaucoup augmenté , ce riz est financé par les membres de la famille partis en ville.
+
+La conso de mil est passée de 7kg par jour à 4kgs par jour dans une cuisine  
+
+
+
+## Acteurs : le chef de concession 
+
+
+Le chef de village a un rôle dans la gestion de conflits. 
+
+Pour la diffusions d'information et l'autorité dans la gestion de conflit, il y a une chaîne hiérarchique chef de village -> chef de concession -> chef de cuisine 
+
+
+>«un chef de concession est forcément au courant d'un problème que rencontre une cuisine de sa concession»
+>« En temps de paix il y a coopération entre chef de concession» et chef de cuisine»
+
+
+
+Le chef de concession a la responsabilité morale du chef de cuisine. Le chef de cuisine respecte, consulte et obéit au chef de concession
+
+Le chef de concession doit : 
+
+ - «être à la hauteur»
+ - protéger, «être devant» , en cas d'accident ou de maladie
+ - anticiper les conflits à l'échelle de la concession
+ - aller voir les paysans alentours pour demander un lopin quand un chef de cuisine en a besoin [Rq : ce fait est curieux car plus tard on apprend que la négociation pour le prêt de terre est strictement entre agriculteurs, dyadique et secrète]
+
+ MAIS 
+
+ pas d'**ingérence** dans la cuisine , qui reste le domaine du chef de cuisine
+
+
+
+>«C'est au niveau des cuisine que s'il y a la paix sociale , ça peut se propager» [Rq : fait intéressant qui va dans le sens de la paix sociale vu comme une émergence forte ]
+
+
+
+Le chef de concession est un régulateur. 
+
+
+
+
+
+## L'arbre à palabres 
+
+
+à l'échelle d'**un quartier** 
+
+
+Arbre sous lequel se retrouvent les notables, les anciens et les adultes du quartier. Groupe principalement masculin, femmes et enfants sont mis a l'écart [et de manière générale rarement mentionnés].
+
+C'est un niveau intermédiaire de gestion des conflits,
+
+c'est  **le lieu public** du quartier [il ne semble pas y en avoir d'autres]
+
+
+- peut être choisi sur critère historique  : 
+	-  «c'est là qu'un notable responsable et droit habitait il y a longtemps»
+	- c'était le lieu de vie des fondateurs du village
+- parfois on y mange entre concessions proches
+- les enfants jouent à côté , les anciens jouent aux dames dessous
+- ce n'est pas le lieu des réunions de la première chasse
+- tradition très ancrée , séculaire «Le roi s'y arrêtait quand il voyageait»
+- [POV moi : similaire à l'Agora/Forum des latins]
+- on s'y rend pour résoudre les conflits
+- on y désigne le fautif
+- quand on présente un cas / une affaire au niveau hiérarchique supérieur ( i.e. chef de village par exemple) on dit que le fautif a été désigné sous l'arbre à palabres , qui agit comme une sorte de tribunal/cour très locale, du quartier. 
+
+
+[POV moi : je soupçonne une métonymie  entre l'arbre et les gens qui y vont.ça m'étonnerait pas qu'on puisse dire "j'ai averti l'arbre à palabres" ou "On va bien voir ce que l'arbre à palabres en pense" ]
+
+
+
+## Conflit et conciliation
+
+
+
+Apparition de la première chaîne de règlement des problèmes , la flèche signifiant  "en cas d'échec , c'est transmis à" :
+
+$Cuisine \rightarrow  Concession \rightarrow Notables \rightarrow Arbre à palabres $  
+
+
+
+
+
+Les **notables**  peuvent intervenir au niveau des concessions , comme conseillers, de même que certains chefs de cuisine, quand ils s'entendent bien.
+
+La relation entre notable et chefs de cuisines est étiquetée «bons offices et réconciliation» . La réconciliation passe d'abord par le chef de concession.
+
+
+La réconciliation **interne** est toujours privilégiée à la réconciliation externe. 
+
+
+Proverbe cerrer  : 
+> «Il vaut mieux avoir honte assis [dans une case en petit comité] que debout [devant le quartier/ la concession / l'arbre à palabres]»
+
+
+Il y a effectivement de  **multiples niveaux intermédiaires**  et autant d'**opportunités** de régler les conflits le plus **tôt** possible (i.e. à un petit niveau d'importance), avant, en cas d'échecs répétés lors de ces phases de (tentative de) réconciliation, de passer à une gestion plus formelle et juridique : avertir les représentants du pouvoirs / de l'état i.e. maire , sous-préfet , gendarmerie etc..
+
+
+Le chef de village peut envoyer un émissaire à l'arbre à palabres, afin de recueillir de l'information : plainte sur un conflit non résolu ou  villageois insatisfait.
+
+Un responsable de l'arbre à palabre est l'oeil et l'oreille du Chef de village , il témoigne et fait des compte rendus.
+
+
+
+Parfois , on ne passe pas par toutes ces antichambres :  Robert nous explique un conflit qui l'oppose à des cousins , pour lequel il est est allé directement à la mairie.
+La mairie a **déferré** l'affaire à l'arbre à palabres et un groupe de notable.
+
+CChaque fois que c'est possible, une instance du pouvoir / de justice  d'un niveau donné essaiera de faire **redescendre** la gestion du conflit au niveau inférieur.
+
+
+Monter haut dans les niveaux de justice est risqué , on peut se voir refuser des mariages ou d'autres faveurs ensuite , en représailles
+
+
+[POV moi : grosse incitation au local qui favorise la concertation, c'est peut être pour ça aussi que le nouveau droit est aussi contraignant et mal reçu : ça ne vient pas du bon niveau de justice  ]
+
+
+Parfois à l'issue d'un conflit, la mairie peut confisquer des terres, qui sont versées dans la réserve foncière, mais toujours cultivées, sous la responsabilité du conseiller municipal .
+Le sous préfet peut **geler** la terre , qui ne sera jamais cultivée jusqu'à nouvel ordre 
+
+
+
+Les parcelles **indéterminées** en mai sont **suspendues**, i.e. confiées aux conseillers qui les mettent au service des potentiels nécessiteux, mais qui restent la propriété de leur propriétaire
+
+
+[POV moi : Intermède socio de comptoir :  définition de construit social pour l'avoir sous la main quand les collègues ne me croient pas quand je dis que c'en est  :  Ensemble de règles, de normes et d'actions, qui ont été crées et fondées par l'interaction répétée et durable d'acteurs sociaux, parfois institutionnalisées et transformées en traditions, et qui ont besoin de pratiques sociales pour continuer d’exister, et produisent des effets reconnus. 
+
+Sinon pour se mettre à l'os , définition de Hacking :  il faut au moins deux conditions nécessaires et suffisantes pour que X soit un construit :
+
+- dans l’état actuel des choses, X est tenu pour acquis, X apparait comme inévitable.
+- Néanmoins : X n’a pas besoin d’exister ou d’être comme il est en quoi que se soit. X tel qu’il est aujourd’hui n’est pas inévitable. 
+
+
+
+Autre caractéristiques utiles :
+- les gens concernés par un construits peuvent réagir (incorporer , rejeter , critiquer, modifier) à la catégorisation sociale induite par le construit 
+- le constructivisme rejette l'hypothèse de nature des choses , essentialiste . C'est comme ça parce que c'est comme ça   
+]
+
+
+
+
+REtour sur les acteurs mystiques : saltigués et vielles mamans font des prières , donnent des grigris et des protections tout au long de la saisons pour protéger es attaques , des sécheresses tant que la récolte est pas faite, la responsabilité du saltigué est engagée.  
+
+
+
+
+
+Question : comment est débattue la jachère  ? 
+
+
+Chaque quartier fait ses orientations, puis de petites enquêtes ont lieur entre les quartiers, les quartiers s'entendent sur l'orientation.
+
+>«le gros de la jachère est connu , on arrondit les angles sur les petits problèmes»
+
+
+Question : Comment ça se passe quand certains veulent quitter la jachère ? 
+
+
+
+Réponse : la décision est privée "par quartier" , elle n'est pas prise  sous l'arbre à palabres , elle est individuelle (la personne propriétaire peut décider de cultiver dans la jachère)
+
+
+
+De manière générale , il faut 1, 2 ou 3 actes "malveillants" pour qu'il y ait une "sanction" à la quatrième.
+>«Les sanction sont très rares , mais ça arrive quand on attaque les us et coutumes» 
+
+
+Les problèmes de jachère arrivent sur le pourtour de la jachère , jamais au ileu, c'est plus facile de sortir de la jachère pour des parcelles du pourtour.
+
+
+La sortie ou le retour dans la jachère n'est **jamais verbalisé** mais constaté par tout un chacun.
+
+
+
+
+
+
+Robert : Il y a des griots , qui ne sont pas mentionnés par les autres acteurs, qui n'étaient ni agriculteurs ni éleveurs, assez "faibles" [au sens social? ] qui voulaient abandonner la jachère.
+Même quand un agriculteur contre la jachère décide de délimiter un champ dans la jachère, il y a des dégâts sur son champ pendant la nuit car les petits bergers laissent entrer les bêtes, mais comme ça arrive de nuit , on ne sait pas qui c'est, on ne le constate que le lendemain quand il fait jour. 
+
+
+
+Dans les années 1990 , 
+plan d'Occupation et d'Aménagement des Sols , co-construits par la population et l'État 
+Notion de vocation de la terre :  Si tu fais pâturer dans une parcelle à vocation agricole, à charge à toi de "remettre" la parcelle à sa vocation après ton usage. 
+
+
+
+Dans certains villmages à traditions d'élevage moindre, la jachère n'est pas restée longtemps.
+
+On peut pâturer partout , quelque soit le quartier dont la terre est en jachère
+
+
+
+Mercredi 20 octobre
+
+
+
+(reprise du modèle Acteur - Ressources) entrepris la veille
+
+
+
+les Champs de case sont enrichis par les déchets de la cuisine et le compost de la cuisine
+
+
+Les champs intermédiaires (dénomination faite par des scinetifiques toubabs) sont entre les champs de case et les champs de brousse
+
+
+le champs de brousse sont plus loin des cases , c'est là qu'on fait pâturer  
+
+
+
+
+Trois types de sol : 
+
+-  Sableux (Dior) , favorables aux autres céréales
+-  Argilo-sableux ( Dekk Dior) , favorable au mil et Sorgo 
+-  Argileux (Dekk) , favorable  au sorgo 
+
+Le bissap , le néibé et la pastèque s'adaptent partout 
+
+
+Les advantices sont alissées sur le champ pour être mangées par les animaux. 
+
+
+Une partie des tiges de Sorgo est utilisées pour faire des clôtures
+
+
+
+
+
+## La paille 
+
+La paille d'Arachide et de Niébé est stockée à la maison.
+
+La paille de mil est rationnée mais laissée sur le champ pour plus tard, pour les animaux 
+
+
+la différence entre agriculteur et éleveur : c'est l'éleveur qui nourrit les animaux avec la paille, même si elle est produite par l'agriculteur [?]
+
+une partie de l'herbe est ramassée par les **éleveurs** pour renforcer leur stock (action anticipée) si le stock est insuffisant
+
+
+
+À cause de la météo et du changement climatique , il y a beaucoup d'incertitude, ce qui fait que : 
+>«pour un éleveur c'est difficile d'évaluer [la quantité pour] l'auto-suffisance alimentaire de son troupeau»
+
+
+
+## L'embouche 
+
+
+il s'agit d'élever des animaux pour les engraisser et les vendre au poids.
+Les bêtes sont vendues au marché , pour les fêtes , etc.
+
+Marcel a embouché un beouf qu'il a vendu + d'un million de CFA
+
+
+
+
+
+## Engrais chimiques 
+
+
+
+l'engrais est **donné** par petites doses dans des semances : e.g. un petit sachet de graines(semances) de pastèques déja traitées 
+
+
+engrais KPN, les paysnas cerrer trouvent du PN et du PK sur le marché.
+Mais aucun ne dose leur terre, même pas le pH
+
+
+
+les 4 acteurs  réunis sont conscient du déséquilibre induit par l'utilisation d'engrais dans le système (sols + santé + rendements) 
+
+
+
+
+
+Question : est-ce que les producteurs d'engrais organisent la pénurie pour grossir le prix de vente ? 
+Reponse : 
+
+
+L'engrais est si rare et mal vendu / acheminé jusqu'au paysans , **qu'il ne se prête pas**.
+
+L'État achète de l'engrais : c'est l'engrais subventionné .
+Acheminé aux mairies , en quantité proportionnelle à la taille du village  + favoritisme aux villages qui payent des impôts. 
+
+
+Question de moi : Y a til du vol d'engrais ? 
+réponse : non 
+
+Au temps de Senghor , il y avait des stock d'engrais dans les coopératives
+Ablaye 1er a démantelé les coopératives, maintenant c'est un marché : la loi du plus fort. Le plus fort financièrement a la main sur l'engrais
+
+
+>«L'état finance des milliards d'engrais les paysans n'en voient pas la couleur»
+
+
+
+
+
+
+
+
+
+
+la scolarisation a réduit la quantité de cheptel , car les enfants devaient aller à l'école et ne pouvaient plus garder les bêtes.
+Exemple de Marie Hélène qui a dû quitter l'école car son père avait trop peu d'enfant pour tenir la cuisine et l'exploitation 	
 
 
 
