@@ -39,7 +39,7 @@ Premier listing des acteurs
 
 Le chef de concession n'est pas le chef de toutes les cuisines. Il peut proposer aux chefs de cuisine de semer tel ou tel jour, mais il ne **peut pas** dire [imposer] aux cuisines ce qu'il faut faire 
 
->  « Chez les cerrer on aime la concertation»
+>  « Chez les sérère on aime la concertation»
 
 L'action agricole concertée/ synchronisée se fait à l'échelle du quartier ou du village 
 
@@ -95,7 +95,7 @@ Point de vue divergent [Idi] : la pâture ne doit pas enfreindre sur l'agricole.
 Distinction champs de case (proche habitations) des champs de brousse. 
 Les champs de case sont toujours fertiles , à cause des ordures ménagères
 
-Parfois champs intermédiaires (dénomination par des scientifiques non cerrer) entre case et brousse
+Parfois champs intermédiaires (dénomination par des scientifiques non sérère) entre case et brousse
 
 Précision : Paul qui vit dans le village A peut avoir un champ de case dans le village B 
 
@@ -276,10 +276,10 @@ Avec de petites familles, chacun doit travailler pour nourrir la famille.
 Cela peut entraîner un surplus [de récolte] , qui est plus ou moins visible suivant la situation de chacun.
 
 
-Proverbe Cerrer : «Il n'y a pas toujours assez de nourriture»  [POV moi : ça veut tout dire sur leur sécurité alimentaire]
+Proverbe sérère : «Il n'y a pas toujours assez de nourriture»  [POV moi : ça veut tout dire sur leur sécurité alimentaire]
 
 
-Le surplus dure rarement car il y a toujours une personne dans le besoin, et la solidarité est une valeur cardinale de la société cerrer
+Le surplus dure rarement car il y a toujours une personne dans le besoin, et la solidarité est une valeur cardinale de la société sérère
 
 
 Question de nous :  Le rendement d'une famille est-elle une fonction croissante de sa taille ? 
@@ -372,7 +372,7 @@ Réponse : Prêter de la terre n'est pas la même chose que prêter du mil.
 >«Aider quelqu'un pour manger , il y a une croyance que ce sera rendu»
 
 
-Les cerrer aiment le secret, ils attendront la nuit pour donner de la nourriture et dépanner la cuisine.
+Les sérère aiment le secret, ils attendront la nuit pour donner de la nourriture et dépanner la cuisine.
 
 
 >«Les temps ont changé , on ne quittait pas le village avant, mais maintenant comme des gens de chaque famille sont à Dakar, ceux-ci ne voudraient pas que la famille ait à demander de l'aide au village et envoient de l'argent à la famille restée au village»
@@ -544,7 +544,7 @@ La relation entre notable et chefs de cuisines est étiquetée «bons offices et
 La réconciliation **interne** est toujours privilégiée à la réconciliation externe. 
 
 
-Proverbe cerrer  : 
+Proverbe sérère  : 
 > «Il vaut mieux avoir honte assis [dans une case en petit comité] que debout [devant le quartier/ la concession / l'arbre à palabres]»
 
 
@@ -721,7 +721,7 @@ Marcel a embouché un beouf qu'il a vendu + d'un million de CFA
 l'engrais est **donné** par petites doses dans des semances : e.g. un petit sachet de graines(semances) de pastèques déja traitées 
 
 
-engrais KPN, les paysnas cerrer trouvent du PN et du PK sur le marché.
+engrais KPN, les paysnas sérère trouvent du PN et du PK sur le marché.
 Mais aucun ne dose leur terre, même pas le pH
 
 
@@ -751,11 +751,7 @@ Ablaye 1er a démantelé les coopératives, maintenant c'est un marché : la loi
 
 >«L'état finance des milliards d'engrais les paysans n'en voient pas la couleur»
 
-
-
-
-
-
+Marcel attendait 10 sacs , et il s'estime chanceux d'avoir pu en toucher un 
 
 
 
@@ -766,4 +762,625 @@ Exemple de Marie Hélène qui a dû quitter l'école car son père avait trop pe
 
 
 
+Question de Robert : faut-il introduire [dans le modèle] l'acteur "revendeur de semence" ? 
+
+Les revendeurs fournissent beaucoup de semences, surtout celles d'arachide.
+Il y a les mêmes problèmes que pour le maïs : les semences hybrides s'appauvrissent avec les générations
+
+
+"variété population" : variété stable dans le temps , mais rendements moindres
+"variété hybride" : pas stable, se déshybride de génération en génération, mais rendements élevés.
+
+Adaptation de la semence à la parcelle : 
+
+>«La fertilité compose la parcelle» 
+
+
+
+## retour sur le saltigué
+
+Ajouts à propos du saltigué , son influence s'étend aussi à : 
+
+- la pluviométrie
+- la population 
+- la santé des plantes et des parcelles
+
+
+la zone de chalandise du saltigué est vaste et "trans-cuisine" : hommes, animaux, parcelles, santé
+
+
+
+Le saltigué est alimenté en information à l'issue des réunions nocturnes la veille de la première chasse
+
+Si le combat est trop difficile, il appelle ses collègues saltigués pour se grouper et être plus fort dans le combat
+
+[Pov moi : encore un exemple de regroupement face à l'adversité]
+
+
+Le conseil des femmes (vieilles mamans) est plus centré sur leur localité / groupes de quartiers, mais elles s'unissent aussi pour des problèmes qui concerneraient un/leur groupe de quartiers
+
+
+
+>«les arbres attirent la pluie»
+
+
+Effet positif de l'arbre faidherbia (Faidherbia albida- épicea gris à toutes petites feuilles) sur la fertilité 
+
+
+::: info
+Petit détour sur le Faidherbia, l'arbe magique qui sauve tout le monde 
+Il pompe  la nappe phréatique profonde et concurrence pas les autres plantes, 
+pendant qu'il pleut , il pompe  les eaux de surface quand il pleut 
+résistant à la sécheresse , 
+il pousse à rebours des plantes (perd ses feuilles à la saison des pluies et verdit à la fin des pluies) 
+les feuilles qui tombent enrichissent le sol et favorisent la pousse au début de la saison des pluies, 
+il fait de l'ombre pendant la saison chaude , 
+les fruits sont mangeables par les animaux 
+:::
+
+
+
+
+
+Marcel donne son point de vue : il insiste sur l'intérêt pour l'agriculteur de la paix sociale, et insiste sur réciprocité de l'entraide.
+
+
+## le troupeau 
+
+On découvre que les troupeaux ne sont pas forcéments disjoints (par cuisine)
+Le troupeau contient potentiellement des bâtes qui appartiennent à tous.
+
+Le troupeau est une banque / un portefeuille
+
+
+Quand un individu insère un animal dans le troupeau, il ne prévient pas tout le monde de l'arrivée de l'animal.
+En cas de problème (vol, maladie), on finira par demander les information de propriétés.
+Le troupeau s'élargit **au delà des limites de la concession** [Pov moi : ça nous arrange pas pour la  future modélisation]
+
+
+
+
+
+
+## Contours du domaine de la paix sociale 
+
+
+
+La paix sociale repose sur de multiples sous-systèmes de liens : 
+
+- concessions, parcelles 
+- travaux agricoles prêt outillage et animaux de trait
+- troupeau fumure 
+- banque de céréales
+- dettes et dons 
+
+
+
+
+
+## Exode et diaspora 
+
+
+L'exode est forcé 
+
+>«C'est comme la transhumance, les bêtes ne partiraient pas s'il y a avait assez d'herbe »
+
+
+**Mais** les gens partis à la ville sont quand même des acteurs  : il y a unité de temps et de lieu. 
+Communication (whatsapp), support financier, intervention spontanée
+En cas de gros pépin tout le monde revient au village, mobilisation par téléphone et internet et au sein du village
+
+E.g. Un marabout maléfique et sa milice commençait à vouloir imposer sa loi à Diohine , tout le est revenu pour lui péter sa gueule, il a fui à temps, mais on a brulé sa maison. Tout le village y compris la diaspora s'est mobilisé quand la police est intervenue pour prendre les dépositions.
+
+
+
+
+
+Question de moi : Y a t'il un parallèle entre paix sociale et fertilité ? 
+Réponse de Paul : oui : le point commun c'est que tous les éléments y participent, ce sont 2 éléments capitaux pour le bonheur.
+
+
+[POV moi] il y a un couplage entre maintien de la paix sociale et  application modérée du droit foncier
+
+
+[POV Etienne] Dans tous les shcémas /modèles , **il n'y a pas d'argent** 
+
+[POV Romain] Fertilité et paix sociale sont des moyens de productions
+
+
+[POV moi] C'est surtout  un **capital social** plutôt que des moyens de productions, dont la définition est plutôt physique, en tout cas non-humaine.
+
+
+
+Robert  : L'eau n'apparaît pas dans le modèle
+
+
+Les acteurs semblent avoir besoin de modéliser un sous système de gestion de l'eau car il y a l'ASUFOR (collectifs d'usagers du forage)  , la mairie qui la gère , l'école et l'hôpital qui la consomme
+
+3 types d'eau : eau de forage , de mare et de puits
+
+
+Comment ça va toi ? en sérère  : Na (comment) fi (ça va) yo (toi) ?
+
+
+
+----
+
+Jeudi 21  Octobre 
+
+
+
+Les acteurs ajoutent une petite nuance sur le fumier des petits ruminants : s'il y en a suffisamment , les agriculteurs l'utilisent comme la fumure du gros bétail
+
+Toute la paille n'est pas laissée dans les champs, on la ramène dans les maisons , les greniers.
+
+
+
+
+
+## conflit entre agriculteur et éleveur
+
+
+
+Idirissa : 
+
+>«Même s'il y a de l'entraide, il y a toujours des conflits entre  agriculteurs et éleveurs»
+
+une sorte de mélange entre entente et méfiance entre les agriculteurs et les éleveurs 
+
+Proverbe sérère : 
+
+>«Il ne faut pas avoir un éleveur à côté de soi»
+
+
+Le conflit s'incarne dans la présence (anormale) d'animaux dans une parcelle : la **divagation**
+
+
+Le terme **divagation** ne désigne pas l'intention de celui qui a laissé les bêtes divaguer, mais le résultat qui est décrit par ce mot	: les dégâts dans les champs , les vergers, les jardins 
+
+Il y a de la divagation inoffensive, et de la divagation plus grave.
+
+
+L'éleveur est responsable des ses bêtes
+Les clôtures sont de la responsabilité du propriétaire de la zone.  
+S'il n'y a pas de clôtures, c'est la faute du propriétaire du jardin ravagé ! 
+
+
+
+
+
+Lors du constat [des dégâts], on évoque une **compensation**	
+
+
+L'arbre à palabres est vu comme la dernière chance . 
+Les anciens et les notables y sont conviés pour convoquer le souvenir et les antécédents des familles des partis impliqués dans le conflit 
+L'issue du jugement de l'arbre à palabres est incertaine 
+
+
+Toute cette dynamique sociale de conciliation ne s'active que pour des conflits internes, au sein de l'ethnie sérère. 
+Si le conflit  implique un étranger à l'ethnie, le conflit est directement porté au chef de village
+
+
+En cas de flagrant délit de divagation, le propriétaire de la parcelle ravagée **peut** emmener les animaux à la **fourrière municipale**.
+ça dépend de la colère du propriétaire et de l'étendue des dégâts.
+Si les dégâts sont importants, il n'y aura pas de long processus de conciliation emprunt de préservation de la paix sociale : ce sera direct à la fourrière ! 
+
+Il y a alors un droit de conduite à payer : 10% de la compensation est versé à l'agriculteur pour avoir ramené les bêtes [à la fourrière]
+
+
+L'estimation des dégâts sur les terres par les animaux est faite **au nombre d'empreintes  de sabots sur le sol**
+[POV moi : magnifique exemple de stygmergie pour mesurer, intégrer le processus dans le temps et dans l'espace ]
+
+
+
+
+Il semble que le processus de plainte au chef de village revient à tempérer ou calmer le **plaignant**
+
+
+
+la constatation des dégâts est faite **collectivement**  
+
+il y a des circonstances atténuantes, mais le constat des dégâts se confond avec la **preuve**. 
+L'intention [du fautif] semble indépendante du dégât, car nul n'est sensé laisser des bêtes sans surveillance , sans berger
+
+
+>«on essaye de rendre des raccourcis, d'alléger les choses, plutôt que d'allonger l'affaire dans la loi et sa largeur»
+
+[Pov moi: géométrie du droit ! ]
+
+
+les cerres cherchent à **éviter  de subir la loi** car 
+
+>«le tribunal c'est plus dur , c'est des délits, c'est plus dangereux pour tout le monde [plaignant et fautif] »
+
+Si une affaire est portée jusqu'au tribunal, ce sont des agents représentant le ministère de l'agriculture qui constituent les pièces à conviction.
+
+
+
+
+Confirmation que quelque soit le niveau de décision/conciliation, il y a toujours une incitation à régler le conflit au niveau d'en dessous, au niveau plus local.
+
+Car chaque étape , chaque niveau supérieur devient plus compliqué. La zone du conflit augmenter et le nombre de personnes impliquées aussi, donc le risque aussi, ainsi que la somme probable à payer ! 
+
+
+Marcel fait une métaphore avec l'incendie pour une affaire qui enfle et escalade les niveaux : 
+il faut l'éteindre tôt , sinon il s'étend dans l'espace (social)  et si la gravité des dégâts est trop importante, les dégâts deviennent structurels
+
+
+Ce genre de conflits ne doit pas être sous-estimé , par exemple c'est ce qui pouvait causer les guerres à l'époque féodale 
+
+>«la paix a été acquise difficilement »
+
+
+Étienne détecte des valeurs communes et partagées/entretenues
+
+ - préserver la paix sociale 
+ - ne pas causer du tort
+ - compenser le tort
+
+
+Les acteurs ne semblent pas d'accord 
+
+Pov Paul : la première valeur c'est le **respect** 
+la deuxième valeur c'est de **montrer le repentir** par le comportement 
+
+
+
+Dans tous les cas (indépendamment des valeurs citées ou reconnues par nous ou les acteurs)) , il y a un processus d'actualisation (de rééquilibrage) du réseau de respect / bonne entente 
+
+Autre cas de figure : 2 boeufs se battent, l'un tue l'autre. Le propriétaire du boeuf mort repart avec le boeuf survivant
+
+
+Avant de saisir les instances de conciliation (du quartier au village en passant par l'arbre à palabres), il y a des avertissements, plusieurs. 
+Si rien ne se passe , alors on saisit les instances
+
+
+POV moi : Proposition de systèmes de valeurs  / caractéristiques qui ressortent dans la description des acteurs des intéractions sociales autour du conflit : 
+
+- Calmer tôt
+- Dire 
+- Écouter / tenir compte 
+- Faire "petit"
+- Égaliser / Équilibrer
+- Participer
+- Soutenir 
+- Collectiviser (tout évènement où il y a un investissement : cérémonies, remboursement , réparation)
+
+
+
+Idrissa , proverbe sérère 
+>«Le champ ne se déplace pas pour trouver les bêtes»
+
+i.e. la responsabilité en cas de divagation, c'est les bêtes, donc le propriétaire 
+
+>«L'éleveur n'a jamais raison»
+
+
+
+Question Étienne : pourquoi il existe encore des éleveurs ? 
+
+S'il existe des interdépendances [POV moi : il y a des transactions, donc des intérêts bien compris] et des rapports de forces équilibrés entre agriculteurs et éleveurs, on peut se poser la question : A quel point le système dépend de l'élevage sur la fertilité ? 
+
+Réponse (paul) On prête les animaux pour travailler , le fumage des terres fait des récoltes extraordinaires
+
+Réponse (Idrissa)  le troupeau fait porte-monnaie, il fait banque 
+
+>«Ici le richesse c'est les vaches» 
+
+
+le troupeau fait tampon , en cas de coup dur , on vend une bête. Typiquement pendant la soudure.
+
+
+> Paul : «C'est pour ça que la jachère ne va pas disparaître»
+
+
+
+Étienne revient sur la fertilité : La fertilité est-elle une conséquence positive du troupeau ? y-a-t'il une action collective sur la fertilité ? 
+
+Réponse Paul : Oui : reboisement , protection des petits buissons, divers projets avec les instituts
+
+La pauvreté des sols est discutée en permanence  sous l'arbre à palabres
+
+
+Pendant les cérémonies (réunions diurnes de la première chasse) il n'y a pas que de la divination , c'est aussi l'occasion de faire le bilan de l'année sur le contexte et les pratiques (agricoles) .
+les divinations seront décryptées plus tard.
+
+
+-----
+
+Vendredi 22 octobre
+
+
+Rappel de la problématique du projet : 
+
+Explore le lien entre structure démographique et  utilisation du sol [Pov moi : encore trop flou, à préciser , surtout structure démographique]
+L'idée est que la jachère est une manifestation de la paix sociale .
+
+
+
+---- 
+
+L'année dernière il y a eu moins de pluie (83mm)  que l'année précédente (106mm)
+
+Le tapis herbacé de cette année , celui qu'on a vu en allant voir le marigot, c'est pas représentatif de la qualité habituelle du tapis.
+
+Question de nous : on propose un mécanisme général basé sur la **réputation** , qui serait alimentée / mise à jour  par 3 intéractions : 
+
+- le prêt de terre
+- le don de mil -> en fait non (!) 
+- participation à la jachère
+
+
+Réponse de Paul : 
+
+On part de l'**insuffisant** ,le  manque de terre. La première chose c'est la demande de terre.
+>«Il est très rare qu'une cuisine ait **toutes** ses parcelles dans la jachère»
+
+
+
+
+car dans l'éclatement , on fait attention lors du partage et surtout on tient compte des enfants garçons , car eux ils restent, produisent mais également coûtent.
+
+
+
+Pour la demande de mil, : les gens sont réticents à demander de l'aide , à la différence de la réparation des dégâts
+
+Seuls les castés (griots, forgerons, laobés) osent demander du mil. 
+
+Beaucoup plus souvent , il y a **anticipation** , un don **avant** la demande 
+
+La banque joue aussi : les gnes vont à la baque bien avant de demander à manger. 
+
+Et la solidarité des membres d'une cuisine qui sont partis , et qui financeront la nourriture si elle venait à manquer dans une cuisine 
+
+
+>« Ils ont réussi , ils sont partis»
+
+>« le fonctionnaire a l'argent chaque mois»
+
+
+
+En conclusion : pas de demande de bouffe dans le modèle !
+
+
+-----
+
+La loi moderne indique que la terre  "libre" doit être dispatché entre tous les gens en situation d'insuffisance.
+mais cette loi n'est pas appliquée , on prêt les terres aux autres bien avant, il n'y a jamais de terre laissée libre et la loi ne s'applique donc pas 
+
+
+
+Le partage sérère est équitable entre les enfants garçons mais pas égalitaire.
+La priorité est donné aux aînés en terme de fertilité , taille et proximité des parcelles partagées
+
+
+De même si un des enfants est fonctionnaire , il est plus stable 
+
+
+## Démographie et naissance 
+
+Question  : Y a t'il une tendance à la limitation des naissances ?
+Réponse : ça commence , la tendance est naissante. Avant , on pouvait grosso modo attendre un enfant tous les 2 ans à partir du mariage, maintenant c'est plutôt 6 ans
+la moyenne d'enfants par femme est de ~ 5
+
+
+
+## Réputation des villageois
+
+
+
+ceux qui ont acquis la terre parce qu'ils l'ont cultivée plusieurs années de suite ont mauvaise réputation 
+
+
+Si un agriculteur travaille comme un sagouin , on lui prête pas la terre
+
+
+Question : qu'est ce qui fait un bon cultivateur ?
+
+Réponse :  le sarclage , au moins 2 fois par an , aérer le sol, entretenir les parcelles
+
+
+
+
+
+>«la mauvaise culture c'est celle de celui qui ne produit pas à partir de la terre»
+
+MAl exploiter la terre c'est dommageable car on aurait pu la confier à quelqu'un d'autre , plus compétent
+
+
+>«c'est comme le mauvais élève dans une classe , il faut le virer , il prend la place d'un potentiel bon élève»
+
+Il y a aussi la notion de faire honneur au prêteur 
+
+>«Si dans un champ prêté , je peux apporter de la fumure ou de l'engrais, je suis un bon cultivateur» 
+
+Robert nuance : on ne met pas toujours de fumier lors de l'année courrante , car le bénéfice arrivera l'année prochaine , quand on ne cultivera plus cette terre qui aura été rendue
+
+>«Le mauvais travailleur a du mal à se marier»
+
+
+Le paysan sérère conserve et entretient la terre , même s'il ne la possède pas . 
+
+
+Robert : le paysans sérère joue sur **l'intérêt** : on prête au plus offrant  , au moins risqué
+
+Seuls les propriétaires de troupeau empruntent des champs en jachère, ils s'en servent 2 saisons : 1 an de fumure, 1 an d'exploitation.
+
+
+Critères utiliser  pour décider de prêter la terre : 
+
+- le risque associé  / l'assise financière du demandeur
+- le cheptel du demandeur 
+- la qualité perçue du travail du demandeur
+
+
+
+----
+
+la connaissance à propos de la fertilité des terres à un instant est partagée en quasi-broadcast , lors des réunions diurnes et sous l'arbre à palabres
+
+Si il y a un effet néfaste de quelque chose, on interpelle les gens pour prévenir / avertir
+
+
+paul :
+
+>«Entre deux emprunteurs , on essaye de voir le plus nécessiteux»
+
+
+>«Il faut aller **très tôt** demander l'emprunt de terre»
+ L'ordre est plus ou moins fixé 
+
+
+ refuser un prêt ne chage pas la confiance dans / la réputation de la personne qui refuse, ni de la personne à qui on a refusé le prêt.
+
+
+Il y a toujours un petit cadeau : du thé , du sucre , les anciens amenaient des feuilles de tabac au prêteur .
+
+
+
+
+Celui qui a de la terre en excès la prête toujours au final (dans «70% des cas») , mais il ne fait aucune démarche , il attend toujours qu'on vienne lui demander (sauf cas intra familiaux très marginaux) 
+
+-----
+
+
+Déboisage :  avant on le faisait à la main , ça repoussait , mais maintenant les charreus ont arraché trop de racines des arbres qui auraient dû reopousser 
+
+
+Augmentation de la population : [POV moi les acteurs insistent pas mal sur cette contrainte ]
+
+le taux de mortalité était assez élevé avant (poliomyélite et paludisme) 5 millions d'enfants mouraient par an.
+Maintenant qu'il n'y a plus cette mortalité , c'est la démographie qui cause la difficulté  
+
+
+
+## Métriques et mesures et quantité et ordres de grandeur
+
+
+1 ha de Mil bine entretenu avec fumure , c'est 60 à 80 bottes
+si on ajoute de l'engrais chimique, ça peut atteindre 100 bottes
+
+
+Au bout d'une longue discussion , les acteurs convergent vers un consensus sur le poids d'une botte de Mil (en grain) ~ 10kgs de grain par botte
+
+
+
+1kg de Mil nourrit une personne 2 jours
+1 kg de riz nouttir 4 jour une personne
+
+-----
+
+
+### Arachide 
+
+plusieurs facteurs détermienent le rendement : qualité de la terre , qualité des semences (selection ou vulgarisation), mil l'an passé (qui fixe le phosphate)
+
+semances selctionnées : 1200 kg par ha 
+semances vulagrisées : 6000kg par ha
+
+
+Si pas de mil cultivé sur le champ l'année passée : 200kgs par ha
+
+Si mil cultivé l'an passé + parquage des bêtes  300-600kgs par ha 
+
+Si mil cultivé l'an passé sans  parquage des bêtes  300 par ha 
+
+
+prix de l'arachide , fonction de la qualité de la graine 
+
+400 CFA le kg pour du haut de gamme 
+125-200 CFA le kg pour le bas de gamme
+
+
+prix fixé par l'état : 225CFA le kg 
+
+
+Des spéculateurs achètent plus tôt , en dessous du prix de l'état
+
+
+
+Avant : 2kgs d'arachide valaient  1 kg de riz
+Promesse de l'état : 1 kg d'arachide vaut 2kg de riz 
+
+
+-----
+
+engrais 3sacs ,150 kgs par hectare
+
+
+Cultiver le mil ou non , ça dépend des terres
+cultiver l'arachide ou non ça dépend de la pluviométrie et sa répartition dans le temps et l'espace , car ça fait varieri la **densité** des graines et donc le poids des sacs.
+
+------
+
+### Cheptel  
+
+
+Il est impossible de connaitre le cheptel des acteurs,  ça ne se demande pas , personne ne répondra la vérité à une telle question 
+cette réticence vient du passé où les bêtes étaient taxées au nombre de têtes de bétail donc les paysans étaient évasifs et cachaient les bêtes
+
+
+ordre de grandeur : 
+
+pour une famille de 5 à 10 personnes , 7 têtes de bétail suffisent
+pour une famille de 10 à 20 personnes , 15 têtes de bétail c'est confortable 
+
+
+Avoir un troupeau de + de 15 bêtes est difficile à gérer .
+Un troupeau de 50 bêtes ne peut pas rester dans le village [Pov moi : ils boufferaient tout ?] 
+le troupeau doit partir, ou on le confie à un autre.
+
+Pour autant avoir beaucoup de bêtes n'est pas un problème **tant qu'il y a de quoi les nourrir**
+
+
+Si on donne une bonne nourriture , en quantité,  et dans le temps , à une vache, elle fait 1 veau par an 
+Maintenant c'est moins que ça, avoir un veau par an est plus rare , ça oscille entre 0.3 et 1 veau par an 
+Il y a toujours un taureau géniteur dans un troupeau
+
+
+Question de nous : Estimation du destockage dans le troupeau pour couvrir un évènement aléatoire (type conflit ou maladie ) 
+Réponse : en fait on ne donne pas les bêtes du troupeau 
+On les vend pour la **construction**
+Marcel a vendu et/ou perdu 5 bêtes l'année dernières, il en a acheté  une pour compenser 
+
+
+estimation de Paul : une cuisine de 30 personnes vendra 3 bêtes en 3 ans 
+
+
+### Petits ruminants
+
+Pour une cuisine de 10 personnes **sans vaches** 
+
+les acteurs disent le nombre qu'ils estiment suffire , puis celui confortable 
+Marcel 10 | 15 
+Marie-Hélène 10 | 15  
+Idrissa 20  | 30 
+Paul 15-20 | 25 
+
+
+la fumure produite sera bonne mais couvrira peu de surface 
+
+
+Taux de reproduction des chèvres entre 1 et 2 chevreau par an en cycle normal 
+
+
+[POV Paul]
+>«La chèvre c'est l'opportunité du paysan, les moutons mangent 2 à 4 fois plus mais tout le monde ne le voit pas. Elle se contente de peu , peut broutter en brousse »
+
+
+
+## Premier retour des acteurs 
+
+
+[POV Idrissa]
+>«[en parlant du schéma synoptique] On a la connaissance dans le modèle, amis on l'a jamais vu comme ça »
+
+>«on[les acteurs]  est chacun plus pointus sur certains sujets, on s'est complétés pour faire apparaître [le schéma] »
+
+
+
+[POV Paul] 
+très optmiste , apprécie l'idée , la manière de procéder et le climat entre nous tous 
+
+>«on vit des réalités dont on prend pas conscience»
 
