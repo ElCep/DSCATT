@@ -1366,21 +1366,3 @@ Taux de reproduction des chèvres entre 1 et 2 chevreau par an en cycle normal
 
 [POV Paul]
 >«La chèvre c'est l'opportunité du paysan, les moutons mangent 2 à 4 fois plus mais tout le monde ne le voit pas. Elle se contente de peu , peut broutter en brousse »
-
-
-
-## Premier retour des acteurs 
-
-
-[POV Idrissa]
->«[en parlant du schéma synoptique] On a la connaissance dans le modèle, amis on l'a jamais vu comme ça »
-
->«on[les acteurs]  est chacun plus pointus sur certains sujets, on s'est complétés pour faire apparaître [le schéma] »
-
-
-
-[POV Paul] 
-très optmiste , apprécie l'idée , la manière de procéder et le climat entre nous tous 
-
->«on vit des réalités dont on prend pas conscience»
-
