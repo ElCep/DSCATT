@@ -1,12 +1,13 @@
 # Notes des Séances ComMod  Diohine Social Club
 
 
+[TOC]
 
 
-## Lundi 
+# Lundi 
 
 
-Rencontre des acteurs : 
+## Rencontre des acteurs  
 
  - Paul 
  - Marcel / Lathir
@@ -20,7 +21,7 @@ Rencontre des acteurs :
 > Comment préserver une gestion foncière concertée ? 
  
 
-Premier listing des acteurs
+## Premier listing des acteurs
 
 - conseillers municipaux (élus pour 5 ans)
 - agriculteur
@@ -34,7 +35,10 @@ Premier listing des acteurs
  - chef de concession, qui n'est pas nécessairement agriculteur
  - chef de cuisine
   
-> « [le chef de cuisine] peut dire "va dire à ta soeur de faire de l'arachide"»
+  
+ 
+  
+> « [le chef de cuisine] peut dire "va dire à ta sœur de faire de l'arachide"»
 >  « Avant , il y avait une cuisine par concession »
 
 Le chef de concession n'est pas le chef de toutes les cuisines. Il peut proposer aux chefs de cuisine de semer tel ou tel jour, mais il ne **peut pas** dire [imposer] aux cuisines ce qu'il faut faire 
@@ -47,7 +51,7 @@ L'action agricole concertée/ synchronisée se fait à l'échelle du quartier ou
 
 Tradition coutumière pour le semis : libations et prières particulières pour les semis/la récolte
 
-- Saltigué : sorte de prètre qui officie  lors de la **première chasse**  et prédit l'hivernage (mauvaise saison, période où ça ne pousse plus, le bétail mange les plantes encore dispo) à venir . Un saltigué a  un quartier sous sa juridiction, 
+- Saltigué : sorte de prêtre qui officie  lors de la **première chasse**  et prédit l'hivernage (mauvaise saison, période où ça ne pousse plus, le bétail mange les plantes encore dispo) à venir . Un saltigué a  un quartier sous sa juridiction, 
 
 
 ## La première chasse 
@@ -68,7 +72,7 @@ Les femmes ont leur propres prières et réunions : elles apportent  à boire au
 Les vielles femmes «les vielles mamans» se réunissent sous un arbre et prédisent elles aussi l'hivernage...
 
 Séquence : 
-1. Réunion nocturne de tous les hommes : concernent les voyants «qui ont des dons » et partagent leur prédictions, et leur connaissances pour dire ce qu'on va faire , et les libations à faire. Ce sont ces infos qui seronts centralisées par le grand saltigué
+1. Réunion nocturne de tous les hommes : concernent les voyants «qui ont des dons » et partagent leur prédictions, et leur connaissances pour dire ce qu'on va faire , et les libations à faire. Ce sont ces infos qui seront centralisées par le grand saltigué
 2. Première chasse. Cette chasse concerne plusieurs villages.  le grand saltigué centralise les informations et fait un message à tout le monde , avec des recommandations. les hommes partent à la chasse dans la brousse, les anciens restent à discuter sous l'arbre , expliquer et choisir quoi faire. transmission de connaissance, il y a un délégué qui rapporte au saltigué les informations du quartier.
 les anciens rapporteront les informations et décisions dans leur quartier.
 
@@ -86,7 +90,7 @@ En cas d'insuffisance de terre dans sa cuisine , l' agriculteur va demander **in
 
 Le pâturage est affecté en premier : c'est l'hivernage (qui débute par affectation des pâturages) 
 
-Point de vue divergent [Idi] : la pâture ne doit pas enfreindre sur l'agricole.
+Point de vue divergent [Idrissa] : la pâture ne doit pas enfreindre sur l'agricole.
 > «On cultive pour vivre , c'est ça d'abord»
 
 
@@ -117,7 +121,7 @@ La zone de culture est celle d'un **groupe de quartiers**, qui a sa propre rotat
 
 
 La rotation dessinée par les acteurs est : Mil puis Arachide puis Jachère
-Ce n'est pas 100% des gens qui font ce cyle mais une bonne majorité , 
+Ce n'est pas 100% des gens qui font ce cycle mais une bonne majorité , 
 >«ça dépend des gens»
 
 Possible de faire Jachère - Mil - Mil ,
@@ -125,7 +129,7 @@ mais Jamais arachide puis arachide
 
 > «On fait l'arachide et le mil d'un même élan, ça évite le grapillage»
 
-Grapillage des oiseaux qui viennent manger les semances 
+Grapillage des oiseaux qui viennent manger les semences 
 
 
 Il y a une distinction entre Gros mil et Petit mil . On ne trouve normalement le petit mil que dans les champs de case, avant, mais à cette époque il y avait moins de culture d'arachide
@@ -185,19 +189,19 @@ E.g. Si sur 5 enfants hommes , 2 restent à Diohoine et 3 partent à Dakar.
 Les 3 qui partent à Dakar n'emmène pas le reste de la famille , qui reste cultiver.
 
 
-Le patrimoine est gardé par le plus ancien de la lignée maternelle . L'oncle regle tous les problèmes : dot , soin , conflit, etc.
+Le patrimoine est gardé par le plus ancien de la lignée maternelle . L'oncle règle tous les problèmes : dot , soin , conflit, etc.
 
-Les problèmes de succession sont plus nombreux entre fils des soeurs et fils de l'oncle.
+Les problèmes de succession sont plus nombreux entre fils des sœurs et fils de l'oncle.
 
 >«Les femmes ont participé à l'éclatement »
 
-Car elles ne voulaient pas faire cuisine commuine, elles veulent leur propre cuisine avec leurs enfants.
+Car elles ne voulaient pas faire cuisine commune, elles veulent leur propre cuisine avec leurs enfants.
 
 Définition du ménage / cuisine : «ceux qui mangent ensemble»
 
-Si une cuisine éclate, on découpe en deux (si deux frères) , quelkque soit la taille de leurs foyers respectifs .
+Si une cuisine éclate, on découpe en deux (si deux frères) , quelque soit la taille de leurs foyers respectifs .
 
-Mais la legislation actuelle (celle du conseiller) tient compte de l'effectif des foyers.
+Mais la législation actuelle (celle du conseiller) tient compte de l'effectif des foyers.
 
 Avant c'est l'aînesse qui prévalait .
 
@@ -285,7 +289,7 @@ Le surplus dure rarement car il y a toujours une personne dans le besoin, et la 
 Question de nous :  Le rendement d'une famille est-elle une fonction croissante de sa taille ? 
 Réponse : pas directement . il y a des contraintes importantes sur l'équipement , le troupeau et les animaux de traits. [ fonction en escaliers, les animaux de trait sont un goulet, un cheval ne nécessite que 3 personnes par exemple]
 
-Mais il semble qu'il existe une économie d'échelle sur la taille de la main d'oeuvre pour la récolte. 
+Mais il semble qu'il existe une économie d'échelle sur la taille de la main d’œuvre pour la récolte. 
 
 
 
@@ -323,8 +327,9 @@ Question de moi  : Je croyais que le droit moderne laissait la main au chef de v
 [ Je n'ai pas de trace de la réponse à cette question dans mes notes] 
 
 
+# Mardi
 
-Question de nous : Que se passe-t-il lors de la réunion diurne après la 1ère chasse ?
+Question de nous : Que se passe-t-il lors de la réunion diurne après la première chasse ?
 
 
 Réponse : «Il y a du **disponible** et de **l'insuffisant**»
@@ -390,7 +395,7 @@ De la nourriture est glissée sous la porte, les greniers sont remplis de nuit ,
 
 
 
-Un ami de Marcel , lorsqu'il était parti , Marcel a pu lui donner du mil et de la semance d'arachide. En retour l'ami lui a donné [plutôt prêté] des terres quand Marcel en manquait.
+Un ami de Marcel , lorsqu'il était parti , Marcel a pu lui donner du mil et de la semence d'arachide. En retour l'ami lui a donné [plutôt prêté] des terres quand Marcel en manquait.
 
 >«La solidarité est toujours là dans les évènements sociaux (mariages , funérailles) si on manque pour donner , des proches vont prêter»
 
@@ -437,7 +442,7 @@ Question d'Étienne : Comment les marginalisés s'insèrent dans la société ?
 >«il existe des hypocrites, des gens qui n'ont cherché que le gain»
 
 
-Question : Coment est évaluée la fiabilité des gens ? 
+Question : Comment est évaluée la fiabilité des gens ? 
 
 
 >«Vous savez on ne peut pas trop cacher les choses»
@@ -553,7 +558,7 @@ Il y a effectivement de  **multiples niveaux intermédiaires**  et autant d'**op
 
 Le chef de village peut envoyer un émissaire à l'arbre à palabres, afin de recueillir de l'information : plainte sur un conflit non résolu ou  villageois insatisfait.
 
-Un responsable de l'arbre à palabre est l'oeil et l'oreille du Chef de village , il témoigne et fait des compte rendus.
+Un responsable de l'arbre à palabre est l’œil et l'oreille du Chef de village , il témoigne et fait des compte rendus.
 
 
 
@@ -620,7 +625,7 @@ De manière générale , il faut 1, 2 ou 3 actes "malveillants" pour qu'il y ait
 >«Les sanction sont très rares , mais ça arrive quand on attaque les us et coutumes» 
 
 
-Les problèmes de jachère arrivent sur le pourtour de la jachère , jamais au ileu, c'est plus facile de sortir de la jachère pour des parcelles du pourtour.
+Les problèmes de jachère arrivent sur le pourtour de la jachère , jamais au milieu, c'est plus facile de sortir de la jachère pour des parcelles du pourtour.
 
 
 La sortie ou le retour dans la jachère n'est **jamais verbalisé** mais constaté par tout un chacun.
@@ -641,13 +646,13 @@ Notion de vocation de la terre :  Si tu fais pâturer dans une parcelle à vocat
 
 
 
-Dans certains villmages à traditions d'élevage moindre, la jachère n'est pas restée longtemps.
+Dans certains villages à traditions d'élevage moindre, la jachère n'est pas restée longtemps.
 
 On peut pâturer partout , quelque soit le quartier dont la terre est en jachère
 
 
 
-Mercredi 20 octobre
+ # Mercredi 20 octobre
 
 
 
@@ -658,7 +663,7 @@ Mercredi 20 octobre
 les Champs de case sont enrichis par les déchets de la cuisine et le compost de la cuisine
 
 
-Les champs intermédiaires (dénomination faite par des scinetifiques toubabs) sont entre les champs de case et les champs de brousse
+Les champs intermédiaires (dénomination faite par des scientifiques toubabs) sont entre les champs de case et les champs de brousse
 
 
 le champs de brousse sont plus loin des cases , c'est là qu'on fait pâturer  
@@ -675,7 +680,7 @@ Trois types de sol :
 Le bissap , le néibé et la pastèque s'adaptent partout 
 
 
-Les advantices sont alissées sur le champ pour être mangées par les animaux. 
+Les advantices sont laissées sur le champ pour être mangées par les animaux. 
 
 
 Une partie des tiges de Sorgo est utilisées pour faire des clôtures
@@ -708,7 +713,7 @@ une partie de l'herbe est ramassée par les **éleveurs** pour renforcer leur st
 il s'agit d'élever des animaux pour les engraisser et les vendre au poids.
 Les bêtes sont vendues au marché , pour les fêtes , etc.
 
-Marcel a embouché un beouf qu'il a vendu + d'un million de CFA
+Marcel a embouché un bœuf qu'il a vendu + d'un million de CFA
 
 
 
@@ -718,10 +723,10 @@ Marcel a embouché un beouf qu'il a vendu + d'un million de CFA
 
 
 
-l'engrais est **donné** par petites doses dans des semances : e.g. un petit sachet de graines(semances) de pastèques déja traitées 
+l'engrais est **donné** par petites doses dans des semences : e.g. un petit sachet de graines(semences) de pastèques déjà traitées 
 
 
-engrais KPN, les paysnas sérère trouvent du PN et du PK sur le marché.
+engrais KPN, les paysans sérère trouvent du PN et du PK sur le marché.
 Mais aucun ne dose leur terre, même pas le pH
 
 
@@ -733,7 +738,7 @@ les 4 acteurs  réunis sont conscient du déséquilibre induit par l'utilisation
 
 
 Question : est-ce que les producteurs d'engrais organisent la pénurie pour grossir le prix de vente ? 
-Reponse : 
+Réponse : 
 
 
 L'engrais est si rare et mal vendu / acheminé jusqu'au paysans , **qu'il ne se prête pas**.
@@ -742,7 +747,7 @@ L'État achète de l'engrais : c'est l'engrais subventionné .
 Acheminé aux mairies , en quantité proportionnelle à la taille du village  + favoritisme aux villages qui payent des impôts. 
 
 
-Question de moi : Y a til du vol d'engrais ? 
+Question de moi : Y a t-il du vol d'engrais ? 
 réponse : non 
 
 Au temps de Senghor , il y avait des stock d'engrais dans les coopératives
@@ -808,9 +813,9 @@ Effet positif de l'arbre faidherbia (Faidherbia albida- épicea gris à toutes p
 
 
 ::: info
-Petit détour sur le Faidherbia, l'arbe magique qui sauve tout le monde 
-Il pompe  la nappe phréatique profonde et concurrence pas les autres plantes, 
-pendant qu'il pleut , il pompe  les eaux de surface quand il pleut 
+Petit détour sur le Faidherbia, l'arbe magique qui sauve tout le monde. 
+Il pompe la nappe phréatique profonde et ne  concurrence pas les autres plantes, 
+pendant qu'il pleut , il pompe  les eaux de surface,  
 résistant à la sécheresse , 
 il pousse à rebours des plantes (perd ses feuilles à la saison des pluies et verdit à la fin des pluies) 
 les feuilles qui tombent enrichissent le sol et favorisent la pousse au début de la saison des pluies, 
@@ -820,15 +825,13 @@ les fruits sont mangeables par les animaux
 
 
 
-
-
 Marcel donne son point de vue : il insiste sur l'intérêt pour l'agriculteur de la paix sociale, et insiste sur réciprocité de l'entraide.
 
 
 ## le troupeau 
 
 On découvre que les troupeaux ne sont pas forcéments disjoints (par cuisine)
-Le troupeau contient potentiellement des bâtes qui appartiennent à tous.
+Le troupeau contient potentiellement des bêtes qui appartiennent à tous.
 
 Le troupeau est une banque / un portefeuille
 
@@ -883,7 +886,7 @@ Réponse de Paul : oui : le point commun c'est que tous les éléments y partici
 [POV moi] il y a un couplage entre maintien de la paix sociale et  application modérée du droit foncier
 
 
-[POV Etienne] Dans tous les shcémas /modèles , **il n'y a pas d'argent** 
+[POV Etienne] Dans tous les schémas /modèles , **il n'y a pas d'argent** 
 
 [POV Romain] Fertilité et paix sociale sont des moyens de productions
 
@@ -906,7 +909,7 @@ Comment ça va toi ? en sérère  : Na (comment) fi (ça va) yo (toi) ?
 
 ----
 
-Jeudi 21  Octobre 
+# Jeudi 21  Octobre 
 
 
 
@@ -1028,14 +1031,14 @@ la deuxième valeur c'est de **montrer le repentir** par le comportement
 
 Dans tous les cas (indépendamment des valeurs citées ou reconnues par nous ou les acteurs)) , il y a un processus d'actualisation (de rééquilibrage) du réseau de respect / bonne entente 
 
-Autre cas de figure : 2 boeufs se battent, l'un tue l'autre. Le propriétaire du boeuf mort repart avec le boeuf survivant
+Autre cas de figure : 2 bœufs se battent, l'un tue l'autre. Le propriétaire du bœuf mort repart avec le bœuf survivant
 
 
 Avant de saisir les instances de conciliation (du quartier au village en passant par l'arbre à palabres), il y a des avertissements, plusieurs. 
 Si rien ne se passe , alors on saisit les instances
 
 
-POV moi : Proposition de systèmes de valeurs  / caractéristiques qui ressortent dans la description des acteurs des intéractions sociales autour du conflit : 
+POV moi : Proposition de systèmes de valeurs  / caractéristiques qui ressortent dans la description des acteurs des interactions sociales autour du conflit : 
 
 - Calmer tôt
 - Dire 
@@ -1088,17 +1091,16 @@ les divinations seront décryptées plus tard.
 
 -----
 
-Vendredi 22 octobre
+# Vendredi 22 octobre
 
-
+:::success
 Rappel de la problématique du projet : 
-
 Explore le lien entre structure démographique et  utilisation du sol [Pov moi : encore trop flou, à préciser , surtout structure démographique]
 L'idée est que la jachère est une manifestation de la paix sociale .
+:::
 
 
 
----- 
 
 L'année dernière il y a eu moins de pluie (83mm)  que l'année précédente (106mm)
 
@@ -1113,10 +1115,8 @@ Question de nous : on propose un mécanisme général basé sur la **réputation
 
 Réponse de Paul : 
 
-On part de l'**insuffisant** ,le  manque de terre. La première chose c'est la demande de terre.
+>«On part de l'**insuffisant**,le  manque de terre. La première chose c'est la demande de terre.»
 >«Il est très rare qu'une cuisine ait **toutes** ses parcelles dans la jachère»
-
-
 
 
 car dans l'éclatement , on fait attention lors du partage et surtout on tient compte des enfants garçons , car eux ils restent, produisent mais également coûtent.
@@ -1129,7 +1129,7 @@ Seuls les castés (griots, forgerons, laobés) osent demander du mil.
 
 Beaucoup plus souvent , il y a **anticipation** , un don **avant** la demande 
 
-La banque joue aussi : les gnes vont à la baque bien avant de demander à manger. 
+La banque joue aussi : les gens vont à la banque bien avant de demander à manger. 
 
 Et la solidarité des membres d'une cuisine qui sont partis , et qui financeront la nourriture si elle venait à manquer dans une cuisine 
 
@@ -1222,7 +1222,7 @@ la connaissance à propos de la fertilité des terres à un instant est partagé
 Si il y a un effet néfaste de quelque chose, on interpelle les gens pour prévenir / avertir
 
 
-paul :
+Paul :
 
 >«Entre deux emprunteurs , on essaye de voir le plus nécessiteux»
 
@@ -1231,7 +1231,7 @@ paul :
  L'ordre est plus ou moins fixé 
 
 
- refuser un prêt ne chage pas la confiance dans / la réputation de la personne qui refuse, ni de la personne à qui on a refusé le prêt.
+ refuser un prêt ne change pas la confiance dans / la réputation de la personne qui refuse, ni de la personne à qui on a refusé le prêt.
 
 
 Il y a toujours un petit cadeau : du thé , du sucre , les anciens amenaient des feuilles de tabac au prêteur .
@@ -1244,7 +1244,7 @@ Celui qui a de la terre en excès la prête toujours au final (dans «70% des ca
 -----
 
 
-Déboisage :  avant on le faisait à la main , ça repoussait , mais maintenant les charreus ont arraché trop de racines des arbres qui auraient dû reopousser 
+Déboisage :  avant on le faisait à la main , ça repoussait , mais maintenant les charrues ont arraché trop de racines des arbres qui auraient dû reopousser 
 
 
 Augmentation de la population : [POV moi les acteurs insistent pas mal sur cette contrainte ]
@@ -1273,17 +1273,17 @@ Au bout d'une longue discussion , les acteurs convergent vers un consensus sur l
 
 ### Arachide 
 
-plusieurs facteurs détermienent le rendement : qualité de la terre , qualité des semences (selection ou vulgarisation), mil l'an passé (qui fixe le phosphate)
+plusieurs facteurs détermienent le rendement : qualité de la terre , qualité des semences (sélection ou vulgarisation), mil l'an passé (qui fixe le phosphate)
 
-semances selctionnées : 1200 kg par ha 
-semances vulagrisées : 6000kg par ha
+semences sélectionnées : 1200 kg par ha 
+semences vulgarisées : 6000kg par ha
 
 
 Si pas de mil cultivé sur le champ l'année passée : 200kgs par ha
 
-Si mil cultivé l'an passé + parquage des bêtes  300-600kgs par ha 
+Si mil cultivé l'an passé + parcage des bêtes  300-600kgs par ha 
 
-Si mil cultivé l'an passé sans  parquage des bêtes  300 par ha 
+Si mil cultivé l'an passé sans  parcage des bêtes  300 par ha 
 
 
 prix de l'arachide , fonction de la qualité de la graine 
@@ -1309,7 +1309,7 @@ engrais 3sacs ,150 kgs par hectare
 
 
 Cultiver le mil ou non , ça dépend des terres
-cultiver l'arachide ou non ça dépend de la pluviométrie et sa répartition dans le temps et l'espace , car ça fait varieri la **densité** des graines et donc le poids des sacs.
+cultiver l'arachide ou non ça dépend de la pluviométrie et sa répartition dans le temps et l'espace , car ça fait varier la **densité** des graines et donc le poids des sacs.
 
 ------
 
@@ -1338,7 +1338,7 @@ Maintenant c'est moins que ça, avoir un veau par an est plus rare , ça oscille
 Il y a toujours un taureau géniteur dans un troupeau
 
 
-Question de nous : Estimation du destockage dans le troupeau pour couvrir un évènement aléatoire (type conflit ou maladie ) 
+Question de nous : Estimation du déstockage dans le troupeau pour couvrir un évènement aléatoire (type conflit ou maladie ) 
 Réponse : en fait on ne donne pas les bêtes du troupeau 
 On les vend pour la **construction**
 Marcel a vendu et/ou perdu 5 bêtes l'année dernières, il en a acheté  une pour compenser 

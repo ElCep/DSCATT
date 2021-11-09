@@ -1,24 +1,24 @@
 digraph g {
 
   /* Acteurs */
-  "Sous-préfet" [color=red];
-  "Conseil Municipal" [color=red];
-  "Chef de village" [color=red];
-  "Notables" [color=red];
-  "Chef de Consession" [color=red];
-  "Cuisine (chef)" [color=red];
-  "Travailleur Sortie" [color=red];
-  "Agriculteur" [color=red];
-  "Eleveur" [color=red];
-  "Ecole" [color=red];
-  "Banque de Céréales" [color=red];
-  "Revendeur de Semence" [color=red];
-  "Revendeur d'engrais" [color=red];
-  "Vieilles Maman" [color=red];
-  "Saltigué" [color=red];
-  "Animaux de trait" [color=red];
-  "Petit ruminants" [color=red];
-  "Grand ruminants" [color=red];
+  "Sous-préfet" [color=red, shape = box];
+  "Conseil Municipal" [color=red, shape = box];
+  "Chef de village" [color=red, shape = box];
+  "Notables" [color=red, shape = box];
+  "Chef de Consession" [color=red, shape = box];
+  "Cuisine (chef)" [color=red, shape = box];
+  "Travailleur Sortie" [color=red, shape = box];
+  "Agriculteur" [color=red, shape = box];
+  "Eleveur" [color=red, shape = box];
+  "École" [color=red, shape = box];
+  "Banque de céréales" [color=red, shape = box];
+  "Revendeur de semence" [color=red, shape = box];
+  "Revendeur d'engrais" [color=red, shape = box];
+  "Vieilles mamans" [color=red, shape = box];
+  "Saltigué" [color=red, shape = box];
+  "Animaux de trait" [color=red, shape = box];
+  "Petits ruminants" [color=red, shape = box];
+  "Grands ruminants" [color=red, shape = box];
 
   /* Ressources*/
   "Arbres à palabres" [color=blue];
@@ -30,7 +30,7 @@ digraph g {
   "Engrais Chimique" [color=blue];
   "Arachide" [color=blue];
   "Paille d'arachide" [color=blue];
-  "Céréale" [color=blue];
+  "Céréales" [color=blue];
   "Paille de Céréale" [color=blue];
   "Tige de céréale" [color=blue];
   "Bisape" [color=blue];
@@ -38,8 +38,8 @@ digraph g {
   "Niebe" [color=blue];
   "Paille de Niebe" [color=blue];
   "Sorgo" [color=blue];
-  "Sol Dior (sableux)" [color=blue];
-  "Sol Dekk (argilleux)" [color=blue];
+  "Sol Dior \n (sableux)" [color=blue];
+  "Sol Dekk \n (argileux)" [color=blue];
   "Sol Dekk Dior" [color=blue];
   "Parcelles" [color=blue];
   "Tapis herbacé" [color=blue];
@@ -77,14 +77,14 @@ digraph g {
   "Eleveur" -> "Cuisine (chef)" [label=constitue][color=green]
   "Agriculteur" -> "Animaux" [label="Contribut à l'allimentation"][color=green]
   "Agriculteur" -> "Parcelles" [label="Valorise entretien"][color=green]
-  {"Sol Dior (sableux)" "Sol Dekk (argilleux)" "Sol Dekk Dior"} -> "Parcelles" [label="compose"][color=green]
-  {"Arachide" "Céréale"} -> "Sol Dior (sableux)" [label="s'addapte"][color=green]
-  {"Bisape" "Maraichage" "Niebe"} -> {"Sol Dior (sableux)" "Sol Dekk (argilleux)" "Sol Dekk Dior"} [label="s'addapte"][color=green]
+  {"Sol Dior \n (sableux)" "Sol Dekk \n (argileux)" "Sol Dekk Dior"} -> "Parcelles" [label="compose"][color=green]
+  {"Arachide" "Céréales"} -> "Sol Dior \n (sableux)" [label="s'addapte"][color=green]
+  {"Bisape" "Maraichage" "Niebe"} -> {"Sol Dior \n (sableux)" "Sol Dekk \n (argileux)" "Sol Dekk Dior"} [label="s'adapte"][color=green]
   "Paille d'arachide" -> "Arachide" [label="Plante de"][color=green]
   "Paille de Niebe" -> "Niebe" [label="Plante de"][color=green]
-  "Paille de Céréale" -> "Céréale" [label="Plante de"][color=green]
-  "Tige de Céréale" -> "Céréale" [label="Plante de"][color=green]
-  "Sorgo" -> "Sol Dekk (argilleux)" [label="s'addapte"][color=green]
+  "Paille de Céréale" -> "Céréales" [label="Plante de"][color=green]
+  "Tige de Céréale" -> "Céréales" [label="Plante de"][color=green]
+  "Sorgo" -> "Sol Dekk \n (argileux)" [label="s'addapte"][color=green]
   "Tige de céréale" -> {"Agriculteur" "Eleveur"} [label="construit"][color=green]
   "Paille d'arachide" -> "Eleveur" [label="stock"][color=green]
   "Tapis herbacé" -> "Eleveur" [label="stock"][color=green]
