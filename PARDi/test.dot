@@ -13,7 +13,7 @@ digraph g {
   "Ecole" [color=red];
   "Banque de Céréales" [color=red];
   "Revendeur de Semence" [color=red];
-  "Revendeur d'engrais" [color=red];
+  "Revendeur d engrais" [color=red];
   "Vieilles Maman" [color=red];
   "Saltigué" [color=red];
   "Animaux de trait" [color=red];
@@ -29,7 +29,7 @@ digraph g {
   "Pluviometrie" [color=blue];
   "Engrais Chimique" [color=blue];
   "Arachide" [color=blue];
-  "Paille d'arachide" [color=blue];
+  "Paille d arachide" [color=blue];
   "Céréale" [color=blue];
   "Paille de Céréale" [color=blue];
   "Tige de céréale" [color=blue];
@@ -48,7 +48,8 @@ digraph g {
   "Matière Organique" [color=blue];
   "Fertilité" [color=blue];
 
-  /* Interactions */
+  
+  
   "Cuisine (chef)" -> {"Eau du forage" "Eau des puis"} [label=Boivent][color=green]
   "Travailleur Sortie" -> "Animaux" [label=confient][color=green]
   "Cuisine (chef)" -> "Travailleur Sortie" [label=soutient][color=green]
@@ -69,24 +70,24 @@ digraph g {
   "Animaux" -> "Eleveur" [label=usufruit][color=green]
   "Eleveur" -> "École" [label=occupe][color=green]
   "Agriculteur" -> "Cuisine (chef)" [label=constitue][color=green]
-  "Agriculteur" -> {"Revendeur d'engrais" "Revendeur de Semmence"} [label="s'approvisionne"][color=green]
+  "Agriculteur" -> {"Revendeur d engrais" "Revendeur de Semmence"} [label="s approvisionne"][color=green]
   "Agriculteur" -> "Engrais Chimique" [label="épandage"][color=green]
   "Agriculteur" -> "Paix sociale" [label=preserve][color=green]
   "Paix sociale" -> "Agriculteur" [label=asure][color=green]
   "Engrais Chimique" -> "Parcelles"[label="épandage"][color=green]
   "Eleveur" -> "Cuisine (chef)" [label=constitue][color=green]
-  "Agriculteur" -> "Animaux" [label="Contribut à l'allimentation"][color=green]
+  "Agriculteur" -> "Animaux" [label="Contribut à l allimentation"][color=green]
   "Agriculteur" -> "Parcelles" [label="Valorise entretien"][color=green]
   {"Sol Dior (sableux)" "Sol Dekk (argilleux)" "Sol Dekk Dior"} -> "Parcelles" [label="compose"][color=green]
-  {"Arachide" "Céréale"} -> "Sol Dior (sableux)" [label="s'addapte"][color=green]
-  {"Bisape" "Maraichage" "Niebe"} -> {"Sol Dior (sableux)" "Sol Dekk (argilleux)" "Sol Dekk Dior"} [label="s'addapte"][color=green]
-  "Paille d'arachide" -> "Arachide" [label="Plante de"][color=green]
+  {"Arachide" "Céréale"} -> "Sol Dior (sableux)" [label="s addapte"][color=green]
+  {"Bisape" "Maraichage" "Niebe"} -> {"Sol Dior (sableux)" "Sol Dekk (argilleux)" "Sol Dekk Dior"} [label="s addapte"][color=green]
+  "Paille d arachide" -> "Arachide" [label="Plante de"][color=green]
   "Paille de Niebe" -> "Niebe" [label="Plante de"][color=green]
   "Paille de Céréale" -> "Céréale" [label="Plante de"][color=green]
   "Tige de Céréale" -> "Céréale" [label="Plante de"][color=green]
-  "Sorgo" -> "Sol Dekk (argilleux)" [label="s'addapte"][color=green]
+  "Sorgo" -> "Sol Dekk (argilleux)" [label="s addapte"][color=green]
   "Tige de céréale" -> {"Agriculteur" "Eleveur"} [label="construit"][color=green]
-  "Paille d'arachide" -> "Eleveur" [label="stock"][color=green]
+  "Paille d arachide" -> "Eleveur" [label="stock"][color=green]
   "Tapis herbacé" -> "Eleveur" [label="stock"][color=green]
   "Tapis herbacé" -> "Parcelles" [label="Pousse"][color=green]
   "Tapis herbacé" -> "Fertilité" [label="améliore"][color=green]
@@ -102,19 +103,19 @@ digraph g {
   "Paturage/Jachère" -> "Fertilité" [label=restaure][color=green]
   "Matière Organique" -> "Parcelles" [label=transport][color=green]
   "Parcelles" -> "Agriculteur" [label=transport][color=green]
-  {"Paille d'arachide" "Paille de Céréale" "Paille de Niebe"} -> "Animaux" [label=nourrit][color=green]
-  {"Paille d'arachide" "Paille de Céréale" "Paille de Niebe"} -> "Eleveur"[label=Stock][color=green]
+  {"Paille d arachide" "Paille de Céréale" "Paille de Niebe"} -> "Animaux" [label=nourrit][color=green]
+  {"Paille d arachide" "Paille de Céréale" "Paille de Niebe"} -> "Eleveur"[label=Stock][color=green]
   "Fertilité" -> {"Agriculteur" "Cuisine (chef)" "Chef de Consession"} [label=connait][color=green]
   "Fertilité" -> "Arbres à palabres" [label="diff. information"][color=green]
 
-  /* dynamique */
+
   // Conflict agriculteur éleveur
   "Animaux" -> "Parcelles" [label="1 dégat"][color=Yellow]
   "Agriculteur" -> "Parcelles" [label="2 constat"][color=Yellow]
-  "Agriculteur" -> "Fourrière" [label="3' flagrant delit"][color=Yellow]
+  "Agriculteur" -> "Fourrière" [label="3 flagrant delit"][color=Yellow]
   "Eleveur" -> "Parcelles" [label="3 constat"][color=Yellow]
-  "Agriculteur" -> "Eleveur" [label="4 tentative resol."][color=Yellow]
-  "Eleveur" -> "Agriculteur" [label="4 tentative resol."][color=Yellow]
+  "Agriculteur" -> "Eleveur" [label="4 tentative resol"][color=Yellow]
+  "Eleveur" -> "Agriculteur" [label="4 tentative resol"][color=Yellow]
   "Agriculteur" -> "Cuisine (chef)" [label="5 information"][color=Yellow]
   "Cuisine (chef)" -> "Chef de Consession" [label="6 Information"][color=Yellow]
   "Chef de Consession" -> "Cuisine (chef)" [label="6 concertation"][color=Yellow]
@@ -132,11 +133,13 @@ digraph g {
   "Conseil de village" -> "Conseil de village" [label="7 tentative resol."][color=brown]
   //Niveau droit positif
   "Agriculteur" -> "Sous-préfet" [label="1 plainte"][color=black]
-  "Sous-préfet" -> "Chef de village" [label="2 demande d'info."][color=black]
+  "Sous-préfet" -> "Chef de village" [label="2 demande d info."][color=black]
   "Sous-préfet" -> "Chef de village" [label="3 envois convoq"][color=black]
   "Chef de village" -> {"Eleveur" "Agriculteur"} [label="4 transmission convoq"][color=black]
   "Sous-préfet" -> "Sous-préfet" [label="4 tentative resol."][color=black]
   "Sous-préfet" -> "gendramerie" [label="5 transmission dossier"][color=black]
   "gendramerie" -> "gendramerie" [label="6 enquête"][color=black]
   "gendramerie" -> "tribunal" [label="7 transmission"][color=black]
+
+
 }
