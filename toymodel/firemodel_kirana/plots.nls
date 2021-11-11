@@ -1,0 +1,16 @@
+to update-the-plots 
+  
+  
+  let dada [parcelle-id] of patches
+  
+
+  
+  set-current-plot "patches per fire"
+  ;;pour réaliser un histogram on a besoin d'une liste
+  set-plot-x-range 1 ( (max dada) + 5)
+  set-histogram-num-bars 30
+  histogram dada
+  
+  
+end
+
