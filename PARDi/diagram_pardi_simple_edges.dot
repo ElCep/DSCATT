@@ -24,10 +24,11 @@ digraph g {
   "Conseil de village" [color = @@1 pardi=acteur];
   "gendarmerie" [color = @@1 pardi=acteur];
   "Animaux" [color = @@1 pardi=acteur];
-
+  "Fourrière" [color = @@1 pardi=acteur];
+  "tribunal" [color = @@1 pardi=acteur];
 
   /* Ressources*/
-  "Arbres à palabre" [color = @@2 pardi=ressource];
+  "Arbres à palabres" [color = @@2 pardi=ressource];
   "Paix sociale" [color = @@2 pardi=ressource];
   "Eau du forage" [color = @@2 pardi=ressource];
   "Eau des Mares" [color = @@2 pardi=ressource];
@@ -60,10 +61,10 @@ digraph g {
   "Travailleur Sortie" -> "Animaux" [label=confient color = @@3 pardi=interaction]
   "Cuisine (chef)" -> "Travailleur Sortie" [label=soutient color = @@3 pardi=interaction]
   "Cuisine (chef)" -> "Travailleur Sortie" [label=soutient color = @@3 pardi=interaction]
-  "Cuisine (chef)" -> "Arbres à palabre" [label=contribue color = @@3 pardi=interaction]
-  "Chef de village" -> "Arbres à palabre" [label=covoque color = @@3 pardi=interaction]
-  "Notables" -> "Arbres à palabre" [label=contribue color = @@3 pardi=interaction]
-  "Arbres à palabre" -> "Chef de village"[label=informe color = @@3 pardi=interaction]
+  "Cuisine (chef)" -> "Arbres à palabres" [label=contribue color = @@3 pardi=interaction]
+  "Chef de village" -> "Arbres à palabres" [label=covoque color = @@3 pardi=interaction]
+  "Notables" -> "Arbres à palabres" [label=contribue color = @@3 pardi=interaction]
+  "Arbres à palabres" -> "Chef de village"[label=informe color = @@3 pardi=interaction]
   "Notables" -> "Chef de Consession" [label="bons offices" color = @@3 pardi=interaction]
   "Notables" -> "Cuisine (chef)" [label="bons offices" color = @@3 pardi=interaction]
   "Chef de Consession" -> "Cuisine (chef)" [label="Régule" color = @@3 pardi=interaction]
@@ -159,44 +160,43 @@ digraph g {
 
   /* dynamique */
   // Conflict agriculteur éleveur
-  "Animaux" -> "Parcelles" [label="1 Conflict (divagation accidentelle ou à dessin)" color = @@4 pardi=dynamique]
-  "Agriculteur" -> "Parcelles" [label="2 constat" color = @@4 pardi=dynamique]
-  "Agriculteur" -> "Fourrière" [label="3 flagrant delit"  color = @@4 pardi=dynamique]
-  "Eleveur" -> "Parcelles" [label="3 constat"  color = @@4 pardi=dynamique]
-  "Agriculteur" -> "Eleveur" [label="4 tentative resol"  color = @@4 pardi=dynamique]
-  "Eleveur" -> "Agriculteur" [label="4 tentative resol"  color = @@4 pardi=dynamique]
-  "Agriculteur" -> "Cuisine (chef)" [label="5 information"  color = @@4 pardi=dynamique]
-  "Cuisine (chef)" -> "Chef de Consession" [label="6 Information"  color = @@4 pardi=dynamique]
-  "Chef de Consession" -> "Cuisine (chef)" [label="6 concertation"  color = @@4 pardi=dynamique]
-  "Chef de Consession" -> "Parcelles" [label="7 concertation"  color = @@4 pardi=dynamique]
-  "Chef de Consession" -> "Chef de Consession" [label="8 tentative resol."  color = @@4 pardi=dynamique]
-  "Notables" -> "Chef de Consession" [label="9 conv. arbre à palabres"  color = @@4 pardi=dynamique]
-  "Notables" -> "Arbres à palabres" [label="10 tentative resol."  color = @@4 pardi=dynamique]
+  "Animaux" -> "Parcelles" [label="1 Conflict (divagation accidentelle ou à dessin)" color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Agriculteur" -> "Parcelles" [label="2 constat" color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Agriculteur" -> "Fourrière" [label="3 flagrant delit"  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Eleveur" -> "Parcelles" [label="3 constat"  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Agriculteur" -> "Eleveur" [label="4 tentative resol"  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Eleveur" -> "Agriculteur" [label="4 tentative resol"  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Agriculteur" -> "Cuisine (chef)" [label="5 information"  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Cuisine (chef)" -> "Chef de Consession" [label="6 Information"  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Chef de Consession" -> "Cuisine (chef)" [label="6 concertation"  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Chef de Consession" -> "Parcelles" [label="7 concertation"  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Chef de Consession" -> "Chef de Consession" [label="8 tentative resol."  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Notables" -> "Chef de Consession" [label="9 conv. arbre à palabres"  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Notables" -> "Arbres à palabres" [label="10 tentative resol."  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
   // niveau village
-  "Agriculteur" -> "Chef de village" [label="1 plainte"  color = @@5 pardi=dynamique]
-  "Chef de village" -> "Parcelles"[label="2 constat"  color = @@5 pardi=dynamique]
-  "Chef de village" -> "Notables" [label="3 information"  color = @@5 pardi=dynamique]
-  "Notables" -> "Eleveur"  [label="4 tentative resol."  color = @@5 pardi=dynamique]
-  "Notables" ->  "Agriculteur" [label="4 tentative resol."  color = @@5 pardi=dynamique]
-  "Notables" -> "Chef de village" [label="5 rapport"  color = @@5 pardi=dynamique]
-  "Chef de village" -> "Conseil de village" [label="6 constitution"  color = @@5 pardi=dynamique]
-  "Conseil de village" -> "Conseil de village" [label="7 tentative resol."  color = @@5 pardi=dynamique]
+  "Agriculteur" -> "Chef de village" [label="1 plainte"  color = @@5 pardi=dynamique_conflit lvl_conflict=village]
+  "Chef de village" -> "Parcelles"[label="2 constat"  color = @@5 pardi=dynamique_conflit lvl_conflict=village]
+  "Chef de village" -> "Notables" [label="3 information"  color = @@5 pardi=dynamique_conflit lvl_conflict=village]
+  "Notables" -> "Eleveur"  [label="4 tentative resol."  color = @@5 pardi=dynamique_conflit lvl_conflict=village]
+  "Notables" ->  "Agriculteur" [label="4 tentative resol."  color = @@5 pardi=dynamique_conflit lvl_conflict=village]
+  "Notables" -> "Chef de village" [label="5 rapport"  color = @@5 pardi=dynamique_conflit lvl_conflict=village]
+  "Chef de village" -> "Conseil de village" [label="6 constitution"  color = @@5 pardi=dynamique_conflit lvl_conflict=village]
+  "Conseil de village" -> "Conseil de village" [label="7 tentative resol."  color = @@5 pardi=dynamique_conflit lvl_conflict=village]
   //Niveau droit positif
-  "Agriculteur" -> "Sous préfet" [label="1 plainte"  color = @@6 pardi=dynamique]
-  "Sous-préfet" -> "Chef de village" [label="2 demande d info."  color = @@6 pardi=dynamique]
-  "Sous-préfet" -> "Chef de village" [label="3 envois convoc"  color = @@6 pardi=dynamique]
-  "Chef de village" -> "Eleveur"  [label="4 transmission convoc"  color = @@6 pardi=dynamique]
-  "Chef de village" -> "Agriculteur" [label="4 transmission convoc"  color = @@6 pardi=dynamique]
-  
-  "Sous-préfet" -> "Sous préfet" [label="4 tentative resol."  color = @@6 pardi=dynamique]
-  "Sous-préfet" -> "gendarmerie" [label="5 transmission dossier"  color = @@6 pardi=dynamique]
-  "gendarmerie" -> "gendarmerie" [label="6 enquête"  color = @@6 pardi=dynamique]
-  "gendarmerie" -> "tribunal" [label="7 transmission"  color = @@6 pardi=dynamique]
+  "Agriculteur" -> "Sous préfet" [label="1 plainte"  color = @@6 pardi=dynamique_conflit lvl_conflict=droit]
+  "Sous-préfet" -> "Chef de village" [label="2 demande d info."  color = @@6 pardi=dynamique_conflit lvl_conflict=droit]
+  "Sous-préfet" -> "Chef de village" [label="3 envois convoc"  color = @@6 pardi=dynamique_conflit lvl_conflict=droit]
+  "Chef de village" -> "Eleveur"  [label="4 transmission convoc"  color = @@6 pardi=dynamique_conflit lvl_conflict=droit]
+  "Chef de village" -> "Agriculteur" [label="4 transmission convoc"  color = @@6 pardi=dynamique_conflit lvl_conflict=droit]
+  "Sous-préfet" -> "Sous préfet" [label="4 tentative resol."  color = @@6 pardi=dynamique_conflit lvl_conflict=droit]
+  "Sous-préfet" -> "gendarmerie" [label="5 transmission dossier"  color = @@6 pardi=dynamique_conflit lvl_conflict=droit]
+  "gendarmerie" -> "gendarmerie" [label="6 enquête"  color = @@6 pardi=dynamique_conflit lvl_conflict=droit]
+  "gendarmerie" -> "tribunal" [label="7 transmission"  color = @@6 pardi=dynamique_conflit lvl_conflict=droit]
 
   //dynamique sociale de la fertilite
-  "Agriculteur"  -> "Fertilité" [label="suivi"  color = @@7 pardi=dynamique]
-  "Chef de Consession" -> "Fertilité" [label="suivi"  color = @@7 pardi=dynamique]
-  "Arbres à palabre" -> "Fertilité" [label="est infromé"  color = @@7 pardi=dynamique]
+  "Agriculteur"  -> "Fertilité" [label="suivi"  color = @@7 pardi=dynamique_fertilite]
+  "Chef de Consession" -> "Fertilité" [label="suivi"  color = @@7 pardi=dynamique_fertilite]
+  "Arbres à palabres" -> "Fertilité" [label="est informé"  color = @@7 pardi=dynamique_fertilite]
 
 }
 

@@ -2,128 +2,85 @@ library(DiagrammeR)
 library(readr)
 library(igraph)
 library(stringr)
-
-
-#library(sna)
-#AM <- read.dot("~/DSCATT/PARDi/diagram_pardi_simple_edges.dot")
-#gg <-  graph_from_adjacency_matrix(AM)
-#igraph::plot.igraph(gg,layout=layout_with_kk)
-#grViz("~/DSCATT/PARDi/diagram_pardi_simple_edges.dot")
-
-lignes_du_dot <-  read_lines("~/DSCATT/PARDi/diagram_pardi_simple_edges.dot")
-
-acteurs <-  c()
-ressources <-  c()
-acteurs_colors <-  c()
-ressources_colors <-c()
-edges <-  c()
-
-for(lili in (lignes_du_dot)){
-  if(str_detect(string = lili,pattern = "acteur"))
-  {
-    cat("ACTEUR\n")
-    acteur_name <-  str_split(string = lili,pattern = "[:punct:]color =", simplify = T)[1]
-    acteur_name <- acteur_name %>%  str_extract_all(pattern = "\\w+", simplify = T) %>%  str_c( collapse=" ") 
-    acteurs <-  c(acteurs,acteur_name)
-    
-    color <-  str_split(string = lili,pattern = "[:punct:]color =", simplify = T)[2]
-    color <- str_split(color, pattern = "pardi=", simplify = T)[1] %>%  as.character %>% str_trim()
-    acteurs_colors <-  c(acteurs_colors,color)
-  }
-  
-  if(str_detect(string = lili,pattern = "ressource")){
-    cat("RESSOURCE\n")
-    ressource_name <-  str_split(string = lili,pattern = "[:punct:]color =", simplify = T)[1]
-    ressource_name <- ressource_name %>%  str_extract_all(pattern = "\\w+", simplify = T) %>%  str_c( collapse=" ")     
-    ressources <-  c(ressources,ressource_name)
-
-    color <-  str_split(string = lili,pattern = "[:punct:]color =", simplify = T)[2]
-    color <- str_split(color, pattern = "pardi=", simplify = T)[1] %>%  as.character %>% str_trim()
-    ressources_colors <-  c(ressources_colors,color)
-  }
-  
-  if(str_detect(string = lili,pattern = "->")){
-    
-    
-    cat("EDGE\n")
-        
-    ego <- str_split(lili, "->", simplify = T)[1] %>%  str_extract_all(pattern = "\\w+", simplify = T)%>%  str_c( collapse=" ") 
-    
-    alter <- str_split(lili, "->", simplify = T)[2]
-    alter <-   str_split(alter,pattern = "[:punct:]label=", simplify = T)[1]
-    alter <-  alter %>%   str_extract_all(pattern = "\\w+", simplify = T)%>%  str_c( collapse=" ") 
-    
-  
-    color_edge <-  str_split(lili, "->", simplify = T)[2]
-    color_edge <-  str_split(color_edge, pattern = "color =", simplify = T)[2]  
-    color_edge <- str_split(color_edge, pattern = "pardi=", simplify = T)[1] %>% str_trim()
-    color_edge
-    
-    label_edge <-  str_split(lili, "->", simplify = T)[2]
-    label_edge <-  str_split(label_edge, "label=", simplify = T)[2]
-    label_edge<-  str_split(label_edge, "color", simplify = T)[1]
-    label_edge <-  label_edge %>%   str_extract_all(pattern = "\\w+", simplify = T)%>%  str_c( collapse=" ") 
-    label_edge
-    
-    
-    the_edge <-  c(ego, alter, label_edge, color_edge)        
-    edges <- c(edges, list(the_edge))
-    
-  }
-  
-  
-}
-
-edgesdf <- do.call(rbind,edges) %>%  as.data.frame()
-names(edgesdf) <-  c("ego", "alter", "label", "color")
-rm(edges)
-
-acteurs_df <- data.frame(acteurs)
-names(acteurs_df) <-  "ID"
-acteurs_df$color <-  acteurs_colors
-acteurs_df$type <-  "acteur"
-rm(acteurs_colors)
-
-ressources_df <- data.frame(ressources)
-names(ressources_df) <-  "ID"
-ressources_df$color<-  ressources_colors
-ressources_df$type <-  "ressource"
-rm(ressources_colors)
-
-
-nodes_df <-  rbind(acteurs_df, ressources_df)
-rm(acteurs_df)
-rm(ressources_df)
-
-nodes_df$color <-  as.factor(nodes_df$color)
-
 library(dplyr)
+library(visNetwork)
 
 
 
-edgesdf %>%  filter( !(ego %in% nodes_df$ID)) %>%  pull(ego)
+setwd("~/DSCATT/PARDi/")
 
-nodes_df$ID[14] == 
+lignes_du_dot <-  read_lines("./diagram_pardi_simple_edges.dot")
+source("./code_R/parsing_dot.R")
 
-
-nodes_df <- nodes_df %>%  filter( (ID %in% unique(edgesdf$ego)) & (ID %in% unique(edgesdf$alter))  ) 
-
-gg <- graph_from_data_frame(edgesdf, directed = TRUE, vertices = nodes_df)
+obj_result <- generate_dataframe_and_graph(lignes_du_dot)
 
 
+nodes_df <-  obj_result$nodes
+edges_df <-obj_result$edges
+gg <- obj_result$graph
 
-library(ggplot2)
-library(ggnetwork)
 
-class(gg)
+#extraction des sous graphes
+edges_interac <-  edges_df %>%  filter(pardi_type=="interaction")
+nodes_interac <- nodes_df %>%  filter(name %in% union(edges_interac$ego, edges_interac$alter))
+gg_interac <- graph_from_data_frame(edges_interac, directed = TRUE, vertices = nodes_interac)
 
-fortify(gg)
+plot.igraph(x = gg_interac, 
+            layout= layout_with_kk(gg_interac),
+            edge.arrow.size = 0.2,
+            edge.label = NA    )
 
-ggg <- ggnetwork(gg)
-names(ggg)
 
-ggplot(ggg, aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_nodes( shape ="")+
-  geom_nodetext(aes(label=name))+
-  geom_edges(aes(color =color )) +
-  theme_blank()
+edges_conflit <-  edges_df %>%  filter(pardi_type=="dynamique_conflit")
+nodes_conflit <- nodes_df %>%  filter(name %in% union(edges_conflit$ego, edges_conflit$alter))
+gg_conflit <- graph_from_data_frame(edges_conflit, directed = TRUE, vertices = nodes_conflit)
+
+plot.igraph(x = gg_conflit, 
+            layout= layout_with_kk(gg_conflit),
+            edge.arrow.size = 0.2,
+            edge.label=NA)
+
+
+edges_fertilite <-  edges_df %>%  filter(pardi_type=="dynamique_fertilite")
+nodes_fertilite <- nodes_df %>%  filter(name %in% union(edges_fertilite$ego, edges_fertilite$alter))
+gg_fertilite <- graph_from_data_frame(edges_fertilite, directed = TRUE, vertices = nodes_fertilite)
+
+plot.igraph(x = gg_fertilite, 
+            layout= layout_with_kk(gg_fertilite),
+            edge.arrow.size = 0.5)
+
+
+
+#vizu avec diagrameR
+
+#nodes
+nn <- create_node_df(nrow(nodes_interac), 
+                     label = nodes_interac$name, 
+                     type=nodes_interac$type,
+                     shape  = ifelse(nodes_interac$type== "acteur", "ellipse", "box"),
+                     width = (nodes_interac$name) %>% as.character() %>%  nchar / 10,
+                     color= ifelse(nodes_interac$type== "acteur", "CornflowerBlue", "DarkTurquoise"), 
+                     #color="darkgrey",
+                     fillcolor= ifelse(nodes_interac$type== "acteur", "CornflowerBlue", "DarkTurquoise") 
+                     )
+
+# edges
+ee <- create_edge_df(from = match(as.character(edges_interac$ego) , as.character(nn$label)),
+                     to= match(as.character(edges_interac$alter) , as.character(nn$label)), 
+                     rel = edges_interac$label,
+                     color= "grey")
+
+#directed graph
+dig_gg <- create_graph(graph_name = "interactions",
+              nodes_df = nn, 
+             edges_df = ee,
+             directed = T
+                )
+
+#rendu interactif
+render_graph(dig_gg, output = "visNetwork" ) %>% 
+  visNodes(physics = F ) 
+
+
+
+
