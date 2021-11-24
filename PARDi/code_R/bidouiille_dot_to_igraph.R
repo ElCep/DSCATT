@@ -9,8 +9,9 @@ library(visNetwork)
 
 setwd("~/DSCATT/PARDi/")
 
-lignes_du_dot <-  read_lines("./diagram_pardi_simple_edges.dot")
+#lignes_du_dot <-  read_lines("./diagram_pardi_simple_edges.dot")
 source("./code_R/parsing_dot.R")
+lignes_du_dot <-  read_lines("./diagram_simplified_soil_pardi_simple_edges.dot")
 
 obj_result <- generate_dataframe_and_graph(lignes_du_dot)
 
@@ -53,21 +54,25 @@ plot.igraph(x = gg_fertilite,
 
 #vizu avec diagrameR
 
-#nodes
-nn <- create_node_df(nrow(nodes_interac), 
-                     label = nodes_interac$name, 
-                     type=nodes_interac$type,
-                     shape  = ifelse(nodes_interac$type== "acteur", "ellipse", "box"),
-                     width = (nodes_interac$name) %>% as.character() %>%  nchar / 10,
-                     color= ifelse(nodes_interac$type== "acteur", "CornflowerBlue", "DarkTurquoise"), 
+
+
+
+
+vizu_interactive <- function(df_nodes, df_edges){
+nn <- create_node_df(nrow(df_nodes), 
+                     label = df_nodes$name, 
+                     type=df_nodes$type,
+                     shape  = ifelse(df_nodes$type== "acteur", "ellipse", "box"),
+                     width = (df_nodes$name) %>% as.character() %>%  nchar / 10,
+                     color= ifelse(df_nodes$type== "acteur", "CornflowerBlue", "DarkTurquoise"), 
                      #color="darkgrey",
-                     fillcolor= ifelse(nodes_interac$type== "acteur", "CornflowerBlue", "DarkTurquoise") 
+                     fillcolor= ifelse(df_nodes$type== "acteur", "CornflowerBlue", "DarkTurquoise") 
                      )
 
 # edges
-ee <- create_edge_df(from = match(as.character(edges_interac$ego) , as.character(nn$label)),
-                     to= match(as.character(edges_interac$alter) , as.character(nn$label)), 
-                     rel = edges_interac$label,
+ee <- create_edge_df(from = match(as.character(df_edges$ego) , as.character(nn$label)),
+                     to= match(as.character(df_edges$alter) , as.character(nn$label)), 
+                     rel = df_edges$label,
                      color= "grey")
 
 #directed graph
@@ -81,6 +86,13 @@ dig_gg <- create_graph(graph_name = "interactions",
 render_graph(dig_gg, output = "visNetwork" ) %>% 
   visNodes(physics = F ) 
 
+}
 
+I
 
+vizu_interactive(nodes_interac,edges_interac )
+
+vizu_interactive(nodes_conflit,edges_conflit )
+
+vizu_interactive(nodes_fertilite,edges_fertilite )
 
