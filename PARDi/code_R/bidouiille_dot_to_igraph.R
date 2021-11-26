@@ -6,12 +6,12 @@ library(dplyr)
 library(visNetwork)
 
 
-
-setwd("~/DSCATT/PARDi/")
+# Set working folder to the one where this script is saved
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 #lignes_du_dot <-  read_lines("./diagram_pardi_simple_edges.dot")
-source("./code_R/parsing_dot.R")
-lignes_du_dot <-  read_lines("./diagram_simplified_soil_pardi_simple_edges.dot")
+source("./parsing_dot.R")
+lignes_du_dot <-  read_lines("../diagram_simplified_soil_pardi_simple_edges.dot")
 
 obj_result <- generate_dataframe_and_graph(lignes_du_dot)
 
