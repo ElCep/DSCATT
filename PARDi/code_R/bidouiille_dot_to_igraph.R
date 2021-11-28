@@ -50,13 +50,22 @@ plot.igraph(x = gg_fertilite,
             layout= layout_with_kk(gg_fertilite),
             edge.arrow.size = 0.5)
 
+## agriculteurs et eleveurs
+### L'objectif est de produire automatiquement le graphe qui mets en relation avec Eleveur et/ou agriculteur
 
+gg_agro_pasteur <- subgraph.edges(gg, E(gg)[inc(V(gg)[name=c("Eleveur","Agriculteur")])])
+plot(gg_agro_pasteur)
+
+plot.igraph(x = gg_agro_pasteur, 
+            layout= layout_with_kk(gg_agro_pasteur),
+            edge.arrow.size = 0.5)
+
+
+
+edges_agroPasteur <- union(edges_fertilite$ego, edges_fertilite$alter)
+node_agroPasteur <- nodes_df %>%  filter(name==c("Eleveur","Agriculteur"))
 
 #vizu avec diagrameR
-
-
-
-
 
 vizu_interactive <- function(df_nodes, df_edges){
 nn <- create_node_df(nrow(df_nodes), 
@@ -95,4 +104,6 @@ vizu_interactive(nodes_interac,edges_interac )
 vizu_interactive(nodes_conflit,edges_conflit )
 
 vizu_interactive(nodes_fertilite,edges_fertilite )
+
+
 
