@@ -53,8 +53,9 @@ plot.igraph(x = gg_fertilite,
 ## agriculteurs et eleveurs
 ### L'objectif est de produire automatiquement le graphe qui mets en relation avec Eleveur et/ou agriculteur
 
-gg_agro_pasteur <- subgraph.edges(gg, E(gg)[inc(V(gg)[name=c("Eleveur","Agriculteur")])])
-plot(gg_agro_pasteur)
+gg_agro_pasteur <- subgraph.edges(gg, E(gg)[inc(V(gg)[name=c("Eleveur","Agriculteur")])]) # on se concentre sur eleveur et agriculteur
+gg_agro_pasteur <-subgraph.edges(gg_agro_pasteur, E(gg_agro_pasteur)[pardi_type!="dynamique_conflit"]) #j'enlève les dynamique qui auront une autre visualisation
+
 
 plot.igraph(x = gg_agro_pasteur, 
             layout= layout_with_kk(gg_agro_pasteur),
@@ -64,6 +65,14 @@ plot.igraph(x = gg_agro_pasteur,
 
 edges_agroPasteur <- union(edges_fertilite$ego, edges_fertilite$alter)
 node_agroPasteur <- nodes_df %>%  filter(name==c("Eleveur","Agriculteur"))
+
+
+library(visNetwork)
+library(htmlwidgets)
+E(gg_agro_pasteur)$color <- "grey"
+V(gg_agro_pasteur)$color <- "blue"
+saveWidget(visIgraph(gg_agro_pasteur, layout = "layout_nicely"), file = "~/test.html")
+
 
 #vizu avec diagrameR
 
