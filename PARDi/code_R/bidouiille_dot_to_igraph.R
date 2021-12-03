@@ -54,17 +54,53 @@ plot.igraph(x = gg_fertilite,
 ### L'objectif est de produire automatiquement le graphe qui mets en relation avec Eleveur et/ou agriculteur
 
 gg_agro_pasteur <- subgraph.edges(gg, E(gg)[inc(V(gg)[name=c("Eleveur","Agriculteur")])]) # on se concentre sur eleveur et agriculteur
-gg_agro_pasteur <-subgraph.edges(gg_agro_pasteur, E(gg_agro_pasteur)[pardi_type!="dynamique_conflit"]) #j'enlève les dynamique qui auront une autre visualisation
+gg_agro_pasteur2 <-subgraph.edges(gg_agro_pasteur, E(gg_agro_pasteur)[pardi_type=="interaction"]) #j'enlève les dynamique qui auront une autre visualisation
 
-
-plot.igraph(x = gg_agro_pasteur, 
+plot.igraph(x = gg_agro_pasteur2, 
             layout= layout_with_kk(gg_agro_pasteur),
             edge.arrow.size = 0.5)
 
 
 
-edges_agroPasteur <- union(edges_fertilite$ego, edges_fertilite$alter)
-node_agroPasteur <- nodes_df %>%  filter(name==c("Eleveur","Agriculteur"))
+
+
+nodes_agroPasteur <-  nodes_df %>%  filter (name %in% c("Eleveur","Agriculteur") ) 
+
+voisins_agropasteur_ordre2 <-  make_ego_graph(graph = gg,
+             order = 2,
+             nodes = V(gg)[name  %in% c("Eleveur","Agriculteur")],
+             mode = "all",
+             mindist = 1)
+
+
+
+voisins_agropasteur_ordre2[[1]] %>% plot.igraph()
+
+
+
+edf <- voisins_agropasteur_ordre2[[1]] %>% get.edgelist() %>%  as.data.frame()
+names(edf) <-  c("from", "to")
+ndf <-   data.frame(name=V(voisins_agropasteur_ordre2[[1]])$name, id= V(voisins_agropasteur_ordre2[[1]])$ID)
+
+ee <- create_edge_df(from = match(as.character(edf$from) , as.character(ndf$name)),
+                     to= match(as.character(edf$to) , as.character(ndf$name)), 
+                                        color= "grey")
+
+
+
+
+dig_gg <- create_graph(graph_name = "interactions",
+                       nodes_df = ndf,
+                       edges_df = ee ,
+                       directed = T
+)
+
+#rendu interactif
+render_graph(dig_gg, output = "visNetwork" ) %>% 
+  visNodes(physics = F ) 
+
+
+
 
 
 library(visNetwork)
@@ -72,6 +108,8 @@ library(htmlwidgets)
 E(gg_agro_pasteur)$color <- "grey"
 V(gg_agro_pasteur)$color <- "blue"
 saveWidget(visIgraph(gg_agro_pasteur, layout = "layout_nicely"), file = "~/test.html")
+
+
 
 
 #vizu avec diagrameR
@@ -109,10 +147,28 @@ render_graph(dig_gg, output = "visNetwork" ) %>%
 I
 
 vizu_interactive(nodes_interac,edges_interac )
-
 vizu_interactive(nodes_conflit,edges_conflit )
-
 vizu_interactive(nodes_fertilite,edges_fertilite )
+
+
+
+## TODO
+
+# 1 : 
+# toutes les relations d'ordre 1 qui concernent agri et eleveur 
+# toutes les relation d'ordre deux de ces deux noeuds là 
+# + les liens entre les voisins d'ordre et les voisins d'ordre 2 
+
+#2: 
+# trouver les boucles de rétroactions 
+
+
+# question générale : en s'appuyant sur 
+## objectif : trouver le groupe d'acteurs/ressources dans lequel il y a un lien 
+#  soit direct , soit boucle , soit indirect 
+# pour faire apparaître un groupe solidaire 
+
+
 
 
 
