@@ -82,15 +82,22 @@ edf <- voisins_agropasteur_ordre2[[1]] %>% get.edgelist() %>%  as.data.frame()
 names(edf) <-  c("from", "to")
 ndf <-   data.frame(name=V(voisins_agropasteur_ordre2[[1]])$name, id= V(voisins_agropasteur_ordre2[[1]])$ID)
 
-ee <- create_edge_df(from = match(as.character(edf$from) , as.character(ndf$name)),
-                     to= match(as.character(edf$to) , as.character(ndf$name)), 
+nn <- create_node_df(nrow(ndf), 
+                     label = ndf$name, 
+                     
+)
+
+
+
+ee <- create_edge_df(from = match(as.character(edf$from) , as.character(nn$label)),
+                     to= match(as.character(edf$to) , as.character(nn$label)), 
                                         color= "grey")
 
 
 
 
 dig_gg <- create_graph(graph_name = "interactions",
-                       nodes_df = ndf,
+                       nodes_df = nn,
                        edges_df = ee ,
                        directed = T
 )
