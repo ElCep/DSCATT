@@ -114,7 +114,7 @@ library(visNetwork)
 library(htmlwidgets)
 E(gg_agro_pasteur)$color <- "grey"
 V(gg_agro_pasteur)$color <- "blue"
-saveWidget(visIgraph(gg_agro_pasteur, layout = "layout_nicely"), file = "~/test.html")
+saveWidget(visIgraph(gg_agro_pasteur, layout = "layout_nicely"), file = "./test.html")
 
 
 
