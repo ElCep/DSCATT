@@ -32,20 +32,13 @@ Bla
 
 \newpage
 
-\section{Problématique soulevée}
 
-Bla
-
-
-# Rapport de mission ComEXP  Diohine
-
-###### tags: `DSCATT` `comExp` `dakar` `senegal`
 
 Auteurs : Paul Chapron (IGN), Romain Reuillon (ISCPIF), Mathieu Leclaire (ISCPF), Etienne Delay (CIRAD)
 
 Pour le réaliser, on s'appuie sur deux notes : 
-- Note de [Paul](https://hackmd.openmole.org/Rck70wm6Qmu_ztM0M03--w?view)
-- Note d'[Etienne](https://hackmd.openmole.org/qhPAjsJGRbiOQYIItbwPww#)
+- Note de [Paul]\url{https://hackmd.openmole.org/Rck70wm6Qmu_ztM0M03--w?view}
+- Note d'[Etienne]\url{https://hackmd.openmole.org/qhPAjsJGRbiOQYIItbwPww#}
 
 
 :::info
@@ -56,9 +49,8 @@ A minima les 4 acteurs (Paul, Marcel ,  Marie-Hélène et Idrissa), + toute pers
 On n'hésitera pas a mettre des référence bilio
 :::
 
-[TOC]
 
-# Contexte
+\section{Contexte}
 
 Dans le cadre du projet DSCATT, nous Paul Chapron (IGN) Romain Reuillon (CNRS) et Etienne Delay (CIRAD) avons animé 1 semaine d'atelier à Diohine sur le territoire de l'observatoire IRD de Niakhar. Ils s'inscrivent dans différentes réflexions de recherche autour de l'exploration d'accompagnement, et les théories de la viabilité appliquées aux systèmes multi-agents.
 Ces journées d'atelier ont mobilisé quatre acteurs locaux sur cinq jours: 
@@ -72,9 +64,9 @@ L'enjeu de cette semaine d'atelier était de formaliser avec les acteurs leur re
 
 À l'issue de la semaine, les participants ont pu valider une première version de leur système qu'on retrouve ici : https://github.com/ElCep/DSCATT/tree/master/PARDi
 
-# PARDi, un outil de mise en lumière de l'agencement des éléments du système.
+\section{PARDi, un outil de mise en lumière de l'agencement des éléments du système.}
 
-## Le diagramme  comme outil de représentation du système
+\subsection{Le diagramme  comme outil de représentation du système}
 
 La méthode PARDI est une évolution des spécifications de ARDI (Etienne et al. 2011) qui relève de la capacité de l'outil à expliciter des implicites et rendre visible des  hypothèses de modélisation. Cette méthode mobilise des diagrammes pour représenter à la fois les **éléments** constitutifs du système et les **interactions** entre ces éléments. 
 
@@ -82,25 +74,34 @@ Ces diagrammes sont constitués de **noeuds** représentés par des cercles ou d
 
 Dans un diagramme PARDI comme ceux que nous allons inclure dans la suite de ce rapport, les noeuds représentent des **acteurs** ou des **ressources**, et les arcs représentent des **interactions** entre ces acteurs, entre ces ressources ou entre ces acteurs et ces ressources.
 
-Par exemple pour représenter une intéraction simple entre un acteur **A** et une ressource **B**, on aurait le diagramme suivant : 
+%inclusion d'une mage dans le document
+\begin{figure}
+\begin{center}
+%taille de l'image en largeur
+remplacer "width" par "height" pour régler la hauteur
+\includegraphics[width=15cm]{img/diagramme_simple.png}
+\end{center}
+%légende de l'image
+\caption{Interaction simple }
+\label{simple_interac}
+\end{figure}
 
 
-![](https://miniocodimd.openmole.org/codimd/uploads/upload_9e263f7bb23d44d75f7ad9c156fa71d0.png)
 
-
-Comme les noeuds et les arcs sont nommés, il devient facile de faire une phrase qui décrit l'intéraction de façon concise. Par exemple avec la figure [TODO ref] , on pourrait former la phrase suivante : 
-« A consomme B»
+Comme les noeuds et les arcs sont nommés, il devient facile de faire une phrase qui décrit l'interaction de façon concise. Par exemple avec la figure \ref{simple_interac} , on pourrait former la phrase suivante : « A consomme B»
 
 Plusieurs arcs peuvent exister entre deux mêmes noeuds, pour représenter des interactions différentes.
 
 
-## Modélisation PARDI du système de Diohine
+\subsection{Modélisation PARDI du système de Diohine}
 
-### Les Acteurs
+\subsubsection{Les Acteurs}
 
 Par la suite nous utiliserons les termes suivants:
-- **acteur/role**: personne physique partie prenante dans le système étudié
-- **participant** : personnes physiques concourant à la co-construction du modèle durant l'atelier. C'est donc un sous ensemble des "acteurs".
+\begin{itemize}
+\item \textbf{acteur/role}: personne physique partie prenante dans le système étudié
+\item \textbf{participant} : personnes physiques concourant à la co-construction du modèle durant l'atelier. C'est donc un sous ensemble des "acteurs".
+\end{itemize}
 
 La méthode PARDI propose d'interroger des participants évoluant dans un même système. Ils participent à co-construire un diagramme d'interactions entre acteurs sur la base de la connaissance qu'ils ont de ce système. Elle a pour effet de les faire réfléchir sur la réalité du système dans lequel ils évoluent. Les échanges de points de vue stimulent leur créativité en mettant en lumière des liens entre certains objets de leurs quotidiens. L'enjeu du travail de modélisation conceptuel avec PARDI est d'accompagner par un mode de représentation schématique la réflexion sur le fonctionnement du système (Becu et al. 2010).
 
@@ -127,7 +128,7 @@ Les acteurs ci-dessous ne nécessitent pas d'explicitation approfondie, leur nom
 - **Petit ruminant** : mouton et chèvre
 - **Grand ruminant** : boeuf et vache
 
-### L'atelier de modélisation PARDI à Diohine 
+\subsubsection{L'atelier de modélisation PARDI à Diohine }
 
 Dans le cadre du questionnement autour du stockage de carbone dans les pratiques agricoles du projet DSCATT, nous nous sommes intéréssés à la gestion communautaire de la jachère dans la commune de Diohine. 
 
@@ -299,7 +300,7 @@ Une fois que le zonage est effectué lors de la réunion diurne, les tractations
 
 Les parcelles sont prêtées par le chef de cuisine, pour une durée d'un an. Les prêts étaient traditionnellement accompagnés d'offrande/cadeau en nature. Mais de plus en plus ces pratiques se métamorphosent en location (prêt contre de l'argent).
 
-# Les réseaux de solidarité
+\section{Les réseaux de solidarité}
 
 :::warning
 Est-ce que la solidarité ici est proche/assimilable à la notion de proximité de l'école des proximités (Tores, Grossetti, Bouba-olga)
@@ -327,7 +328,7 @@ Les interactions sont plus ponctuelles : conseils sur l'achat ou la vente de bé
 Enfin un troisième réseau de solidarité , plus étendu, est celui qui lie les cuisines à leur famille lointaine, installée dans les villes  de taille plus importante , voire d'autres pays (diaspora).
 Ce réseau est le support d'interactions  moins fréquentes , et il semblerait qu'il soit mobilisé principalement pour contribuer financièrement à la sécurité alimentaire des familles du village, ou à statuer sur des évènements politiques majeurs. (La diaspora mondiale peut être convoquée)
 
-# Conclusion
+\section{Conclusion}
 
 Le territoire fait face à un phénomène d’éclatement des cuisines. Le concept de cuisine regroupe les personnes qui mangent ensemble et donc qui participent à l’alimentation. Du fait de l’imbrication des systèmes de solidarité (et du lien avec la lignée maternelle?)([paul] casse gueule la lignée ici) , la propension des acteurs à participer à l’alimentation de la cuisine est réduite aux obligations. Pour nos participants, les femmes participent très fortement à l’éclatement des cuisines.
 
