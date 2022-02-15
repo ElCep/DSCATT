@@ -1,0 +1,168 @@
+digraph g {
+
+
+
+  /* Acteurs */
+  "Sous préfet" [color = "red" pardi=acteur];
+  "Conseil Municipal" [color = "red" pardi=acteur];
+  "Chef de village" [color = "red" pardi=acteur];
+  "Notables" [color = "red" pardi=acteur];
+  "Chef de Consession" [color = "red" pardi=acteur];
+  "Cuisine (chef)" [color = "red" pardi=acteur];
+  "Travailleur Sortie" [color = "red" pardi=acteur];
+  "Agriculteur" [color = "red" pardi=acteur];
+  "Eleveur" [color = "red" pardi=acteur];
+  "Ecole" [color = "red" pardi=acteur];
+  "Banque de Céréale" [color = "red" pardi=acteur];
+  "Revendeur de Semmence" [color = "red" pardi=acteur];
+  "Revendeur dengrais" [color = "red" pardi=acteur];
+  "Vieilles mamans" [color = "red" pardi=acteur];
+  "Saltigué" [color = "red" pardi=acteur];
+  "Animaux de trait" [color = "red" pardi=acteur];
+  "Petit ruminants" [color = "red" pardi=acteur];
+  "Grand ruminants" [color = "red" pardi=acteur];
+  "Conseil de village" [color = "red" pardi=acteur];
+  "gendarmerie" [color = "red" pardi=acteur];
+  "Animaux" [color = "red" pardi=acteur];
+  "Fourrière" [color = "red" pardi=acteur];
+  "tribunal" [color = "red" pardi=acteur];
+
+  /* Ressources*/
+  "Arbres à palabres" [color = "blue" pardi=ressource];
+  "Paix sociale" [color = "blue" pardi=ressource];
+  "Eau du forage" [color = "blue" pardi=ressource];
+  "Eau des Mares" [color = "blue" pardi=ressource];
+  "Eau des puis" [color = "blue" pardi=ressource];
+  "Pluviometrie" [color = "blue" pardi=ressource];
+  "Engrais Chimique" [color = "blue" pardi=ressource];
+  "paille et culture" [color = "blue" pardi=ressource];
+  "Paille darachide" [color = "blue" pardi=ressource];
+  "Tige de céréale" [color = "blue" pardi=ressource];
+  "Sol" [color = "blue" pardi=ressource];
+  "Parcelles" [color = "blue" pardi=ressource];
+  "Tapis herbacé" [color = "blue" pardi=ressource];
+  "Arbres" [color = "blue" pardi=ressource];
+  "Paturage/Jachère" [color = "blue" pardi=ressource];
+  "Matière Organique" [color = "blue" pardi=ressource];
+  "Fertilité" [color = "blue" pardi=ressource];
+
+  /* Interactions */
+  "Cuisine (chef)" -> "Eau des puis" [label=Boivent color = "green" pardi=interaction]
+  "Cuisine (chef)" -> "Eau du forage"[label=Boivent color = "green" pardi=interaction]
+  "Travailleur Sortie" -> "Animaux" [label=confient color = "green" pardi=interaction]
+  "Cuisine (chef)" -> "Travailleur Sortie" [label=soutient color = "green" pardi=interaction]
+  "Cuisine (chef)" -> "Travailleur Sortie" [label=soutient color = "green" pardi=interaction]
+  "Cuisine (chef)" -> "Arbres à palabres" [label=contribue color = "green" pardi=interaction]
+  "Chef de village" -> "Arbres à palabres" [label=covoque color = "green" pardi=interaction]
+  "Notables" -> "Arbres à palabres" [label=contribue color = "green" pardi=interaction]
+  "Arbres à palabres" -> "Chef de village"[label=informe color = "green" pardi=interaction]
+  "Notables" -> "Chef de Consession" [label="bons offices" color = "green" pardi=interaction]
+  "Notables" -> "Cuisine (chef)" [label="bons offices" color = "green" pardi=interaction]
+  "Chef de Consession" -> "Cuisine (chef)" [label="Régule" color = "green" pardi=interaction]
+  "Cuisine (chef)" ->   "Conseil Municipal" [label="Plainte" color = "green" pardi=interaction]
+  "Cuisine (chef)" ->  "Chef de village" [label="Plainte" color = "green" pardi=interaction]
+  "Saltigué" -> "Eleveur"  [label="Predit&Protège" color = "green" pardi=interaction]
+  "Saltigué" -> "Agriculteur"  [label="Predit&Protège" color = "green" pardi=interaction]
+  "Saltigué" -> "Pluviometrie" [label="Predit&Protège" color = "green" pardi=interaction]
+  "Saltigué" -> "Parcelles" [label="Predit&Protège" color = "green" pardi=interaction]
+  
+
+  "Vieilles mamans" -> "Eleveur"  [label="Predit&Protège" color = "green" pardi=interaction]
+  "Vieilles mamans" -> "Agriculteur"  [label="Predit&Protège" color = "green" pardi=interaction]
+  "Vieilles mamans" -> "Pluviometrie" [label="Predit&Protège" color = "green" pardi=interaction]
+  "Vieilles mamans" -> "Parcelles" [label="Predit&Protège" color = "green" pardi=interaction]
+
+  
+  
+
+
+  "Eleveur" -> "Cuisine (chef)" [label=constitue color = "green" pardi=interaction]
+  "Eleveur" -> "Paix sociale" [label=preserve color = "green" pardi=interaction]
+  "Eleveur" -> "Animaux" [label=entretien color = "green" pardi=interaction]
+  "Paix sociale" -> "Eleveur" [label=assure color = "green" pardi=interaction]
+  "Animaux" -> "Eleveur" [label=usufruit color = "green" pardi=interaction]
+  "Eleveur" -> "Ecole" [label=occupe color = "green" pardi=interaction]
+  "Agriculteur" -> "Cuisine (chef)" [label=constitue color = "green" pardi=interaction]
+  "Agriculteur" -> "Revendeur de Semmence" [label="approvisionnement" color = "green" pardi=interaction]
+  "Agriculteur" -> "Revendeur dengrais"  [label="approvisionnement" color = "green" pardi=interaction]
+    "Agriculteur" -> "Engrais Chimique" [label="épandage" color = "green" pardi=interaction]
+  "Agriculteur" -> "Paix sociale" [label=preserve color = "green" pardi=interaction]
+  "Paix sociale" -> "Agriculteur" [label=assure color = "green" pardi=interaction]
+  "Engrais Chimique" -> "Parcelles"[label="épandage" color = "green" pardi=interaction]
+  "Eleveur" -> "Cuisine (chef)" [label=constitue color = "green" pardi=interaction]
+  "Agriculteur" -> "Animaux" [label="Contribut à lallimentation" color = "green" pardi=interaction]
+  "Agriculteur" -> "Parcelles" [label="valorise et entretient" color = "green" pardi=interaction]
+  
+
+  "Sol"  -> "Parcelles" [label="compose" color = "green" pardi=interaction]
+  "paille et culture"-> "Sol" [label="adaptation à" color = "green" pardi=interaction]
+
+  "Paille darachide"  -> "Sol" [label="adaptation à" color = "green" pardi=interaction]
+  "Tige de céréale" -> "Sol" [label="adaptation à" color = "green" pardi=interaction]
+
+
+  "Tige de céréale" -> "Agriculteur"  [label="construit" color = "green" pardi=interaction]
+  "Tige de céréale" -> "Eleveur" [label="construit" color = "green" pardi=interaction]
+  "Paille darachide" -> "Eleveur" [label="stock" color = "green" pardi=interaction]
+  "Tapis herbacé" -> "Eleveur" [label="stock" color = "green" pardi=interaction]
+  "Tapis herbacé" -> "Parcelles" [label="Pousse" color = "green" pardi=interaction]
+  "Tapis herbacé" -> "Fertilité" [label="améliore" color = "green" pardi=interaction]
+  "Arbres" -> "Pluviometrie" [label="attire" color = "green" pardi=interaction]
+  "Arbres" -> "Fertilité" [label="améliore" color = "green" pardi=interaction]
+  "Animaux" -> "Parcelles" [label=enrichit color = "green" pardi=interaction]
+  "Parcelles" -> "Animaux"[label=nourrit color = "green" pardi=interaction]
+  "Animaux" -> "Eau des Mares"  [label=boivent color = "green" pardi=interaction]
+  "Animaux" -> "Eau du forage"  [label=boivent color = "green" pardi=interaction]
+  "Animaux" -> "Eau des puis" [label=boivent color = "green" pardi=interaction]
+
+
+  "Parcelles" -> "Paturage/Jachère"[label=repos color = "green" pardi=interaction]
+  "Paturage/Jachère" -> "Parcelles" [label=revitalise color = "green" pardi=interaction]
+  "Animaux" -> "Matière Organique" [label=produit color = "green" pardi=interaction]
+  "Paturage/Jachère" -> "Matière Organique" [label=Dégrade color = "green" pardi=interaction]
+  "Matière Organique" -> "Parcelles" [label=transport color = "green" pardi=interaction]
+  "Parcelles" -> "Agriculteur" [label=transport color = "green" pardi=interaction]
+
+  /* dynamique */
+  // Conflict agriculteur éleveur
+  "Animaux" -> "Parcelles" [label="1 Conflict (divagation accidentelle ou à dessin)" color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Agriculteur" -> "Parcelles" [label="2 constat" color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Agriculteur" -> "Fourrière" [label="3 flagrant delit"  color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Eleveur" -> "Parcelles" [label="3 constat"  color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Agriculteur" -> "Eleveur" [label="4 tentative resol"  color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Eleveur" -> "Agriculteur" [label="4 tentative resol"  color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Agriculteur" -> "Cuisine (chef)" [label="5 information"  color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Cuisine (chef)" -> "Chef de Consession" [label="6 Information"  color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Chef de Consession" -> "Cuisine (chef)" [label="6 concertation"  color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Chef de Consession" -> "Parcelles" [label="7 concertation"  color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Chef de Consession" -> "Chef de Consession" [label="8 tentative resol."  color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Notables" -> "Chef de Consession" [label="9 conv. arbre à palabres"  color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  "Notables" -> "Arbres à palabres" [label="10 tentative resol."  color = "yellow" pardi=dynamique_conflit lvl_conflict=quartier]
+  // niveau village
+  "Agriculteur" -> "Chef de village" [label="1 plainte"  color = "purple" pardi=dynamique_conflit lvl_conflict=village]
+  "Chef de village" -> "Parcelles"[label="2 constat"  color = "purple" pardi=dynamique_conflit lvl_conflict=village]
+  "Chef de village" -> "Notables" [label="3 information"  color = "purple" pardi=dynamique_conflit lvl_conflict=village]
+  "Notables" -> "Eleveur"  [label="4 tentative resol."  color = "purple" pardi=dynamique_conflit lvl_conflict=village]
+  "Notables" ->  "Agriculteur" [label="4 tentative resol."  color = "purple" pardi=dynamique_conflit lvl_conflict=village]
+  "Notables" -> "Chef de village" [label="5 rapport"  color = "purple" pardi=dynamique_conflit lvl_conflict=village]
+  "Chef de village" -> "Conseil de village" [label="6 constitution"  color = "purple" pardi=dynamique_conflit lvl_conflict=village]
+  "Conseil de village" -> "Conseil de village" [label="7 tentative resol."  color = "purple" pardi=dynamique_conflit lvl_conflict=village]
+  //Niveau droit positif
+  "Agriculteur" -> "Sous préfet" [label="1 plainte"  color = "pink" pardi=dynamique_conflit lvl_conflict=droit]
+  "Sous-préfet" -> "Chef de village" [label="2 demande d info."  color = "pink" pardi=dynamique_conflit lvl_conflict=droit]
+  "Sous-préfet" -> "Chef de village" [label="3 envois convoc"  color = "pink" pardi=dynamique_conflit lvl_conflict=droit]
+  "Chef de village" -> "Eleveur"  [label="4 transmission convoc"  color = "pink" pardi=dynamique_conflit lvl_conflict=droit]
+  "Chef de village" -> "Agriculteur" [label="4 transmission convoc"  color = "pink" pardi=dynamique_conflit lvl_conflict=droit]
+  "Sous-préfet" -> "Sous préfet" [label="4 tentative resol."  color = "pink" pardi=dynamique_conflit lvl_conflict=droit]
+  "Sous-préfet" -> "gendarmerie" [label="5 transmission dossier"  color = "pink" pardi=dynamique_conflit lvl_conflict=droit]
+  "gendarmerie" -> "gendarmerie" [label="6 enquête"  color = "pink" pardi=dynamique_conflit lvl_conflict=droit]
+  "gendarmerie" -> "tribunal" [label="7 transmission"  color = "pink" pardi=dynamique_conflit lvl_conflict=droit]
+
+  //dynamique sociale de la fertilite
+  "Agriculteur"  -> "Fertilité" [label="suivi"  color = "orange" pardi=dynamique_fertilite]
+  "Chef de Consession" -> "Fertilité" [label="suivi"  color = "orange" pardi=dynamique_fertilite]
+  "Arbres à palabres" -> "Fertilité" [label="est informé"  color = "orange" pardi=dynamique_fertilite]
+
+}
+
+
