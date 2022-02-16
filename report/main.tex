@@ -15,7 +15,8 @@
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{url}
 %pour les informations sur un document compilé en PDF et les liens externes / internes
-\usepackage{hyperref}
+\usepackage[breaklinks]{hyperref}
+
 
 %pour la mise en page des tableaux
 \usepackage{array}
@@ -31,6 +32,30 @@
 %Pour les galerie d'images
 \usepackage{subfig}
 
+% Pour faire des encadré
+\usepackage{tikz}
+
+%bibliography
+\usepackage[
+	backend=biber,
+	style=geschichtsfrkl]{biblatex}
+\addbibresource{rapport_diohine.bib}
+% creation d'encadrex
+\newcommand{\titlebox}[2]{%
+	\tikzstyle{titlebox}=[rectangle,inner sep=10pt,inner ysep=10pt,draw]%
+	\tikzstyle{title}=[fill=white]%
+	%
+	\bigskip\noindent\begin{tikzpicture}
+	\node[titlebox] (box){%
+	\begin{minipage}{0.94\textwidth}
+	#2
+	\end{minipage}
+	};
+	%\draw[color=blue] (box.north west)--(box.north east);
+	\node[title] at (box.north) {#1};
+	\end{tikzpicture}\bigskip%
+}
+
 %====================== INFORMATION ET REGLES ======================
 
 %rajouter les numérotation pour les \paragraphe et \subparagraphe
@@ -42,7 +67,7 @@ pdfauthor = {Étienne Delay ,
 			Paul Chapron,
 			Mathieu Leclaire,
     		Romain Reuillon},			% Auteurs
-pdftitle = {DSCATT - Gestion foncière concertée de la fertilité 
+pdftitle = {DSCATT - Gestion foncière concertée de la fertilité
 			},			% Titre du document
 pdfsubject = {Rapport intermédiaire},		% Sujet
 pdfkeywords = {Tag1, Tag2, Tag3, ...},	% Mots-clefs
@@ -87,24 +112,27 @@ pdfstartview={FitH}}					% ajuste la page à la largueur de l'écran
 \newpage
 
 \input{./presentation.tex}
+\newpage
 
 \input{./resultats.tex}
+\newpage
 
 \input{./bilan.tex}
+\newpage
+
+
+%inclusion de la biblio
+\printbibliography
+%voir wiki pour plus d'information sur la syntaxe des entrées d'une bibliographie
 
 \input{./annexes.tex}
-
 \newpage
 
 %récupérer les citation avec "/footnotemark"
 \nocite{*}
 
-%choix du style de la biblio
-\bibliographystyle{plain}
-%inclusion de la biblio
-\bibliography{bibliographie.bib}
-%voir wiki pour plus d'information sur la syntaxe des entrées d'une bibliographie
 
-\end{document}
+
+%\end{document}
 
 \end{document}
