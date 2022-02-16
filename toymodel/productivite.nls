@@ -5,20 +5,23 @@ to-report production [c]
  ;;show [ idmyParcellesCultive ] of c
   let pids [ idmyParcellesCultive ] of c
   let parcelles map [pid -> patches with [ parcelle-id = pid ]] pids
+ 
   let prod map [ p -> production-parcelle p ] parcelles
   report sum prod
 end
 
 to-report production-parcelle[pid]
-  let pp patches with [ parcelle-id = pid ]
   
-  if not any? pp [ report 0 ]
   
-  let parcelle-fertilite sum [fertilite] of pp
-  let raw-production count pp * surface-de-patch * kg-cereale-par-ha / 10000
+  ;;let pp patches with [ parcelle-id = pid ]
+  
+  if not any? pid [ report 0 ]
+  
+  let parcelle-fertilite sum [fertilite] of pid
+  let raw-production count pid * surface-de-patch * kg-cereale-par-ha / 10000
   
   let malus-f ifelse-value parcelle-fertilite <= 0 [ malus-fertilite ] [0] ;; malus fertilite
-  let malus-j ifelse-value [ cycle ] of (one-of pp) = 3  [ malus-in-jachere ] [0] ;; malus jachere
+  let malus-j ifelse-value [ cycle ] of (one-of pid) = 3  [ malus-in-jachere ] [0] ;; malus jachere
   let malus malus-f + malus-j ;; malus de prod
   
   report raw-production - raw-production * malus
@@ -78,7 +81,6 @@ to planif-culture
         set iter iter + 1
       ][
         set tropParcelles? TRUE
-        show "tranquille"
       ]
     ]
   ]

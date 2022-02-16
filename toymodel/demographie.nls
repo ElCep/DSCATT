@@ -6,10 +6,12 @@ to demographie
   ask cuisines [
     ifelse bilan-nourriture > 0 [
       let entrants_ sum(map [ t -> ifelse-value (random-float 1) < t [1] [0] ] (n-values taille [croissance-demographique]))
+      
       set taille taille + entrants_
       set entrants entrants + entrants_
     ] [
       let sortants_ ceiling (abs(bilan-nourriture) / (kg-nourriture-par-pers-jour * 365))
+      
       ifelse taille - sortants_ < min-taille-cuisine and absorption [
         let cuisine-absorbante one-of other cuisines 
         if(cuisine-absorbante != NOBODY) [

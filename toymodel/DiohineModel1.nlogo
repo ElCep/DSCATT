@@ -203,9 +203,10 @@ to setup
   ;; set troupeau 130
 
 
-  show "calcul bilan"
+ ask cuisines [
+    set besoin-nourriture calcul-besoin-nourriture  [taille] of self
+  ]
 
-  calcul-bilan
 
 end ;; setup
 
@@ -220,6 +221,7 @@ to go
   planif-culture
   chercher-parcelles
   mise-en-culture
+
   ;; GUI cosmétique
   ask betails [die]
    ask n-of 15 patches with [cycle = 3 and zone != "case" and proprietaire != "bordures"]
@@ -285,7 +287,8 @@ to calcul-bilan
 
   ask cuisines [
     set besoin-nourriture calcul-besoin-nourriture  [taille] of self
-    let sumIdP sum countMyCultivetedPlots
+
+    ;;let sumIdP sum countMyCultivetedPlots
     ;set nb-patch-dispo count patches with [(proprietaire = myself and parcelle-id =   or zone = "case" ) ] ;; selection sur la liste des parcelle cultive
     ;;set nourriture-autosuffisante (sumIdP * surface-de-patch  /  10000) * kg-cereale-par-ha
 
@@ -758,9 +761,9 @@ SLIDER
 325
 patch-area
 patch-area
-50
+10
 500
-500.0
+90.0
 10
 1
 m2
@@ -773,7 +776,7 @@ SWITCH
 475
 absorption
 absorption
-1
+0
 1
 -1000
 
@@ -786,7 +789,7 @@ sd-ppc
 sd-ppc
 0
 5
-2.9
+0.0
 0.1
 1
 NIL
