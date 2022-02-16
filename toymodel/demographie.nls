@@ -11,8 +11,8 @@ to demographie
     ] [
       let sortants_ ceiling (abs(bilan-nourriture) / (kg-nourriture-par-pers-jour * 365))
       ifelse taille - sortants_ < min-taille-cuisine [
-        let cuisine-absorbe one-of other cuisines 
-        absorbe-cuisine cuisine-absorbe self
+        let cusine-absorbante one-of other cuisines 
+        absorbe-cuisine cusine-absorbante self
       ] [
         set taille max list (taille - sortants_) 0
         set sortants sortants + sortants_
@@ -21,11 +21,11 @@ to demographie
   ]
 end
 
-to absorbe-cuisine [cuisine-absorbe cuisine-disparait]
-  ask cuisine-absorbe [
+to absorbe-cuisine [cusine-absorbante cuisine-disparait]
+  ask cusine-absorbante [
     set taille taille + [taille] of cuisine-disparait
     ask patches with [ proprietaire = cuisine-disparait ] [
-      set proprietaire cuisine-absorbe
+      set proprietaire cusine-absorbante
       set pcolor [color] of myself 
     ]
   ]
