@@ -63,6 +63,7 @@ globals [
 
 to setup
   ca
+  random-seed seed
   reset-ticks
   set cycle-jachere-courante 1
 
@@ -403,10 +404,10 @@ NIL
 1
 
 MONITOR
-96
-625
-197
-670
+1112
+587
+1213
+632
 fertilite totale
 sum [fertilite] of patches
 1
@@ -432,10 +433,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches"
 
 MONITOR
-14
-624
-86
-669
+1030
+586
+1102
+631
 NIL
 troupeau
 17
@@ -772,10 +773,10 @@ m2
 HORIZONTAL
 
 SWITCH
-1048
-442
-1183
-475
+4
+606
+139
+639
 absorption
 absorption
 0
@@ -814,6 +815,17 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" "plot population-totale"
+
+INPUTBOX
+4
+651
+99
+711
+seed
+77.0
+1
+0
+Number
 
 @#$#@#$#@
 ## WHAT IS IT?
