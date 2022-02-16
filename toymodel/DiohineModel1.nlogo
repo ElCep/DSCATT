@@ -151,10 +151,10 @@ to setup
 
 
 
- ask n-of 10 patches with [zone = "case" and pxcor <= 25 and pycor <= 25]  [
+ ask n-of nb-cuisines patches with [zone = "case" and pxcor <= 25 and pycor <= 25]  [
     set proprietaire "zone cuisine"
     sprout-cuisines 1 [
-      set taille  10
+      set taille  nb-personne-par-cuisine
       set shape "house"
       set color (who + 1) * 10 + 6
     ]
@@ -304,10 +304,10 @@ to update-cuisine-size
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-210
-10
-723
-524
+295
+43
+808
+557
 -1
 -1
 5.0
@@ -365,10 +365,10 @@ NIL
 1
 
 BUTTON
-763
-13
-861
+848
 46
+946
+79
 paturage
 random-walk-betail
 T
@@ -382,10 +382,10 @@ NIL
 1
 
 BUTTON
-750
-71
-863
+835
 104
+948
+137
 NIL
 eclatement
 NIL
@@ -399,10 +399,10 @@ NIL
 1
 
 MONITOR
-108
-410
-209
-455
+96
+523
+197
+568
 fertilite totale
 sum [fertilite] of patches
 1
@@ -410,10 +410,10 @@ sum [fertilite] of patches
 11
 
 PLOT
-934
-205
-1134
-355
+1019
+238
+1219
+388
 fertilité globale 
 NIL
 NIL
@@ -428,10 +428,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches"
 
 MONITOR
-26
-409
-98
-454
+14
+522
+86
+567
 NIL
 troupeau
 17
@@ -439,10 +439,10 @@ troupeau
 11
 
 PLOT
-1142
-52
-1342
-202
+1227
+85
+1427
+235
 patchs par parcelle
 NIL
 NIL
@@ -457,10 +457,10 @@ PENS
 "default" 1.0 1 -16777216 true "" ""
 
 SLIDER
-873
-17
-1051
+958
 50
+1136
+83
 ratio-arachide-riz
 ratio-arachide-riz
 0
@@ -472,25 +472,25 @@ NIL
 HORIZONTAL
 
 SLIDER
-13
-126
-198
-159
+1
+239
+186
+272
 kg-cereale-par-ha
 kg-cereale-par-ha
 100
 800
-420.0
+620.0
 10
 1
 NIL
 HORIZONTAL
 
 PLOT
-938
-52
-1138
-202
+1023
+85
+1223
+235
 bilan nourriture global
 NIL
 NIL
@@ -505,10 +505,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot sum [bilan-nourriture]  of cuisines"
 
 MONITOR
-756
-161
-866
-206
+841
+194
+951
+239
 besoins tot
 sum [besoin-nourriture] of cuisines
 1
@@ -516,10 +516,10 @@ sum [besoin-nourriture] of cuisines
 11
 
 MONITOR
-752
-112
-927
-157
+837
+145
+1012
+190
 surface tot. dispo
 sum [nb-patch-dispo] of cuisines
 0
@@ -527,10 +527,10 @@ sum [nb-patch-dispo] of cuisines
 11
 
 MONITOR
-745
-213
-854
-258
+830
+246
+939
+291
 production tot.
 sum [nourriture-autosuffisante] of cuisines
 0
@@ -538,10 +538,10 @@ sum [nourriture-autosuffisante] of cuisines
 11
 
 MONITOR
-758
-285
-851
-330
+843
+318
+936
+363
 bilan moyen
 mean [bilan-nourriture] of cuisines
 1
@@ -549,10 +549,10 @@ mean [bilan-nourriture] of cuisines
 11
 
 PLOT
-737
-385
-937
-535
+822
+418
+1022
+568
 bilan cuisine
 NIL
 NIL
@@ -567,10 +567,10 @@ PENS
 "besoin 1" 1.0 2 -16777216 true "" ""
 
 PLOT
-1139
-207
-1339
-357
+1224
+240
+1424
+390
 patchs par cuisine
 NIL
 NIL
@@ -585,10 +585,10 @@ PENS
 "default" 1.0 1 -16777216 true "" ""
 
 MONITOR
-972
-466
-1050
-511
+1057
+499
+1135
+544
 NIL
 calcul-gini
 4
@@ -596,10 +596,10 @@ calcul-gini
 11
 
 SLIDER
-13
-169
-198
-202
+1
+282
+186
+315
 gini-parcelles
 gini-parcelles
 0.0
@@ -628,10 +628,10 @@ NIL
 1
 
 SLIDER
-13
-212
-200
-245
+1
+325
+188
+358
 croissance-demographique
 croissance-demographique
 0
@@ -643,10 +643,10 @@ NIL
 HORIZONTAL
 
 PLOT
-1081
-384
-1281
-534
+1166
+417
+1366
+567
 emigration/immigration
 NIL
 NIL
@@ -661,45 +661,45 @@ PENS
 "default" 1.0 2 -16777216 true "" ""
 
 SLIDER
-12
-260
-199
-293
+0
+373
+187
+406
 troupeau
 troupeau
 count cuisines
 200
-131.0
+80.0
 10
 1
 NIL
 HORIZONTAL
 
 SLIDER
-13
-301
-200
-334
+1
+414
+188
+447
 malus-fertilite
 malus-fertilite
 0
 1
-0.15
+0.81
 0.01
 1
 NIL
 HORIZONTAL
 
 SLIDER
-16
-341
-191
-374
+4
+454
+179
+487
 malus-in-jachere
 malus-in-jachere
 0
 1
-0.3
+0.72
 0.01
 1
 NIL
@@ -721,6 +721,36 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+2
+150
+174
+183
+nb-cuisines
+nb-cuisines
+1
+25
+10.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+3
+196
+227
+229
+nb-personne-par-cuisine
+nb-personne-par-cuisine
+1
+20
+10.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -1064,7 +1094,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.1
+NetLogo 6.2.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
