@@ -57,6 +57,8 @@ globals [
 
   ;; demographie
   min-taille-cuisine
+  population-totale
+
 ]
 
 to setup
@@ -763,7 +765,7 @@ patch-area
 patch-area
 10
 500
-90.0
+60.0
 10
 1
 m2
@@ -794,6 +796,24 @@ sd-ppc
 1
 NIL
 HORIZONTAL
+
+PLOT
+1463
+85
+1663
+235
+Population totale
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot population-totale"
 
 @#$#@#$#@
 ## WHAT IS IT?

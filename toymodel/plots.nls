@@ -30,5 +30,8 @@ to updatePlots
     set-plot-pen-color color ;pour renvoyer la couleur du fermier
     plotxy ticks (entrants - sortants)
     ]
+  
+  set-current-plot "Population totale"
+  set population-totale sum [taille] of cuisines
 end
 
