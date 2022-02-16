@@ -10,7 +10,7 @@ to demographie
       set entrants entrants + entrants_
     ] [
       let sortants_ ceiling (abs(bilan-nourriture) / (kg-nourriture-par-pers-jour * 365))
-      ifelse taille - sortants_ < min-taille-cuisine [
+      ifelse taille - sortants_ < min-taille-cuisine and absorption [
         let cuisine-absorbante one-of other cuisines 
         if(cuisine-absorbante != NOBODY) [
         absorbe-cuisine cuisine-absorbante self
@@ -32,6 +32,15 @@ to absorbe-cuisine [cuisine-absorbante cuisine-disparait]
     ]
   ]
   ask cuisine-disparait [ die ]
+end
+
+
+to distiribution-population-par-cuisine
+ 
+  ask cuisines [
+    set taille round random-normal moyenne-ppc sd-ppc
+  ]
+  
 end
 
 

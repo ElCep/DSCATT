@@ -69,7 +69,7 @@ to setup
   ;; paramètre interne
 
   ;; en m²
-  set surface-de-patch 100
+  set surface-de-patch patch-area
 
 
   set seuil-gini 0.01
@@ -154,12 +154,11 @@ to setup
  ask n-of nb-cuisines patches with [zone = "case" and pxcor <= 25 and pycor <= 25]  [
     set proprietaire "zone cuisine"
     sprout-cuisines 1 [
-      set taille  nb-personne-par-cuisine
       set shape "house"
       set color (who + 1) * 10 + 6
     ]
   ]
-
+  distiribution-population-par-cuisine
   update-cuisine-size
 
   ask cuisines [
@@ -400,9 +399,9 @@ NIL
 
 MONITOR
 96
-523
+625
 197
-568
+670
 fertilite totale
 sum [fertilite] of patches
 1
@@ -429,9 +428,9 @@ PENS
 
 MONITOR
 14
-522
+624
 86
-567
+669
 NIL
 troupeau
 17
@@ -473,9 +472,9 @@ HORIZONTAL
 
 SLIDER
 1
-239
+341
 186
-272
+374
 kg-cereale-par-ha
 kg-cereale-par-ha
 100
@@ -597,9 +596,9 @@ calcul-gini
 
 SLIDER
 1
-282
+384
 186
-315
+417
 gini-parcelles
 gini-parcelles
 0.0
@@ -629,9 +628,9 @@ NIL
 
 SLIDER
 1
-325
+427
 188
-358
+460
 croissance-demographique
 croissance-demographique
 0
@@ -643,10 +642,10 @@ NIL
 HORIZONTAL
 
 PLOT
-1166
-417
-1366
-567
+1216
+414
+1416
+564
 emigration/immigration
 NIL
 NIL
@@ -662,9 +661,9 @@ PENS
 
 SLIDER
 0
-373
+475
 187
-406
+508
 troupeau
 troupeau
 count cuisines
@@ -677,9 +676,9 @@ HORIZONTAL
 
 SLIDER
 1
-414
+516
 188
-447
+549
 malus-fertilite
 malus-fertilite
 0
@@ -692,9 +691,9 @@ HORIZONTAL
 
 SLIDER
 4
-454
+556
 179
-487
+589
 malus-in-jachere
 malus-in-jachere
 0
@@ -742,12 +741,53 @@ SLIDER
 196
 227
 229
-nb-personne-par-cuisine
-nb-personne-par-cuisine
+moyenne-ppc
+moyenne-ppc
 1
 20
 10.0
 1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+2
+292
+174
+325
+patch-area
+patch-area
+50
+500
+500.0
+10
+1
+m2
+HORIZONTAL
+
+SWITCH
+1048
+442
+1183
+475
+absorption
+absorption
+1
+1
+-1000
+
+SLIDER
+4
+242
+176
+275
+sd-ppc
+sd-ppc
+0
+5
+2.9
+0.1
 1
 NIL
 HORIZONTAL
