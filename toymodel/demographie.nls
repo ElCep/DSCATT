@@ -20,6 +20,15 @@ to demographie
       ] [
         set taille max list (taille - sortants_) 0
         set sortants sortants + sortants_
+        if taille = 0 [
+          foreach idmyParcellesSorted [
+            id -> ask patches with [parcelle-id = id] [
+              set proprietaire -99
+            ] 
+          ]
+        die
+        
+        ]
       ]
     ]
   ]

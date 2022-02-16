@@ -2,7 +2,7 @@ to updatePlots
   
   let l_surf_parcelle []
   let dada [parcelle-id] of patches
-  let propri [[who] of proprietaire] of patches with [proprietaire != "bordures" and proprietaire != "zone cuisine"]
+  let propri [[who] of proprietaire] of patches with [proprietaire != "bordures" and proprietaire != "zone cuisine" and proprietaire != -99]
 
 
   
@@ -30,6 +30,5 @@ to updatePlots
     set-plot-pen-color color ;pour renvoyer la couleur du fermier
     plotxy ticks (entrants - sortants)
     ]
-  
 end
 
