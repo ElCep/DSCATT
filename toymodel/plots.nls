@@ -4,7 +4,15 @@ to updatePlots
   let dada [parcelle-id] of patches
   let propri [[who] of proprietaire] of patches with [proprietaire != "bordures" and proprietaire != "zone cuisine" and proprietaire != -99]
 
-
+  
+  ;; repetition des identités des cuisines autant de fois que de troupeaux pour construire l'histogramme de têtes de bétail 
+  let rep-who-bestiaux []
+  ask cuisines [
+    set rep-who-bestiaux lput (n-values  taille-troupeau [who]) rep-who-bestiaux
+  ]
+  set rep-who-bestiaux reduce sentence (rep-who-bestiaux)
+  
+  
   
   set-current-plot "patchs par parcelle"
   ;;pour réaliser un histogram on a besoin d'une liste
@@ -33,5 +41,16 @@ to updatePlots
   
   set-current-plot "Population totale"
   set population-totale sum [taille] of cuisines
+
+
+set-current-plot "Troupeaux par cuisine"
+;;pour réaliser un histogram on a besoin d'une liste
+set-plot-x-range -1 ( nb-cuisines + 1  )
+set-histogram-num-bars count cuisines 
+    
+  histogram rep-who-bestiaux
+
 end
+
+
 
