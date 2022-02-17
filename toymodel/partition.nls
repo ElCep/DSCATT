@@ -54,60 +54,6 @@ to partition-iteration
 end ;; partition iteration
 
 
-
-
-
-
-to equilibrage-vers-gini 
-  
-  let gini-souhait 0.3
-  let gini-current calcul-gini
-  let batch 10
-  
-  ask n-of batch patches with  [ 
-    proprietaire != "bordures" and proprietaire != "zone cuisine" and
-   [proprietaire] of one-of neighbors   !=  proprietaire and
-    not any?  neighbors with [proprietaire = "bordures"] and 
-    not any? neighbors with [proprietaire = "zone cuisine"] 
-  ]
-    
-  [
-  
-    let voisin one-of neighbors with [ proprietaire !=  [proprietaire] of myself]
-   
-    if voisin != nobody
-    [
-    ;; 
-    let pcolor-voisin [pcolor] of voisin
-    let proprietaire-voisin [proprietaire] of voisin 
-    let parcelle-id-voisin [parcelle-id] of voisin
-    
-    ;;échange des deux patches 
-    
-    ;; le patch voisin passe dans la parcelle de self
-    ask voisin [
-      set pcolor [pcolor] of myself
-      set proprietaire [proprietaire] of myself
-      set parcelle-id [parcelle-id] of myself 
-    ]
-    ;; self devient le patch voisin
-      set pcolor [pcolor] of voisin
-      set proprietaire [proprietaire] of voisin
-      set parcelle-id [parcelle-id] of voisin
-    ] ;; if voisin != nobody
-    
-    let gini-apres calcul-gini
-    let delta1 abs ( gini-current - gini-souhait)
-    let  delta2 abs (gini-apres - gini-souhait)
-        ;;si ça n'améliore pas le gini on revient en arrière
-        
-        
- ]
- 
-end
-
-
-
 to detecter-frontieres 
   
   let gini-souhait 0.3
