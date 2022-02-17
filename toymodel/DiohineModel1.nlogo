@@ -1,4 +1,4 @@
-__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls"]
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls"]
 
 extensions [gini.jar profiler fp.jar set.jar]
 
@@ -18,7 +18,9 @@ cuisines-own [
   bilan-nourriture
   idmyParcellesSorted
   idmyParcellesCultive
-  tropParcelles?]
+  tropParcelles?
+  taille-troupeau
+]
 
 patches-own [
   zone
@@ -58,7 +60,6 @@ globals [
   ;; demographie
   min-taille-cuisine
   population-totale
-
 ]
 
 to setup
@@ -162,6 +163,7 @@ to setup
     ]
   ]
   distiribution-population-par-cuisine
+  affectation-initiale-troupeau-par-cuisine
   update-cuisine-size
 
   ask cuisines [
@@ -198,6 +200,17 @@ to setup
   show "ordre parcelles"
 
   ordre-parcelles
+
+
+ show "répartition troupeaux"
+ affectation-initiale-troupeau-par-cuisine
+
+  let repartition-init []
+  ask cuisines [
+    set repartition-init lput taille-troupeau repartition-init
+  ]
+
+  repartition-troupeau
 
   ;; troupeau pour mettre à l'équilibre probablement faux
   ;;set troupeau ceiling (((conso-carbone-culture * surface-de-patch) * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"] * 2 / 3 ) / COS-par-tete)
@@ -609,7 +622,7 @@ gini-parcelles
 gini-parcelles
 0.0
 1
-0.25
+0.05
 0.01
 1
 NIL
@@ -641,7 +654,7 @@ croissance-demographique
 croissance-demographique
 0
 1.0
-0.43
+0.0
 0.01
 1
 NIL
@@ -681,10 +694,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1
-516
-188
-549
+0
+583
+187
+616
 malus-fertilite
 malus-fertilite
 0
@@ -696,10 +709,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-4
-556
-179
-589
+3
+623
+178
+656
 malus-in-jachere
 malus-in-jachere
 0
@@ -736,7 +749,7 @@ nb-cuisines
 nb-cuisines
 1
 25
-10.0
+20.0
 1
 1
 NIL
@@ -766,17 +779,17 @@ patch-area
 patch-area
 10
 500
-10.0
+140.0
 10
 1
 m2
 HORIZONTAL
 
 SWITCH
-4
-606
-139
-639
+3
+673
+138
+706
 absorption
 absorption
 0
@@ -817,10 +830,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot population-totale"
 
 INPUTBOX
-4
-651
-99
-711
+3
+718
+98
+778
 seed
 77.0
 1
@@ -837,6 +850,39 @@ mean [taille] of cuisines
 2
 1
 11
+
+SLIDER
+6
+530
+178
+563
+gini-troupeau
+gini-troupeau
+0
+1
+0.0
+0.01
+1
+NIL
+HORIZONTAL
+
+PLOT
+1552
+385
+1752
+535
+Troupeaux par cuisine
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -16777216 true "" ""
 
 @#$#@#$#@
 ## WHAT IS IT?
