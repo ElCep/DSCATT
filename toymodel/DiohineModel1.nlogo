@@ -355,10 +355,10 @@ NIL
 BUTTON
 13
 48
-151
+160
 81
 NIL
-repeat 9 [ go ]
+repeat 25 [ go ]
 NIL
 1
 T
@@ -766,7 +766,7 @@ patch-area
 patch-area
 10
 500
-60.0
+10.0
 10
 1
 m2
@@ -826,6 +826,17 @@ seed
 1
 0
 Number
+
+MONITOR
+1032
+424
+1201
+469
+Taille moyenne des cuisines
+mean [taille] of cuisines
+2
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
