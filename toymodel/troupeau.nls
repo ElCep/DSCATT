@@ -1,0 +1,89 @@
+
+
+to affectation-initiale-troupeau-par-cuisine
+  let betes-par-cuisine floor troupeau / nb-cuisines
+  let reliquat troupeau - (betes-par-cuisine * nb-cuisines)
+  
+  show "b par cuis"
+  show betes-par-cuisine
+  
+  show "reliquat"
+  show reliquat
+  
+  ask cuisines [
+   set taille-troupeau betes-par-cuisine
+  ]
+  
+  ask one-of cuisines [
+  set taille-troupeau taille-troupeau + reliquat  
+  ]
+end
+
+
+to-report calcul-gini-troupeau [repartition]
+   report gini.jar:gini repartition
+end
+
+
+
+to repartition-troupeau
+    
+  let repartition []
+  
+  ask cuisines[
+  set repartition lput taille-troupeau   repartition
+  ]
+  
+  show "RPEANTATION"
+  show repartition
+  let gini-current calcul-gini-troupeau repartition
+       
+  
+ ;; sauvegarde de l'état avant les modifs
+  ;;let to-revert-repartition repartition 
+  let cuisine1 [who] of one-of cuisines
+  let cuisine2 0
+  
+  ask cuisine cuisine1 [
+    ask one-of other cuisines with [taille-troupeau > 0] [
+      set cuisine2 [who] of self
+    ]
+  ]
+ 
+  ask cuisine cuisine1 [
+    set taille-troupeau taille-troupeau + 1
+  ]
+  
+  ask cuisine cuisine2 [
+    set taille-troupeau taille-troupeau - 1
+  ]
+    
+  ;; mise à jour de la répartition
+  ask cuisines[
+  set repartition lput taille-troupeau repartition
+  ]
+  
+  let gini-apres calcul-gini-troupeau repartition
+  let delta1 abs ( gini-current - gini-troupeau)
+  let delta2 abs (gini-apres - gini-troupeau)
+   
+  
+  ;;si ça n'améliore pas le gini on revient en arrière
+  ;; ajout dans la condition pour stochastique si besoin de controle par la temperature : ;:and  ( random-float 1 >  exp  (- abs (delta1 - delta2) / temperature)   )
+   if delta1 < delta2 [
+     ;; defaire
+    
+    ask cuisine cuisine1 [
+    set taille-troupeau taille-troupeau - 1
+  ]
+  
+  ask cuisine cuisine2 [
+    set taille-troupeau taille-troupeau + 1
+  ] 
+  ]
+  
+  if min (list delta1 delta2) > seuil-gini [
+    repartition-troupeau
+  ]
+   
+end
