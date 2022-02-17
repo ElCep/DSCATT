@@ -37,10 +37,25 @@ end
 to MAJ-fertilite
 
   let nb-patches-Jach count patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and not cultived?  ]
-  ;; fumure dans les champs de brousse
+  
+  ;; fumure uniforme de tout le troupeau dans les champs de brousse en jachère pendant la journée 
   ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and not cultived?  ][
-    set fertilite fertilite + ((troupeau * COS-par-tete) / nb-patches-Jach)
+    set fertilite fertilite + (((sum [taille-troupeau] of cuisines ) * COS-par-tete) / nb-patches-Jach) * 0.5  ;; le 0.5 indique que c'est le jour, i.e. la moitié du temps 
   ]
+  
+  ;; la nuit les troupeaux des cuisines paturent sur les parcelles de leur cuisine
+  
+  ask cuisines [
+    ;; les patches de la cuisine 
+    let myjachereplots patches with   [cycle = 3  and not cultived? and proprietaire = [who] of myself ]
+    ask myjachereplots[
+      set fertilite fertilite + ((([taille-troupeau] of myself) * COS-par-tete) / nb-patches-Jach) * 0.5  ;; le 0.5 indique que c'est la nuit, le reste du temps
+    ; et que le troupeau va specifiquement chier sur les parcelles des propriétaires
+    ; il pourra y avoir du pret de troupeau de nuit ... un jour  
+    ]
+  ]
+  
+  
 
   ask cuisines [
     foreach idmyParcellesCultive [

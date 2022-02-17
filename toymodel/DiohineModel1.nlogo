@@ -259,6 +259,11 @@ to go
 
 
   MAJ-fertilite
+
+
+   MAJ-teinte
+
+
   updatePlots
 
   calcul-bilan
@@ -622,7 +627,7 @@ gini-parcelles
 gini-parcelles
 0.0
 1
-0.05
+0.15
 0.01
 1
 NIL
@@ -860,7 +865,7 @@ gini-troupeau
 gini-troupeau
 0
 1
-0.0
+0.55
 0.01
 1
 NIL
@@ -883,6 +888,17 @@ false
 "" ""
 PENS
 "default" 1.0 1 -16777216 true "" ""
+
+SWITCH
+367
+578
+578
+611
+update-fertilite-teinte
+update-fertilite-teinte
+0
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?

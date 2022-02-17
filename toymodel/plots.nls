@@ -52,5 +52,32 @@ set-histogram-num-bars count cuisines
 
 end
 
-
+to MAJ-teinte
+  
+  
+ask cuisines [
+ 
+    
+     if update-fertilite-teinte [
+    ask patches with [proprietaire = myself][
+   
+    ;; MAJ teinte 
+     
+   
+        set pcolor scale-color red fertilite 0 110 
+      
+    ]]
+    
+     if update-fertilite-teinte = false [
+   
+       ask patches with [proprietaire = myself][
+   
+      ;;show proprietaire
+      ;; on revient à la couleur de la cuiisine non teintée
+      set pcolor [color]  of myself 
+    ]
+    ]
+  
+  ]  
+end
 
