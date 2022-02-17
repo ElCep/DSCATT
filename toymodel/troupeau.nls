@@ -4,12 +4,6 @@ to affectation-initiale-troupeau-par-cuisine
   let betes-par-cuisine floor troupeau / nb-cuisines
   let reliquat troupeau - (betes-par-cuisine * nb-cuisines)
   
-  show "b par cuis"
-  show betes-par-cuisine
-  
-  show "reliquat"
-  show reliquat
-  
   ask cuisines [
    set taille-troupeau betes-par-cuisine
   ]
@@ -34,8 +28,6 @@ to repartition-troupeau
   set repartition lput taille-troupeau   repartition
   ]
   
-  show "RPEANTATION"
-  show repartition
   let gini-current calcul-gini-troupeau repartition
        
   

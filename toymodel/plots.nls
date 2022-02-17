@@ -2,6 +2,7 @@ to updatePlots
   
   let l_surf_parcelle []
   let dada [parcelle-id] of patches
+  let repartition-histogram [taille-troupeau] of cuisines 
   let propri [[who] of proprietaire] of patches with [proprietaire != "bordures" and proprietaire != "zone cuisine" and proprietaire != -99]
 
 
