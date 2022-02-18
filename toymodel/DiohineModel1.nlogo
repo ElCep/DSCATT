@@ -917,7 +917,7 @@ max-sacs
 1
 NIL
 VERTICAL
-=======
+
 CHOOSER
 7
 580
