@@ -1,6 +1,6 @@
 __includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls" "engrais.nls" "update_g_variables.nls"]
 
-extensions [gini.jar set.jar]
+extensions [gini.jar profiler fp.jar set.jar]
 
 ;; on utilise l'extension fp (fonctionnal programming) https://github.com/NetLogo/FP-Extension
 
@@ -529,6 +529,7 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" "plot sum [bilan-nourriture]  of cuisines"
+"pen-1" 1.0 0 -7500403 true "" "plot 0"
 
 MONITOR
 835
@@ -635,6 +636,23 @@ gini-parcelles
 1
 NIL
 HORIZONTAL
+
+BUTTON
+13
+80
+90
+113
+profile
+profiler:start         ;; start profiling\nrepeat 3 [ go ]       ;; run something you want to measure\nprofiler:stop          ;; stop profiling\nprint profiler:report  ;; view the results\nprofiler:reset         ;; clear the data
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 SLIDER
 1
