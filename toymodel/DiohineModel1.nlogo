@@ -758,7 +758,7 @@ nb-cuisines
 nb-cuisines
 1
 25
-14.0
+16.0
 1
 1
 NIL
@@ -788,7 +788,7 @@ patch-area
 patch-area
 10
 500
-100.0
+20.0
 10
 1
 m2
@@ -946,6 +946,16 @@ false
 "" ""
 PENS
 "default" 1.0 2 -16777216 true "" ""
+
+TEXTBOX
+250
+580
+410
+655
+Nb cuisine 16 (de 10 personnes)\nmalus fertilie 0\nkg cereale par ha 620
+12
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
