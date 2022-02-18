@@ -424,10 +424,10 @@ NIL
 1
 
 MONITOR
-1112
-587
-1213
-632
+845
+430
+946
+475
 fertilite totale
 sum [fertilite] of patches
 1
@@ -439,7 +439,7 @@ PLOT
 238
 1219
 388
-fertilité globale 
+fertilité globale
 NIL
 NIL
 0.0
@@ -454,10 +454,10 @@ PENS
 "pen-1" 1.0 0 -7500403 true "" "let fertilite-totale 0\nask cuisines [\n    let myParcelles patches with [member? parcelle-id [idmyParcellesCultive] of myself]\n    set fertilite-totale fertilite-totale + sum [fertilite] of myParcelles\n    ]\nplot fertilite-totale"
 
 MONITOR
-1030
-586
-1102
-631
+838
+384
+910
+429
 NIL
 troupeau
 17
@@ -531,10 +531,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot sum [bilan-nourriture]  of cuisines"
 
 MONITOR
-841
-194
-951
-239
+835
+190
+920
+235
 besoins tot
 sum [besoin-nourriture] of cuisines
 1
@@ -542,10 +542,10 @@ sum [besoin-nourriture] of cuisines
 11
 
 MONITOR
-837
-145
-1012
-190
+835
+140
+1010
+185
 surface tot. dispo
 sum [nb-patch-dispo] of cuisines
 0
@@ -553,10 +553,10 @@ sum [nb-patch-dispo] of cuisines
 11
 
 MONITOR
-830
-246
-939
-291
+835
+235
+944
+280
 production tot.
 sum [nourriture-autosuffisante] of cuisines
 0
@@ -564,10 +564,10 @@ sum [nourriture-autosuffisante] of cuisines
 11
 
 MONITOR
-843
-318
-936
-363
+920
+190
+1000
+235
 bilan moyen
 mean [bilan-nourriture] of cuisines
 1
@@ -575,10 +575,10 @@ mean [bilan-nourriture] of cuisines
 11
 
 PLOT
-822
-418
-1022
-568
+1020
+390
+1220
+540
 bilan cuisine
 NIL
 NIL
@@ -611,10 +611,10 @@ PENS
 "default" 1.0 1 -16777216 true "" ""
 
 MONITOR
-1057
-499
-1135
-544
+835
+335
+913
+380
 NIL
 calcul-gini
 4
@@ -652,10 +652,10 @@ NIL
 HORIZONTAL
 
 PLOT
-1216
-414
-1416
-564
+1225
+390
+1425
+540
 emigration/immigration
 NIL
 NIL
@@ -803,9 +803,9 @@ NIL
 HORIZONTAL
 
 PLOT
-1463
+1430
 85
-1663
+1630
 235
 Population totale
 NIL
@@ -821,10 +821,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot population-totale"
 
 INPUTBOX
-3
-767
-98
-827
+180
+125
+275
+185
 seed
 77.0
 1
@@ -832,10 +832,10 @@ seed
 Number
 
 MONITOR
-1032
-424
-1201
-469
+835
+285
+1004
+330
 Taille moyenne des cuisines
 mean [taille] of cuisines
 2
@@ -858,10 +858,10 @@ NIL
 HORIZONTAL
 
 PLOT
-1552
-385
-1752
-535
+1430
+240
+1630
+390
 Troupeaux par cuisine
 NIL
 NIL
@@ -876,15 +876,30 @@ PENS
 "default" 1.0 1 -16777216 true "" ""
 
 SWITCH
-367
-578
-578
-611
+170
+10
+381
+43
 update-fertilite-teinte
 update-fertilite-teinte
 1
 1
 -1000
+
+SLIDER
+193
+234
+226
+384
+max-sacs
+max-sacs
+0
+10
+2.0
+1
+1
+NIL
+VERTICAL
 
 CHOOSER
 7
@@ -897,10 +912,10 @@ strategie-paturage
 0
 
 PLOT
-1485
-595
-1685
-745
+1430
+395
+1630
+545
 Fertilite cuisine
 NIL
 NIL
@@ -1328,5 +1343,5 @@ true
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
 @#$#@#$#@
-0
+1
 @#$#@#$#@

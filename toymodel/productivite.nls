@@ -11,10 +11,7 @@ to-report production [c]
 end
 
 to-report production-parcelle[pid]
-  
-  
-  ;;let pp patches with [ parcelle-id = pid ]
-  
+    
   if not any? pid [ report 0 ]
   
   let parcelle-fertilite sum [fertilite] of pid

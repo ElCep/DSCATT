@@ -1,8 +1,6 @@
 
 
 to init-sacs-engrais-cuisines 
-  ;; TODO mettre max de sacs dans la GUI
- let max-sacs 5
  ask cuisines [
    set kg-engrais (random  max-sacs) * 50  ;; Entre 0 et 4 sacs de 50kgs 
   ]  
