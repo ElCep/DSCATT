@@ -50,9 +50,6 @@ to MAJ-fertilite
     (strategie-paturage = "collectif") [set coefficients-strategie [1.0 0.0]]
     (strategie-paturage = "par cuisine") [set coefficients-strategie [0.0 1.0]]
   )     
-  
-  show word "COEF STRATEGIE first " (first coefficients-strategie) 
-  show word "last" (last coefficients-strategie)
 
   ;; fumure uniforme de tout le troupeau dans les champs de brousse en jachère pendant la journée 
   ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and not cultived?  ][
