@@ -1,0 +1,75 @@
+
+
+to init-sacs-engrais-cuisines 
+  ;; TODO mettre max de sacs dans la GUI
+ let max-sacs 5
+ ask cuisines [
+   set kg-engrais (random  max-sacs) * 50  ;; Entre 0 et 4 sacs de 50kgs 
+  ]  
+end
+
+
+to engrais-une-parcelle-random
+    ;; TODO remplacer par nom du slider de la GUI
+  let boost-rendement 0.2  ;; boost rendement à 150kgs par hectare 
+ 
+  ;; stratégie : on affecte la quantité nominale d'engrais à une parcelle au hasard  si on a assez,
+ ;;sinon on met ce qui reste  
+
+  
+  ask cuisines with [kg-engrais > 0 ]
+  [
+    
+  let myParcelles-id remove-duplicates [parcelle-id] of patches with [proprietaire = myself and zone != "case" and cultived?] ; liste des ID de toutes mes parcelles cultivées
+   
+    if empty? myParcelles-id [ 
+      show word self "n'a aucune parcelle cultivee"
+      stop ] 
+    
+   
+    
+   let une-parcelle-id one-of myParcelles-id
+   let surface-parcelle (count patches with [parcelle-id = une-parcelle-id]) * surface-de-patch ;; surface en metre carré
+   let besoin-engrais-parcelle surface-parcelle *  0.015 ;; valeur 0.015 = kg d'engrais par metre carré à dire d'acteurs  TODO valeur en dur 
+   
+   ;;show (word   "il faut " besoin-engrais-parcelle  " pour la parcelle de " self "qui a " kg-engrais " kgs d'engrais" ) 
+    
+    ;; si on a assez d'engrais 
+    ifelse besoin-engrais-parcelle <= kg-engrais[
+    
+      ;; on booste la fertilité des patches de la parcelle
+      ask patches with [parcelle-id = une-parcelle-id][
+        set fertilite  fertilite + fertilite * boost-rendement
+        sprout-engrais 1 [
+         set size 1
+         set shape "triangle 2"
+          set color white 
+        ]
+        
+      ]
+      ;; on met a jour la quantité d'engrais consommée
+      set kg-engrais kg-engrais - besoin-engrais-parcelle 
+     ;; show (word "il reste " kg-engrais "chez"   self)
+    ]
+    ;si on a pas assez d'engrais , on met ce qui reste 
+    [
+      ;; on n'a qu'une fraction del l'engrais ->  fraction du boost
+       ;;show (word   "epandage des " kg-engrais " kgs qui restaient chez " self ) 
+    let fraction-boost kg-engrais / besoin-engrais-parcelle  
+      ask patches with [parcelle-id = une-parcelle-id][
+        set fertilite  fertilite + (fertilite * boost-rendement * fraction-boost)
+      ]
+      set kg-engrais 0    ;; plus d'engrais 
+   ]
+  ]   
+end 
+
+
+to epandage-engrais 
+    ask engrais [die]
+  
+  while [any? cuisines with [kg-engrais > 0 ]] [
+    engrais-une-parcelle-random
+  ]
+
+end

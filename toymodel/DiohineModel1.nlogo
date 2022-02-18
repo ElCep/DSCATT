@@ -1,4 +1,4 @@
-__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls"]
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls" "engrais.nls"]
 
 extensions [gini.jar profiler fp.jar set.jar]
 
@@ -7,6 +7,7 @@ extensions [gini.jar profiler fp.jar set.jar]
 breed [cuisines cuisine]
 breed [couverts couvert]
 breed [betails betail]
+breed [engrais engrai]
 cuisines-own [
   taille
   entrants
@@ -20,6 +21,7 @@ cuisines-own [
   idmyParcellesCultive
   tropParcelles?
   taille-troupeau
+  kg-engrais
 ]
 
 patches-own [
@@ -31,6 +33,7 @@ patches-own [
   parcelle-id
   myDistFromCuisine
   cultived?
+
 ]
 
 globals [
@@ -754,7 +757,7 @@ nb-cuisines
 nb-cuisines
 1
 25
-20.0
+5.0
 1
 1
 NIL
@@ -784,7 +787,7 @@ patch-area
 patch-area
 10
 500
-140.0
+10.0
 10
 1
 m2
@@ -896,7 +899,7 @@ SWITCH
 611
 update-fertilite-teinte
 update-fertilite-teinte
-0
+1
 1
 -1000
 
@@ -1242,7 +1245,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.2
+NetLogo 6.2.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
