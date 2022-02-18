@@ -41,23 +41,22 @@ to updatePlots
     ]
   
   set-current-plot "Population totale"
-  set population-totale sum [taille] of cuisines
+  set population-totale populationsize
 
 
-set-current-plot "Troupeaux par cuisine"
-;;pour réaliser un histogram on a besoin d'une liste
-set-plot-x-range -1 ( nb-cuisines + 1  )
-set-histogram-num-bars count cuisines 
-    
+  set-current-plot "Troupeaux par cuisine"
+  ;;pour réaliser un histogram on a besoin d'une liste
+  set-plot-x-range -1 ( nb-cuisines + 1  )
+  set-histogram-num-bars count cuisines 
   histogram rep-who-bestiaux
 
   
-set-current-plot "Fertilite cuisine"
-ask cuisines [
+  set-current-plot "Fertilite cuisine"
+  ask cuisines [
     let myParcelles patches with [member? parcelle-id [idmyParcellesSorted] of myself]
     set-plot-pen-color color ;pour renvoyer la couleur du fermier
     plotxy ticks sum [fertilite] of myParcelles / count myParcelles
-    ]
+  ]
   
 end
 
