@@ -51,6 +51,14 @@ set-histogram-num-bars count cuisines
     
   histogram rep-who-bestiaux
 
+  
+set-current-plot "Fertilite cuisine"
+ask cuisines [
+    let myParcelles patches with [member? parcelle-id [idmyParcellesSorted] of myself]
+    set-plot-pen-color color ;pour renvoyer la couleur du fermier
+    plotxy ticks sum [fertilite] of myParcelles / count myParcelles
+    ]
+  
 end
 
 to MAJ-teinte

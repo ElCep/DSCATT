@@ -249,7 +249,6 @@ to go
   ]
 
 
-
   ask patches with [ zone != "case" and proprietaire != "bordures" and proprietaire != "zone cuisine"]
   [
     set cycle (cycle + 1)
@@ -440,7 +439,7 @@ PLOT
 238
 1219
 388
-fertilité globale 
+fertilité globale
 NIL
 NIL
 0.0
@@ -451,7 +450,8 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches"
+"default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches with [proprietaire != \"zone cuisine\" and proprietaire != \"bordures\" and zone != \"case\" ]"
+"pen-1" 1.0 0 -7500403 true "" "let fertilite-totale 0\nask cuisines [\n    let myParcelles patches with [member? parcelle-id [idmyParcellesCultive] of myself]\n    set fertilite-totale fertilite-totale + sum [fertilite] of myParcelles\n    ]\nplot fertilite-totale"
 
 MONITOR
 1030
@@ -695,7 +695,7 @@ troupeau
 troupeau
 count cuisines
 200
-80.0
+195.0
 10
 1
 NIL
@@ -703,9 +703,9 @@ HORIZONTAL
 
 SLIDER
 0
-583
+632
 187
-616
+665
 malus-fertilite
 malus-fertilite
 0
@@ -718,9 +718,9 @@ HORIZONTAL
 
 SLIDER
 3
-623
+672
 178
-656
+705
 malus-in-jachere
 malus-in-jachere
 0
@@ -757,7 +757,7 @@ nb-cuisines
 nb-cuisines
 1
 25
-5.0
+14.0
 1
 1
 NIL
@@ -787,7 +787,7 @@ patch-area
 patch-area
 10
 500
-10.0
+100.0
 10
 1
 m2
@@ -795,9 +795,9 @@ HORIZONTAL
 
 SWITCH
 3
-673
+722
 138
-706
+755
 absorption
 absorption
 0
@@ -839,9 +839,9 @@ PENS
 
 INPUTBOX
 3
-718
+767
 98
-778
+827
 seed
 77.0
 1
@@ -917,6 +917,34 @@ max-sacs
 1
 NIL
 VERTICAL
+=======
+CHOOSER
+7
+580
+169
+625
+strategie-paturage
+strategie-paturage
+"mixte" "collectif" "par cuisine"
+0
+
+PLOT
+1485
+595
+1685
+745
+Fertilite cuisine
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 2 -16777216 true "" ""
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -1264,6 +1292,61 @@ NetLogo 6.2.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="malus-in-jachere">
+      <value value="0.72"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="gini-parcelles">
+      <value value="0.15"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="seed">
+      <value value="77"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="gini-troupeau">
+      <value value="0.55"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="moyenne-ppc">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="malus-fertilite">
+      <value value="0.81"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kg-cereale-par-ha">
+      <value value="620"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="absorption">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="update-fertilite-teinte">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="croissance-demographique">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ratio-arachide-riz">
+      <value value="0.9"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="nb-cuisines">
+      <value value="20"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sd-ppc">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="strategie-paturage">
+      <value value="&quot;collectif&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="patch-area">
+      <value value="90"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="troupeau">
+      <value value="80"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
