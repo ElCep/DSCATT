@@ -1,4 +1,4 @@
-__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls" "engrais.nls"]
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls" "engrais.nls" "update_g_variables.nls"]
 
 extensions [gini.jar profiler fp.jar set.jar]
 
@@ -59,10 +59,13 @@ globals [
   kg-nourriture-par-pers-jour
 
   seuil-gini ;; tolérance entre gini souhaité et gini calculé
+  last-tick  ;; defined the end of the simu a init
 
   ;; demographie
   min-taille-cuisine
   population-totale
+  fertilite-global
+  population-troupeau
 ]
 
 to setup
@@ -70,7 +73,7 @@ to setup
   random-seed seed
   reset-ticks
   set cycle-jachere-courante 1
-
+  set last-tick 25
   ;;no-display
 
   ;; paramètre interne
@@ -263,13 +266,10 @@ to go
   MAJ-fertilite
 
 
-   MAJ-teinte
-
-
+  MAJ-teinte
   updatePlots
-
   calcul-bilan
-
+  update-end ;; update at last tick
   tick
 end
 
@@ -377,8 +377,8 @@ BUTTON
 48
 160
 81
-NIL
-repeat 25 [ go ]
+go 25
+repeat last-tick [ go ]
 NIL
 1
 T
@@ -450,7 +450,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches with [proprietaire != \"zone cuisine\" and proprietaire != \"bordures\" and zone != \"case\" ]"
+"default" 1.0 0 -16777216 true "" "plot fertilitesize"
 "pen-1" 1.0 0 -7500403 true "" "let fertilite-totale 0\nask cuisines [\n    let myParcelles patches with [member? parcelle-id [idmyParcellesCultive] of myself]\n    set fertilite-totale fertilite-totale + sum [fertilite] of myParcelles\n    ]\nplot fertilite-totale"
 
 MONITOR
@@ -710,7 +710,7 @@ malus-fertilite
 malus-fertilite
 0
 1
-0.81
+0.0
 0.01
 1
 NIL
@@ -725,7 +725,7 @@ malus-in-jachere
 malus-in-jachere
 0
 1
-0.72
+0.4
 0.01
 1
 NIL

@@ -1,0 +1,21 @@
+to update-end
+  if ticks = last-tick - 1 [
+    ;; recalculer la somme de tout les troupeau à la fin
+  set fertilite-global fertilitesize
+    ;; la population-total
+   set population-totale populationsize 
+   set population-troupeau popTroupeau
+  ]
+end
+
+to-report populationsize
+  report sum[taille] of cuisines
+end 
+
+to-report fertilitesize
+  report sum [fertilite] of  patches with [proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ]
+end
+
+to-report popTroupeau
+  report sum[taille-troupeau] of cuisines
+end
