@@ -75,9 +75,12 @@ globals [
   myseed
 ]
 
+to setup-i
+  set myseed myseed-i
+end
+
 to setup
   ca
-  set myseed myseed-i
   random-seed myseed
   reset-ticks
   set cycle-jachere-courante 1
@@ -359,7 +362,7 @@ BUTTON
 88
 47
 setup
-setup
+setup-i\nsetup
 NIL
 1
 T
