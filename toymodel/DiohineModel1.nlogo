@@ -79,7 +79,7 @@ to setup
   random-seed myseed
   reset-ticks
   set cycle-jachere-courante 1
-  set last-tick 25
+  set last-tick 10
   ;;no-display
 
   ;; paramètre interne
@@ -223,8 +223,6 @@ to setup
  ask cuisines [
     set besoin-nourriture calcul-besoin-nourriture  [taille] of self
   ]
-
-  set bilan-nourriture-g-init bilan-nourriture-g
 
   init-sacs-engrais-cuisines
 end ;; setup
@@ -1297,7 +1295,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.1
+NetLogo 6.2.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

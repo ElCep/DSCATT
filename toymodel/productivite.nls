@@ -2,7 +2,7 @@
 ;; animaux qui mange quand le champs qui sont dans la jachère font perdre de la récole
 
 to-report production [c]  
- ;;show [ idmyParcellesCultive ] of c
+ 
   let pids [ idmyParcellesCultive ] of c
   let parcelles map [pid -> patches with [ parcelle-id = pid ]] pids
  
@@ -73,7 +73,7 @@ to planif-culture
         set idmyParcellesCultive lput x idmyParcellesCultive  
         if (i = iter)[
           set tropParcelles? FALSE
-          show "pas assez de parcelle"
+          ;;show "pas assez de parcelle"
         ]
         set iter iter + 1
       ][
@@ -99,7 +99,6 @@ end
 
 
 to mise-en-culture
-  show "paf ça plante"
   ask patches with[cultived? = TRUE][
           sprout-couverts 1 [
             set shape "plant"
