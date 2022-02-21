@@ -4,6 +4,7 @@ to update-end
   if ticks > 1 [
     if ticks < 3 [     
       set  bilan-nourriture-g-init bilan-nourriture-g
+      set fertilite-init fertilitesize
       
     ]
     ;; recalculer la somme de tout les troupeau à la fin
@@ -14,6 +15,7 @@ to update-end
 ;  set bilan-nourriture-g bilanNourriture
   set delta-nourriture nt
   set delta-population pt
+  set delta-fertilite ft
   ]
 end
 
@@ -41,4 +43,8 @@ end
 to-report pt
   ;; ecart entre la population a la fin de la simul et la populatione en début
   report (populationsize - (nb-cuisines * moyenne-ppc)) / (nb-cuisines * moyenne-ppc)
+end
+
+to-report ft
+  report (fertilite-init - fertilitesize) / fertilite-init
 end

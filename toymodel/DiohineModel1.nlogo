@@ -65,11 +65,13 @@ globals [
   min-taille-cuisine
   population-totale
   fertilite-global
+  fertilite-init
   bilan-nourriture-g-init
   bilan-nourriture-g
   population-troupeau
   delta-nourriture
   delta-population
+  delta-fertilite
   myseed
 ]
 
@@ -952,6 +954,26 @@ myseed-i
 1
 0
 Number
+
+PLOT
+875
+585
+1075
+735
+Plot des varibale OM
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"nourriture" 1.0 0 -16777216 true "" "if ticks > 3 [\nplot delta-nourriture\n]"
+"population" 1.0 0 -7500403 true "" "if ticks > 3 [\nplot delta-population\n]"
+"fertilite" 1.0 0 -8053223 true "" "if ticks > 3 [ plot delta-fertilite]"
 
 @#$#@#$#@
 ## WHAT IS IT?
