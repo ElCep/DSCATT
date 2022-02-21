@@ -1,6 +1,6 @@
 __includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls" "engrais.nls" "update_g_variables.nls"]
 
-extensions [gini.jar profiler fp.jar set.jar]
+extensions [gini.jar fp.jar set.jar]
 
 ;; on utilise l'extension fp (fonctionnal programming) https://github.com/NetLogo/FP-Extension
 
@@ -375,7 +375,7 @@ BUTTON
 48
 160
 81
-go 25
+go 10
 repeat last-tick [ go ]
 NIL
 1
@@ -635,23 +635,6 @@ gini-parcelles
 NIL
 HORIZONTAL
 
-BUTTON
-13
-80
-90
-113
-profile
-profiler:start         ;; start profiling\nrepeat 3 [ go ]       ;; run something you want to measure\nprofiler:stop          ;; stop profiling\nprint profiler:report  ;; view the results\nprofiler:reset         ;; clear the data
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
 SLIDER
 1
 427
@@ -887,7 +870,7 @@ SWITCH
 43
 update-fertilite-teinte
 update-fertilite-teinte
-0
+1
 1
 -1000
 
