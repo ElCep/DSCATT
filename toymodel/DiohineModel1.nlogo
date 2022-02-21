@@ -65,12 +65,15 @@ globals [
   min-taille-cuisine
   population-totale
   fertilite-global
+  bilan-nourriture-g
   population-troupeau
+  myseed
 ]
 
 to setup
   ca
-  random-seed seed
+  set myseed 77
+  random-seed myseed
   reset-ticks
   set cycle-jachere-courante 1
   set last-tick 25
@@ -838,17 +841,6 @@ false
 PENS
 "default" 1.0 0 -16777216 true "" "plot population-totale"
 
-INPUTBOX
-180
-125
-275
-185
-seed
-77.0
-1
-0
-Number
-
 MONITOR
 835
 285
@@ -1304,27 +1296,39 @@ NetLogo 6.2.2
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="plan-complet-diohine022020" repetitions="20" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
-    <metric>count turtles</metric>
+    <timeLimit steps="25"/>
+    <metric>population-totale</metric>
+    <metric>fertilite-global</metric>
+    <metric>population-troupeau</metric>
+    <metric>bilan-nourriture-g</metric>
     <enumeratedValueSet variable="malus-in-jachere">
-      <value value="0.72"/>
+      <value value="0"/>
+      <value value="0.1"/>
+      <value value="0.4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="malus-fertilite">
+      <value value="0"/>
+      <value value="0.1"/>
+      <value value="0.4"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="gini-parcelles">
-      <value value="0.15"/>
+      <value value="0"/>
+      <value value="0.1"/>
+      <value value="0.4"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="seed">
-      <value value="77"/>
+    <enumeratedValueSet variable="max-sacs">
+      <value value="2"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="gini-troupeau">
-      <value value="0.55"/>
+      <value value="0"/>
+      <value value="0.1"/>
+      <value value="0.4"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="moyenne-ppc">
       <value value="10"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="malus-fertilite">
-      <value value="0.81"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="kg-cereale-par-ha">
       <value value="620"/>
@@ -1342,19 +1346,21 @@ NetLogo 6.2.2
       <value value="0.9"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="nb-cuisines">
-      <value value="20"/>
+      <value value="16"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="sd-ppc">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="strategie-paturage">
-      <value value="&quot;collectif&quot;"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="patch-area">
-      <value value="90"/>
+      <value value="140"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="strategie-paturage">
+      <value value="&quot;mixte&quot;"/>
+      <value value="&quot;collectif&quot;"/>
+      <value value="&quot;par cuisine&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="troupeau">
-      <value value="80"/>
+      <value value="195"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>

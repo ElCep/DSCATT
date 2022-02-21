@@ -5,6 +5,7 @@ to update-end
     ;; la population-total
    set population-totale populationsize 
    set population-troupeau popTroupeau
+   set bilan-nourriture-g bilanNourriture
   ]
 end
 
@@ -18,4 +19,8 @@ end
 
 to-report popTroupeau
   report sum[taille-troupeau] of cuisines
+end
+
+to-report bilanNourriture
+  report sum [bilan-nourriture]  of cuisines
 end
