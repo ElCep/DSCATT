@@ -1,12 +1,12 @@
 to update-end
-  if ticks = last-tick - 1 [
     ;; recalculer la somme de tout les troupeau à la fin
   set fertilite-global fertilitesize
     ;; la population-total
-   set population-totale populationsize 
-   set population-troupeau popTroupeau
-   set bilan-nourriture-g bilanNourriture
-  ]
+  set population-totale populationsize 
+  set population-troupeau popTroupeau
+  set bilan-nourriture-g bilanNourriture
+  set delta-nourriture nt
+  set delta-population pt
 end
 
 to-report populationsize
@@ -23,4 +23,14 @@ end
 
 to-report bilanNourriture
   report sum [bilan-nourriture]  of cuisines
+end
+
+to-report nt
+  ;;ecart a la quantité de nourriture en fin de simualtion
+  report bilan-nourriture-g - bilan-nourriture-g-init
+end
+
+to-report pt
+  ;; ecart entre la population a la fin de la simul et la populatione en début
+  report populationsize - (nb-cuisines * moyenne-ppc)
 end

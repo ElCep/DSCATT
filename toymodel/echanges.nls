@@ -21,7 +21,6 @@ to chercher-parcelles
           ]
           ask myself [
             set idmyParcellesCultive lput parcelleDispo idmyParcellesCultive
-            show "preter c'est preter"
           ]
         ]
       ]

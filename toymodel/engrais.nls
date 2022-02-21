@@ -21,7 +21,7 @@ to engrais-une-parcelle-random
   let myParcelles-id remove-duplicates [parcelle-id] of patches with [proprietaire = myself and zone != "case" and cultived?] ; liste des ID de toutes mes parcelles cultivées
    
     if empty? myParcelles-id [ 
-      show word self "n'a aucune parcelle cultivee"
+      ;; show word self "n'a aucune parcelle cultivee"
       stop ] 
     
    
@@ -29,8 +29,6 @@ to engrais-une-parcelle-random
    let une-parcelle-id one-of myParcelles-id
    let surface-parcelle (count patches with [parcelle-id = une-parcelle-id]) * surface-de-patch ;; surface en metre carré
    let besoin-engrais-parcelle surface-parcelle *  0.015 ;; valeur 0.015 = kg d'engrais par metre carré à dire d'acteurs  TODO valeur en dur 
-   
-   ;;show (word   "il faut " besoin-engrais-parcelle  " pour la parcelle de " self "qui a " kg-engrais " kgs d'engrais" ) 
     
     ;; si on a assez d'engrais 
     ifelse besoin-engrais-parcelle <= kg-engrais[
@@ -47,12 +45,10 @@ to engrais-une-parcelle-random
       ]
       ;; on met a jour la quantité d'engrais consommée
       set kg-engrais kg-engrais - besoin-engrais-parcelle 
-     ;; show (word "il reste " kg-engrais "chez"   self)
     ]
     ;si on a pas assez d'engrais , on met ce qui reste 
     [
       ;; on n'a qu'une fraction del l'engrais ->  fraction du boost
-       ;;show (word   "epandage des " kg-engrais " kgs qui restaient chez " self ) 
     let fraction-boost kg-engrais / besoin-engrais-parcelle  
       ask patches with [parcelle-id = une-parcelle-id][
         set fertilite  fertilite + (fertilite * boost-rendement * fraction-boost)

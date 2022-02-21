@@ -65,14 +65,17 @@ globals [
   min-taille-cuisine
   population-totale
   fertilite-global
+  bilan-nourriture-g-init
   bilan-nourriture-g
   population-troupeau
+  delta-nourriture
+  delta-population
   myseed
 ]
 
 to setup
   ca
-  set myseed 77
+  set myseed myseed-i
   random-seed myseed
   reset-ticks
   set cycle-jachere-courante 1
@@ -194,25 +197,14 @@ to setup
     set proprietaire "zone cuisine"
   ]
 
-
-  show "attribution des terre"
-
   partition-init
   partition-iteration
   etalement-parcelle
 
-
-  show "int fertilite "
   init-fertilite-a-la-parcelle
 
-
-  show "ordre parcelles"
-
   ordre-parcelles
-
-
- show "répartition troupeaux"
- affectation-initiale-troupeau-par-cuisine
+  affectation-initiale-troupeau-par-cuisine
 
   let repartition-init []
   ask cuisines [
@@ -232,7 +224,7 @@ to setup
     set besoin-nourriture calcul-besoin-nourriture  [taille] of self
   ]
 
-
+  set bilan-nourriture-g-init bilan-nourriture-g
 end ;; setup
 
 
@@ -531,7 +523,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot sum [bilan-nourriture]  of cuisines"
+"default" 1.0 0 -16777216 true "" "plot bilan-nourriture-g"
 "pen-1" 1.0 0 -7500403 true "" "plot 0"
 
 MONITOR
@@ -892,7 +884,7 @@ SWITCH
 43
 update-fertilite-teinte
 update-fertilite-teinte
-1
+0
 1
 -1000
 
@@ -948,6 +940,17 @@ Nb cuisine 16 (de 10 personnes)\nmalus fertilie 0\nkg cereale par ha 620
 12
 0.0
 1
+
+INPUTBOX
+195
+95
+270
+155
+myseed-i
+77.0
+1
+0
+Number
 
 @#$#@#$#@
 ## WHAT IS IT?
