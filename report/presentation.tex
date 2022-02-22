@@ -41,9 +41,9 @@ Ce document à été rédiger avec en s'appuyant sur des notes prise sur le terr
 
 La méthode PARDI est une évolution des spécifications de ARDI\cite{etienne_ardi_2011} qui relève de la capacité de l'outil à expliciter des implicites et rendre visible des  hypothèses de modélisation. Cette méthode mobilise des diagrammes pour représenter à la fois les éléments constitutifs du système et les interactions entre ces éléments.
 
-Ces diagrammes sont constitués de noeuds représentés par des cercles ou des ellipses, et d'arcs, représentés par des flèches, qui relient les noeuds.
+Ces diagrammes sont constitués de nœuds représentés par des cercles ou des ellipses, et d'arcs, représentés par des flèches, qui relient les nœuds.
 
-Dans un diagramme PARDI comme ceux que nous allons inclure dans la suite de ce rapport, les noeuds représentent des acteurs ou des ressources, et les arcs représentent des interactions entre ces acteurs, entre ces ressources ou entre ces acteurs et ces ressources.
+Dans un diagramme PARDI comme ceux que nous allons inclure dans la suite de ce rapport, les nœuds représentent des acteurs ou des ressources, et les arcs représentent des interactions entre ces acteurs, entre ces ressources ou entre ces acteurs et ces ressources.
 
 %inclusion d'une mage dans le document
 \begin{figure}[h!]
@@ -56,7 +56,7 @@ Dans un diagramme PARDI comme ceux que nous allons inclure dans la suite de ce r
 \end{figure}
 
 
-Comme les noeuds et les arcs sont nommés, il devient facile de faire une phrase qui décrit l'interaction de façon concise. Par exemple avec la figure \ref{simple_interac} , on pourrait former la phrase suivante : « A consomme B». Plusieurs arcs peuvent exister entre deux mêmes noeuds, pour représenter des interactions différentes.
+Comme les nœuds et les arcs sont nommés, il devient facile de faire une phrase qui décrit l'interaction de façon concise. Par exemple avec la figure \ref{simple_interac} , on pourrait former la phrase suivante : « A consomme B». Plusieurs arcs peuvent exister entre deux mêmes nœuds, pour représenter des interactions différentes.
 
 \section{Modélisation PARDI du système de Diohine}
 
@@ -64,31 +64,35 @@ Comme les noeuds et les arcs sont nommés, il devient facile de faire une phrase
 
 Par la suite nous utiliserons les termes suivants:
 \begin{itemize}
-  \item \textbf{acteur/role}: personne physique partie prenante dans le système étudié
-  \item \textbf{participant} : personnes physiques concourant à la co-construction du modèle durant l'atelier. C'est donc un sous ensemble des "acteurs".
+  \item \textbf{Acteur/role}: personne physique partie prenante dans le système étudié
+  \item \textbf{Participant} : personnes physiques concourant à la co-construction du modèle durant l'atelier. C'est donc un sous-ensemble des "acteurs".
 \end{itemize}
 
 \vspace{0.5cm}
 
 La méthode PARDI propose d'interroger des participants évoluant dans un même système. Ils participent à co-construire un diagramme d'interactions entre acteurs sur la base de la connaissance qu'ils ont de ce système. Elle a pour effet de les faire réfléchir sur la réalité du système dans lequel ils évoluent. Les échanges de points de vue stimulent leur créativité en mettant en lumière des liens entre certains objets de leurs quotidiens. L'enjeu du travail de modélisation conceptuel avec PARDI est d'accompagner par un mode de représentation schématique la réflexion sur le fonctionnement du système \cite{becu_les_2010}.\\
 
+En avant propos, il nous semble important de définir le concept de cuisines, qui est un élément central de l'organisation du social du système. Une \textbf{cuisine} regroupe les personnes qui mangent ensemble et donc qui participent à l’alimentation par leur travail. Du fait de l’imbrication des systèmes de solidarité (et du lien avec la lignée maternelle).
+
+Le territoire fait face à un phénomène d’éclatement des cuisines.  Pour nos participants, si les femmes participent très fortement à cet éclatement, l'éducation des enfants y joue aussi un rôle important, quand les sanctions d'autres membres de la famille sont mal vécues par les parents. Cela produit un phénomène «Avec l’éclatement des cuisines, il y a de moins en moins de place pour les fainéants. Tout le monde doit travailler à fond.»
 
 Les acteurs représentés dans le modèle sont:
 \begin{itemize}
-  \item Agriculteur: paysan travaillant la terre et produisant de l'arachide et du mil.
-  \item Pasteur: éleveur utilisant les jachères comme pâturage pour son bétail
-  \item Chef de cuisine: homme ayant la responsabilité de nourrir tout ou partie de la famille.
-  \item Chef de concession (ou chef de famille): homme ayant la charge de la paix sociale au sein de la famille, et donc des différentes cuisines qui la compose.
-  \item Notable: personne importante dans le village (ex: instituteur, médecin, imam, etc)
-  \item Vieille maman:  femme agée, sage, capable
-  \item Chef de village : autorité coutumière du lieu de peuplement, reconnu par l'autorité centrale de l'état.
-  \item Conseil municipale : ensemble d'individus qui sont élus aux élections locales et qui s'insèrent dans le droit positif et les institutions de l'état.
-  \item Sous-préfet : Représentant de l'état décentralisé sur les territoires. Il prend en charge les conflits quand le droit traditionnel n'a pas réussi à trouver une solution convenable pour les différentes parti du conflit.
-  \item Saltigué : voyant et devin qui officie lors de la cérémonie divinatoire de la première chasse. Ses prédictions portent sur la météo, les catastrophes et les remèdes pour y faire face. Un saltigué a un quartier sous sa juridiction
-  \item Banque de Céréales : Structure locale (à l'échelle d'un quartier) qui prête des céréales aux agro-pasteurs contre une remboursement ultérieur et vend des céréales. Chaque cuisine contribue au stock de la banque.
+  \item \textbf{Agriculteur}: paysan travaillant la terre, soucieux de sa productivité, produisant de l'arachide, du mil, des cultures de rente et des plantes fourragères. Il accueille et nourrit le bétail des pasteurs transhumants, qui vont fertiliser son champ en retour. Il supporte les frais d'abreuvage et de soins aux bêtes des transhumants.
+  \item \textbf{Pasteur}: éleveur utilisant pour nourrir son bétail les herbes fourragères, les résidus des récoltes (tiges de mil, fane d'arachide, etc), ou le pâturage dans les jachères ou les couloirs entre les cultures. Il contribue par son cheptel à la fertilité des sols. Il accompagne étroitement le paysan dans la fertilisation de son sol.
+  \item \textbf{Eleveur/Transhumant}: pasteur (nomade) s'arrêtant quelques semaines dans le village pour faire pâturer son bétail sur les jachères et les pâturages "couloirs" entrer les cultures. Il participe en retour à la fertilité des champs ponctuellement.
+  \item \textbf{Chef de cuisine} (ou chef de famille ou chef de ménage): homme ayant la responsabilité de nourrir, éduquer, soigner, soutenir (financièrement), et de représentation morale de tout ou partie de la famille. C'est souvent le plus âgé de la famille. Il supervise et participe (s'il le peut toujours)aux travaux de la cuisine.
+  \item \textbf{Chef de concession} (ou chef de maison): homme ayant la charge d'entretenir et de partager la paix sociale au sein des différentes cuisines qui la compose. Il a un rôle de conseil envers ses chefs de cuisine.
+  \item \textbf{Notable} ("personne qui a la parole" litteralement en Serer): personne morale importante dans le village, soucieuse du bien être social de la communauté. Il est écouté dans le village (ex: instituteur, médecin, imam, saltigué, marabout, etc).
+  \item \textbf{Vieille maman}:  femme âgée, sage, capable de guider les membres de la communauté. Elle n'est plus comptée dans les activités de la famille. Elle a une autorité coutumière envers les autres femmes.
+  \item \textbf{Chef de village}: autorité coutumière du lieu de peuplement, reconnue par l'autorité centrale de l'état. Il est élu à vie (sauf destitution en cas de malhonnêteté avérée) par les chefs de cuisine sous l'égide le l'autorité centrale (via les sous-préfets). Il est l'intermédiaire entre l'autorité centrale et les habitants. Il intervient dans les activités courantes du village (paix sociale, éducation, distribution des engrais, etc).
+  \item \textbf{Conseil municipal}: ensemble d'individus qui sont élus aux élections locales et qui s'insèrent dans le droit positif et les institutions de l'état. Il traite de nombreux aspects de la vie de la population, entre autres il prend en charge les conflits sur les territoires et mobilise les lois de l'état pour les résoudre  (commission domaniale).
+  \item \textbf{Sous-préfet}: Représentant de l'état décentralisé sur les territoires. Il prend en charge les conflits quand le droit traditionnel n'a pas réussi à trouver une solution convenable pour les différentes parties du conflit. Il contrôle la légalité des activités du conseil municipal.
+  \item \textbf{Saltigué}: voyant et devin qui officie lors de la cérémonie divinatoire de la première chasse. Ses prédictions portent sur la météo, les catastrophes et les remèdes pour y faire face. Il a également un rôle de soignant. Un saltigué a un ou plusieurs quartiers sous sa juridiction.
+  \item \textbf{Banque de Céréales}: Structure locale (à l'échelle d'un quartier) qui prête des céréales aux agro-pasteurs contre un remboursement ultérieur et vend des céréales. Chaque cuisine est libre de contribuer au stock de la banque en donnant une portion de sa récolte.
 \end{itemize}
 
-Le concept de cuisine regroupe les personnes qui mangent ensemble et donc qui participent à l’alimentation. Du fait de l’imbrication des systèmes de solidarité (et du lien avec la lignée maternelle?). Le territoire fait face à un phénomène d’éclatement des cuisines.  Pour nos participants, les femmes participent très fortement à cet éclatement. Par ailleur cela produit un autre phénomène «Avec l’éclatement des cuisines, il y a de moins en moins de place pour les fainéants. Tout le monde doit travailler à fond. »
+
 
 Les acteurs ci-dessous ne nécessitent pas d'explicitation approfondie, leur nom étant assez explicite.
 
@@ -98,16 +102,16 @@ Les acteurs ci-dessous ne nécessitent pas d'explicitation approfondie, leur nom
 \item Revendeur d'engrais
 \item Animal de trait : âne et cheval
 \item Petit ruminant : mouton et chèvre
-\item Grand ruminant : boeuf et vache
+\item Grand ruminant : bœuf et vache
 \end{itemize}
 
 \subsection{L'atelier de modélisation PARDI à Diohine }
 
-Dans le cadre du questionnement autour du stockage de carbone dans les pratiques agricoles du projet DSCATT, nous nous sommes intéréssés à la gestion communautaire de la jachère dans la commune de Diohine.
+Dans le cadre du questionnement autour du stockage de carbone dans les pratiques agricoles du projet DSCATT, nous nous sommes intéressés à la gestion communautaire de la jachère dans la commune de Diohine.
 
-La jachère est la pratique agricole visant à laisser au repos une parcelle entre deux cultures, généralement sur une période d'un an. À Diohine, cette jachère s'intercale la plupart du temps au sein d'un assolement triénal: Mil, Arachide, Jachère.
+La jachère est la pratique agricole visant à laisser au repos une parcelle entre deux cultures, généralement sur une période d'un an. À Diohine, cette jachère s'intercale la plupart du temps au sein d'un assolement triennal: Mil, Arachide, Jachère.
 
-Ainsi la jachère a le double avantage de maintenir une fertilité élevée et de stocker du carbone. Ainsi s'intéresser au maintien d'une jachère gérée en commun à l'échelle d est un proxy du stockage de carbone tout en permettant à la population de subvenir à ses besoins alimentaires.
+Ainsi la jachère a le double avantage de maintenir une fertilité élevée et de stocker du carbone. Ainsi s'intéresser au maintien d'une jachère gérée en commun semble être un proxy du stockage de carbone tout en permettant à la population de subvenir à ses besoins alimentaires.
 
 L'atelier de modélisation réunit:
 \begin{itemize}
@@ -116,7 +120,7 @@ L'atelier de modélisation réunit:
   \item une agri-pastrice vieille maman
 \end{itemize}
 
-Ils participent à co-construire le diagramme d'interaction d'un système agro-pastoral à l'échelle de la ville de Diohine, tentant de répondre à la problématique que nous pouvons formuler de la mamnière suivante : «Comment se maintient la jachère communautaire de Diohine ?»
+Ils participent à co-construire le diagramme d'interaction d'un système agro-pastoral à l'échelle de la ville de Diohine, tentant de répondre à la problématique que nous pouvons formuler de la manière suivante : «Comment se maintient la jachère communautaire de Diohine ?»
 
 Cette question fait suite à une première consultation à Diohine en mai 2021 lors de laquelle une inquiétude doublée d'une aspiration très forte a été formulée (voir figure \ref{aspiration}) : Comment préserver la jachère communautaire à Diohine ?\cite{perrotton_definition_2021}
 
@@ -155,7 +159,7 @@ Le travail de modélisation a amené les participants à définir une centaine d
 
 Nous avons choisi de le restituer dans ce rapport avec quatre points de vue différents :
 \begin{enumerate}
-  \item les activités liées au rôle d'agro-pasteur
+  \item les activités liées aux rôles d'agro-pasteur
   \item les mécanismes de résolution de conflit
   \item les interactions liées à la gestion collective de l'espace
   \item les réseaux de solidarités
