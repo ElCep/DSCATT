@@ -72,16 +72,14 @@ globals [
   delta-nourriture
   delta-population
   delta-fertilite
-  myseed
 ]
 
 to setup-i
-  set myseed myseed-i
+  random-seed myseed-i
 end
 
 to setup
   ca
-  random-seed myseed
   reset-ticks
   set cycle-jachere-courante 1
   set last-tick 10

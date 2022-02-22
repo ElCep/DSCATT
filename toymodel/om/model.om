@@ -1,0 +1,63 @@
+val mySeed = Val[Int]
+val kgCerealeParHa = Val[Double]
+val giniParcelles = Val[Double]
+val croissanceDemographique = Val[Double]
+val troupeau = Val[Double]
+val malusFertilite = Val[Double]
+val malusInJachere = Val[Double]
+val nbCuisines = Val[Double]
+val moyennePpc = Val[Double]
+val patchArea = Val[Double]
+val absorption = Val[Boolean]
+val sdPpc = Val[Double]
+val seed = Val[Double]
+val giniTroupeau = Val[Double]
+val strategiePaturage = Val[String]
+val populationTotale = Val[Double]
+val deltaFertilite = Val[Double]
+val deltaPopulation = Val[Double]
+
+val launch = List("random-seed ${mySeed}", "setup", "repeat 10 [ go ]")
+
+val model = NetLogo6Task(
+  workDirectory / "model/DiohineModel1.nlogo",
+  launch,
+  embedWorkspace = true
+) set (
+  inputs += mySeed,
+  inputs+= kgCerealeParHa mapped "kg-cereale-par-ha",
+  inputs += giniParcelles mapped "gini-parcelles",
+  inputs += croissanceDemographique mapped "croissance-demographique",
+  inputs += troupeau mapped "troupeau",
+  inputs += malusFertilite mapped "malus-fertilite",
+  inputs += malusInJachere mapped "malus-in-jachere",
+  inputs += nbCuisines mapped "nb-cuisines",
+  inputs += moyennePpc mapped "moyenne-ppc",
+  inputs += patchArea mapped "patch-area",
+  inputs += absorption mapped "absorption",
+  inputs += sdPpc mapped "sd-ppc",
+  inputs += giniTroupeau mapped "gini-troupeau",
+  inputs += strategiePaturage mapped "strategie-paturage",
+  outputs += deltaFertilite mapped "delta-fertilite",
+  outputs += deltaPopulation mapped "delta-population",
+
+  // Default values. Can be removed if OpenMOLE Vals are set by values coming from the workflow
+  giniParcelles := 0.15,
+  croissanceDemographique := 0.02,
+  troupeau := 80,
+  giniTroupeau := 0.2,
+  malusFertilite := 0.05,
+  strategiePaturage := "mixte",
+
+  // fixed
+  malusInJachere := 0.0,
+  kgCerealeParHa := 620.0,
+  nbCuisines := 10.0,
+  moyennePpc := 16.0,
+  sdPpc := 0.0,
+  patchArea := 140.0,
+  absorption := true
+)
+
+model hook display
+//diohinemodel1Task hook display

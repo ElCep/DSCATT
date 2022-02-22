@@ -1,0 +1,39 @@
+import _file_.model._
+
+
+val evolution = PSEEvolution(
+  evaluation = model,
+  parallelism = 100,
+  termination = 100000,
+  genome = Seq(
+    giniParcelles  in (0.1, 0.5),
+    croissanceDemographique in (0.0, 0.02),
+    troupeau in (70.0, 250.0),
+    giniTroupeau in (0.1,0.6),
+    malusFertilite in (0.0, 1.0),
+    strategiePaturage in Seq("mixte", "collectif", "par cuisine")
+  ),
+  objective = Seq(
+    deltaPopulation in(-0.15 to 0.15 by 0.05),
+    deltaFertilite in (-0.15 to 0.15 by 0.05)
+    ),
+  distribution = Island(3 minutes),
+  stochastic = Stochastic(seed = mySeed, sample = 30)
+) hook (workDirectory / "results_pse", frequency = 10)
+
+
+/*val env = EGIEnvironment("vo.complex-systems.eu")
+
+val muse = SLURMEnvironment(
+    "delaye",
+    "muse-login.meso.umontpellier.fr",
+    // optional parameters
+    queue = "agap_normal", // can be agap_short agap_normal agap_long
+    workDirectory = "/lustre/delaye/openmole",
+    //workDirectory = "/home/delaye/scratch/openmole",
+    sharedDirectory = "/storage/replicated/cirad_users/delaye/openmole",
+    wallTime = 1 hours
+  )*/
+
+val local = LocalEnvironment(60)
+evolution on local
