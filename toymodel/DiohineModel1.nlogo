@@ -959,6 +959,40 @@ PENS
 "population" 1.0 0 -7500403 true "" "if ticks > 3 [\nplot delta-population\n]"
 "fertilite" 1.0 0 -8053223 true "" "if ticks > 3 [ plot delta-fertilite]"
 
+BUTTON
+870
+505
+942
+538
+setup
+setup-i\nsetup
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+885
+550
+947
+583
+go
+repeat last-tick [ go ]
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
 @#$#@#$#@
 ## WHAT IS IT?
 
