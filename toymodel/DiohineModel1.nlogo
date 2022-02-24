@@ -629,8 +629,8 @@ SLIDER
 gini-parcelles
 gini-parcelles
 0.0
-1
-0.15
+0.6
+0.58
 0.01
 1
 NIL
@@ -740,7 +740,7 @@ nb-cuisines
 nb-cuisines
 1
 25
-16.0
+20.0
 1
 1
 NIL
@@ -755,7 +755,7 @@ moyenne-ppc
 moyenne-ppc
 1
 20
-10.0
+11.0
 1
 1
 NIL
@@ -840,7 +840,7 @@ gini-troupeau
 gini-troupeau
 0
 1
-0.55
+1.0
 0.01
 1
 NIL
