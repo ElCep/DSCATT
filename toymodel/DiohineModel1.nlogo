@@ -376,8 +376,8 @@ BUTTON
 48
 160
 81
-go 10
-repeat last-tick [ go ]
+go 20
+repeat 20 [ go ]
 NIL
 1
 T
@@ -630,7 +630,7 @@ gini-parcelles
 gini-parcelles
 0.0
 0.6
-0.58
+0.2
 0.01
 1
 NIL
@@ -645,7 +645,7 @@ croissance-demographique
 croissance-demographique
 0
 1.0
-0.02
+0.01
 0.01
 1
 NIL
@@ -676,9 +676,9 @@ SLIDER
 508
 troupeau
 troupeau
-count cuisines
+25
 200
-195.0
+145.0
 10
 1
 NIL
@@ -738,9 +738,9 @@ SLIDER
 183
 nb-cuisines
 nb-cuisines
-1
+5
 25
-20.0
+10.0
 1
 1
 NIL
@@ -755,7 +755,7 @@ moyenne-ppc
 moyenne-ppc
 1
 20
-11.0
+16.0
 1
 1
 NIL
@@ -770,7 +770,7 @@ patch-area
 patch-area
 10
 500
-20.0
+140.0
 10
 1
 m2
@@ -796,7 +796,7 @@ sd-ppc
 sd-ppc
 0
 5
-0.0
+2.0
 0.1
 1
 NIL
@@ -840,7 +840,7 @@ gini-troupeau
 gini-troupeau
 0
 1
-1.0
+0.2
 0.01
 1
 NIL
@@ -958,40 +958,6 @@ PENS
 "nourriture" 1.0 0 -16777216 true "" "if ticks > 3 [\nplot delta-nourriture\n]"
 "population" 1.0 0 -7500403 true "" "if ticks > 3 [\nplot delta-population\n]"
 "fertilite" 1.0 0 -8053223 true "" "if ticks > 3 [ plot delta-fertilite]"
-
-BUTTON
-870
-505
-942
-538
-setup
-setup-i\nsetup
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-885
-550
-947
-583
-go
-repeat last-tick [ go ]
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
 
 @#$#@#$#@
 ## WHAT IS IT?
