@@ -1,16 +1,16 @@
 \documentclass[a4paper]{report}
+\usepackage[a4paper,margin=2.54cm]{geometry} %left=4cm,right=2cm would be equivalent
 
 % Paquets généraux
 \usepackage[utf8]{inputenc}     % Codage du fichier TeX
 \usepackage[T1]{fontenc}        % Codage du fichier PDF (les paquets cm-super ou lmodern doivent être installés pour obtenir un bon résultat)
 \usepackage{helvet}             % Police Helvetica
-%\fontfamily{WalbaumGrotesk Text}
-\usepackage{graphicx}           % Logos et autres illustrations
-%\usepackage{fancyhdr}           % En-têtes et pieds de page
+%\usepackage{graphicx}           % Logos et autres illustrations
 \usepackage{color}              % Couleur
 \usepackage{ifthen}             % Condition
 
-\usepackage[french]{babel}      % Courrier en français
+\usepackage[french, american]{babel}      % Courrier en français
+\usepackage{paracol} 						% deux colomnes pour la traduction
 \usepackage{csquotes}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{url}
@@ -42,7 +42,7 @@
 %bibliography
 \usepackage[
 	backend=biber,
-	style=geschichtsfrkl]{biblatex}
+	style=numeric]{biblatex}
 \addbibresource{rapport_diohine.bib}
 % creation d'encadrex
 \newcommand{\titlebox}[2]{%
@@ -65,6 +65,7 @@
 %rajouter les numérotation pour les \paragraphe et \subparagraphe
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
+\setcolumnwidth{0.40\textwidth/20pt, 0.40\textwidth} % column width + column inter space
 
 \hypersetup{							% Information sur le document
 pdfauthor = {Étienne Delay ,
