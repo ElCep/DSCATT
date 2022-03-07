@@ -18,7 +18,8 @@ cuisines-own [
   nourriture-autosuffisante
   bilan-nourriture
   idmyParcellesSorted
-  idmyParcellesCultive
+  idmyParcellesCultiveM
+  idmyParcellesCultiveA
   tropParcelles?
   taille-troupeau
   kg-engrais
@@ -47,6 +48,8 @@ globals [
   COS-champ-brousse-sd
   surface-de-patch
   betail-par-ha
+
+  ;; production
   kg-mil-par-ha
   kg-mil-par-patch
   kg-arachide-par-ha
@@ -147,25 +150,28 @@ to setup
   [
     set pcolor 6
     set zone "case"
-
+    set couvert-type "M"
   ]
 
   ask patches with [pxcor > 50 and pycor < 50]
   [
     set zone "J1"
     set cycle 1
+    set couvert-type "M"
   ]
 
   ask patches with [pxcor > 50 and pycor > 50]
   [
     set zone "J2"
-      set cycle 2
+    set cycle 2
+    set couvert-type "A"
   ]
 
   ask patches with [pxcor < 50 and pycor > 50]
   [
     set zone "J3"
     set cycle 3
+    set couvert-type "J"
   ]
 
 
@@ -182,7 +188,8 @@ to setup
   update-cuisine-size
 
   ask cuisines [
-    set idmyParcellesCultive []
+    set idmyParcellesCultiveA []
+    set idmyParcellesCultiveM []
   ]
 
   ;; attriubut des bordures de zones proprietaire =  bordure
@@ -309,13 +316,18 @@ to-report calcul-besoin-nourriture [my-taille]
    report my-taille * kg-nourriture-par-pers-jour * 365
  end
 
-to-report countMyCultivetedPlots ;cuisine context
+to-report countMyCultivetedPlots [couvertType] ;cuisine context
   let idP 0
     ifelse ticks < 1 [
       set idP map [id -> count patches with[parcelle-id = id]] idmyParcellesSorted ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
     ][
-      set idP map [id -> count patches with[parcelle-id = id]] idmyParcellesCultive ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
+    if (couvertType = "M") [
+      set idP map [id -> count patches with[parcelle-id = id and cultived? and couvert-type = "M"]] idmyParcellesCultiveM ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
     ]
+    if (couvertType = "A") [
+      set idP map [id -> count patches with[parcelle-id = id and cultived? and couvert-type = "A"]] idmyParcellesCultiveA ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
+    ]
+  ]
   report idP
 end
 
@@ -464,7 +476,7 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" "plot fertilitesize"
-"pen-1" 1.0 0 -7500403 true "" "let fertilite-totale 0\nask cuisines [\n    let myParcelles patches with [member? parcelle-id [idmyParcellesCultive] of myself]\n    set fertilite-totale fertilite-totale + sum [fertilite] of myParcelles\n    ]\nplot fertilite-totale"
+"pen-1" 1.0 0 -7500403 true "" "let fertilite-totale 0\nask cuisines [\n    let myParcelles patches with [member? parcelle-id [sentence idmyParcellesCultiveA idmyParcellesCultiveM] of myself]\n    set fertilite-totale fertilite-totale + sum [fertilite] of myParcelles\n    ]\nplot fertilite-totale"
 
 MONITOR
 838
@@ -494,21 +506,6 @@ false
 "" ""
 PENS
 "default" 1.0 1 -16777216 true "" ""
-
-SLIDER
-958
-50
-1136
-83
-ratio-arachide-riz
-ratio-arachide-riz
-0
-2
-0.9
-.1
-1
-NIL
-HORIZONTAL
 
 SLIDER
 1
@@ -692,7 +689,7 @@ troupeau
 troupeau
 25
 200
-125.0
+195.0
 10
 1
 NIL
@@ -754,7 +751,7 @@ nb-cuisines
 nb-cuisines
 5
 25
-13.0
+16.0
 1
 1
 NIL
@@ -769,7 +766,7 @@ moyenne-ppc
 moyenne-ppc
 1
 20
-20.0
+10.0
 1
 1
 NIL
@@ -784,7 +781,7 @@ patch-area
 patch-area
 10
 500
-130.0
+140.0
 10
 1
 m2
@@ -898,7 +895,7 @@ max-sacs
 max-sacs
 0
 10
-2.0
+10.0
 1
 1
 NIL
@@ -972,6 +969,36 @@ PENS
 "nourriture" 1.0 0 -16777216 true "" "if ticks > 3 [\nplot delta-nourriture\n]"
 "population" 1.0 0 -7500403 true "" "if ticks > 3 [\nplot delta-population\n]"
 "fertilite" 1.0 0 -8053223 true "" "if ticks > 3 [ plot delta-fertilite]"
+
+SLIDER
+565
+595
+792
+628
+taux-arachide-nourriture
+taux-arachide-nourriture
+0
+5
+2.5
+0.1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+560
+645
+807
+678
+ratio-arachide-subsistence
+ratio-arachide-subsistence
+0
+1
+0.9
+0.1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -1315,7 +1342,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.1
+NetLogo 6.2.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

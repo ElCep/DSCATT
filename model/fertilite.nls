@@ -81,7 +81,7 @@ to MAJ-fertilite
   
 
   ask cuisines [
-    foreach idmyParcellesCultive [
+    foreach sentence idmyParcellesCultiveA idmyParcellesCultiveM [
       ;; la fertilite des champs de case est fixe (pour le moment)
       x -> ask patches with [parcelle-id = x and zone != "case" ][
             set fertilite  fertilite -  (surface-de-patch * conso-carbone-culture)

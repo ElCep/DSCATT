@@ -3,7 +3,7 @@
 
 to-report production [c]  
  
-  let pids [ idmyParcellesCultive ] of c
+  let pids sentence ([ idmyParcellesCultiveA ] of c) ([ idmyParcellesCultiveM ] of c)
   let parcelles map [pid -> patches with [ parcelle-id = pid ]] pids
  
   let prod map [ p -> production-parcelle p ] parcelles
@@ -15,7 +15,12 @@ to-report production-parcelle[pid]
   if not any? pid [ report 0 ]
   
   let parcelle-fertilite sum [fertilite] of pid
-  let raw-production count pid * surface-de-patch * kg-cereale-par-ha / 10000
+  
+  let raw-production 0
+  let surfaceHA count pid * surface-de-patch / 10000
+  
+  if ([couvert-type] of (one-of pid) = "M") [set raw-production surfaceHA * kg-mil-par-ha]
+  if ([couvert-type] of (one-of pid) = "A") [set raw-production surfaceHA * kg-arachide-par-ha * ratio-arachide-subsistence * taux-arachide-nourriture]
   
   let malus-f ifelse-value parcelle-fertilite <= 0 [ malus-fertilite ] [0] ;; malus fertilite
   let malus-j ifelse-value [ cycle ] of (one-of pid) = 3  [ malus-in-jachere ] [0] ;; malus jachere
@@ -61,16 +66,31 @@ to planif-culture
     let i length idmyParcellesSorted
     let iter 1
     foreach  idmyParcellesSorted [
-      x -> let myactualParcelle patches with[parcelle-id = x and cycle < 3 ]
+      x -> let myactualParcelle patches with[parcelle-id = x and couvert-type != "J"]
+      
+      let nbPatches count myactualParcelle
+      if (nbPatches > 0) [
       ifelse (actualBesoin > 0) [ ; temps que je n'ai pas assouvie mes besoin j'itère sur mes parcelles
-        let surface-parcelle count myactualParcelle
-        let besoin-assouvi-parcelle (surface-parcelle * surface-de-patch  /  10000) * kg-cereale-par-ha
+        let surface-parcelleHA nbPatches * surface-de-patch  /  10000
+        
+        let besoin-assouvi-parcelle 0
+        let aPatch one-of myactualParcelle
+          
+        if ([couvert-type] of aPatch = "M") [
+            set besoin-assouvi-parcelle surface-parcelleHA * kg-mil-par-ha
+            set idmyParcellesCultiveM lput x idmyParcellesCultiveM
+          ]
+        
+        if ([couvert-type] of aPatch = "A") [
+          set besoin-assouvi-parcelle surface-parcelleHA * kg-arachide-par-ha * ratio-arachide-subsistence * taux-arachide-nourriture
+            set idmyParcellesCultiveA lput x idmyParcellesCultiveA
+        ]
+        
         set actualBesoin actualBesoin - besoin-assouvi-parcelle
         ask myactualParcelle [
           set cultived? TRUE  
         ]
-        
-        set idmyParcellesCultive lput x idmyParcellesCultive  
+      
         if (i = iter)[
           set tropParcelles? FALSE
           ;;show "pas assez de parcelle"
@@ -79,6 +99,7 @@ to planif-culture
       ][
         set tropParcelles? TRUE
       ]
+    ]
     ]
   ]
   
@@ -92,7 +113,8 @@ to update-inti-tick
   
   ask cuisines [
    set tropParcelles? FALSE
-    set idmyParcellesCultive []
+    set idmyParcellesCultiveM []
+    set idmyParcellesCultiveA []
   ]
   
 end
