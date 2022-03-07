@@ -57,7 +57,7 @@ to planif-culture
 ; mettre a jour mon besoin et mettre en culture temps que le les besoin ne sont pas 
   ask couverts [die]
   ask cuisines [
-    let actualBesoin besoin-nourriture
+    let actualBesoin calcul-besoin-nourriture  [taille] of self
     let i length idmyParcellesSorted
     let iter 1
     foreach  idmyParcellesSorted [
