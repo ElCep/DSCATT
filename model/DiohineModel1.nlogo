@@ -282,13 +282,12 @@ to rotation-trienale
 
   ask patches with [ zone != "case" and proprietaire != "bordures" and proprietaire != "zone cuisine"]
   [
-    set cycle (cycle + 1)
+    set cycle ((cycle + 1) mod 3) + 1
+    if cycle = 1 [ set couvert-type "M" ]
+    if cycle = 2 [ set couvert-type "A" ]
+    if cycle = 3 [ set couvert-type "J" ]
   ]
 
-  ask patches with [cycle = 4]
-  [
-    set cycle 1
-  ]
 
 end
 
@@ -693,7 +692,7 @@ troupeau
 troupeau
 25
 200
-145.0
+125.0
 10
 1
 NIL
@@ -755,7 +754,7 @@ nb-cuisines
 nb-cuisines
 5
 25
-14.0
+13.0
 1
 1
 NIL
@@ -770,7 +769,7 @@ moyenne-ppc
 moyenne-ppc
 1
 20
-16.0
+20.0
 1
 1
 NIL
@@ -785,7 +784,7 @@ patch-area
 patch-area
 10
 500
-140.0
+130.0
 10
 1
 m2
@@ -811,7 +810,7 @@ sd-ppc
 sd-ppc
 0
 5
-2.0
+1.9
 0.1
 1
 NIL
