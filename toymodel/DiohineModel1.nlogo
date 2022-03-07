@@ -238,13 +238,22 @@ end ;; setup
 
 
 to go
+
+
+
+
   demographie
   update-cuisine-size
   update-inti-tick
+  rotation-trienale
+
   ordre-parcelles
   planif-culture
   chercher-parcelles
   mise-en-culture
+
+
+
 
   ;; GUI cosmétique
   ask betails [die]
@@ -253,16 +262,6 @@ to go
     sprout-betails 1 [ set shape "cow" set size 4 set color white ]
   ]
 
-
-  ask patches with [ zone != "case" and proprietaire != "bordures" and proprietaire != "zone cuisine"]
-  [
-    set cycle (cycle + 1)
-  ]
-
-  ask patches with [cycle = 4]
-  [
-    set cycle 1
-  ]
 
 
   epandage-engrais
@@ -279,7 +278,19 @@ end
 
 
 
+to rotation-trienale
 
+  ask patches with [ zone != "case" and proprietaire != "bordures" and proprietaire != "zone cuisine"]
+  [
+    set cycle (cycle + 1)
+  ]
+
+  ask patches with [cycle = 4]
+  [
+    set cycle 1
+  ]
+
+end
 
 
 
@@ -744,7 +755,7 @@ nb-cuisines
 nb-cuisines
 5
 25
-10.0
+14.0
 1
 1
 NIL
