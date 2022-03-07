@@ -1,6 +1,6 @@
 __includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls" "engrais.nls" "update_g_variables.nls"]
 
-extensions [gini.jar set.jar]
+extensions [gini.jar set.jar profiler]
 
 ;; on utilise l'extension fp (fonctionnal programming) https://github.com/NetLogo/FP-Extension
 
@@ -751,7 +751,7 @@ nb-cuisines
 nb-cuisines
 5
 25
-16.0
+12.0
 1
 1
 NIL
@@ -766,7 +766,7 @@ moyenne-ppc
 moyenne-ppc
 1
 20
-10.0
+14.0
 1
 1
 NIL
@@ -781,7 +781,7 @@ patch-area
 patch-area
 10
 500
-140.0
+310.0
 10
 1
 m2
@@ -807,7 +807,7 @@ sd-ppc
 sd-ppc
 0
 5
-1.9
+1.5
 0.1
 1
 NIL
@@ -895,7 +895,7 @@ max-sacs
 max-sacs
 0
 10
-10.0
+5.0
 1
 1
 NIL
