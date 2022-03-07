@@ -20,13 +20,16 @@ to engrais-une-parcelle-random
     
   let myParcelles-id remove-duplicates [parcelle-id] of patches with [proprietaire = myself and zone != "case" and cultived?] ; liste des ID de toutes mes parcelles cultivées
    
-    if empty? myParcelles-id [ 
-      ;; show word self "n'a aucune parcelle cultivee"
-      stop ] 
     
-   
     
-   let une-parcelle-id one-of myParcelles-id
+    let une-parcelle-id  nobody
+    
+    ifelse empty? myParcelles-id [ 
+       show word self "n'a aucune parcelle cultivee en dehors de ses champs de case, elle met de l'engrais au hasard dans ses champs de brousse "
+       set une-parcelle-id one-of remove-duplicates [parcelle-id] of patches with [proprietaire = myself and zone != "case"]
+      ] [
+    set une-parcelle-id one-of myParcelles-id
+    ]
    let surface-parcelle (count patches with [parcelle-id = une-parcelle-id]) * surface-de-patch ;; surface en metre carré
    let besoin-engrais-parcelle surface-parcelle *  0.015 ;; valeur 0.015 = kg d'engrais par metre carré à dire d'acteurs  TODO valeur en dur 
     
