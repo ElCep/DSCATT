@@ -44,9 +44,9 @@ to MAJ-fertilite
   ;; mixte: la nuit les troupeaux des cuisines paturent sur les parcelles de leur cuisine et la journée sur toutes les jachères
   
   
-  let coefficients-strategie [] ;; [ratio colletif, ratio cuisine] 
+  let coefficients-strategie [] ;; [ratio colletif (paturage en journée), ratio cuisine (paturage au piquet la nuit)] 
   (ifelse 
-    (strategie-paturage = "mixte") [set coefficients-strategie [0.5 0.5]]
+    (strategie-paturage = "mixte") [set coefficients-strategie [0.25 0.75]]
     (strategie-paturage = "collectif") [set coefficients-strategie [1.0 0.0]]
     (strategie-paturage = "par cuisine") [set coefficients-strategie [0.0 1.0]]
   )     
