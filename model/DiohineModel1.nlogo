@@ -1,6 +1,6 @@
 __includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls" "engrais.nls" "update_g_variables.nls"]
 
-extensions [gini.jar set.jar profiler]
+extensions [gini.jar set.jar]
 
 ;; on utilise l'extension fp (fonctionnal programming) https://github.com/NetLogo/FP-Extension
 
