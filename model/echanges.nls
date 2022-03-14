@@ -13,15 +13,16 @@ to chercher-parcelles
       ask one-of cuisines-autosuf [
         ;show word "list 1 " idmyParcellesSorted 
         ;show word "list 2 " idmyParcellesCultive
-        let parcelleDispo set.jar:diff idmyParcellesSorted idmyParcellesCultive
+        let parcelleDispo set.jar:diff idmyParcellesSorted (sentence idmyParcellesCultiveA idmyParcellesCultiveM)
         if length parcelleDispo > 0 [
-          show word "parcelles dispo " set.jar:diff idmyParcellesSorted idmyParcellesCultive
+          show word "parcelles dispo " set.jar:diff idmyParcellesSorted (sentence idmyParcellesCultiveA idmyParcellesCultiveM)
           ask patches with[parcelle-id = parcelleDispo ][
             set cultived? TRUE
           ]
-          ask myself [
-            set idmyParcellesCultive lput parcelleDispo idmyParcellesCultive
-          ]
+          ;; échange. TODO mettre à jour un propriétaire-id et ajouter un attribut pret pour connaitre le proprietaire originel 
+        ;;  ask myself [
+        ;;    set idmyParcellesCultive lput parcelleDispo idmyParcellesCultive
+        ;;  ]
         ]
       ]
     ]
@@ -33,6 +34,9 @@ end
 to-report calcul-besoin-tempo; contexte de cuisine
   ;; ce reporter nous renvois les besoin assouvi ou innasouvie pour les cuisine pour la saison en cour 
   let mes-besoin-actu taille * kg-nourriture-par-pers-jour * 365
-  let mes-besoin-cultive ( (sum countMyCultivetedPlots) * surface-de-patch  /  10000) * kg-cereale-par-ha
-  report mes-besoin-actu - mes-besoin-cultive
+
+  let raw-productionM (sum countMyCultivetedPlots "M") * surface-de-patch  /  10000 * kg-mil-par-ha
+  let raw-productionA (sum countMyCultivetedPlots "A") * surface-de-patch  /  10000 * kg-arachide-par-ha * ratio-arachide-subsistence * taux-arachide-nourriture
+  
+  report mes-besoin-actu - (raw-productionA + raw-productionM)
 end

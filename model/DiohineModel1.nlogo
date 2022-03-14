@@ -1,33 +1,113 @@
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls" "engrais.nls" "update_g_variables.nls"]
+
+extensions [gini.jar set.jar]
+
+;; on utilise l'extension fp (fonctionnal programming) https://github.com/NetLogo/FP-Extension
+
 breed [cuisines cuisine]
 breed [couverts couvert]
 breed [betails betail]
-cuisines-own [ taille domaine besoin bande-mil bande-arachide bande-jachere famille ]
-patches-own [ zone couvert-type  proprietaire fertilite cycle ]
-globals [case-offset taille-bande cycle-jachere-courante
-  fumier-par-tete
-  COS-champ-case-moy  COS-champ-case-sd
-  COS-champ-brousse-moy COS-champ-brousse-sd
+breed [engrais engrai]
+cuisines-own [
+  taille
+  entrants
+  sortants
+  famille
+  besoin-nourriture
+  nb-patch-dispo
+  nourriture-autosuffisante
+  bilan-nourriture
+  idmyParcellesSorted
+  idmyParcellesCultiveM
+  idmyParcellesCultiveA
+  tropParcelles?
+  taille-troupeau
+  kg-engrais
+]
+
+patches-own [
+  zone
+  couvert-type
+  proprietaire
+  fertilite
+  cycle
+  parcelle-id
+  myDistFromCuisine
+  cultived?
+
+]
+
+globals [
+  case-offset
+  taille-bande
+  cycle-jachere-courante
+  COS-par-tete
+  COS-champ-case-moy
+  COS-champ-case-sd
+  COS-champ-brousse-moy
+  COS-champ-brousse-sd
   surface-de-patch
- betail-par-ha
-troupeau
-conso-carbone-culture]
+  betail-par-ha
+
+  ;; production
+  kg-mil-par-ha
+  kg-mil-par-patch
+  kg-arachide-par-ha
+  kg-arachide-par-patch
+
+  transhumants
+  conso-carbone-culture
+  spl-champ-brousse-par-cuisine
+  spl-champ-case-par-cuisine
+  kg-nourriture-par-pers-jour
+
+  seuil-gini ;; tolérance entre gini souhaité et gini calculé
+  last-tick  ;; defined the end of the simu a init
+
+  ;; demographie
+  min-taille-cuisine
+  population-totale
+  fertilite-global
+  fertilite-init
+  bilan-nourriture-g-init
+  bilan-nourriture-g
+  population-troupeau
+  delta-nourriture
+  delta-population
+  delta-fertilite
+]
+
+to setup-i
+  random-seed myseed-i
+end
 
 to setup
   ca
   reset-ticks
   set cycle-jachere-courante 1
-
+  set last-tick 10
   ;;no-display
 
   ;; paramètre interne
 
   ;; en m²
-  set surface-de-patch 10
+  set surface-de-patch patch-area
 
+
+  set seuil-gini 0.01
+  ;;
+
+  set spl-champ-brousse-par-cuisine 5
+  set spl-champ-case-par-cuisine 5
+
+
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; paramètres calibrés depuis les données
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; fumier en kgs par tete par an
-  set fumier-par-tete 250
+  set COS-par-tete 250
 
   ;; en kg par m²
   set COS-champ-case-moy 1.26
@@ -35,11 +115,30 @@ to setup
   set COS-champ-brousse-moy 0.84
   set COS-champ-brousse-sd  0.06
 
-  set conso-carbone-culture 0.05
-
   ;; en tete par hectare
   set betail-par-ha 1
 
+
+  ;; paramètres libres pour modèle à l'équilibre
+
+  ;; en kg de COS par m²
+  set conso-carbone-culture 0.39 / 3 ;; source : simulation de chapitre 8 de "carbone des sols en afrique" tableau 2
+
+
+
+  ;; croissance demographiuqe
+  set min-taille-cuisine 3
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; paramètres calibrés depuis les acteurs
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+  set kg-mil-par-ha 600
+  set kg-mil-par-patch (kg-mil-par-ha *  (surface-de-patch / 10000))
+  set kg-arachide-par-ha 400
+  set kg-arachide-par-patch (kg-arachide-par-ha *  (surface-de-patch / 10000))
+  set kg-nourriture-par-pers-jour 0.75
 
 
 ;; repartition des terres intiales
@@ -51,36 +150,46 @@ to setup
   [
     set pcolor 6
     set zone "case"
-
+    set couvert-type "M"
   ]
 
   ask patches with [pxcor > 50 and pycor < 50]
   [
     set zone "J1"
     set cycle 1
+    set couvert-type "M"
   ]
 
   ask patches with [pxcor > 50 and pycor > 50]
   [
     set zone "J2"
-      set cycle 2
+    set cycle 2
+    set couvert-type "A"
   ]
 
   ask patches with [pxcor < 50 and pycor > 50]
   [
     set zone "J3"
     set cycle 3
+    set couvert-type "J"
   ]
 
 
 
- ask n-of 2 patches with [zone = "case" and pxcor < 25 and pycor < 25]  [
-     set proprietaire "zone cuisine"
+ ask n-of nb-cuisines patches with [zone = "case" and pxcor <= 25 and pycor <= 25]  [
+    set proprietaire "zone cuisine"
     sprout-cuisines 1 [
-      set taille  10
-      set size taille / 2 + 2
       set shape "house"
+      set color (who + 1) * 10 + 6
     ]
+  ]
+  distiribution-population-par-cuisine
+  affectation-initiale-troupeau-par-cuisine
+  update-cuisine-size
+
+  ask cuisines [
+    set idmyParcellesCultiveA []
+    set idmyParcellesCultiveM []
   ]
 
   ;; attriubut des bordures de zones proprietaire =  bordure
@@ -100,58 +209,58 @@ to setup
 
   partition-init
   partition-iteration
+  etalement-parcelle
 
-  init-fertilite
+  init-fertilite-a-la-parcelle
 
+  ordre-parcelles
+  affectation-initiale-troupeau-par-cuisine
 
-  set troupeau round (((surface-de-patch * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"]) / 10000 ) * betail-par-ha) + 1
-
-
-  ;;display
-end
-
-
-to partition-init
-ask cuisines [
-    foreach [ "J1" "J2" "J3"][
-      x -> ask n-of (random 40 + 1) patches with [ zone = x]
-      [
-        set pcolor [color] of myself
-        set proprietaire myself
-      ]
-    ];; foreach
-
-    ;; champ de case hors des maisons
-    ask n-of (random 8 + 1) patches with [zone = "case" and pxcor > 25 and pycor > 25]
-    [
-      set pcolor [color] of myself
-      set proprietaire myself
-    ]
-  ]
-end ;; partition init
-
-to partition-iteration
+  let repartition-init []
   ask cuisines [
-  foreach [ "J1" "J2" "J3" "case"][
-      x -> ask patches with [ zone = x and proprietaire =  myself]
-      [
-        ask neighbors with [zone = x and  proprietaire = -99  and ( pxcor > 25 or pycor > 25)]
-        [
-          set pcolor [pcolor] of myself
-          set proprietaire [proprietaire] of myself
-        ]
-      ]
-  ];; foreach
+    set repartition-init lput taille-troupeau repartition-init
   ]
 
-  if any? patches with [proprietaire = -99]
-  [
-    partition-iteration
+  repartition-troupeau
+
+  ;; troupeau pour mettre à l'équilibre probablement faux
+  ;;set troupeau ceiling (((conso-carbone-culture * surface-de-patch) * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"] * 2 / 3 ) / COS-par-tete)
+
+  ;; équilibre empirique pour gini faible (0.02)
+  ;; set troupeau 130
+
+
+ ask cuisines [
+    ;; si on démarre la simu avec un déficite
+    ;;set besoin-nourriture calcul-besoin-nourriture  [taille] of self ;;
+
+    ;: si on démarre la simu à l'équilibre , les besoins des cuisines sont nuls
+    set besoin-nourriture 0
   ]
-end ;; partition iteration
+
+  init-sacs-engrais-cuisines
+end ;; setup
 
 
-to cycle-jachere
+
+
+to go
+
+
+
+
+  demographie
+  update-cuisine-size
+  update-inti-tick
+  rotation-trienale
+
+  ordre-parcelles
+  planif-culture
+  chercher-parcelles
+  mise-en-culture
+
+
+
 
   ;; GUI cosmétique
   ask betails [die]
@@ -162,179 +271,93 @@ to cycle-jachere
 
 
 
-  ask patches with [ zone != "case" and proprietaire != "bordures" and proprietaire != "zone cuisine"]
-  [
-    set cycle (cycle + 1)
-  ]
-
-  ask patches with [cycle = 4]
-  [
-    set cycle 1
-  ]
-
-
+  epandage-engrais
   MAJ-fertilite
 
+
+  MAJ-teinte
+  updatePlots
+  calcul-bilan
+  update-end ;; update at last tick
   tick
 end
 
 
-to dessin-couvert
 
 
-  ask patches with [couvert-type = "mil"]
+to rotation-trienale
+
+  ask patches with [ zone != "case" and proprietaire != "bordures" and proprietaire != "zone cuisine"]
   [
-    ask couverts-here [die]
-    sprout-couverts 1 [set shape "plant"  set color 65 set size random 3]
+    set cycle ((cycle + 1) mod 3) + 1
+    if cycle = 1 [ set couvert-type "M" ]
+    if cycle = 2 [ set couvert-type "A" ]
+    if cycle = 3 [ set couvert-type "J" ]
   ]
 
-ask patches with [couvert-type = "arachide"]
-  [
-    ask couverts-here [die]
-    sprout-couverts 1 [set shape "bug"  set color 23 set size random 3]
-  ]
-
-ask patches with [couvert-type = "jachere"]
-  [
-    ask couverts-here [die]
-    sprout-couverts 1 [set shape "square"  set color 45 ]
-  ]
 
 end
 
 
 
-to random-walk-betail
-  ask betails [
 
-    ifelse can-move? 1
-    [
-      ifelse [proprietaire] of patch-ahead 1  != "bordures"
-      [
-        fd 1
-        set heading random 360
-      ]
-      [
-        rt 180
-        fd 1
-      ]
+to-report calcul-gini
+  let surfaces [] ; pour stocker les surfaces
+  ask cuisines [
+    set surfaces lput count patches with [proprietaire != "bordures" and proprietaire != "zone cuisine" and proprietaire = myself] surfaces
+  ]
 
+  report gini.jar:gini surfaces
+end
+
+
+
+to-report calcul-besoin-nourriture [my-taille]
+   report my-taille * kg-nourriture-par-pers-jour * 365
+ end
+
+to-report countMyCultivetedPlots [couvertType] ;cuisine context
+  let idP 0
+    ifelse ticks < 1 [
+      set idP map [id -> count patches with[parcelle-id = id]] idmyParcellesSorted ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
+    ][
+    if (couvertType = "M") [
+      set idP map [id -> count patches with[parcelle-id = id and cultived? and couvert-type = "M"]] idmyParcellesCultiveM ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
     ]
-    [ rt 180 fd 1 ]
-  ]
-  wait 0.1
-end
-
-
-
-
-to init-fertilite
-  let dist-max  max-pxcor * sqrt 2
-
-  ;; champs de case
-  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone = "case"]
-  [
-
-    ;; unité : kg de matiere organique, un patch fait 10m²
-    set fertilite surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
-
-
-   ]
-
-  ;; champs de brousse
-
-  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
-  [
-       ;; unité : kg de matiere organique, un patch fait 10m²
-    set fertilite surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
-
-   ]
-end
-
-to MAJ-fertilite
-
-  let nb-patches-Jach count patches with [cycle = 3]
-
-  ;; fumure dans les champs de brousse
-  ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ][
-    set fertilite fertilite + ((troupeau * fumier-par-tete) / nb-patches-Jach)
-    ]
-  show word "fumure" (((troupeau * fumier-par-tete) / nb-patches-Jach))
-
-
-  ;; culture
-
-  ask patches with [cycle < 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case"][
-      set fertilite fertilite - (surface-de-patch *  conso-carbone-culture)
-  ]
-
-  show word "culture" (surface-de-patch *  conso-carbone-culture)
-
-
-
-end
-
-
-
-to eclatement
-
-  ask one-of cuisines [
-    hatch 1 [
-
-      set taille  [taille] of myself * 0.5
-      set size taille / 2 + 2
-      set shape "house"
+    if (couvertType = "A") [
+      set idP map [id -> count patches with[parcelle-id = id and cultived? and couvert-type = "A"]] idmyParcellesCultiveA ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
     ]
   ]
+  report idP
 end
 
+to calcul-bilan
 
+  ask cuisines [
+    set besoin-nourriture calcul-besoin-nourriture  [taille] of self
 
+    ;;let sumIdP sum countMyCultivetedPlots
+    ;set nb-patch-dispo count patches with [(proprietaire = myself and parcelle-id =   or zone = "case" ) ] ;; selection sur la liste des parcelle cultive
+    ;;set nourriture-autosuffisante (sumIdP * surface-de-patch  /  10000) * kg-cereale-par-ha
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; VIEUX CODE
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-to pousse-du-couvert
-  ask patches with [couvert-type = "mil" and cycle = false]
- [
-    set couvert-type "arachide"
-  ;;  ask couvert-here [set shape "bug"  set color 23 set size random 5]
-    set cycle true
- ]
-  ask patches with [couvert-type = "arachide" and cycle = false]
-    [
-    set couvert-type "jachere"
-   ;; ask couvert-here [set shape "square"  set color 45 ]
-      set cycle true
-  ]
-  ask patches with [couvert-type = "jachere" and cycle = false]
- [
-    set couvert-type "mil"
-   ;; ask couvert-here [set shape "plant"  set color 65 set size random 5]
-    set cycle true
+    set nourriture-autosuffisante production self
+    set bilan-nourriture nourriture-autosuffisante - besoin-nourriture
   ]
 
-  ask patches [set cycle  false]
 
-  dessin-couvert
 end
 
-
-to-report calcul-besoin-mil [my-taille ]
-  ;; 1 personne consomme 66 kgs de mil par an
-  ;; 1 an de mil pour une cuisine = taille * 66
-  let quantite-mil my-taille * 66
-  report quantite-mil
-
+to update-cuisine-size
+  ask cuisines [
+    set size taille / 2 + 2
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-210
-10
-723
-524
+295
+43
+808
+557
 -1
 -1
 5.0
@@ -358,12 +381,12 @@ ticks
 30.0
 
 BUTTON
-39
-105
-112
-138
+15
+14
+88
+47
 setup
-setup
+setup-i\nsetup
 NIL
 1
 T
@@ -375,27 +398,27 @@ NIL
 1
 
 BUTTON
-21
-161
-147
-194
-NIL
-cycle-jachere
-T
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-763
 13
-861
+48
+160
+81
+go 20
+repeat 20 [ go ]
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+848
 46
+946
+79
 paturage
 random-walk-betail
 T
@@ -409,10 +432,10 @@ NIL
 1
 
 BUTTON
-750
-71
-863
+835
 104
+948
+137
 NIL
 eclatement
 NIL
@@ -426,10 +449,10 @@ NIL
 1
 
 MONITOR
-771
-125
-872
-170
+845
+430
+946
+475
 fertilite totale
 sum [fertilite] of patches
 1
@@ -437,11 +460,11 @@ sum [fertilite] of patches
 11
 
 PLOT
-814
-208
-1014
-358
-fertilité globale 
+1019
+238
+1219
+388
+fertilité globale
 NIL
 NIL
 0.0
@@ -452,14 +475,26 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches"
+"default" 1.0 0 -16777216 true "" "plot fertilitesize"
+"pen-1" 1.0 0 -7500403 true "" "let fertilite-totale 0\nask cuisines [\n    let myParcelles patches with [member? parcelle-id [sentence idmyParcellesCultiveA idmyParcellesCultiveM] of myself]\n    set fertilite-totale fertilite-totale + sum [fertilite] of myParcelles\n    ]\nplot fertilite-totale"
+
+MONITOR
+838
+384
+910
+429
+NIL
+troupeau
+17
+1
+11
 
 PLOT
-986
-10
-1186
-160
-plot 1
+1227
+85
+1427
+235
+patchs par parcelle
 NIL
 NIL
 0.0
@@ -470,7 +505,500 @@ true
 false
 "" ""
 PENS
-"default" 1.0 1 -16777216 true "" "histogram [fertilite] of patches with [proprietaire != \"bordures\" and proprietaire != \"zone case\" ]"
+"default" 1.0 1 -16777216 true "" ""
+
+SLIDER
+1
+341
+186
+374
+kg-cereale-par-ha
+kg-cereale-par-ha
+100
+800
+620.0
+10
+1
+NIL
+HORIZONTAL
+
+PLOT
+1023
+85
+1223
+235
+bilan nourriture global
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot bilan-nourriture-g"
+"pen-1" 1.0 0 -7500403 true "" "plot 0"
+
+MONITOR
+835
+190
+920
+235
+besoins tot
+sum [besoin-nourriture] of cuisines
+1
+1
+11
+
+MONITOR
+835
+140
+1010
+185
+surface tot. dispo
+sum [nb-patch-dispo] of cuisines
+0
+1
+11
+
+MONITOR
+835
+235
+944
+280
+production tot.
+sum [nourriture-autosuffisante] of cuisines
+0
+1
+11
+
+MONITOR
+920
+190
+1000
+235
+bilan moyen
+mean [bilan-nourriture] of cuisines
+1
+1
+11
+
+PLOT
+1020
+390
+1220
+540
+bilan cuisine
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"besoin 1" 1.0 2 -16777216 true "" ""
+
+PLOT
+1224
+240
+1424
+390
+patchs par cuisine
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -16777216 true "" ""
+
+MONITOR
+835
+335
+913
+380
+NIL
+calcul-gini
+4
+1
+11
+
+SLIDER
+1
+384
+186
+417
+gini-parcelles
+gini-parcelles
+0.0
+0.6
+0.2
+0.01
+1
+NIL
+HORIZONTAL
+
+SLIDER
+1
+427
+188
+460
+croissance-demographique
+croissance-demographique
+0
+1.0
+0.01
+0.01
+1
+NIL
+HORIZONTAL
+
+PLOT
+1225
+390
+1425
+540
+emigration/immigration
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 2 -16777216 true "" ""
+
+SLIDER
+0
+475
+187
+508
+troupeau
+troupeau
+25
+200
+195.0
+10
+1
+NIL
+HORIZONTAL
+
+SLIDER
+0
+632
+187
+665
+malus-fertilite
+malus-fertilite
+0
+1
+0.0
+0.01
+1
+NIL
+HORIZONTAL
+
+SLIDER
+3
+672
+178
+705
+malus-in-jachere
+malus-in-jachere
+0
+1
+0.4
+0.01
+1
+NIL
+HORIZONTAL
+
+BUTTON
+88
+14
+151
+47
+NIL
+go
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+SLIDER
+2
+150
+174
+183
+nb-cuisines
+nb-cuisines
+5
+25
+12.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+3
+196
+227
+229
+moyenne-ppc
+moyenne-ppc
+1
+20
+14.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+2
+292
+174
+325
+patch-area
+patch-area
+10
+500
+310.0
+10
+1
+m2
+HORIZONTAL
+
+SWITCH
+3
+722
+138
+755
+absorption
+absorption
+0
+1
+-1000
+
+SLIDER
+4
+242
+176
+275
+sd-ppc
+sd-ppc
+0
+5
+1.5
+0.1
+1
+NIL
+HORIZONTAL
+
+PLOT
+1430
+85
+1630
+235
+Population totale
+NIL
+NIL
+1.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot population-totale"
+
+MONITOR
+835
+285
+1004
+330
+Taille moyenne des cuisines
+mean [taille] of cuisines
+2
+1
+11
+
+SLIDER
+6
+530
+178
+563
+gini-troupeau
+gini-troupeau
+0
+1
+0.2
+0.01
+1
+NIL
+HORIZONTAL
+
+PLOT
+1430
+240
+1630
+390
+Troupeaux par cuisine
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -16777216 true "" ""
+
+SWITCH
+170
+10
+381
+43
+update-fertilite-teinte
+update-fertilite-teinte
+1
+1
+-1000
+
+SLIDER
+193
+234
+226
+384
+max-sacs
+max-sacs
+0
+10
+5.0
+1
+1
+NIL
+VERTICAL
+
+CHOOSER
+7
+580
+169
+625
+strategie-paturage
+strategie-paturage
+"mixte" "collectif" "par cuisine"
+0
+
+PLOT
+1430
+395
+1630
+545
+Fertilite cuisine
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 2 -16777216 true "" ""
+
+TEXTBOX
+250
+580
+410
+655
+Nb cuisine 16 (de 10 personnes)\nmalus fertilie 0\nkg cereale par ha 620
+12
+0.0
+1
+
+INPUTBOX
+195
+95
+270
+155
+myseed-i
+77.0
+1
+0
+Number
+
+PLOT
+875
+585
+1075
+735
+Plot des varibale OM
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"nourriture" 1.0 0 -16777216 true "" "if ticks > 3 [\nplot delta-nourriture\n]"
+"population" 1.0 0 -7500403 true "" "if ticks > 3 [\nplot delta-population\n]"
+"fertilite" 1.0 0 -8053223 true "" "if ticks > 3 [ plot delta-fertilite]"
+
+SLIDER
+565
+595
+792
+628
+taux-arachide-nourriture
+taux-arachide-nourriture
+0
+5
+2.5
+0.1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+560
+645
+807
+678
+ratio-arachide-subsistence
+ratio-arachide-subsistence
+0
+1
+0.9
+0.1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -814,10 +1342,79 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.0
+NetLogo 6.2.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="plan-complet-diohine022020" repetitions="20" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="25"/>
+    <metric>population-totale</metric>
+    <metric>fertilite-global</metric>
+    <metric>population-troupeau</metric>
+    <metric>bilan-nourriture-g</metric>
+    <enumeratedValueSet variable="malus-in-jachere">
+      <value value="0"/>
+      <value value="0.1"/>
+      <value value="0.4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="malus-fertilite">
+      <value value="0"/>
+      <value value="0.1"/>
+      <value value="0.4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="gini-parcelles">
+      <value value="0"/>
+      <value value="0.1"/>
+      <value value="0.4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="max-sacs">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="gini-troupeau">
+      <value value="0"/>
+      <value value="0.1"/>
+      <value value="0.4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="moyenne-ppc">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="kg-cereale-par-ha">
+      <value value="620"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="absorption">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="update-fertilite-teinte">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="croissance-demographique">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ratio-arachide-riz">
+      <value value="0.9"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="nb-cuisines">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sd-ppc">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="patch-area">
+      <value value="140"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="strategie-paturage">
+      <value value="&quot;mixte&quot;"/>
+      <value value="&quot;collectif&quot;"/>
+      <value value="&quot;par cuisine&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="troupeau">
+      <value value="195"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
@@ -831,5 +1428,5 @@ true
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
 @#$#@#$#@
-0
+1
 @#$#@#$#@

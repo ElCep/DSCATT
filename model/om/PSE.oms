@@ -17,23 +17,24 @@ val evolution = PSEEvolution(
     deltaPopulation in(-0.15 to 0.15 by 0.05),
     deltaFertilite in (-0.15 to 0.15 by 0.05)
     ),
-  distribution = Island(3 minutes),
+  distribution = Island(5 minutes),
   stochastic = Stochastic(seed = mySeed, sample = 30)
-) hook (workDirectory / "results_pse", frequency = 10)
+) hook (workDirectory / "results_pse_1", frequency = 10)
 
 
-/*val env = EGIEnvironment("vo.complex-systems.eu")
+//val env = EGIEnvironment("vo.complex-systems.eu")
 
 val muse = SLURMEnvironment(
     "delaye",
-    "muse-login.meso.umontpellier.fr",
+    "muse-login.hpc-lr.univ-montp2.fr",
     // optional parameters
-    queue = "agap_normal", // can be agap_short agap_normal agap_long
+    partition = "agap_normal", // can be agap_short agap_normal agap_long
     workDirectory = "/lustre/delaye/openmole",
     //workDirectory = "/home/delaye/scratch/openmole",
     sharedDirectory = "/storage/replicated/cirad_users/delaye/openmole",
-    wallTime = 1 hours
-  )*/
+    time = 1 hours
+  )
 
-val local = LocalEnvironment(60)
-evolution on local
+val local = LocalEnvironment(1)
+evolution on muse
+
