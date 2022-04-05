@@ -126,7 +126,7 @@ to setup
 
 
 
-  ;; croissance demographiuqe
+  ;; croissance demographique
   set min-taille-cuisine 3
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -279,7 +279,14 @@ to go
   updatePlots
   calcul-bilan
   update-end ;; update at last tick
+
+
   tick
+   ;; si il n'y a plus de cuisines , on arrête la simulation
+    if count cuisines = 0 [
+   stop
+  ]
+
 end
 
 
@@ -656,7 +663,7 @@ croissance-demographique
 croissance-demographique
 0
 1.0
-0.01
+0.02
 0.01
 1
 NIL
