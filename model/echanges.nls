@@ -40,3 +40,56 @@ to-report calcul-besoin-tempo; contexte de cuisine
   
   report mes-besoin-actu - (raw-productionA + raw-productionM)
 end
+
+
+
+to-report conversion-besoin-nourriture-surface-ha  ; contexte de cuisine 
+  
+  let rendement-moyen mean list (kg-mil-par-ha) (kg-arachide-par-ha * ratio-arachide-subsistence * taux-arachide-nourriture)
+
+  let besoin [calcul-besoin-tempo] of self
+  report (besoin / rendement-moyen)
+  
+end
+
+to-report conversion-besoin-nourriture-surface-en-patches  ; contexte de cuisine 
+  let rendement-moyen mean list (kg-mil-par-ha) (kg-arachide-par-ha * ratio-arachide-subsistence * taux-arachide-nourriture)
+  let besoin [calcul-besoin-tempo] of self
+ 
+  report round (((besoin / rendement-moyen) * 10000)  / surface-de-patch)
+  
+end
+
+
+
+
+to resolution-pret
+ 
+  show "resolution-pret"
+  ;; agensets cuisines demandeuses et preteuses
+  let cuisines-D cuisines with [conversion-besoin-nourriture-surface-ha > 0]
+  let cuisines-P cuisines with [conversion-besoin-nourriture-surface-ha < 0]
+   
+  let nb-cuisines-D  count cuisines-D
+  
+  if any? cuisines-D [
+  
+  ask cuisines-P [
+    set patches-pretables count patches with [proprietaire = self and not cultived? and cycle != 3 and zone != "case" and proprietaire != "bordures"]
+  ]
+  
+  let sum-surfaces-CD sum [conversion-besoin-nourriture-surface-en-patches] of cuisines-D
+  let sum-surfaces-pretables sum [patches-pretables] of cuisines-P
+ 
+  ;; surface pretable moyenne 
+ let surface-pretable-moyenne sum-surfaces-pretables /  nb-cuisines-D
+ 
+ ask cuisines-D [
+      show "MAJ surf escomp"
+    set surface-escomptee   round ([conversion-besoin-nourriture-surface-en-patches] of self / sum-surfaces-CD) * surface-pretable-moyenne
+  ]
+ 
+  ]
+  
+  
+end

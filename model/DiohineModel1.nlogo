@@ -14,7 +14,8 @@ cuisines-own [
   sortants
   famille
   besoin-nourriture
-  nb-patch-dispo
+  patches-pretables
+  surface-escomptee
   nourriture-autosuffisante
   bilan-nourriture
   idmyParcellesSorted
@@ -29,6 +30,7 @@ patches-own [
   zone
   couvert-type
   proprietaire
+  locataire
   fertilite
   cycle
   parcelle-id
@@ -348,7 +350,7 @@ to calcul-bilan
     set besoin-nourriture calcul-besoin-nourriture  [taille] of self
 
     ;;let sumIdP sum countMyCultivetedPlots
-    ;set nb-patch-dispo count patches with [(proprietaire = myself and parcelle-id =   or zone = "case" ) ] ;; selection sur la liste des parcelle cultive
+
     ;;set nourriture-autosuffisante (sumIdP * surface-de-patch  /  10000) * kg-cereale-par-ha
 
     set nourriture-autosuffisante production self
@@ -527,7 +529,7 @@ kg-cereale-par-ha
 kg-cereale-par-ha
 100
 800
-620.0
+300.0
 10
 1
 NIL
@@ -667,7 +669,7 @@ croissance-demographique
 croissance-demographique
 0
 1.0
-0.02
+0.42
 0.01
 1
 NIL
@@ -700,7 +702,7 @@ troupeau
 troupeau
 25
 200
-195.0
+75.0
 10
 1
 NIL
@@ -792,7 +794,7 @@ patch-area
 patch-area
 10
 500
-310.0
+110.0
 10
 1
 m2
@@ -906,7 +908,7 @@ max-sacs
 max-sacs
 0
 10
-5.0
+1.0
 1
 1
 NIL
