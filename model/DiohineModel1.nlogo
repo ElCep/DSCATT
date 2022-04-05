@@ -84,6 +84,7 @@ end
 to setup
   ca
   reset-ticks
+
   set cycle-jachere-courante 1
   set last-tick 10
   ;;no-display
@@ -118,8 +119,10 @@ to setup
   ;; en tete par hectare
   set betail-par-ha 1
 
-
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; paramètres libres pour modèle à l'équilibre
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
   ;; en kg de COS par m²
   set conso-carbone-culture 0.39 / 3 ;; source : simulation de chapitre 8 de "carbone des sols en afrique" tableau 2
@@ -146,6 +149,7 @@ to setup
     set proprietaire -99
   ]
 
+  ;; champs de case
   ask patches with [pxcor < 50 and pycor < 50]
   [
     set pcolor 6
