@@ -16,11 +16,13 @@ cuisines-own [
   besoin-nourriture
   patches-pretables
   surface-escomptee
+  surface-totale-cultivable
   nourriture-autosuffisante
   bilan-nourriture
   idmyParcellesSorted
   idmyParcellesCultiveM
   idmyParcellesCultiveA
+
   tropParcelles?
   taille-troupeau
   kg-engrais
@@ -36,6 +38,7 @@ patches-own [
   parcelle-id
   myDistFromCuisine
   cultived?
+  pretable?
 
 ]
 
@@ -149,6 +152,7 @@ to setup
 ;; repartition des terres intiales
   ask patches [
     set proprietaire -99
+
   ]
 
   ;; champs de case
@@ -196,6 +200,7 @@ to setup
   ask cuisines [
     set idmyParcellesCultiveA []
     set idmyParcellesCultiveM []
+
   ]
 
   ;; attriubut des bordures de zones proprietaire =  bordure
@@ -244,8 +249,16 @@ to setup
     set besoin-nourriture 0
   ]
 
+
+
+
   init-sacs-engrais-cuisines
-end ;; setup
+
+
+  end ;; setup
+
+
+
 
 
 
@@ -261,10 +274,31 @@ to go
   rotation-trienale
 
   ordre-parcelles
-  planif-culture
-  chercher-parcelles
-  mise-en-culture
 
+  ask patches [ set pretable? false]
+
+
+   ask patches  with [ proprietaire != "bordures" and zone != "case" and cycle != 3  and proprietaire != "zone cuisine" ]
+  [
+    set cultived? false
+    set pretable? true
+  ]
+
+
+
+ planif-ou-mise-en-culture
+
+  show sort remove-duplicates [parcelle-id] of patches with [pretable? ]
+
+ resolution-pret
+
+  show sort remove-duplicates [parcelle-id] of patches with [pretable? ]
+
+
+
+
+ reset-locataires
+ dessin-culture-GUI
 
 
 
@@ -332,7 +366,7 @@ to-report calcul-besoin-nourriture [my-taille]
 to-report countMyCultivetedPlots [couvertType] ;cuisine context
   let idP 0
     ifelse ticks < 1 [
-      set idP map [id -> count patches with[parcelle-id = id]] idmyParcellesSorted ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
+      set idP map [id -> count patches with[parcelle-id = id and  cultived?]] idmyParcellesSorted ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
     ][
     if (couvertType = "M") [
       set idP map [id -> count patches with[parcelle-id = id and cultived? and couvert-type = "M"]] idmyParcellesCultiveM ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
@@ -365,6 +399,23 @@ to update-cuisine-size
     set size taille / 2 + 2
   ]
 end
+
+
+to calcul-surface-cultivable
+
+   ask cuisines [
+    show self
+    set surface-totale-cultivable count patches with [proprietaire = myself and cultived? and cycle != 3 and zone != "case" and proprietaire != "bordures"]
+    show surface-totale-cultivable
+  ]
+end
+
+to reset-locataires
+ask patches [
+   set locataire proprietaire
+  ]
+end
+
 @#$#@#$#@
 GRAPHICS-WINDOW
 295
@@ -529,7 +580,7 @@ kg-cereale-par-ha
 kg-cereale-par-ha
 100
 800
-300.0
+180.0
 10
 1
 NIL
@@ -669,7 +720,7 @@ croissance-demographique
 croissance-demographique
 0
 1.0
-0.42
+0.88
 0.01
 1
 NIL
@@ -764,7 +815,7 @@ nb-cuisines
 nb-cuisines
 5
 25
-12.0
+7.0
 1
 1
 NIL
@@ -779,7 +830,7 @@ moyenne-ppc
 moyenne-ppc
 1
 20
-14.0
+5.0
 1
 1
 NIL
@@ -794,7 +845,7 @@ patch-area
 patch-area
 10
 500
-110.0
+60.0
 10
 1
 m2
@@ -820,7 +871,7 @@ sd-ppc
 sd-ppc
 0
 5
-1.5
+1.0
 0.1
 1
 NIL
@@ -908,7 +959,7 @@ max-sacs
 max-sacs
 0
 10
-1.0
+2.0
 1
 1
 NIL

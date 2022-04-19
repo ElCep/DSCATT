@@ -36,7 +36,7 @@ to ordre-parcelles
 ;; 1 trouver les parcelles les plus proches, c.a.d. reordonnancer les id des parcelles par la distance
   
   ask cuisines [
-    let myParcelles remove-duplicates [parcelle-id] of patches with [proprietaire = myself] ; liste des ID de toutes mes parcelles
+    let myParcelles remove-duplicates [parcelle-id] of patches with [proprietaire = myself or locataire = myself] ; liste des ID de toutes mes parcelles
     ;; pour chaque parcelle je récupère la distance minimal
     let patchDistance []
     foreach myParcelles [
@@ -46,7 +46,10 @@ to ordre-parcelles
       ]
     ]
     
-    let mySmallPatches patches with[proprietaire = myself and myDistFromCuisine != 0]
+    ;;let mySmallPatches patches with[proprietaire = myself and myDistFromCuisine != 0 ]
+    ;; maj de la condition pour prendre en compte les parcelles prétées : clause sur propriétaire -> clause sur locataire
+    let mySmallPatches patches with[locataire = myself and myDistFromCuisine != 0 ]
+    
     let myParcellesSorted sort-by [[p1 p2]-> distance p1 < distance p2 ] mySmallPatches
     set idmyParcellesSorted []
     foreach myParcellesSorted [
@@ -56,7 +59,7 @@ to ordre-parcelles
     ]
 end
 
-to planif-culture
+to planif-ou-mise-en-culture 
 ; recupérer les surface des parcelles 
 ; mettre en culture
 ; mettre a jour mon besoin et mettre en culture temps que le les besoin ne sont pas 
@@ -70,7 +73,7 @@ to planif-culture
       
       let nbPatches count myactualParcelle
       if (nbPatches > 0) [
-      ifelse (actualBesoin > 0) [ ; temps que je n'ai pas assouvie mes besoin j'itère sur mes parcelles
+      ifelse (actualBesoin > 0) [ ; temps que je n'ai pas assouvi mes besoin j'itère sur mes parcelles
         let surface-parcelleHA nbPatches * surface-de-patch  /  10000
         
         let besoin-assouvi-parcelle 0
@@ -88,7 +91,8 @@ to planif-culture
         
         set actualBesoin actualBesoin - besoin-assouvi-parcelle
         ask myactualParcelle [
-          set cultived? TRUE  
+           set cultived? TRUE 
+           set pretable? FALSE 
         ]
       
         if (i = iter)[
@@ -120,7 +124,7 @@ to update-inti-tick
 end
 
 
-to mise-en-culture
+to dessin-culture-GUI
   ask patches with[cultived? = TRUE][
           sprout-couverts 1 [
             set shape "plant"

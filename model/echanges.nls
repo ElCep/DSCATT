@@ -35,6 +35,7 @@ to-report calcul-besoin-tempo; contexte de cuisine
   ;; ce reporter nous renvois les besoin assouvi ou innasouvie pour les cuisine pour la saison en cour 
   let mes-besoin-actu taille * kg-nourriture-par-pers-jour * 365
 
+ 
   let raw-productionM (sum countMyCultivetedPlots "M") * surface-de-patch  /  10000 * kg-mil-par-ha
   let raw-productionA (sum countMyCultivetedPlots "A") * surface-de-patch  /  10000 * kg-arachide-par-ha * ratio-arachide-subsistence * taux-arachide-nourriture
   
@@ -53,10 +54,8 @@ to-report conversion-besoin-nourriture-surface-ha  ; contexte de cuisine
 end
 
 to-report conversion-besoin-nourriture-surface-en-patches  ; contexte de cuisine 
-  let rendement-moyen mean list (kg-mil-par-ha) (kg-arachide-par-ha * ratio-arachide-subsistence * taux-arachide-nourriture)
-  let besoin [calcul-besoin-tempo] of self
- 
-  report round (((besoin / rendement-moyen) * 10000)  / surface-de-patch)
+  
+  report round ((conversion-besoin-nourriture-surface-ha * 10000)  / surface-de-patch)
   
 end
 
@@ -67,29 +66,93 @@ to resolution-pret
  
   show "resolution-pret"
   ;; agensets cuisines demandeuses et preteuses
-  let cuisines-D cuisines with [conversion-besoin-nourriture-surface-ha > 0]
-  let cuisines-P cuisines with [conversion-besoin-nourriture-surface-ha < 0]
-   
-  let nb-cuisines-D  count cuisines-D
+  let cuisines-D cuisines with [conversion-besoin-nourriture-surface-en-patches > 0]
+  ;show "Cuisines demandeuses" 
+  ;show cuisines-D
   
-  if any? cuisines-D [
+  let cuisines-P cuisines with [( any? patches with [proprietaire = myself and cycle != 3 and zone != "case" and not cultived? and locataire = myself])]
+  ;show "Cuisines preteuses" 
+  ;show cuisines-P
+  
+  
+  
+  
+  ;show "cuisines en excès de terre" 
+  ;show cuisines with [any? patches with [proprietaire = myself and cycle != 3 and zone != "case" and not cultived? and locataire = myself]]
+  
+  
+  let nb-cuisines-D  count cuisines-D
+;  show "nb cuisines-D" 
+;  show count cuisines-D 
+;  show "nb cuisines P"
+;  show count cuisines-P 
+
+  
+  ifelse any? cuisines-D and any? cuisines-P [
   
   ask cuisines-P [
-    set patches-pretables count patches with [proprietaire = self and not cultived? and cycle != 3 and zone != "case" and proprietaire != "bordures"]
+    set patches-pretables count patches with [proprietaire = myself and pretable? and cycle != 3 and zone != "case" and proprietaire != "bordures"]
   ]
   
   let sum-surfaces-CD sum [conversion-besoin-nourriture-surface-en-patches] of cuisines-D
   let sum-surfaces-pretables sum [patches-pretables] of cuisines-P
  
+    ;;show "sum surfaces demandees"
+    ;;show sum-surfaces-CD
+    show "sum surfaces pretables"
+    show sum-surfaces-pretables
+    
   ;; surface pretable moyenne 
  let surface-pretable-moyenne sum-surfaces-pretables /  nb-cuisines-D
- 
+ show "surface pretable moyenne"
+    show surface-pretable-moyenne
  ask cuisines-D [
-      show "MAJ surf escomp"
-    set surface-escomptee   round ([conversion-besoin-nourriture-surface-en-patches] of self / sum-surfaces-CD) * surface-pretable-moyenne
+      ;;show "besoin proportionnel" 
+      ;;show  ([conversion-besoin-nourriture-surface-en-patches] of self / sum-surfaces-CD)
+      ;;show "MAJ surf escomp"
+    set surface-escomptee   round ([conversion-besoin-nourriture-surface-en-patches] of self / sum-surfaces-CD * surface-pretable-moyenne)
+    ; show surface-escomptee
   ]
- 
+    
+   ;; un tour de prêt 
+    show "un tour de pret"
+ ask one-of cuisines-D[
+           
+      let ID-demandeuse [who] of self 
+      ; while pas satisfait  et il reste de la terre pretable 
+      
+     
+      ;show "parcelles proprio "
+     ; show sort remove-duplicates [parcelle-id] of patches with [proprietaire = myself or locataire = myself] 
+      
+      
+      ask one-of cuisines-P[
+        
+        let myParcelles-pretables remove-duplicates [parcelle-id] of patches with [proprietaire = myself and pretable? and locataire = myself and cycle != 3 and zone != "case"] 
+;        show "ID parcelles de la cuisines préteuse"
+;        show myParcelles-pretables
+        let parcelle-pretee one-of  myParcelles-pretables
+;        show "parcelle sur le point d'etre pretee" 
+;        show parcelle-pretee
+        
+
+        
+        ask patches with [parcelle-id = parcelle-pretee ][
+          set locataire  cuisine ID-demandeuse
+          set pretable? false
+          set cultived? true 
+        ]
+        ;; TODO MAJ de la surface escomptee de la cuisine D a qui on vient de preter 
+        ;; TODO MAJ de la surface pretable de la cuisine P qui vient de preter 
+        ;; TODO appel recursif /while c'est pas 
+      ]
+      ; show "parcelles proprio + locataire"
+      ;show sort remove-duplicates [parcelle-id] of patches with [proprietaire = myself or locataire = myself] 
+    ]
+    
+    
+   
   ]
-  
+  [show "pas de preteuse ou pas de demandeuse"]
   
 end

@@ -6,6 +6,7 @@ ask cuisines [
       [
         set pcolor [color] of myself
         set proprietaire myself
+        set locataire myself
        sprout 1 [
           ask patch-here [ set parcelle-id [who] of myself]
           die
@@ -20,6 +21,7 @@ ask cuisines [
     [
       set pcolor [color] of myself
       set proprietaire myself
+      set locataire myself 
       sprout 1
       [
           ask patch-here [ set parcelle-id [who] of myself]
@@ -40,6 +42,8 @@ to partition-iteration
         [
           set pcolor [pcolor] of myself
           set proprietaire [proprietaire] of myself
+          set locataire proprietaire 
+          
           set parcelle-id [parcelle-id] of myself
         ]
       ]
