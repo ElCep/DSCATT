@@ -34,6 +34,7 @@ ask cuisines [
 end ;; partition init
 
 to partition-iteration
+  
   ask cuisines [
   foreach [ "J1" "J2" "J3" "case"][
       x -> ask patches with [ zone = x and proprietaire =  myself]

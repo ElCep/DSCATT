@@ -1,6 +1,6 @@
 
 
-to demographie
+to accroissement-demographique
   ;; taux de croissance du systeme
   
   ask cuisines [
@@ -46,7 +46,7 @@ to absorbe-cuisine [cuisine-absorbante cuisine-disparait]
 end
 
 
-to distiribution-population-par-cuisine
+to distribution-population-par-cuisine
  
   ask cuisines [
     set taille round random-normal moyenne-ppc sd-ppc

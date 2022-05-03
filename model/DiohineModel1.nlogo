@@ -91,22 +91,92 @@ to setup
   reset-ticks
 
   set cycle-jachere-courante 1
+  ;; durée simu
   set last-tick 10
-  ;;no-display
 
-  ;; paramètre interne
+
+  ;; paramètre internes
 
   ;; en m²
   set surface-de-patch patch-area
+  setup-params-agricoles
+  setup-world-patches
+  setup-cuisines
+
+end ;; setup
 
 
-  set seuil-gini 0.01
-  ;;
-
-  set spl-champ-brousse-par-cuisine 5
-  set spl-champ-case-par-cuisine 5
 
 
+
+to go
+
+
+  accroissement-demographique
+  update-cuisine-size
+  update-inti-tick
+  rotation-trienale
+
+
+  ordre-parcelles
+  reset-prets-terre
+
+
+ planif-ou-mise-en-culture
+  show sort remove-duplicates [parcelle-id] of patches with [pretable? ]
+
+ resolution-pret
+  show sort remove-duplicates [parcelle-id] of patches with [pretable? ]
+
+
+ reset-locataires
+
+  dessin-culture-GUI
+  MAJ-GUI-betail
+
+  epandage-engrais
+  MAJ-fertilite
+
+
+  MAJ-teinte
+  updatePlots
+  calcul-bilan
+  update-end ;; update at last tick
+
+
+  tick
+   ;; si il n'y a plus de cuisines , on arrête la simulation
+    if count cuisines = 0 [
+   stop
+  ]
+
+end
+
+
+to MAJ-GUI-betail
+  ;; GUI cosmétique
+  ask betails [die]
+   ask n-of 15 patches with [cycle = 3 and zone != "case" and proprietaire != "bordures"]
+  [
+    sprout-betails 1 [ set shape "cow" set size 4 set color white ]
+  ]
+end;
+
+
+
+to reset-prets-terre
+
+   ask patches [ set pretable? false]
+   ask patches  with [ proprietaire != "bordures" and zone != "case" and cycle != 3  and proprietaire != "zone cuisine" ]
+  [
+    set cultived? false
+    set pretable? true
+  ]
+end
+
+
+
+to setup-params-agricoles
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; paramètres calibrés depuis les données
@@ -138,7 +208,7 @@ to setup
   set min-taille-cuisine 3
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; paramètres calibrés depuis les acteurs
+  ;; paramètres céréales  calibrés depuis les acteurs
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -148,12 +218,92 @@ to setup
   set kg-arachide-par-patch (kg-arachide-par-ha *  (surface-de-patch / 10000))
   set kg-nourriture-par-pers-jour 0.75
 
+end
+
+
+to setup-cuisines
+
+  distribution-population-par-cuisine
+  affectation-initiale-troupeau-par-cuisine
+  update-cuisine-size
+
+  ask cuisines [
+    set idmyParcellesCultiveA []
+    set idmyParcellesCultiveM []
+  ]
+
+  ;;
+
+  ;; parametres pour la partition de l'espace
+
+  ;; tolérance de gini pour la desc
+  set seuil-gini 0.01
+
+  ;; nombre de graines initiales pour les parcelles dans les quadrants
+  set spl-champ-brousse-par-cuisine 5
+  set spl-champ-case-par-cuisine 5
+
+
+  partition-init
+  partition-iteration
+  etalement-parcelle
+
+  init-fertilite-a-la-parcelle
+
+  ordre-parcelles
+  affectation-initiale-troupeau-par-cuisine
+
+  let repartition-init []
+  ask cuisines [
+    set repartition-init lput taille-troupeau repartition-init
+  ]
+
+  repartition-troupeau
+
+  ;; troupeau pour mettre à l'équilibre probablement faux
+  ;;set troupeau ceiling (((conso-carbone-culture * surface-de-patch) * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"] * 2 / 3 ) / COS-par-tete)
+
+  ;; équilibre empirique pour gini faible (0.02)
+  ;; set troupeau 130
+
+  init-sacs-engrais-cuisines
+
+  ask cuisines [
+    ;; si on démarre la simu avec un déficite
+    ;;set besoin-nourriture calcul-besoin-nourriture  [taille] of self ;;
+
+    ;: si on démarre la simu à l'équilibre , les besoins des cuisines sont nuls
+    set besoin-nourriture 0
+  ]
+
+end
+
+
+to setup-world-patches
+
 
 ;; repartition des terres intiales
   ask patches [
     set proprietaire -99
 
   ]
+
+   ;; attribut des bordures de zones proprietaire =  bordure
+
+  ask patches with [ pxcor = 50 or pycor = 50 ]
+  [
+    set pcolor blue
+    set proprietaire "bordures"
+  ]
+
+  ;; attribut proprietaire de la zone de cases
+
+  ask patches with [pxcor <= 25 and pycor <= 25]
+  [
+    set proprietaire "zone cuisine"
+  ]
+
+
 
   ;; champs de case
   ask patches with [pxcor < 50 and pycor < 50]
@@ -193,141 +343,10 @@ to setup
       set color (who + 1) * 10 + 6
     ]
   ]
-  distiribution-population-par-cuisine
-  affectation-initiale-troupeau-par-cuisine
-  update-cuisine-size
 
-  ask cuisines [
-    set idmyParcellesCultiveA []
-    set idmyParcellesCultiveM []
-
-  ]
-
-  ;; attriubut des bordures de zones proprietaire =  bordure
-
-  ask patches with [ pxcor = 50 or pycor = 50 ]
-  [
-    set pcolor blue
-    set proprietaire "bordures"
-  ]
-
-  ;; attribut proprietaire de la zone de cases
-
-  ask patches with [pxcor <= 25 and pycor <= 25]
-  [
-    set proprietaire "zone cuisine"
-  ]
-
-  partition-init
-  partition-iteration
-  etalement-parcelle
-
-  init-fertilite-a-la-parcelle
-
-  ordre-parcelles
-  affectation-initiale-troupeau-par-cuisine
-
-  let repartition-init []
-  ask cuisines [
-    set repartition-init lput taille-troupeau repartition-init
-  ]
-
-  repartition-troupeau
-
-  ;; troupeau pour mettre à l'équilibre probablement faux
-  ;;set troupeau ceiling (((conso-carbone-culture * surface-de-patch) * count patches with [ proprietaire != "bordures" and proprietaire != "zone cuisine"] * 2 / 3 ) / COS-par-tete)
-
-  ;; équilibre empirique pour gini faible (0.02)
-  ;; set troupeau 130
-
-
- ask cuisines [
-    ;; si on démarre la simu avec un déficite
-    ;;set besoin-nourriture calcul-besoin-nourriture  [taille] of self ;;
-
-    ;: si on démarre la simu à l'équilibre , les besoins des cuisines sont nuls
-    set besoin-nourriture 0
-  ]
-
-
-
-
-  init-sacs-engrais-cuisines
-
-
-  end ;; setup
-
-
-
-
-
-
-
-to go
-
-
-
-
-  demographie
-  update-cuisine-size
-  update-inti-tick
-  rotation-trienale
-
-  ordre-parcelles
-
-  ask patches [ set pretable? false]
-
-
-   ask patches  with [ proprietaire != "bordures" and zone != "case" and cycle != 3  and proprietaire != "zone cuisine" ]
-  [
-    set cultived? false
-    set pretable? true
-  ]
-
-
-
- planif-ou-mise-en-culture
-
-  show sort remove-duplicates [parcelle-id] of patches with [pretable? ]
-
- resolution-pret
-
-  show sort remove-duplicates [parcelle-id] of patches with [pretable? ]
-
-
-
-
- reset-locataires
- dessin-culture-GUI
-
-
-
-  ;; GUI cosmétique
-  ask betails [die]
-   ask n-of 15 patches with [cycle = 3 and zone != "case" and proprietaire != "bordures"]
-  [
-    sprout-betails 1 [ set shape "cow" set size 4 set color white ]
-  ]
-
-
-
-  epandage-engrais
-  MAJ-fertilite
-
-
-  MAJ-teinte
-  updatePlots
-  calcul-bilan
-  update-end ;; update at last tick
-
-
-  tick
-   ;; si il n'y a plus de cuisines , on arrête la simulation
-    if count cuisines = 0 [
-   stop
-  ]
 
 end
+
 
 
 
@@ -415,7 +434,6 @@ ask patches [
    set locataire proprietaire
   ]
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 295
