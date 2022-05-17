@@ -1,4 +1,4 @@
-__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls" "engrais.nls" "update_g_variables.nls"]
+__includes [ "plots.nls" "productivite.nls" "partition.nls" "anim_betail.nls" "demographie.nls" "echanges.nls" "fertilite.nls" "troupeau.nls" "engrais.nls" "update_g_variables.nls" "parcel.nls"]
 
 extensions [gini.jar set.jar]
 
@@ -156,7 +156,7 @@ end
 to MAJ-GUI-betail
   ;; GUI cosmétique
   ask betails [die]
-   ask n-of 15 patches with [cycle = 3 and zone != "case" and proprietaire != "bordures"]
+   ask n-of 15 parcellesEnJachere
   [
     sprout-betails 1 [ set shape "cow" set size 4 set color white ]
   ]
@@ -167,7 +167,7 @@ end;
 to reset-prets-terre
 
    ask patches [ set pretable? false]
-   ask patches  with [ proprietaire != "bordures" and zone != "case" and cycle != 3  and proprietaire != "zone cuisine" ]
+   ask parcellesCultivables
   [
     set cultived? false
     set pretable? true
@@ -353,7 +353,7 @@ end
 
 to rotation-trienale
 
-  ask patches with [ zone != "case" and proprietaire != "bordures" and proprietaire != "zone cuisine"]
+  ask champsDeBrousse
   [
     set cycle ((cycle + 1) mod 3) + 1
     if cycle = 1 [ set couvert-type "M" ]
@@ -388,10 +388,10 @@ to-report countMyCultivetedPlots [couvertType] ;cuisine context
       set idP map [id -> count patches with[parcelle-id = id and  cultived?]] idmyParcellesSorted ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
     ][
     if (couvertType = "M") [
-      set idP map [id -> count patches with[parcelle-id = id and cultived? and couvert-type = "M"]] idmyParcellesCultiveM ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
+      set idP map [id -> count cultivedMil with[parcelle-id = id]] idmyParcellesCultiveM ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
     ]
     if (couvertType = "A") [
-      set idP map [id -> count patches with[parcelle-id = id and cultived? and couvert-type = "A"]] idmyParcellesCultiveA ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
+      set idP map [id -> count cultivedArachide with[parcelle-id = id]] idmyParcellesCultiveA ;; ATTENTION il faudra que ce soit seulement les id des parcelles cultivé
     ]
   ]
   report idP
@@ -420,11 +420,11 @@ to update-cuisine-size
 end
 
 
-to calcul-surface-cultivable
+to calcul-surface-cultivee-par-cuisine
 
    ask cuisines [
     show self
-    set surface-totale-cultivable count patches with [proprietaire = myself and cultived? and cycle != 3 and zone != "case" and proprietaire != "bordures"]
+    set surface-totale-cultivable count parcellesCultivables with [proprietaire = myself and cultived?]
     show surface-totale-cultivable
   ]
 end

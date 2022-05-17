@@ -1,13 +1,13 @@
 
 to init-fertilite-au-patch
-  ;; champs de case
-  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone = "case"]
+  
+  ask champsDeCase
   [
     ;; unité : kg de matiere organique,
     set fertilite surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
   ]
-  ;; champs de brousse
-  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
+  
+  ask champsDeBrousse
   [
     ;; unité : kg de matiere organique, 
     set fertilite surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
@@ -36,7 +36,7 @@ end
 
 to MAJ-fertilite
 
-  let nb-patches-Jach count patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and not cultived?  ]
+  let nb-patches-Jach count parcellesEnJachere with [not cultived?  ]
   
     
   ;; collectif: les troupeaux paturent sur toutes les jachères de manière indifénciée
@@ -52,13 +52,13 @@ to MAJ-fertilite
   )     
 
   ;; fumure uniforme de tout le troupeau dans les champs de brousse en jachère pendant la journée 
-  ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and not cultived?  ][
+  ask parcellesEnJachere with [not cultived?][
     set fertilite fertilite + (((sum [taille-troupeau] of cuisines ) * COS-par-tete) / nb-patches-Jach) * first coefficients-strategie  ;; le 0.5 indique que c'est le jour, i.e. la moitié du temps 
   ]
   
   ask cuisines [
     ;; les patches de la cuisine 
-    let myjachereplots patches with   [cycle = 3  and not cultived? and proprietaire = [who] of myself ]
+    let myjachereplots parcellesEnJachere with [not cultived? and proprietaire = [who] of myself ]
     ask myjachereplots[
       set fertilite fertilite + ((([taille-troupeau] of myself) * COS-par-tete) / nb-patches-Jach) * last coefficients-strategie  ;; le 0.5 indique que c'est la nuit, le reste du temps
       
@@ -67,19 +67,7 @@ to MAJ-fertilite
     ; il pourra y avoir du pret de troupeau de nuit ... un jour  
     ]
   ]
-  
-  ;; test
-;    ask one-of cuisines [
-;    ask patches with [cycle = 3 and zone != "case" and proprietaire = self] [
-;      sprout 1 [ 
-;        set size 1
-;        set color black
-;      ]
-;    ]
-;  ]
-  
-  
-
+ 
   ask cuisines [
     foreach sentence idmyParcellesCultiveA idmyParcellesCultiveM [
       ;; la fertilite des champs de case est fixe (pour le moment)

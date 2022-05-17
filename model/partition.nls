@@ -17,7 +17,7 @@ ask cuisines [
 
 
     ;; champ de case hors des maisons
-    ask n-of (random spl-champ-case-par-cuisine + 1) patches with [zone = "case" and proprietaire != "bordures" and  proprietaire != "zone cuisine"]
+    ask n-of (random spl-champ-case-par-cuisine + 1) champsDeCase
     [
       set pcolor [color] of myself
       set proprietaire myself
@@ -65,8 +65,7 @@ to detecter-frontieres
   let gini-current calcul-gini
   let batch 10
   
-  ask  patches with  [ 
-    proprietaire != "bordures" and proprietaire != "zone cuisine" and
+  ask tousLesChamps with  [ 
    ;;[proprietaire] of one-of neighbors4   !=  proprietaire and
     
     any?  neighbors with [proprietaire != [proprietaire] of myself] and

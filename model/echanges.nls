@@ -70,16 +70,9 @@ to resolution-pret
   ;show "Cuisines demandeuses" 
   ;show cuisines-D
   
-  let cuisines-P cuisines with [( any? patches with [proprietaire = myself and cycle != 3 and zone != "case" and not cultived? and locataire = myself])]
+  let cuisines-P cuisines with [( any? parcellesCultivables with [proprietaire = myself and not cultived? and locataire = myself])]
   ;show "Cuisines preteuses" 
   ;show cuisines-P
-  
-  
-  
-  
-  ;show "cuisines en excès de terre" 
-  ;show cuisines with [any? patches with [proprietaire = myself and cycle != 3 and zone != "case" and not cultived? and locataire = myself]]
-  
   
   let nb-cuisines-D  count cuisines-D
 ;  show "nb cuisines-D" 
@@ -91,7 +84,7 @@ to resolution-pret
   ifelse any? cuisines-D and any? cuisines-P [
   
   ask cuisines-P [
-    set patches-pretables count patches with [proprietaire = myself and pretable? and cycle != 3 and zone != "case" and proprietaire != "bordures"]
+    set patches-pretables count parcellesCultivables with [proprietaire = myself and pretable?]
   ]
   
   let sum-surfaces-CD sum [conversion-besoin-nourriture-surface-en-patches] of cuisines-D
@@ -127,15 +120,9 @@ to resolution-pret
       
       
       ask one-of cuisines-P[
-        
-        let myParcelles-pretables remove-duplicates [parcelle-id] of patches with [proprietaire = myself and pretable? and locataire = myself and cycle != 3 and zone != "case"] 
-;        show "ID parcelles de la cuisines préteuse"
-;        show myParcelles-pretables
-        let parcelle-pretee one-of  myParcelles-pretables
+        let parcelle-pretee one-of parcellesPretables self
 ;        show "parcelle sur le point d'etre pretee" 
 ;        show parcelle-pretee
-        
-
         
         ask patches with [parcelle-id = parcelle-pretee ][
           set locataire  cuisine ID-demandeuse

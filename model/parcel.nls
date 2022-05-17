@@ -1,0 +1,35 @@
+to-report niCaseNiBordure
+  report patches with [zone != "case" and proprietaire != "bordures"]
+end
+
+to-report parcellesEnJachere
+  report niCaseNiBordure with [cycle = 3]
+end
+
+to-report parcellesCultivables
+  report niCaseNiBordure with [cycle != 3]
+end
+
+to-report champsDeBrousse
+  report (patch-set parcellesEnJachere parcellesCultivables)
+end
+
+to-report champsDeCase
+  report patches with [zone = "case" and proprietaire != "zone cuisine" and proprietaire != "bordures" ]
+end
+
+to-report tousLesChamps
+  report (patch-set champsDeBrousse champsDeCase)
+end
+
+to-report cultivedMil 
+  report  patches with [cultived? and couvert-type = "M"]
+end
+
+to-report cultivedArachide
+  report  patches with [cultived? and couvert-type = "A"]
+end
+
+to-report parcellesPretables [uneCuisine]
+ report remove-duplicates [parcelle-id] of parcellesCultivables with [proprietaire = uneCuisine and pretable? and locataire = uneCuisine] 
+end

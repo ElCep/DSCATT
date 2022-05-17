@@ -24,7 +24,7 @@ to-report populationsize
 end 
 
 to-report fertilitesize
-  report sum [fertilite] of  patches with [proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" ]
+  report sum [fertilite] of champsDeBrousse
 end
 
 to-report popTroupeau
