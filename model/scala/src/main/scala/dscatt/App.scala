@@ -10,7 +10,15 @@ object Diohine{
       Parameters(Some(args(0)))
     } else Parameters()
 
-    Simulation(12, 0.5, 0.01, 200, parameters.outputParcelPath)
+    Simulation(
+      77,
+      numberOfKitchens = 12,
+      kitchenSizeAverage = 5.0,
+      kitchenSizeStd = 1.0,
+      giniParcels = 0.5,
+      giniTolerance = 0.01,
+      maximumNumberOfParcels = 200,
+      parcelOutputPath = parameters.outputParcelPath)
   }
 
 }

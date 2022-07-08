@@ -1,5 +1,7 @@
 package dscatt
 
+import breeze.stats.distributions.{Gaussian, ThreadLocalRandomGenerator, RandBasis}
+import org.apache.commons.math3.random.MersenneTwister
 
 object Kitchen {
 
@@ -7,10 +9,11 @@ object Kitchen {
 
   def parcelsOfTheYear(kitchenID: KitchenID): Seq[Parcel] = ???
 
+  def buildKitchens(numberOfKitchens: Int, sizeAverage: Double, sizeStd: Double)(using mT: MersenneTwister): Seq[Kitchen] = {
+    val randBasis = new RandBasis(new ThreadLocalRandomGenerator(mT))
+    val gaussian = Gaussian(sizeAverage, sizeStd)(randBasis)
+    gaussian.samples.take(numberOfKitchens).toArray.zipWithIndex.map{case (s, i)=> Kitchen(i+1, s.toInt)}
+  }
 }
 
-
-import dscatt.Kitchen._
-import dscatt.Parcel._
-
-case class Kitchen(id: KitchenID)
+case class Kitchen(id: Kitchen.KitchenID, size: Int)
