@@ -12,6 +12,9 @@ object Simulation {
              giniParcels: Double,
              giniTolerance: Double = 0.01,
              maximumNumberOfParcels: Int = 200,
+             herdSize: Int = 100,
+             giniHerd: Double,
+             demographicGrowth: Double,
              parcelOutputPath: Option[String] = None
            ) = {
 

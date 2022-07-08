@@ -16,6 +16,7 @@ object Parcel {
   object One extends CropZone
   object Two extends CropZone
   object Three extends CropZone
+  object Village extends CropZone
 
   implicit def intToCropZone(cz: Int): CropZone = cz match
     case 1=> One

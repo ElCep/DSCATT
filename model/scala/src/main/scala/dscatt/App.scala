@@ -1,10 +1,9 @@
 package dscatt
 
-object Diohine{
+object Diohine {
 
   case class Parameters(outputParcelPath: Option[String] = None)
-
-
+  
   def main(args: Array[String]) = {
     val parameters = if (args.length > 0) {
       Parameters(Some(args(0)))
@@ -18,6 +17,9 @@ object Diohine{
       giniParcels = 0.5,
       giniTolerance = 0.01,
       maximumNumberOfParcels = 200,
+      herdSize = 100,
+      giniHerd = 75,
+      demographicGrowth = 0.2,
       parcelOutputPath = parameters.outputParcelPath)
   }
 

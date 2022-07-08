@@ -19,15 +19,21 @@ object World {
 
     val parcels = syntheticParcels.toArray.map { sp =>
       val p = sp.asInstanceOf[SyntheticParcel]
-      Parcel(
-        id = p.id,
-        kitchenID = p.ownerID,
-        cropZone = p.regionID,
-        area = p.area,
-        distanceToVillage = p.distanceToCenter,
-        neighbours = p.lIdNeighborhood.asScala.toSeq
-      )
-    }
+
+      val cropZone: CropZone = {
+        if (p.distanceToCenter < Constants.VILLAGE_ZONE_DISTANCE) Village
+        else p.regionID
+      }
+
+          Parcel(
+            id = p.id,
+            kitchenID = p.ownerID,
+            cropZone = cropZone,
+            area = p.area,
+            distanceToVillage = p.distanceToCenter,
+            neighbours = p.lIdNeighborhood.asScala.toSeq
+          )
+      }
 
     World(parcels)
   }
@@ -42,6 +48,12 @@ object World {
       println("AREA            :" + p.area + "\n")
     }
   }
+  
+  private def zoneParcels(world: World, cropZone: CropZone) = world.parcels.filter{_.cropZone == cropZone}
+  def zoneOneParcels(world: World) = zoneParcels(world, One)
+  def zoneTwoParcels(world: World) = zoneParcels(world, Two)
+  def zoneThreeParcels(world: World) = zoneParcels(world, Three)
+  def zoneVillageParcels(world: World) = zoneParcels(world, Village)
 }
 
 case class World(parcels: Seq[Parcel])
