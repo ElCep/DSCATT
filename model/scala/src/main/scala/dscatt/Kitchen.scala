@@ -1,6 +1,6 @@
 package dscatt
 
-import breeze.stats.distributions.{Gaussian, ThreadLocalRandomGenerator, RandBasis}
+import breeze.stats.distributions.{Gaussian, RandBasis, ThreadLocalRandomGenerator}
 import org.apache.commons.math3.random.MersenneTwister
 
 object Kitchen {
