@@ -1,8 +1,9 @@
 package dscatt
 
-import dscatt.Croping.{CropingStrategy, ThreeYears}
-import dscatt.World.evolveRotations
+import dscatt.Croping.{CroppingStrategy, Fallow, Mil, NotAssigned, Peanut, ThreeYears, Village}
 import org.apache.commons.math3.random.MersenneTwister
+
+import scala.annotation.tailrec
 
 object Simulation {
 
@@ -17,7 +18,7 @@ object Simulation {
              herdSize: Int = 100,
              giniHerd: Double,
              demographicGrowth: Double,
-             croppingStrategy: CropingStrategy = ThreeYears,
+             croppingStrategy: CroppingStrategy = ThreeYears,
              simulationLength: Int = 20,
              parcelOutputPath: Option[String] = None
            ) = {
@@ -25,34 +26,42 @@ object Simulation {
     given MersenneTwister(seed)
 
     val kitchens = Kitchen.buildKitchens(numberOfKitchens, kitchenSizeAverage, kitchenSizeStd)
-    val nakedWorld = World.buildWorldGeometry(numberOfKitchens, giniParcels, giniTolerance, maximumNumberOfParcels, parcelOutputPath)
+    val diohine = World.buildWorldGeometry(numberOfKitchens, giniParcels, giniTolerance, maximumNumberOfParcels, parcelOutputPath)
 
     // Initialize first rotation
-    val diohine = World.evolveRotations(nakedWorld, croppingStrategy)
 
-   // World.display(diohine)
+    // World.display(diohine)
+    println("# Vilage " + World.zoneVillageParcels(diohine).length)
+    println("Area factor " + Constants.AREA_FACTOR)
 
-    evolve(diohine, kitchens, ThreeYears, 4)
+    evolve(diohine, kitchens, ThreeYears, simulationLength)
   }
 
   case class Indicators(fertility: Double = 0.0, populationSize: Int = 0)
 
-  def evolve(world: World, kitchens: Seq[Kitchen], cropingStrategy: CropingStrategy, simulationLenght: Int) = {
+  def evolve(world: World, kitchens: Seq[Kitchen], croppingStrategy: CroppingStrategy, simulationLenght: Int) = {
 
+    @tailrec
     def evolve0(world: World, kitchens: Seq[Kitchen], year: Int, indicators: Indicators): Indicators = {
       if (year == 0) indicators
       else {
-        val newWorld = evolveRotations(world, cropingStrategy)
+        println("\nYEAR " + (simulationLenght - year + 1))
 
-        println("YEAR " + (simulationLenght - year + 1))
-        world.parcels.take(5).foreach { p =>
-          println(p.id + " " + p.rotation.cropZone.getClass.toString + " " + p.rotation.crop.getClass.toString)
-        }
+        val newWorld = World.evolveRotations(world, kitchens, croppingStrategy)
+
+        println(" ---- EVOLVED ---- ")
+        println("FALLOW " + World.fallowParcels(newWorld).length)
+        println("PEANUT " + World.peanutParcels(newWorld).length)
+        println("MIL " + World.milParcels(newWorld).length)
+        println("NOT ASSIGNED " + newWorld.parcels.filter { p => p.crop == NotAssigned && p.cropZone != Village }.length)
+
+        //---------------------------------------------------------------------------------------
 
         evolve0(newWorld, kitchens, year - 1, indicators)
       }
     }
 
-    evolve0(world, kitchens, simulationLenght, Indicators())
+    // The first year (+1) is an initialization for kitchen needs
+    evolve0(world, kitchens, simulationLenght + 1, Indicators())
   }
 }

@@ -23,47 +23,55 @@ object Croping {
 
   object Village extends CropZone
 
-  sealed trait CropingStrategy
+  sealed trait CroppingStrategy
 
-  object ThreeYears extends CropingStrategy
+  object ThreeYears extends CroppingStrategy
 
-  object TwoYears extends CropingStrategy
-
-  case class Rotation(crop: Crop, cropZone: CropZone)
+  object TwoYears extends CroppingStrategy
 
   implicit def intToCropZone(cz: Int): CropZone = cz match
     case 1 => One
     case 2 => Two
     case 3 => Three
 
-  def evolve(rotation: Rotation, cropingStrategy: CropingStrategy) = {
+  def evolveCropZone(cropZone: CropZone, cropingStrategy: CroppingStrategy): CropZone = {
     cropingStrategy match {
       // In this case, reassign at the begiging cropZones into 2 cropZones only
-      case TwoYears => rotation.copy(
-        crop = rotation.crop match {
-          case Peanut => Mil
-          case Mil => Peanut
-          case NotAssigned => rotation.cropZone match {
-            case One => Mil
-            case Two => Peanut
-            case x: Crop=> x
-          }
-        }
-      )
-      case ThreeYears => rotation.copy(
-        rotation.crop match {
-          case Peanut => Fallow
-          case Mil => Peanut
-          case Fallow => Mil
-          case NotAssigned => rotation.cropZone match {
-            case One => Mil
-            case Two => Peanut
-            case Three => Fallow
-            case Village=> NotAssigned
-          }
-        }
-      )
+      case TwoYears => cropZone match {
+        case One => Two
+        case _ => One
+      }
+      case ThreeYears => cropZone match {
+        case One => Two
+        case Two => Three
+        case Three => One
+        case Village => Village
+      }
     }
   }
+
+  def evolveCrop(crop: Crop, cropingStrategy: CroppingStrategy, cropZone: CropZone) = {
+    cropingStrategy match {
+      case TwoYears => crop match {
+        case Peanut => Mil
+        case _ => Peanut
+      }
+      case ThreeYears => crop match {
+        case Peanut => Fallow
+        case Mil => Peanut
+        case Fallow => Mil
+        case NotAssigned =>
+        //  println("NOT ASSIGNED " + cropZone)
+          cropZone match {
+          case One => Mil
+          case Two => Peanut
+          case Three => Fallow
+          case Village => NotAssigned
+        }
+      }
+    }
+  }
+
+  def foodFromPeanut(peanutWeight: Double) = Constants.PEANUT_FOOD_EQUIVALENCE * peanutWeight
 }
 
