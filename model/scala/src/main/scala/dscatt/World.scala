@@ -8,6 +8,7 @@ import Parcel.*
 import dscatt.Croping.*
 import dscatt.Kitchen.KitchenID
 
+import java.io.File
 import scala.annotation.tailrec
 
 object World {
@@ -19,6 +20,9 @@ object World {
                          geometryImagePath: Option[String] = None
                         ): World = {
 
+    geometryImagePath.foreach{p=>
+      new File(p).mkdirs
+    }
     val syntheticParcels = usecase.GenerateSyntheticParcel.generate(
       numberOfKitchen, giniIndex, maximumNumberOfParcels, giniTolerance.toFloat, new java.io.File(geometryImagePath.getOrElse(null)))
 
