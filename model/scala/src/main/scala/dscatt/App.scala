@@ -1,5 +1,7 @@
 package dscatt
 
+import dscatt.Croping._
+
 object Diohine {
 
   case class Parameters(outputParcelPath: Option[String] = None)
@@ -11,16 +13,18 @@ object Diohine {
 
     Simulation(
       77,
-      numberOfKitchens = 10,
+      numberOfKitchens = 15,
       kitchenSizeAverage = 20.0,
-      kitchenSizeStd = 2.0,
+      kitchenSizeStd = 0.0,
       giniParcels = 0.0,
       giniTolerance = 0.01,
       maximumNumberOfParcels = 200,
       herdSize = 100,
       giniHerd = 75,
-      demographicGrowth = 0.2,
-      simulationLength = 5,
+      populationGrowth = 0.2,
+      rotationCycle = ThreeYears,
+      cropingStrategy = Parsimonious,
+      simulationLength = 8,
       parcelOutputPath = parameters.outputParcelPath)
   }
 

@@ -8,6 +8,9 @@ object Constants {
   val PEANUT_YIELD_PER_M2 = 400.0 / 10000
   val PEANUT_FOOD_EQUIVALENCE = 0.5 // quantity of food / quantity of peanuts
 
+  //KITCHEN
+  val KITCHEN_MINIMUM_SIZE = 3
+  
   //SPACE // to adjust the generated area to a 200 people village
   val AREA_FACTOR = {
     val foodFor200 = 200 * DAILY_FOOD_NEED_PER_PERSON * 365

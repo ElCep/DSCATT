@@ -3,9 +3,9 @@ package dscatt
 import fr.ign.artiscales.pm.parcel.SyntheticParcel
 import fr.ign.artiscales.pm.{parcel, usecase}
 
-import scala.jdk.CollectionConverters.*
-import Parcel.*
-import dscatt.Croping.*
+import scala.jdk.CollectionConverters._
+import Parcel._
+import dscatt.Croping._
 import dscatt.Kitchen.KitchenID
 
 import java.io.File
@@ -20,7 +20,7 @@ object World {
                          geometryImagePath: Option[String] = None
                         ): World = {
 
-    geometryImagePath.foreach{p=>
+    geometryImagePath.foreach { p =>
       new File(p).mkdirs
     }
     val syntheticParcels = usecase.GenerateSyntheticParcel.generate(
@@ -34,10 +34,15 @@ object World {
         else p.regionID
       }
 
+      val crop = cropZone match {
+        case Village => HutField
+        case _ => NotAssigned
+      }
+
       Parcel(
         id = p.id,
         kitchenID = p.ownerID,
-        crop = NotAssigned,
+        crop = crop,
         cropZone = cropZone,
         area = p.area * Constants.AREA_FACTOR,
         distanceToVillage = p.distanceToCenter,
@@ -48,46 +53,38 @@ object World {
     World(parcels)
   }
 
-  def evolveRotations(world: World, kitchens: Seq[Kitchen], cropingStrategy: CroppingStrategy): World = {
+  def evolveRotations(world: World, kitchens: Seq[Kitchen], rotationCycle: RotationCycle, cropingStrategy: CropingStrategy): World = {
 
-    // Initalization case
-    if (World.notAssignedParcels(world).length == world.parcels.length) {
-      world.copy(parcels = world.parcels.map { p =>
-        p.copy(crop = Croping.evolveCrop(p.crop, cropingStrategy, p.cropZone))
-      })
-    }
-    else {
-      val inCulture = kitchens.flatMap { k =>
-        val sortedByDistanceParcels = World.parcelsForKitchen(world, k).sortBy(_.distanceToVillage) //.filterNot(_.crop == Fallow)
-        val needs = Kitchen.foodNeeds(k)
+    val inCulture = kitchens.flatMap { k =>
+      val parcelsForKitchenK = World.parcelsForKitchen(world, k).filterNot(p => p.crop == HutField)
+      cropingStrategy match {
+        case Parsimonious =>
+          val sortedByDistanceParcels = parcelsForKitchenK.sortBy(_.distanceToVillage)
+          val needs = Kitchen.foodNeeds(k)
 
-        @tailrec
-        def inCultureCrops(kitchen: Kitchen, production: Double, sortedParcels: Seq[Parcel], inCulture: Seq[Parcel]): Seq[Parcel] = {
-          if (sortedParcels.isEmpty || production > needs) {
-            println(" --- OUT ::  " + sortedParcels.length + " // " + production + " // " + needs)
-            inCulture
-          }
-          else {
-            val parcel = sortedParcels.head
-            inCultureCrops(kitchen, production + Kitchen.parcelProduction(parcel), sortedParcels.tail, inCulture :+ parcel)
-          }
-        }
-
-        inCultureCrops(k, 0.0, sortedByDistanceParcels, Seq())
-      }
-
-      world.copy(parcels = world.parcels.map { p =>
-        val newCropZone = Croping.evolveCropZone(p.cropZone, cropingStrategy)
-        p.copy(cropZone = newCropZone,
-          crop = {
-            if (inCulture.contains(p)) Croping.evolveCrop(p.crop, cropingStrategy, newCropZone)
-            else {
-              if (p.crop == Peanut) Fallow
-              else NotAssigned
+          @tailrec
+          def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: Seq[Parcel], inCulture: Seq[Parcel]): Seq[Parcel] = {
+            if (sortedParcels.isEmpty || production > needs) {
+              inCulture
             }
-          })
-      })
+            else {
+              val parcel = sortedParcels.head
+              cropsToBeCultivated(kitchen, production + Kitchen.parcelProduction(parcel), sortedParcels.tail, inCulture :+ parcel)
+            }
+          }
+
+          cropsToBeCultivated(k, 0.0, sortedByDistanceParcels, Seq())
+        case Intensive => parcelsForKitchenK
+      }
     }
+
+    world.copy(parcels = world.parcels.map { p =>
+      val newCropZone = Croping.evolveCropZone(p.cropZone, rotationCycle)
+      p.copy(cropZone = newCropZone,
+        crop = Croping.evolveCrop(p.crop, rotationCycle, newCropZone, inCulture.contains(p))
+      )
+    }
+    )
   }
 
   def display(world: World): Unit = {
@@ -118,8 +115,11 @@ object World {
   def parcelsInCultureForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter { p => p.kitchenID == kitchen.id && Parcel.isCultivated(p) }
 
   def notAssignedParcels(world: World) = world.parcels.filter(_.crop == NotAssigned)
+
   def milParcels(world: World) = world.parcels.filter(_.crop == Mil)
+
   def peanutParcels(world: World) = world.parcels.filter(_.crop == Peanut)
+
   def fallowParcels(world: World) = world.parcels.filter(_.crop == Fallow)
 }
 
