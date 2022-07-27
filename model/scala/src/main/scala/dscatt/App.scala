@@ -13,7 +13,7 @@ object Diohine {
 
     Simulation(
       77,
-      numberOfKitchens = 15,
+      numberOfKitchens = 20,
       kitchenSizeAverage = 20.0,
       kitchenSizeStd = 0.0,
       giniParcels = 0.0,

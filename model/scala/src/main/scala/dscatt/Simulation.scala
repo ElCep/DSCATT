@@ -38,26 +38,11 @@ object Simulation {
     println("MIL " + World.milParcels(firstworld).length)
     println("NOT ASSIGNED " + firstworld.parcels.filter { p => p.crop == NotAssigned }.length)
     println("HUT Fields " + firstworld.parcels.filter { p => p.crop == HutField }.length)
-    
+
 
     println("Area factor " + Constants.AREA_FACTOR)
 
-    println("ZONE 1" + World.zoneOneParcels(firstworld).groupBy {
-      _.kitchenID
-    }.map { x => x._1 -> x._2.size })
-    println("ZONE 2" + World.zoneTwoParcels(firstworld).groupBy {
-      _.kitchenID
-    }.map { x => x._1 -> x._2.size })
-    println("ZONE 3" + World.zoneThreeParcels(firstworld).groupBy {
-      _.kitchenID
-    }.map { x => x._1 -> x._2.size })
-    println("ALL" + firstworld.parcels.groupBy {
-      _.kitchenID
-    }.map { x => x._1 -> x._2.size })
-
     evolve(firstworld, kitchens, rotationCycle, cropingStrategy, populationGrowth, simulationLength)
-
-    println("# Vilage " + World.zoneVillageParcels(firstworld).length)
   }
 
   case class Indicators(
@@ -75,10 +60,12 @@ object Simulation {
         println("\nYEAR " + (simulationLenght - year))
 
 
-        val upToDateKitchens = Kitchen.evolve(world, kitchens, populationGrowth)
+        val (upToDateKitchens, upToDateWorld) = Kitchen.evolve(world, kitchens, populationGrowth)
         println("REMAINING KITCHENS " + upToDateKitchens.map(_.id).mkString(" | ") + "--- NB KITCHENS " + upToDateKitchens.length)
+        println("KITCHEN IDS IN WORLD " + upToDateWorld.parcels.map{_.kitchenID}.distinct.sorted)
+        println("NB PARCELS PER KID " + upToDateWorld.parcels.map{_.kitchenID}.groupBy(x=>x).map(e => (e._1, e._2.length)))
 
-        val newWorld = World.evolveRotations(world, upToDateKitchens, rotationCycle, cropingStrategy)
+        val newWorld = World.evolveRotations(upToDateWorld, upToDateKitchens, rotationCycle, cropingStrategy)
 
         println(" ---- EVOLVED ---- " + newWorld.parcels.length)
         println("FALLOW " + World.fallowParcels(newWorld).length)
