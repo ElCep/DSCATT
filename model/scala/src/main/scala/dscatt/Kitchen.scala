@@ -55,7 +55,9 @@ object Kitchen {
 
 
     println("## EVOLVE KITCHENS " + kitchens.size)
-    println("## TOTAL POP " + kitchens.map{_.size}.sum)
+    println("## TOTAL POP " + kitchens.map {
+      _.size
+    }.sum)
     val updatedSizeKitchens = evolvePopulation(world, kitchens, populationGrowth)
     val regorganiszedKitchens = kitchenAbsorption(updatedSizeKitchens)
     regorganiszedKitchens
@@ -65,7 +67,9 @@ object Kitchen {
   // Compute for each kitchen the number of births and the number of emigrants based on the food balance
   def evolvePopulation(world: World, kitchens: Seq[Kitchen], populationGrowth: Double) = {
 
-    println("EVOLVE POP " + kitchens.map{_.size}.mkString(" // "))
+    println("EVOLVE POP " + kitchens.map {
+      _.size
+    }.mkString(" // "))
     kitchens.map { k =>
       val balanceK = foodBalance(world, k)
       if (balanceK > 0) {
@@ -89,9 +93,10 @@ object Kitchen {
 
     @tailrec
     def absorption(toBeAbsorbed: Seq[Kitchen], absorbing: Seq[Kitchen]): Seq[Kitchen] = {
-      if (toBeAbsorbed.length == 0) absorbing
+      val nbAbsorbing = absorbing.length
+      if (toBeAbsorbed.length == 0 || nbAbsorbing < 1) absorbing
       else {
-        val index = mT.nextInt(absorbing.length - 1)
+        val index = mT.nextInt(nbAbsorbing)
         val oneAbsorbing = absorbing(index)
         val newAbsorbing = absorbing.updated(index, oneAbsorbing.copy(size = oneAbsorbing.size + toBeAbsorbed.head.size))
         println("KITCHEN " + oneAbsorbing.id + " is absorbing kitchen " + toBeAbsorbed.head.id)
