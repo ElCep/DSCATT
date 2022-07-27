@@ -38,7 +38,7 @@ object Simulation {
     println("MIL " + World.milParcels(firstworld).length)
     println("NOT ASSIGNED " + firstworld.parcels.filter { p => p.crop == NotAssigned }.length)
     println("HUT Fields " + firstworld.parcels.filter { p => p.crop == HutField }.length)
-
+    
 
     println("Area factor " + Constants.AREA_FACTOR)
 

@@ -53,11 +53,10 @@ object Kitchen {
 
   def evolve(world: World, kitchens: Seq[Kitchen], populationGrowth: Double)(using mT: MersenneTwister) = {
 
-
-    println("## EVOLVE KITCHENS " + kitchens.size)
     println("## TOTAL POP " + kitchens.map {
       _.size
     }.sum)
+    
     val updatedSizeKitchens = evolvePopulation(world, kitchens, populationGrowth)
     val regorganiszedKitchens = kitchenAbsorption(updatedSizeKitchens)
     regorganiszedKitchens
@@ -67,9 +66,6 @@ object Kitchen {
   // Compute for each kitchen the number of births and the number of emigrants based on the food balance
   def evolvePopulation(world: World, kitchens: Seq[Kitchen], populationGrowth: Double) = {
 
-    println("EVOLVE POP " + kitchens.map {
-      _.size
-    }.mkString(" // "))
     kitchens.map { k =>
       val balanceK = foodBalance(world, k)
       if (balanceK > 0) {
@@ -77,7 +73,15 @@ object Kitchen {
         k.copy(size = k.size + nbBirths, birthPerYear = k.birthPerYear :+ nbBirths, emigrantsPerYear = k.emigrantsPerYear :+ 0)
       }
       else {
-        val nbEmigrants = (Math.abs(balanceK) / (Constants.DAILY_FOOD_NEED_PER_PERSON * 365)).ceil.toInt
+        val theoriticalNbEmigrants = (Math.abs(balanceK) / (Constants.DAILY_FOOD_NEED_PER_PERSON * 365)).ceil.toInt
+
+        // The emigration process can't remove entirely the kitchen. It should be split into migration
+        // (up to KITCHEN_MINIMUM_SIZE remaining in kitchen) and kitchen absorbtion
+        val nbEmigrants = {
+          val emigrantThreshold = k.size - Constants.KITCHEN_MINIMUM_SIZE
+          if (theoriticalNbEmigrants <= emigrantThreshold) theoriticalNbEmigrants
+          else emigrantThreshold
+        }
         k.copy(size = (k.size - nbEmigrants), birthPerYear = k.birthPerYear :+ 0, emigrantsPerYear = k.emigrantsPerYear :+ nbEmigrants)
       }
     }
@@ -85,7 +89,7 @@ object Kitchen {
 
   def kitchenAbsorption(kitchens: Seq[Kitchen])(using mT: MersenneTwister): Seq[Kitchen] = {
 
-    val toBeAbsorbedKitcken = kitchens.filter(k => k.size < Constants.KITCHEN_MINIMUM_SIZE)
+    val toBeAbsorbedKitcken = kitchens.filter(k => k.size <= Constants.KITCHEN_MINIMUM_SIZE)
     val absorbingKitchens = kitchens.diff(toBeAbsorbedKitcken)
 
     println("tO BE ABSORBED " + toBeAbsorbedKitcken.length)
@@ -104,8 +108,7 @@ object Kitchen {
       }
     }
 
-    if (absorbingKitchens.length > 0) absorption(toBeAbsorbedKitcken, absorbingKitchens).diff(toBeAbsorbedKitcken)
-    else kitchens
+    absorption(toBeAbsorbedKitcken, absorbingKitchens).diff(toBeAbsorbedKitcken)
   }
 
 }
