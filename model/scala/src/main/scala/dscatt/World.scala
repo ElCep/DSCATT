@@ -3,10 +3,11 @@ package dscatt
 import fr.ign.artiscales.pm.parcel.SyntheticParcel
 import fr.ign.artiscales.pm.{parcel, usecase}
 
-import scala.jdk.CollectionConverters._
-import Parcel._
-import dscatt.Croping._
+import scala.jdk.CollectionConverters.*
+import Parcel.*
+import dscatt.Croping.*
 import dscatt.Kitchen.KitchenID
+import org.apache.commons.math3.random.MersenneTwister
 
 import java.io.File
 import scala.annotation.tailrec
@@ -17,6 +18,7 @@ object World {
                          giniIndex: Double,
                          giniTolerance: Double = 0.01,
                          maximumNumberOfParcels: Int = 200,
+                         seed: Long,
                          geometryImagePath: Option[String] = None
                         ): World = {
 
@@ -24,7 +26,7 @@ object World {
       new File(p).mkdirs
     }
     val syntheticParcels = usecase.GenerateSyntheticParcel.generate(
-      numberOfKitchen, giniIndex, maximumNumberOfParcels, giniTolerance.toFloat, new java.io.File(geometryImagePath.getOrElse(null)))
+      numberOfKitchen, giniIndex, maximumNumberOfParcels, giniTolerance.toFloat, seed, new java.io.File(geometryImagePath.getOrElse(null)))
 
     val parcels = syntheticParcels.toArray.map { sp =>
       val p = sp.asInstanceOf[SyntheticParcel]
@@ -78,7 +80,7 @@ object World {
         case Intensive => parcelsForKitchenK
       }
     }
-    
+
     world.copy(parcels = world.parcels.map { p =>
       Kitchen.kitchen(kitchens, p.kitchenID).map { k =>
         val newCropZone = Croping.evolveCropZone(p.cropZone, k.rotationCycle)

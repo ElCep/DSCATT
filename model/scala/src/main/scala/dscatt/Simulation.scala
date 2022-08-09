@@ -25,7 +25,7 @@ object Simulation {
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
     println("NB KITCH " + kitchens.length)
-    val nakedWorld = World.buildWorldGeometry(kitchens.length, giniParcels, giniTolerance, maximumNumberOfParcels, parcelOutputPath)
+    val nakedWorld = World.buildWorldGeometry(kitchens.length, giniParcels, giniTolerance, maximumNumberOfParcels, seed, parcelOutputPath)
 
     // Initialize first rotation
     val firstworld = World.evolveRotations(nakedWorld, kitchens)
