@@ -1,6 +1,7 @@
 package dscatt
 
 import dscatt.Croping._
+import dscatt.KitchenPartition._
 
 object Diohine {
 
@@ -11,19 +12,20 @@ object Diohine {
       Parameters(Some(args(0)))
     } else Parameters()
 
+
+    val kitchenProfile1 = KitchenProfile(10, ThreeYears, Parsimonious, Loaner)
+    val kitchenProfile2 = KitchenProfile(10, TwoYears, Intensive, Selfish)
+
+
     Simulation(
       77,
-      numberOfKitchens = 20,
-      kitchenSizeAverage = 20.0,
-      kitchenSizeStd = 0.0,
       giniParcels = 0.0,
       giniTolerance = 0.01,
       maximumNumberOfParcels = 200,
       herdSize = 100,
       giniHerd = 75,
       populationGrowth = 0.2,
-      rotationCycle = ThreeYears,
-      cropingStrategy = Parsimonious,
+      kitchenPartition = KitchenPartition((kitchenProfile1, 16), (kitchenProfile2, 4)),
       simulationLength = 8,
       parcelOutputPath = parameters.outputParcelPath)
   }

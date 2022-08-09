@@ -15,18 +15,6 @@ object Croping {
   object Three extends CropZone
   object Village extends CropZone
 
-  sealed trait RotationCycle
-  object ThreeYears extends RotationCycle
-  object TwoYears extends RotationCycle
-
-  sealed trait CropingStrategy
-  object Intensive extends CropingStrategy // all parcels in culture all the time
-  object Parsimonious extends CropingStrategy // no more than necessary (needs)
-
-  sealed trait LoanStrategy
-  object Loaner extends LoanStrategy // loans its extra parcels
-  object Selfish extends LoanStrategy
-
   implicit def intToCropZone(cz: Int): CropZone = cz match
     case 1 => One
     case 2 => Two

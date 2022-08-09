@@ -12,11 +12,16 @@ object Kitchen {
 
   def parcelsOfTheYear(kitchenID: KitchenID): Seq[Parcel] = ???
 
-  def buildKitchens(numberOfKitchens: Int, sizeAverage: Double, sizeStd: Double)(using mT: MersenneTwister): Seq[Kitchen] = {
-    val randBasis = new RandBasis(new ThreadLocalRandomGenerator(mT))
-    val gaussian = Gaussian(sizeAverage, sizeStd)(randBasis)
-    gaussian.samples.take(numberOfKitchens).toArray.zipWithIndex.map { case (s, i) => Kitchen(i + 1, s.toInt) }
+  def buildKitchens(kitchenPartition: KitchenPartition): Seq[Kitchen] = {
+   // val randBasis = new RandBasis(new ThreadLocalRandomGenerator(mT))
+   // val gaussian = Gaussian(sizeAverage, sizeStd)(randBasis)
+   // gaussian.samples.take(numberOfKitchens).toArray.zipWithIndex.map { case (s, i) => Kitchen(i + 1, s.toInt) }
+   kitchenPartition.profiles.flatMap{p=>Seq.fill[KitchenProfile](p._2)(p._1)}.zipWithIndex.map{case (kp,id)=>
+     Kitchen(id + 1, kp.size, kp.rotationCycle, kp.cropingStrategy, kp.loanStrategy)
+   }
   }
+
+  def kitchen(kitchens: Seq[Kitchen], id: KitchenID) = kitchens.find(_.id == id)
 
   def foodNeeds(kitchen: Kitchen) = kitchen.size * Constants.DAILY_FOOD_NEED_PER_PERSON * 365
 
@@ -130,4 +135,11 @@ object Kitchen {
   }
 }
 
-case class Kitchen(id: Kitchen.KitchenID, size: Int, birthPerYear: Seq[Int] = Seq(), emigrantsPerYear: Seq[Int] = Seq())
+case class Kitchen(id: Kitchen.KitchenID,
+                   size: Int,
+                   rotationCycle: RotationCycle,
+                   cropingStrategy: CropingStrategy,
+                   loanStrategy: LoanStrategy,
+                   birthPerYear: Seq[Int] = Seq(),
+                   emigrantsPerYear: Seq[Int] = Seq()
+                  )

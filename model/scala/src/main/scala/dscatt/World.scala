@@ -53,11 +53,12 @@ object World {
     World(parcels)
   }
 
-  def evolveRotations(world: World, kitchens: Seq[Kitchen], rotationCycle: RotationCycle, cropingStrategy: CropingStrategy): World = {
+  def evolveRotations(world: World, kitchens: Seq[Kitchen]): World = {
 
     val inCulture = kitchens.flatMap { k =>
       val parcelsForKitchenK = World.parcelsForKitchen(world, k).filterNot(p => p.crop == HutField)
-      cropingStrategy match {
+
+      k.cropingStrategy match {
         case Parsimonious =>
           val sortedByDistanceParcels = parcelsForKitchenK.sortBy(_.distanceToVillage)
           val needs = Kitchen.foodNeeds(k)
@@ -77,14 +78,15 @@ object World {
         case Intensive => parcelsForKitchenK
       }
     }
-
+    
     world.copy(parcels = world.parcels.map { p =>
-      val newCropZone = Croping.evolveCropZone(p.cropZone, rotationCycle)
-      p.copy(cropZone = newCropZone,
-        crop = Croping.evolveCrop(p.crop, rotationCycle, newCropZone, inCulture.contains(p))
-      )
-    }
-    )
+      Kitchen.kitchen(kitchens, p.kitchenID).map { k =>
+        val newCropZone = Croping.evolveCropZone(p.cropZone, k.rotationCycle)
+        p.copy(cropZone = newCropZone,
+          crop = Croping.evolveCrop(p.crop, k.rotationCycle, newCropZone, inCulture.contains(p))
+        )
+      }.getOrElse(p)
+    })
   }
 
   def display(world: World): Unit = {
