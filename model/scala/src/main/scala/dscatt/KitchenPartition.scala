@@ -34,14 +34,14 @@ object  NoFaidherbiaAttention extends FaidherbiaStrategy
 object  FaidherbiaRegrowPreservation extends FaidherbiaStrategy
 
 case class KitchenProfile(
-                           size: Int,
+                           size: KitchenSize,
                            rotationCycle: RotationCycle,
                            cropingStrategy: CropingStrategy,
                            loanStrategy: LoanStrategy
                          )
 
 object KitchenProfile {
-  val default = KitchenProfile(10, ThreeYears, Parsimonious, Loaner)
+  val default = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner)
 }
 
 case class KitchenPartition(profiles: (KitchenProfile, KitchenSize)*)
