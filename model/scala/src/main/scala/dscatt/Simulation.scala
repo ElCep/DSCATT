@@ -29,7 +29,7 @@ object Simulation {
 
 
     // Initialize first rotation
-    val firstworld = World.evolveRotations(nakedWorld, kitchens)
+    val firstworld = Rotation.evolve(nakedWorld, kitchens)
 
     println("--------------- FIN INIT ---------------- " + firstworld.parcels.length)
     println("FALLOW " + World.fallowParcels(firstworld).length)
@@ -60,7 +60,7 @@ object Simulation {
         val (upToDateKitchens, upToDateWorld) = Kitchen.evolve(world, kitchens, populationGrowth)
         println("REMAINING KITCHENS " + upToDateKitchens.map(_.id).mkString(" | ") + "--- NB KITCHENS " + upToDateKitchens.length)
 
-        val newWorld = World.evolveRotations(upToDateWorld, upToDateKitchens)
+        val newWorld = Rotation.evolve(upToDateWorld, upToDateKitchens)
 
         println(" ---- EVOLVED ---- " + newWorld.parcels.length)
         println("FALLOW " + World.fallowParcels(newWorld).length)
