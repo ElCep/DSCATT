@@ -3,9 +3,9 @@ package dscatt
 import fr.ign.artiscales.pm.parcel.SyntheticParcel
 import fr.ign.artiscales.pm.{parcel, usecase}
 
-import scala.jdk.CollectionConverters.*
-import Parcel.*
-import dscatt.Croping.*
+import scala.jdk.CollectionConverters._
+import Parcel._
+import dscatt.Croping._
 import dscatt.Kitchen.KitchenID
 import org.apache.commons.math3.random.MersenneTwister
 
@@ -57,38 +57,38 @@ object World {
 
   def evolveRotations(world: World, kitchens: Seq[Kitchen]): World = {
 
-    val inCulture = kitchens.flatMap { k =>
-      val parcelsForKitchenK = World.parcelsForKitchen(world, k).filterNot(p => p.crop == HutField)
+    case class CultureAndManPower(evolvedCropsParcels: Seq[Parcel], manPowerBalance: Double)
+
+    val newParcelsWithCrops = kitchens.flatMap { k =>
+
+      // Compute theoritical crops for coming year before we know if it is in culture or note
+      val parcelCandidatesForKitchenK = World.parcelsForKitchen(world, k).map { p =>
+        val newCropZone = Croping.evolveCropZone(p.cropZone, k.rotationCycle)
+        p.copy(cropZone = newCropZone,
+          crop = Croping.evolveCrop(p.crop, k.rotationCycle, newCropZone)
+        )
+      }
+
+      val (notCultivableCandidatesForKitchenK, cultivableCandidatesForKitchenK) = parcelCandidatesForKitchenK.partition { p =>
+        // Exclude hutfields and next year fallow parcels
+        p.crop == HutField || p.crop == Fallow
+      }
 
       k.cropingStrategy match {
         case Parsimonious =>
-          val sortedByDistanceParcels = parcelsForKitchenK.sortBy(_.distanceToVillage)
-          val needs = Kitchen.foodNeeds(k)
-
-          @tailrec
-          def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: Seq[Parcel], inCulture: Seq[Parcel]): Seq[Parcel] = {
-            if (sortedParcels.isEmpty || production > needs) {
-              inCulture
-            }
-            else {
-              val parcel = sortedParcels.head
-              cropsToBeCultivated(kitchen, production + Kitchen.parcelProduction(parcel), sortedParcels.tail, inCulture :+ parcel)
-            }
-          }
-
-          cropsToBeCultivated(k, 0.0, sortedByDistanceParcels, Seq())
-        case Intensive => parcelsForKitchenK
+          val parcels = Kitchen.cropNeeds(k, cultivableCandidatesForKitchenK, Kitchen.foodNeeds(k))
+          parcels ++: notCultivableCandidatesForKitchenK
+        case Provisioning(exceedingProportion) =>
+          val parcels = Kitchen.cropNeeds(k, cultivableCandidatesForKitchenK, Kitchen.foodNeeds(k) * (1 + exceedingProportion))
+          parcels ++: notCultivableCandidatesForKitchenK
+        case AsMuchAsWeCan =>
+          // Needs are set on purpose to a big value so that it does not limit cultivation
+          Kitchen.cropNeeds(k, cultivableCandidatesForKitchenK, Kitchen.foodNeeds(k) * 10000) ++: notCultivableCandidatesForKitchenK
       }
     }
 
-    world.copy(parcels = world.parcels.map { p =>
-      Kitchen.kitchen(kitchens, p.kitchenID).map { k =>
-        val newCropZone = Croping.evolveCropZone(p.cropZone, k.rotationCycle)
-        p.copy(cropZone = newCropZone,
-          crop = Croping.evolveCrop(p.crop, k.rotationCycle, newCropZone, inCulture.contains(p))
-        )
-      }.getOrElse(p)
-    })
+    world.copy(parcels = newParcelsWithCrops)
+
   }
 
   def display(world: World): Unit = {

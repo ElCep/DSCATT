@@ -27,6 +27,7 @@ object Simulation {
     println("NB KITCH " + kitchens.length)
     val nakedWorld = World.buildWorldGeometry(kitchens.length, giniParcels, giniTolerance, maximumNumberOfParcels, seed, parcelOutputPath)
 
+
     // Initialize first rotation
     val firstworld = World.evolveRotations(nakedWorld, kitchens)
 
@@ -59,8 +60,6 @@ object Simulation {
 
         val (upToDateKitchens, upToDateWorld) = Kitchen.evolve(world, kitchens, populationGrowth)
         println("REMAINING KITCHENS " + upToDateKitchens.map(_.id).mkString(" | ") + "--- NB KITCHENS " + upToDateKitchens.length)
-        println("KITCHEN IDS IN WORLD " + upToDateWorld.parcels.map{_.kitchenID}.distinct.sorted)
-        println("NB PARCELS PER KID " + upToDateWorld.parcels.map{_.kitchenID}.groupBy(x=>x).map(e => (e._1, e._2.length)))
 
         val newWorld = World.evolveRotations(upToDateWorld, upToDateKitchens)
 

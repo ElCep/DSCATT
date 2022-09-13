@@ -13,12 +13,12 @@ object Kitchen {
   def parcelsOfTheYear(kitchenID: KitchenID): Seq[Parcel] = ???
 
   def buildKitchens(kitchenPartition: KitchenPartition): Seq[Kitchen] = {
-   // val randBasis = new RandBasis(new ThreadLocalRandomGenerator(mT))
-   // val gaussian = Gaussian(sizeAverage, sizeStd)(randBasis)
-   // gaussian.samples.take(numberOfKitchens).toArray.zipWithIndex.map { case (s, i) => Kitchen(i + 1, s.toInt) }
-   kitchenPartition.profiles.flatMap{p=>Seq.fill[KitchenProfile](p._2)(p._1)}.zipWithIndex.map{case (kp,id)=>
-     Kitchen(id + 1, kp.size, kp.rotationCycle, kp.cropingStrategy, kp.loanStrategy)
-   }
+    // val randBasis = new RandBasis(new ThreadLocalRandomGenerator(mT))
+    // val gaussian = Gaussian(sizeAverage, sizeStd)(randBasis)
+    // gaussian.samples.take(numberOfKitchens).toArray.zipWithIndex.map { case (s, i) => Kitchen(i + 1, s.toInt) }
+    kitchenPartition.profiles.flatMap { p => Seq.fill[KitchenProfile](p._2)(p._1) }.zipWithIndex.map { case (kp, id) =>
+      Kitchen(id + 1, kp.size, kp.rotationCycle, kp.cropingStrategy, kp.loanStrategy)
+    }
   }
 
   def kitchen(kitchens: Seq[Kitchen], id: KitchenID) = kitchens.find(_.id == id)
@@ -87,6 +87,7 @@ object Kitchen {
           if (theoriticalNbEmigrants <= emigrantThreshold) theoriticalNbEmigrants
           else emigrantThreshold
         }
+        // println("BALANCE " + (k.size - nbEmigrants))
         k.copy(size = (k.size - nbEmigrants), birthPerYear = k.birthPerYear :+ 0, emigrantsPerYear = k.emigrantsPerYear :+ nbEmigrants)
       }
     }
@@ -99,8 +100,8 @@ object Kitchen {
     val toBeAbsorbedKitcken = kitchens.filter(k => k.size <= Constants.KITCHEN_MINIMUM_SIZE)
     val absorbingKitchens = kitchens.diff(toBeAbsorbedKitcken).map { k => AbsorbingKitchen(k, Seq()) }
 
-    println("tO BE ABSORBED " + toBeAbsorbedKitcken.length)
-    println("ABSORBING " + absorbingKitchens.length)
+    //   println("tO BE ABSORBED " + toBeAbsorbedKitcken.length)
+    //   println("ABSORBING " + absorbingKitchens.length)
 
 
     @tailrec
@@ -116,7 +117,7 @@ object Kitchen {
             absorbedIDs = oneAbsorbing.absorbedIDs :+ toBeAbsorbed.head.id
           )
         )
-        println("KITCHEN " + oneAbsorbing.kitchen.id + " is absorbing kitchen " + toBeAbsorbed.head.id)
+        // println("KITCHEN " + oneAbsorbing.kitchen.id + " is absorbing kitchen " + toBeAbsorbed.head.id)
         absorption(toBeAbsorbed.tail, newAbsorbing)
       }
     }
@@ -133,6 +134,40 @@ object Kitchen {
 
     (reorganizedKitchens.map(_.kitchen), reorganizedWorld)
   }
+
+  // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
+  def cropNeeds(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double) = {
+    val sortedByDistanceParcels = cultivableParcelsForKitchen.sortBy(_.distanceToVillage).toList
+    val manPower = Kitchen.manPower(kitchen)
+
+    println("NEEDS " + needs + " MAN POVER " + manPower + " for " + kitchen.id)
+
+    @tailrec
+    def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel], remainingManPower: Double): Seq[Parcel] = {
+      if (sortedParcels.isEmpty || production > needs || remainingManPower < 0) {
+
+       // println("TOTAL PRODUCTION for " + kitchen.id + " : " + production + " for " + kitchen.size + " people, soient " + inCulture.map{_.area}.sum + " m2" + ", remaining man power: " + remainingManPower)
+        inCulture ++: sortedParcels.map { p => p.copy(crop = NotAssigned) }
+
+      }
+      else {
+        val parcel = sortedParcels.head
+        val pproduction = Kitchen.parcelProduction(parcel)
+        cropsToBeCultivated(kitchen, production + pproduction, sortedParcels.tail, inCulture :+ parcel, remainingManPower - manPowerFor(parcel.area))
+      }
+    }
+
+    cropsToBeCultivated(kitchen, 0.0, sortedByDistanceParcels, List(), manPower)
+  }
+
+  // The maximum area of crops in culture regarding to the available manpower
+  def areaOfPossibleCropsInCulture(kitchen: Kitchen) = {
+    manPower(kitchen).ceil * Constants.CULTIVATED_AREA_PER_WORKER // ceil because kids and teenagers can help occasionally
+  }
+
+  def manPower(kitchen: Kitchen) = (kitchen.size * Constants.WORKERS_RATIO_PER_KITCHEN).ceil
+
+  def manPowerFor(cultureArea: Double) = cultureArea / Constants.CULTIVATED_AREA_PER_WORKER
 }
 
 case class Kitchen(id: Kitchen.KitchenID,

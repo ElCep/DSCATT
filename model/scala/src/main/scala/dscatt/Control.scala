@@ -9,7 +9,8 @@ object ThreeYears extends RotationCycle
 object TwoYears extends RotationCycle
 
 sealed trait CropingStrategy extends Control
-object Intensive extends CropingStrategy // all parcels in culture all the time
+object AsMuchAsWeCan extends CropingStrategy // Up to the available manpower
+case class Provisioning(exceedingProportion: Double) extends CropingStrategy // while crop stock and manpower exist. In culture: foodNeeds x (1 + exceedingProportion)
 object Parsimonious extends CropingStrategy // no more than necessary (needs)
 
 sealed trait LoanStrategy extends Control
@@ -20,6 +21,10 @@ object Selfish extends LoanStrategy
 sealed trait InterKitchenFoodExchange extends Control
 object FoodForUsOnly extends InterKitchenFoodExchange // extra food keeps in the kitchen (for being sold)
 object FoodDonation extends InterKitchenFoodExchange // extra food can be given to a demanding kitchen
+
+sealed trait ManPowerProvision extends Control
+object WorkInOwnKitchenOnly extends ManPowerProvision  // manpower is never loaned to another kitchen
+object HelpOnDemand extends ManPowerProvision // manpower is loaned to another kitchen if required
 
 sealed trait MigrantStrategy extends Control
 object LeaveForEver extends MigrantStrategy // when someone leaves a kitchen, it does once and for all

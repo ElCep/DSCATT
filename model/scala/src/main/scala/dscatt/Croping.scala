@@ -36,7 +36,7 @@ object Croping {
     }
   }
 
-  def evolveCrop(crop: Crop, rotationCycle: RotationCycle, targetCropZone: CropZone, inCulture: Boolean) = {
+  def evolveCrop(crop: Crop, rotationCycle: RotationCycle, targetCropZone: CropZone) = {
     rotationCycle match {
       case TwoYears => crop match {
         case Peanut => Mil
@@ -47,7 +47,7 @@ object Croping {
           case Three => Fallow
           case Village => HutField
           case _ =>
-            if (inCulture) {
+           // if (inCulture) {
               crop match {
                 case Peanut => Fallow
                 case Mil => Peanut
@@ -60,7 +60,7 @@ object Croping {
                     case Village => HutField
                   }
               }
-            } else NotAssigned
+          //  } else NotAssigned
         }
     }
   }
