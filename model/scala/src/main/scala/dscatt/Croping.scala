@@ -7,13 +7,11 @@ object Croping {
   object Peanut extends Crop
   object Fallow extends Crop
   object NotAssigned extends Crop
-  object HutField extends Crop
 
   sealed trait CropZone
   object One extends CropZone
   object Two extends CropZone
   object Three extends CropZone
-  object Village extends CropZone
 
   implicit def intToCropZone(cz: Int): CropZone = cz match
     case 1 => One
@@ -31,7 +29,6 @@ object Croping {
         case One => Two
         case Two => Three
         case Three => One
-        case Village => Village
       }
     }
   }
@@ -45,9 +42,7 @@ object Croping {
       case ThreeYears =>
         targetCropZone match {
           case Three => Fallow
-          case Village => HutField
           case _ =>
-           // if (inCulture) {
               crop match {
                 case Peanut => Fallow
                 case Mil => Peanut
@@ -57,10 +52,8 @@ object Croping {
                     case One => Mil
                     case Two => Peanut
                     case Three => Fallow
-                    case Village => HutField
                   }
               }
-          //  } else NotAssigned
         }
     }
   }

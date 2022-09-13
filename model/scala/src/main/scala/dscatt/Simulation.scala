@@ -36,7 +36,6 @@ object Simulation {
     println("PEANUT " + World.peanutParcels(firstworld).length)
     println("MIL " + World.milParcels(firstworld).length)
     println("NOT ASSIGNED " + firstworld.parcels.filter { p => p.crop == NotAssigned }.length)
-    println("HUT Fields " + firstworld.parcels.filter { p => p.crop == HutField }.length)
 
 
     println("Area factor " + Constants.AREA_FACTOR)
@@ -69,7 +68,6 @@ object Simulation {
         println("MIL " + World.milParcels(newWorld).length)
         println("SUM " + (World.fallowParcels(newWorld).length + World.milParcels(newWorld).length + World.peanutParcels(newWorld).length))
         println("NOT ASSIGNED " + newWorld.parcels.filter { p => p.crop == NotAssigned }.length)
-        println("HUT Fields " + newWorld.parcels.filter { p => p.crop == HutField }.length)
 
         println("\nZONE 1 : " + World.zoneOneParcels(newWorld).length)
         println("ZONE 2 : " + World.zoneTwoParcels(newWorld).length)

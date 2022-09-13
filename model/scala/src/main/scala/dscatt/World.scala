@@ -31,21 +31,11 @@ object World {
     val parcels = syntheticParcels.toArray.map { sp =>
       val p = sp.asInstanceOf[SyntheticParcel]
 
-      val cropZone: CropZone = {
-        if (p.distanceToCenter < Constants.VILLAGE_ZONE_DISTANCE) Village
-        else p.regionID
-      }
-
-      val crop = cropZone match {
-        case Village => HutField
-        case _ => NotAssigned
-      }
-
       Parcel(
         id = p.id,
         kitchenID = p.ownerID,
-        crop = crop,
-        cropZone = cropZone,
+        crop = NotAssigned,
+        cropZone = p.regionID,
         area = p.area * Constants.AREA_FACTOR,
         distanceToVillage = p.distanceToCenter,
         neighbours = p.lIdNeighborhood.asScala.toSeq
@@ -56,8 +46,6 @@ object World {
   }
 
   def evolveRotations(world: World, kitchens: Seq[Kitchen]): World = {
-
-    case class CultureAndManPower(evolvedCropsParcels: Seq[Parcel], manPowerBalance: Double)
 
     val newParcelsWithCrops = kitchens.flatMap { k =>
 
@@ -70,8 +58,8 @@ object World {
       }
 
       val (notCultivableCandidatesForKitchenK, cultivableCandidatesForKitchenK) = parcelCandidatesForKitchenK.partition { p =>
-        // Exclude hutfields and next year fallow parcels
-        p.crop == HutField || p.crop == Fallow
+        // Exclude fallow parcels
+        p.crop == Fallow
       }
 
       k.cropingStrategy match {
@@ -111,8 +99,6 @@ object World {
   def zoneTwoParcels(world: World) = zoneParcels(world, Two)
 
   def zoneThreeParcels(world: World) = zoneParcels(world, Three)
-
-  def zoneVillageParcels(world: World) = zoneParcels(world, Village)
 
   def parcelsForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter(_.kitchenID == kitchen.id)
 

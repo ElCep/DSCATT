@@ -7,7 +7,7 @@ object Constants {
   val MIL_YIELD_PER_M2 = 600.0 / 10000
   val PEANUT_YIELD_PER_M2 = 400.0 / 10000
   val PEANUT_FOOD_EQUIVALENCE = 0.5 // quantity of food / quantity of peanuts
-  val CULTIVATED_AREA_PER_WORKER = 50000 // https://www.bameinfopol.info/IMG/pdf/Expl._Fam_1.pdf
+  val CULTIVATED_AREA_PER_WORKER = 15000 // https://www.bameinfopol.info/IMG/pdf/Expl._Fam_1.pdf
   val WORKERS_RATIO_PER_KITCHEN = 0.58 // https://www.bameinfopol.info/IMG/pdf/Expl._Fam_1.pdf
 
   //KITCHEN
@@ -19,6 +19,5 @@ object Constants {
     val surfaceFor200 = foodFor200.toDouble / (0.5 * (MIL_YIELD_PER_M2 + PEANUT_YIELD_PER_M2 * PEANUT_FOOD_EQUIVALENCE))
     surfaceFor200 / (238050 * 2.0 / 3) // 238050 = generated shp cultivated surface
   }
-  val VILLAGE_ZONE_DISTANCE = 50.0 // in meters
 
 }
