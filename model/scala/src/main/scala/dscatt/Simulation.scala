@@ -24,14 +24,23 @@ object Simulation {
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
+//    val newK = Population.evolve(kitchens, populationGrowth)
+//    newK.foreach {k=>
+//      println(k.id + " :: " + k.size)
+//    }
     println("NB KITCH " + kitchens.length)
     val nakedWorld = World.buildWorldGeometry(kitchens.length, giniParcels, giniTolerance, maximumNumberOfParcels, seed, parcelOutputPath)
 
-
+    val oo = nakedWorld.parcels.groupBy(_.kitchenID).map { x => x._2.map {
+      _.area
+    }.sum.ceil
+    }
+    println(oo)
+    println("MEAN " + oo.sum / nakedWorld.parcels.length)
     // Initialize first rotation
     val firstworld = Rotation.evolve(nakedWorld, kitchens)
 
-    println("--------------- FIN INIT ---------------- " + firstworld.parcels.length)
+       println("--------------- FIN INIT ---------------- " + firstworld.parcels.length)
     println("FALLOW " + World.fallowParcels(firstworld).length)
     println("PEANUT " + World.peanutParcels(firstworld).length)
     println("MIL " + World.milParcels(firstworld).length)
@@ -55,12 +64,20 @@ object Simulation {
     def evolve0(world: World, kitchens: Seq[Kitchen], year: Int, indicators: Indicators): Indicators = {
       if (year == 0) indicators
       else {
-        println("\nYEAR " + (simulationLenght - year))
+        println("\n((((((((((((((((((((((YEAR " + (simulationLenght - year) + ")))))))))))))))))))))))))))))")
 
         val (upToDateKitchens, upToDateWorld) = Kitchen.evolve(world, kitchens, populationGrowth)
-        println("REMAINING KITCHENS " + upToDateKitchens.map(_.id).mkString(" | ") + "--- NB KITCHENS " + upToDateKitchens.length)
+        println("REMAINING KITCHENS " + upToDateKitchens.map(_.id).sorted.mkString(" | ") + "--- NB KITCHENS " + upToDateKitchens.length)
+        println("KITCHEN SIZES " + upToDateKitchens.map{k=> k.id-> k.size})
 
         val newWorld = Rotation.evolve(upToDateWorld, upToDateKitchens)
+
+
+//        println("************ ")
+//        val ooo = World.notAssignedParcels(newWorld)
+//        kitchens.foreach{k=>
+//          println((k.id, k.size, Kitchen.foodBalance(newWorld,k), Kitchen.cultivatedSurface(newWorld, k), World.parcelsForKitchen(newWorld,k).length, ooo.filter{_.kitchenID == k.id}.map{_.area}.sum))
+//        }
 
         println(" ---- EVOLVED ---- " + newWorld.parcels.length)
         println("FALLOW " + World.fallowParcels(newWorld).length)

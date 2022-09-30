@@ -20,14 +20,14 @@ object Rotation {
 
       k.cropingStrategy match {
         case Parsimonious =>
-          val parcels = Kitchen.cropNeeds(k, cultivableCandidatesForKitchenK, Kitchen.foodNeeds(k))
+          val parcels = Kitchen.cropNeeds(k, cultivableCandidatesForKitchenK, Some(Kitchen.foodNeeds(k)))
           parcels ++: notCultivableCandidatesForKitchenK
         case Provisioning(exceedingProportion) =>
-          val parcels = Kitchen.cropNeeds(k, cultivableCandidatesForKitchenK, Kitchen.foodNeeds(k) * (1 + exceedingProportion))
+          val parcels = Kitchen.cropNeeds(k, cultivableCandidatesForKitchenK, Some(Kitchen.foodNeeds(k) * (1 + exceedingProportion)))
           parcels ++: notCultivableCandidatesForKitchenK
         case AsMuchAsWeCan =>
           // Needs are set on purpose to a big value so that it does not limit cultivation
-          Kitchen.cropNeeds(k, cultivableCandidatesForKitchenK, Kitchen.foodNeeds(k) * 10000) ++: notCultivableCandidatesForKitchenK
+          Kitchen.cropNeeds(k, cultivableCandidatesForKitchenK, None) ++: notCultivableCandidatesForKitchenK
       }
     }
 

@@ -28,6 +28,10 @@ object World {
     val syntheticParcels = usecase.GenerateSyntheticParcel.generate(
       numberOfKitchen, giniIndex, maximumNumberOfParcels, giniTolerance.toFloat, seed, new java.io.File(geometryImagePath.getOrElse(null)))
 
+    println("all parcels : " + syntheticParcels.toArray.map{p=>
+      val pp = p.asInstanceOf[SyntheticParcel]
+      pp.area}.sum)
+
     val parcels = syntheticParcels.toArray.map { sp =>
       val p = sp.asInstanceOf[SyntheticParcel]
 
@@ -42,7 +46,7 @@ object World {
       )
     }
 
-    World(parcels)
+    World(parcels, numberOfKitchen)
   }
 
   def display(world: World): Unit = {
@@ -79,4 +83,4 @@ object World {
   def fallowParcels(world: World) = world.parcels.filter(_.crop == Fallow)
 }
 
-case class World(parcels: Seq[Parcel])
+case class World(parcels: Seq[Parcel], highestKitckenID: KitchenID)
