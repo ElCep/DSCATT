@@ -42,7 +42,8 @@ object World {
         cropZone = p.regionID,
         area = p.area * Constants.AREA_FACTOR,
         distanceToVillage = p.distanceToCenter,
-        neighbours = p.lIdNeighborhood.asScala.toSeq
+        neighbours = p.lIdNeighborhood.asScala.toSeq,
+        fertility = Constants.INITIAL_FERTILITY_PER_PARCEL
       )
     }
 

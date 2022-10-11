@@ -19,4 +19,5 @@ case class Parcel(id: ParcelID,
                   crop: Crop,
                   area: Double,
                   distanceToVillage: Double,
-                  neighbours: Seq[ParcelID])
+                  neighbours: Seq[ParcelID],
+                  fertility: Double)

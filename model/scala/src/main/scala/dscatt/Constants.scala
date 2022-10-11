@@ -26,4 +26,12 @@ object Constants {
 //    surfaceFor200 / (500000 * 2.0 / 3) // 238050 = generated shp cultivated surface
 //  }
 
+  //FERTILITY
+  val INITIAL_FERTILITY_PER_PARCEL = 1000
+  // Between 12% and 20%, sources: https://www.researchgate.net/publication/248850078_Influence_d%27apports_de_matiere_organique_sur_la_culture_de_mil_et_d%27arachide_sur_un_sol_sableux_du_Nord-Senegal_I_-_Bilans_de_consommation_production_et_developpement_racinaire
+  // Effects are very close for mil and peanut
+  val MANURE_EFFECT_ON_YIELD = 0.15
+  val FALLOW_EFFECT_ON_YIELD = 0.1
+  val FERTILIZER_EFFECT_ON_MIL_YIELD = 0.2
+  val FERTILIZER_EFFECT_ON_PEANUT_YIELD = 0.8
 }
