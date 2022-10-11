@@ -19,12 +19,11 @@ object Constants {
   val KITCHEN_SIZE_THRESHOLD_FOR_ABSORPTION = KITCHEN_MAXIMUM_SIZE - SPLIT_KITCHEN_OFFSPRING_SIZE
 
   //SPACE // to adjust the generated area to a 200 people village
-  val AREA_FACTOR = 10
-//  {
-//    val foodFor200 = 200 * DAILY_FOOD_NEED_PER_PERSON * 365
-//    val surfaceFor200 = foodFor200.toDouble / (0.5 * (MIL_YIELD_PER_M2 + PEANUT_YIELD_PER_M2 * PEANUT_FOOD_EQUIVALENCE))
-//    surfaceFor200 / (500000 * 2.0 / 3) // 238050 = generated shp cultivated surface
-//  }
+  val AREA_FACTOR = {
+    val foodFor200 = 200 * DAILY_FOOD_NEED_PER_PERSON * 365
+    val surfaceFor200 = foodFor200.toDouble / (0.5 * (MIL_YIELD_PER_M2 + PEANUT_YIELD_PER_M2 * PEANUT_FOOD_EQUIVALENCE))
+    surfaceFor200 / (500000 * 2.0 / 3) // 238050 = generated shp cultivated surface
+  }
 
   //FERTILITY
   val INITIAL_FERTILITY_PER_PARCEL = 1000
