@@ -14,7 +14,8 @@ object Parcel {
 }
 
 case class Parcel(id: ParcelID,
-                  kitchenID: KitchenID,
+                  ownerID: KitchenID,
+                  farmerID: KitchenID,
                   cropZone: CropZone,
                   crop: Crop,
                   area: Double,

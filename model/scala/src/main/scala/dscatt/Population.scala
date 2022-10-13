@@ -1,6 +1,6 @@
 package dscatt
 
-import dscatt.Kitchen.{KitchenID, foodBalance}
+import dscatt.Kitchen.{FoodBalance, KitchenID, foodBalance}
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
@@ -46,18 +46,18 @@ object Population {
   }
 
   // Compute for each kitchen the number of births and the number of emigrants based on the food balance
-  def evolveEmigrants(world: World, kitchens: Seq[Kitchen]): Seq[Kitchen] = {
+  def evolveEmigrants(world: World, kitchens: Seq[Kitchen], foodAssessment: Seq[FoodBalance]): Seq[Kitchen] = {
 
+    val foodAssessementMap = foodAssessment.map(fa=> fa.kitchenID-> fa.balance).toMap
+    
     kitchens.map { k =>
-      val balanceK = foodBalance(world, k)
+      val balanceK = foodAssessementMap(k.id)
       if (balanceK > 0) {
         k.copy(emigrantsPerYear = k.emigrantsPerYear :+ 0)
       }
       else {
-      //  println("######## float value for emigrants:  " + (Math.abs(balanceK) / (Constants.DAILY_FOOD_NEED_PER_PERSON * 365)))
         val theoriticalNbEmigrants = (Math.abs(balanceK) / (Constants.DAILY_FOOD_NEED_PER_PERSON * 365)).ceil.toInt
-      //  println("Int value for emigrants:  " + theoriticalNbEmigrants)
-
+        
         // The emigration process can't remove entirely the kitchen. It should be split into migration
         // (up to KITCHEN_MINIMUM_SIZE remaining in kitchen) and kitchen absorbtion
         val nbEmigrants = {

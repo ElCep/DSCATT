@@ -32,12 +32,14 @@ object World {
       val pp = p.asInstanceOf[SyntheticParcel]
       pp.area}.sum)
 
+    println("# of parcel INIT " + syntheticParcels.size)
     val parcels = syntheticParcels.toArray.map { sp =>
       val p = sp.asInstanceOf[SyntheticParcel]
 
       Parcel(
         id = p.id,
-        kitchenID = p.ownerID,
+        ownerID = p.ownerID,
+        farmerID = p.ownerID,
         crop = NotAssigned,
         cropZone = p.regionID,
         area = p.area * Constants.AREA_FACTOR,
@@ -53,7 +55,7 @@ object World {
   def display(world: World): Unit = {
     world.parcels.foreach { p =>
       println("ID              :" + p.id)
-      println("KITCHEN         :" + p.kitchenID)
+      println("KITCHEN         :" + p.ownerID)
       println("CROP ZONE       :" + p.cropZone)
       println("NEIGHBORHOOD    :" + p.neighbours)
       println("DIST TO VILLAGE :" + p.distanceToVillage)
@@ -71,9 +73,15 @@ object World {
 
   def zoneThreeParcels(world: World) = zoneParcels(world, Three)
 
-  def parcelsForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter(_.kitchenID == kitchen.id)
+  def farmedParcelsForKitchen(parcels: Seq[Parcel], kitchen: Kitchen): Seq[Parcel] = parcels.filter(_.farmerID == kitchen.id)
 
-  def parcelsInCultureForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter { p => p.kitchenID == kitchen.id && Parcel.isCultivated(p) }
+  def farmedParcelsForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchen(world.parcels, kitchen)
+
+  def ownedParcelsForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter(_.ownerID == kitchen.id)
+
+  def parcelsInCultureForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = parcelsInCultureForKitchen(world.parcels, kitchen)
+
+  def parcelsInCultureForKitchen(parcels: Seq[Parcel], kitchen: Kitchen): Seq[Parcel] = parcels.filter { p => p.farmerID == kitchen.id && Parcel.isCultivated(p) }
 
   def notAssignedParcels(world: World) = world.parcels.filter(_.crop == NotAssigned)
 

@@ -2,6 +2,7 @@ package dscatt
 
 import breeze.stats.distributions.{Gaussian, RandBasis, ThreadLocalRandomGenerator}
 import dscatt.Croping.*
+import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
@@ -9,6 +10,8 @@ import scala.annotation.tailrec
 object Kitchen {
 
   type KitchenID = Int
+
+  case class FoodBalance(kitchenID: KitchenID, balance: Double)
 
   def parcelsOfTheYear(kitchenID: KitchenID): Seq[Parcel] = ???
 
@@ -23,7 +26,7 @@ object Kitchen {
   def foodNeeds(kitchen: Kitchen) = kitchen.size * Constants.DAILY_FOOD_NEED_PER_PERSON * 365
 
   def cultivatedSurface(world: World, kitchen: Kitchen): Double = {
-    val cultivatedParcels = World.parcelsForKitchen(world, kitchen).filter(p => Parcel.isCultivated(p))
+    val cultivatedParcels = World.farmedParcelsForKitchen(world, kitchen).filter(p => Parcel.isCultivated(p))
     cultivatedParcels.map(_.area).sum
   }
 
@@ -47,26 +50,28 @@ object Kitchen {
     }.sum
   }
 
-  def foodBalance(world: World, kitchen: Kitchen): Double = {
-    parcelsProduction(World.parcelsInCultureForKitchen(world, kitchen)) - foodNeeds(kitchen)
+  def foodBalance(world: World, kitchen: Kitchen): FoodBalance = {
+    foodBalance(world.parcels, kitchen)
+  }
+
+  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen): FoodBalance = {
+    FoodBalance(kitchen.id, parcelsProduction(World.parcelsInCultureForKitchen(parcels, kitchen)) - foodNeeds(kitchen))
   }
 
 
-  def evolve(world: World, kitchens: Seq[Kitchen], populationGrowth: Double)(using mT: MersenneTwister) = {
+  def evolve(simulationState: SimulationState, populationGrowth: Double, foodAssessment: Seq[FoodBalance])(using mT: MersenneTwister) = {
 
-    println("## TOTAL POP " + kitchens.map {
+    println("## TOTAL POP " + simulationState.kitchens.map {
       _.size
     }.sum)
 
-    val populationUpdated = Population.evolve(kitchens, populationGrowth)
-    val emigrantsUpdated = Population.evolveEmigrants(world, populationUpdated)
-    val (afterAbsorbtionKitchens, afterAbsorbtionWorld) = kitchenAbsorption(emigrantsUpdated, world)
+    val populationUpdated = Population.evolve(simulationState.kitchens, populationGrowth)
+    val emigrantsUpdated = Population.evolveEmigrants(simulationState.world, populationUpdated, foodAssessment)
+    val (afterAbsorbtionKitchens, afterAbsorbtionWorld) = kitchenAbsorption(emigrantsUpdated, simulationState.world)
     //println("AFETER ABSORPTION " + afterAbsorbtionKitchens.size)
     val (afterSplitKitchens, afterSplitWorld) = kitchenSplit(afterAbsorbtionKitchens, afterAbsorbtionWorld)
-    println("AFTER SILPT KITCHEN " + afterSplitKitchens.size)
-    (afterSplitKitchens, afterSplitWorld)
+    simulationState.copy(kitchens = afterSplitKitchens, world = afterSplitWorld)
 
-    //    (afterAbsorbtionKitchens, afterAbsorbtionWorld)
   }
 
   def kitchenAbsorption(kitchens: Seq[Kitchen], world: World)(using mT: MersenneTwister): (Seq[Kitchen], World) = {
@@ -78,8 +83,8 @@ object Kitchen {
     // Do not consider too large kitchens to avoid absorbtion/split loops
     val (absorbingKitchens, tooBigKitchens) = absorbingCandidateKitchens.partition(_.kitchen.size <= Constants.KITCHEN_SIZE_THRESHOLD_FOR_ABSORPTION)
 
-    println("absorbing " + absorbingKitchens.map { k => k.kitchen.id -> k.kitchen.size })
-    println(" TO BE ABSORBED " + toBeAbsorbedKitcken.map { k => k.id -> k.size })
+//    println("absorbing " + absorbingKitchens.map { k => k.kitchen.id -> k.kitchen.size })
+//    println(" TO BE ABSORBED " + toBeAbsorbedKitcken.map { k => k.id -> k.size })
 
 
     @tailrec
@@ -106,7 +111,7 @@ object Kitchen {
       val absorbedMap = reorganizedKitchens.flatMap(k => k.absorbedIDs.map(_ -> k.kitchen.id)).toMap
 
       world.copy(parcels = world.parcels.map { p =>
-        p.copy(kitchenID = absorbedMap.getOrElse(p.kitchenID, p.kitchenID))
+        p.copy(ownerID = absorbedMap.getOrElse(p.ownerID, p.ownerID))
       })
     }
 
@@ -127,7 +132,7 @@ object Kitchen {
       if (toBeSplitted.isEmpty) (highestID, offsprings)
       else {
         val kitchenK = toBeSplitted.head
-        val parcelsK = World.parcelsForKitchen(world, kitchenK)
+        val parcelsK = World.ownedParcelsForKitchen(world, kitchenK)
         val targetArea = parcelsK.map(_.area).sum * Constants.SPLIT_KITCHEN_OFFSPRING_SIZE / kitchenK.size
 
         @tailrec
@@ -157,7 +162,7 @@ object Kitchen {
     val (newKitchenIDParcels, untouchedParcel) = world.parcels.partition(p => parcelsToBeChanged.contains(p))
 
 
-    val newWorld = world.copy(parcels = untouchedParcel ++ newKitchenIDParcels.map { p => p.copy(kitchenID = parcelsToBeChangedWithID(p)) }, highestKitckenID = nextHighestID)
+    val newWorld = world.copy(parcels = untouchedParcel ++ newKitchenIDParcels.map { p => p.copy(ownerID = parcelsToBeChangedWithID(p)) }, highestKitckenID = nextHighestID)
     val originKitchens = offsprings.map{_.originKichen.id}
     val newKitchens = kitchens.filterNot(k=> originKitchens.contains(k.id)) ++ offsprings.map{_.originKichen} ++ offsprings.map(_.kitchen)
 
@@ -179,6 +184,7 @@ object Kitchen {
         case _ => false
       }
 
+     // println("CROPNEEDS " + sortedParcels.length + " // " + needs + " / " + production + " // " + remainingManPower)
       if (sortedParcels.isEmpty || needsCondition || remainingManPower < 0 ) {
 
         // println("TOTAL PRODUCTION for " + kitchen.id + " : " + production + " for " + kitchen.size + " people, soient " + inCulture.map{_.area}.sum + " m2" + ", remaining man power: " + remainingManPower)

@@ -16,7 +16,7 @@ object Parsimonious extends CropingStrategy // no more than necessary (needs)
 sealed trait LoanStrategy extends Control
 object AllExtraParcelsLoaner extends LoanStrategy // loans its extra parcels
 object ExtraParcelsExceptFallowLoaner extends LoanStrategy
-object Selfish extends LoanStrategy
+object Selfish extends LoanStrategy  // must be used with AsMuchAsweCan
 
 sealed trait InterKitchenFoodExchange extends Control
 object FoodForUsOnly extends InterKitchenFoodExchange // extra food keeps in the kitchen (for being sold)

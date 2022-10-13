@@ -9,7 +9,7 @@ object Constants {
   val PEANUT_FOOD_EQUIVALENCE = 0.5 // quantity of food / quantity of peanuts
   // Considering that  0.66 workers per kitchen is enough and that they need 273*15=4095kg / year,
   // and a yield of 500kg / ha in mean, it comes 0.8ha / worker
-  val CULTIVATED_AREA_PER_WORKER = 8000
+  val CULTIVATED_AREA_PER_WORKER = 15000
   val WORKERS_RATIO_PER_KITCHEN = 0.66 // Source: Robert and co
 
   //KITCHEN
