@@ -1,14 +1,14 @@
 package dscatt
 
 import dscatt.Croping.*
-import dscatt.Loan.LoanHistory
+import dscatt.History.History
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
 
 object Simulation {
 
-  case class SimulationState(world: World, kitchens: Seq[Kitchen], indicators: Indicators, year: Int)
+  case class SimulationState(world: World, kitchens: Seq[Kitchen], history: History, year: Int)
 
   def apply(
              seed: Long,
@@ -31,17 +31,13 @@ object Simulation {
     println("Area factor " + Constants.AREA_FACTOR)
 
     val nakedWorld = World.buildWorldGeometry(kitchens.length, giniParcels, giniTolerance, maximumNumberOfParcels, seed, parcelOutputPath)
-    val initialState = SimulationState(nakedWorld, kitchens, Indicators(), 0)
+    val initialState = SimulationState(nakedWorld, kitchens, History.initialize(simulationLength, kitchens), 1)
 
-    evolve(initialState, populationGrowth, simulationLength)
+    val finalState = evolve(initialState, populationGrowth, simulationLength + 1)
+
+    History.print(finalState.history, finalState, true)
   }
 
-  case class Indicators(
-                         fertility: Double = 0.0,
-                         populationSize: Int = 0,
-                         nbEmigrantsPerYear: Seq[Int] = Seq(),
-                         loanHistory: LoanHistory = LoanHistory(Seq())
-                       )
 
   def evolve(simulationState: SimulationState, populationGrowth: Double, simulationLenght: Int)(using MersenneTwister): SimulationState = {
 
@@ -49,8 +45,6 @@ object Simulation {
     def evolve0(simulationState: SimulationState): SimulationState = {
       if (simulationLenght - simulationState.year == 0) simulationState
       else {
-        println("\n((((((((((((((((((((((YEAR " + (simulationState.year) + ")))))))))))))))))))))))))))))")
-
         val afterRotationsSimulationState = Rotation.evolve(simulationState)
         val foodAssessment = afterRotationsSimulationState.kitchens.map { k => Kitchen.foodBalance(afterRotationsSimulationState.world, k) }
 
@@ -59,28 +53,22 @@ object Simulation {
 
         val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, foodAssessment)
 
-
-        println("REMAINING KITCHENS " + resizedSimulationState.kitchens.map(_.id).sorted.mkString(" | ") + "--- NB KITCHENS " + resizedSimulationState.kitchens.length)
-        println("KITCHEN SIZES " + resizedSimulationState.kitchens.map { k => k.id -> k.size })
-
-        println(" ---- EVOLVED ---- " + resizedSimulationState.world.parcels.length)
-        println("FALLOW " + World.fallowParcels(resizedSimulationState.world).length)
-        println("PEANUT " + World.peanutParcels(resizedSimulationState.world).length)
-        println("MIL " + World.milParcels(resizedSimulationState.world).length)
-        println("SUM " + (World.fallowParcels(resizedSimulationState.world).length + World.milParcels(resizedSimulationState.world).length + World.peanutParcels(resizedSimulationState.world).length))
-        println("NOT ASSIGNED " + resizedSimulationState.world.parcels.filter { p => p.crop == NotAssigned }.length)
-
-        println("\nZONE 1 : " + World.zoneOneParcels(resizedSimulationState.world).length)
-        println("ZONE 2 : " + World.zoneTwoParcels(resizedSimulationState.world).length)
-        println("ZONE 3: " + World.zoneThreeParcels(resizedSimulationState.world).length)
-        //---------------------------------------------------------------------------------------
+//        println(" ---- EVOLVED ---- " + resizedSimulationState.world.parcels.length)
+//        println("FALLOW " + World.fallowParcels(resizedSimulationState.world).length)
+//        println("PEANUT " + World.peanutParcels(resizedSimulationState.world).length)
+//        println("MIL " + World.milParcels(resizedSimulationState.world).length)
+//        println("SUM " + (World.fallowParcels(resizedSimulationState.world).length + World.milParcels(resizedSimulationState.world).length + World.peanutParcels(resizedSimulationState.world).length))
+//        println("NOT ASSIGNED " + resizedSimulationState.world.parcels.filter { p => p.crop == NotAssigned }.length)
+//
+//        println("\nZONE 1 : " + World.zoneOneParcels(resizedSimulationState.world).length)
+//        println("ZONE 2 : " + World.zoneTwoParcels(resizedSimulationState.world).length)
+//        println("ZONE 3: " + World.zoneThreeParcels(resizedSimulationState.world).length)
 
         evolve0(resizedSimulationState.copy(world = Loan.reset(resizedSimulationState.world), year = resizedSimulationState.year + 1))
       }
     }
 
     val finalState = evolve0(simulationState)
-    //finalState.indicators.loanHistory.records.map(r=> (r.year, r.from, r.to, r.parcel.id)).sortBy(_._1).foreach(println)
     finalState
   }
 }
