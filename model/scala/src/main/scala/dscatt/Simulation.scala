@@ -35,7 +35,7 @@ object Simulation {
 
     val finalState = evolve(initialState, populationGrowth, simulationLength + 1)
 
-    History.print(finalState.history, finalState, true)
+    History.print(finalState, true)
   }
 
 
@@ -53,22 +53,24 @@ object Simulation {
 
         val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, foodAssessment)
 
-//        println(" ---- EVOLVED ---- " + resizedSimulationState.world.parcels.length)
-//        println("FALLOW " + World.fallowParcels(resizedSimulationState.world).length)
-//        println("PEANUT " + World.peanutParcels(resizedSimulationState.world).length)
-//        println("MIL " + World.milParcels(resizedSimulationState.world).length)
-//        println("SUM " + (World.fallowParcels(resizedSimulationState.world).length + World.milParcels(resizedSimulationState.world).length + World.peanutParcels(resizedSimulationState.world).length))
-//        println("NOT ASSIGNED " + resizedSimulationState.world.parcels.filter { p => p.crop == NotAssigned }.length)
-//
-//        println("\nZONE 1 : " + World.zoneOneParcels(resizedSimulationState.world).length)
-//        println("ZONE 2 : " + World.zoneTwoParcels(resizedSimulationState.world).length)
-//        println("ZONE 3: " + World.zoneThreeParcels(resizedSimulationState.world).length)
+        // Problème: si des kitchens split, qu'on-t-elle a bouffer cette année ? Est-ce qu'on les met dans le pool pour l'année d'après ??
 
+        //        println(" ---- EVOLVED ---- " + resizedSimulationState.world.parcels.length)
+        //        println("FALLOW " + World.fallowParcels(resizedSimulationState.world).length)
+        //        println("PEANUT " + World.peanutParcels(resizedSimulationState.world).length)
+        //        println("MIL " + World.milParcels(resizedSimulationState.world).length)
+        //        println("SUM " + (World.fallowParcels(resizedSimulationState.world).length + World.milParcels(resizedSimulationState.world).length + World.peanutParcels(resizedSimulationState.world).length))
+        //        println("NOT ASSIGNED " + resizedSimulationState.world.parcels.filter { p => p.crop == NotAssigned }.length)
+        //
+        //        println("\nZONE 1 : " + World.zoneOneParcels(resizedSimulationState.world).length)
+        //        println("ZONE 2 : " + World.zoneTwoParcels(resizedSimulationState.world).length)
+        //        println("ZONE 3: " + World.zoneThreeParcels(resizedSimulationState.world).length)
         evolve0(resizedSimulationState.copy(world = Loan.reset(resizedSimulationState.world), year = resizedSimulationState.year + 1))
       }
     }
 
     val finalState = evolve0(simulationState)
+
     finalState
   }
 }

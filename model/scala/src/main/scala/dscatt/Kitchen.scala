@@ -68,13 +68,17 @@ object Kitchen {
       val emigrantsK = nbEmigrants.getOrElse(k.id,0)
       val absorbtionsK = absorbingKitchens.getOrElse(k.id, Seq())
       val splittedIntoK = splittedInto.get(k.id)
-      k.id -> History.Population(k.size, birthK, emigrantsK, absorbtionsK, splittedIntoK)
+      k.id -> History.PopulationStat(k.size, birthK, emigrantsK, absorbtionsK, splittedIntoK)
     }
 
     simulationState.copy(
       kitchens = afterSplitKitchens,
       world = afterSplitWorld,
-      history = simulationState.history.updatePopulations(simulationState.year, populations))
+      history = 
+        simulationState.history
+          .updatePopulations(simulationState.year, populations)
+          .updateParcelStatsAfterPopulationEvolution(simulationState.year, afterSplitKitchens.map(_.id))
+    )
 
   }
 

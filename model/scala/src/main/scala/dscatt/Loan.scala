@@ -3,6 +3,7 @@ package dscatt
 import dscatt.Croping.NotAssigned
 import dscatt.Kitchen.{FoodBalance, KitchenID}
 import dscatt.Parcel.ParcelID
+import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
@@ -15,7 +16,9 @@ object Loan {
 
     @tailrec
     def assign0(demandingKitchens: List[FoodBalance], availableParcels: Seq[Parcel], yearLoans: Seq[Loan]): (Seq[Loan], Seq[Parcel]) = {
-      if (demandingKitchens.isEmpty || availableParcels.isEmpty) (yearLoans, availableParcels)
+      if (demandingKitchens.isEmpty || availableParcels.isEmpty) {
+        (yearLoans, availableParcels)
+      }
 
       else {
         val mostNeedy = demandingKitchens.head

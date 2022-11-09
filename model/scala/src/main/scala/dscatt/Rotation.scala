@@ -57,14 +57,14 @@ object Rotation {
           case Some(l: dscatt.Loan.Loan) => ep.copy(farmerID = l.to)
           case None => ep.copy(crop = NotAssigned)
         }
-      } ++ (notAssignedExtraParcels ++ notUsedInLoanProcess).map{p=> p.copy(crop = NotAssigned)}
+      } ++ (notAssignedExtraParcels ++ notUsedInLoanProcess).map { p => p.copy(crop = NotAssigned) }
     }
 
     val newParcels = unchangedParcels ++ changedParcels
 
     simulationState.copy(
       world = simulationState.world.copy(parcels = newParcels),
-      history = simulationState.history.updateLoans(simulationState.year, yearLoans)
+      history = simulationState.history.updateLoans(simulationState.year, yearLoans, newParcels)
     )
   }
 
@@ -80,7 +80,7 @@ object Rotation {
         p.crop == Croping.Fallow
       }
     }
-    
+
     val parcelsNeeded = kitchen.cropingStrategy match {
       case Parsimonious => Kitchen.cropNeeds(kitchen, cultivableCandidatesForKitchenK, Some(Kitchen.foodNeeds(kitchen)))
       case Provisioning(exceedingProportion) => Kitchen.cropNeeds(kitchen, cultivableCandidatesForKitchenK, Some(Kitchen.foodNeeds(kitchen) * (1 + exceedingProportion)))
