@@ -9,18 +9,14 @@ import scala.annotation.tailrec
 
 
 object Loan {
-  case class Loan(year: Int, from: KitchenID, to: KitchenID, parcel: Parcel)
+  case class Loan(from: KitchenID, to: KitchenID, parcel: Parcel)
 
-  case class LoanHistory(records: Seq[Loan]) {
-    def append(loanHistory: LoanHistory) = copy(records = records ++ loanHistory.records)
-  }
-
-  def assign(year: Int, parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance], loanHistory: LoanHistory): (LoanHistory, Seq[Parcel]) = {
+  def assign(year: Int, parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance]): (Seq[Loan], Seq[Parcel]) = {
 
     @tailrec
-    def assign0(demandingKitchens: List[FoodBalance], availableParcels: Seq[Parcel], loanHistory: LoanHistory): (LoanHistory, Seq[Parcel]) = {
-      if (demandingKitchens.isEmpty || availableParcels.isEmpty) (loanHistory, availableParcels)
-      
+    def assign0(demandingKitchens: List[FoodBalance], availableParcels: Seq[Parcel], yearLoans: Seq[Loan]): (Seq[Loan], Seq[Parcel]) = {
+      if (demandingKitchens.isEmpty || availableParcels.isEmpty) (yearLoans, availableParcels)
+
       else {
         val mostNeedy = demandingKitchens.head
         val loanedParcel = availableParcels.head
@@ -28,12 +24,12 @@ object Loan {
           .updated(0, mostNeedy.copy(balance = mostNeedy.balance + Kitchen.parcelProduction(loanedParcel)))
           .sortBy(_.balance)
           .filter(_.balance < 0)
-        assign0(newDemandingKitchens, availableParcels.tail, loanHistory.copy(records = loanHistory.records :+ Loan(year, loanedParcel.ownerID, mostNeedy.kitchenID, loanedParcel)))
+        assign0(newDemandingKitchens, availableParcels.tail, yearLoans :+ Loan(loanedParcel.ownerID, mostNeedy.kitchenID, loanedParcel))
       }
 
     }
 
-    assign0(demandingKitchens.sortBy(_.balance).toList, parcelsToBeLoaned.toList, loanHistory)
+    assign0(demandingKitchens.sortBy(_.balance).toList, parcelsToBeLoaned.toList, Seq())
   }
 
 

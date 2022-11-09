@@ -13,20 +13,20 @@ object Diohine {
     } else Parameters()
 
 
-    val kitchenProfile1 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner)
-    val kitchenProfile2 = KitchenProfile(10, ThreeYears, AsMuchAsWeCan, Selfish)
+    val kitchenProfile1 = KitchenProfile(18, ThreeYears, Parsimonious, Selfish)
+    val kitchenProfile2 = KitchenProfile(4, ThreeYears, AsMuchAsWeCan, Selfish)
 
 
     Simulation(
       77,
       giniParcels = 0.0,
       giniTolerance = 0.01,
-      maximumNumberOfParcels = 150,
+      maximumNumberOfParcels = 350,
       herdSize = 100,
       giniHerd = 75,
       populationGrowth = 0.03,
-      kitchenPartition = KitchenPartition((kitchenProfile1, 5) , (kitchenProfile2, 10)),
-      simulationLength = 10,
+      kitchenPartition = KitchenPartition((kitchenProfile1, 10) , (kitchenProfile2, 15)),
+      simulationLength = 15,
       parcelOutputPath = parameters.outputParcelPath)
   }
 
