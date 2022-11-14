@@ -63,7 +63,7 @@ object Kitchen {
     // val emigrants = emigrantsUpdated
     val populations = afterSplitKitchens.map { k =>
       val birthK = births.getOrElse(k.id, 0)
-      val emigrantsK = nbEmigrants.getOrElse(k.id,0)
+      val emigrantsK = nbEmigrants.getOrElse(k.id, 0)
       val absorbtionsK = absorbingKitchens.getOrElse(k.id, Seq())
       val splittedIntoK = splittedInto.get(k.id)
       k.id -> History.PopulationStat(k.size, birthK, emigrantsK, absorbtionsK, splittedIntoK)
@@ -72,7 +72,7 @@ object Kitchen {
     simulationState.copy(
       kitchens = afterSplitKitchens,
       world = afterSplitWorld,
-      history = 
+      history =
         simulationState.history
           .updatePopulations(simulationState.year, populations)
           .updateParcelStatsAfterPopulationEvolution(simulationState.year, afterSplitKitchens.map(_.id))
@@ -118,7 +118,7 @@ object Kitchen {
 
     (reorganizedKitchens.map(_.kitchen) ++ tooBigKitchens.map {
       _.kitchen
-    }, reorganizedWorld, reorganizedKitchens.map{rK=> rK.kitchen.id-> rK.absorbedIDs}.toMap)
+    }, reorganizedWorld, reorganizedKitchens.map { rK => rK.kitchen.id -> rK.absorbedIDs }.toMap)
   }
 
   def kitchenSplit(kitchens: Seq[Kitchen], world: World): (Seq[Kitchen], World, Map[KitchenID, KitchenID]) = {
@@ -150,7 +150,7 @@ object Kitchen {
         val offspring = Offspring(kitchenK.copy(id = nextID, size = Constants.SPLIT_KITCHEN_OFFSPRING_SIZE),
           kitchenK.copy(size = kitchenK.size - Constants.SPLIT_KITCHEN_OFFSPRING_SIZE),
           acquiredParcelK)
-        
+
         split(toBeSplitted.tail, nextID, offsprings :+ offspring)
       }
     }
@@ -169,7 +169,7 @@ object Kitchen {
       _.originKichen
     } ++ offsprings.map(_.kitchen)
 
-    (newKitchens, newWorld, offsprings.map{o=> o.originKichen.id-> o.kitchen.id}.toMap)
+    (newKitchens, newWorld, offsprings.map { o => o.originKichen.id -> o.kitchen.id }.toMap)
   }
 
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not

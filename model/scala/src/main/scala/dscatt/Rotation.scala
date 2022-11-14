@@ -51,17 +51,11 @@ object Rotation {
       _._2
     } diff (extraParcelsForLoan ++ notAssignedExtraParcels)
 
-
+  
     //Process the effective loan (farmerID is changed)
     val changedParcels: Seq[Parcel] = {
-      extraParcelsForLoan.map { ep =>
-        val loan = yearLoans.find(l => l.parcel.id == ep.id)
-        loan match {
-          case Some(l: dscatt.Loan.Loan) => ep.copy(farmerID = l.to)
-          case None => ep.copy(crop = NotAssigned)
-        }
-      } ++ (notAssignedExtraParcels ++ notUsedInLoanProcess).map { p => p.copy(crop = NotAssigned) }
-    }
+      yearLoans.map(yl => yl.parcel.copy(farmerID = yl.to))
+    } ++ (notUsedInLoanProcess ++ notAssignedExtraParcels).map { p => p.copy(crop = NotAssigned) }
 
     val newParcels = unchangedParcels ++ changedParcels
 

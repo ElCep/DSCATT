@@ -50,7 +50,6 @@ object Simulation {
         val foodAssessment = afterRotationsSimulationState.kitchens.map { k => Kitchen.foodBalance(afterRotationsSimulationState.world, k) }
         val (afterDonationFoodAssessment, foodDonations) = FoodDonation.assign(simulationState.year, foodAssessment)
 
-      //  println("FOOD balances " + afterDonationFoodAssessment.sortBy(_.kitchen.id))
         println("FOOD donations " + foodDonations)
 
         val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoodAssessment)

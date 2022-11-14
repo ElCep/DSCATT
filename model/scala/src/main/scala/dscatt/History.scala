@@ -70,7 +70,6 @@ object History {
     state.history.keys.toSeq.sorted.foreach { y =>
       val yearHistory = state.history(y)
       println(s"\nYEAR $y\n")
-      val loans = yearHistory.loans.groupBy(_.from).map(x => x._1 -> x._2.map { y => s"${y.to} (${x._2.size})" }.mkString(","))
       val sortedPop = yearHistory.population.map { kp =>
         (kp._1, kp._2.size, kp._2.births, kp._2.emigrants, kp._2.absorbedKitchens, kp._2.splittedInto
         )
@@ -93,8 +92,7 @@ object History {
           p._6.map(_.toString).getOrElse("")
         )
       )
-
-      println(s"PARCELS POPULATION ${totalPop(0)} / ${totalPop(1)} / ${totalPop(2)} KITCHENS ${totalPop(3)} / ${totalPop(4)}")
+      
       if (verbose) println(Tabulator.formatTable(table))
     }
   }
