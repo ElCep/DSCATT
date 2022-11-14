@@ -47,7 +47,7 @@ object Population {
   // Compute for each kitchen the number of births and the number of emigrants based on the food balance
   def evolveEmigrants(kitchens: Seq[Kitchen], foodAssessment: Seq[FoodBalance]): (Seq[Kitchen], Map[KitchenID, Int]) = {
 
-    val foodAssessementMap = foodAssessment.map(fa => fa.kitchenID -> fa.balance).toMap
+    val foodAssessementMap = foodAssessment.map(fa => fa.kitchen.id -> fa.balance).toMap
 
     val result = kitchens.map { k =>
       val balanceK = foodAssessementMap(k.id)

@@ -13,8 +13,8 @@ object Diohine {
     } else Parameters()
 
 
-    val kitchenProfile1 = KitchenProfile(14, ThreeYears, Parsimonious, ExtraParcelsExceptFallowLoaner)
-    val kitchenProfile2 = KitchenProfile(4, ThreeYears, AsMuchAsWeCan, ExtraParcelsExceptFallowLoaner)
+    val kitchenProfile1 = KitchenProfile(10, ThreeYears, Parsimonious, Selfish, FoodForUsOnlyStrategy)
+    val kitchenProfile2 = KitchenProfile(4, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
 
 
     Simulation(

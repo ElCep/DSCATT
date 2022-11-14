@@ -11,13 +11,11 @@ object Kitchen {
 
   type KitchenID = Int
 
-  case class FoodBalance(kitchenID: KitchenID, balance: Double)
-
-  def parcelsOfTheYear(kitchenID: KitchenID): Seq[Parcel] = ???
+  case class FoodBalance(kitchen: Kitchen, balance: Double)
 
   def buildKitchens(kitchenPartition: KitchenPartition): Seq[Kitchen] = {
     kitchenPartition.profiles.flatMap { p => Seq.fill[KitchenProfile](p._2)(p._1) }.zipWithIndex.map { case (kp, id) =>
-      Kitchen(id + 1, kp.size, kp.rotationCycle, kp.cropingStrategy, kp.loanStrategy)
+      Kitchen(id + 1, kp.size, kp.rotationCycle, kp.cropingStrategy, kp.loanStrategy, kp.foodDonationStrategy)
     }
   }
 
@@ -49,7 +47,7 @@ object Kitchen {
   }
 
   def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen): FoodBalance = {
-    FoodBalance(kitchen.id, parcelsProduction(World.parcelsInCultureForKitchen(parcels, kitchen)) - foodNeeds(kitchen))
+    FoodBalance(kitchen, parcelsProduction(World.parcelsInCultureForKitchen(parcels, kitchen)) - foodNeeds(kitchen))
   }
 
 
@@ -220,5 +218,6 @@ case class Kitchen(id: Kitchen.KitchenID,
                    size: Int,
                    rotationCycle: RotationCycle,
                    cropingStrategy: CropingStrategy,
-                   loanStrategy: LoanStrategy
+                   loanStrategy: LoanStrategy,
+                   foodDonationStrategy: FoodDonationStrategy
                   )

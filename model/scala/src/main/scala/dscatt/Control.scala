@@ -18,9 +18,9 @@ object AllExtraParcelsLoaner extends LoanStrategy // loans its extra parcels
 object ExtraParcelsExceptFallowLoaner extends LoanStrategy
 object Selfish extends LoanStrategy  // must be used with AsMuchAsweCan
 
-sealed trait InterKitchenFoodExchange extends Control
-object FoodForUsOnly extends InterKitchenFoodExchange // extra food keeps in the kitchen (for being sold)
-object FoodDonation extends InterKitchenFoodExchange // extra food can be given to a demanding kitchen
+sealed trait FoodDonationStrategy extends Control
+object FoodForUsOnlyStrategy extends FoodDonationStrategy // extra food keeps in the kitchen (for being sold)
+object FoodForAllStrategy extends FoodDonationStrategy // extra food can be given to a demanding kitchen
 
 sealed trait ManPowerProvision extends Control
 object WorkInOwnKitchenOnly extends ManPowerProvision  // manpower is never loaned to another kitchen
@@ -42,11 +42,12 @@ case class KitchenProfile(
                            size: KitchenSize,
                            rotationCycle: RotationCycle,
                            cropingStrategy: CropingStrategy,
-                           loanStrategy: LoanStrategy
+                           loanStrategy: LoanStrategy,
+                           foodDonationStrategy: FoodDonationStrategy
                          )
 
 object KitchenProfile {
-  val default = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner)
+  val default = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
 }
 
 case class KitchenPartition(profiles: (KitchenProfile, KitchenSize)*)

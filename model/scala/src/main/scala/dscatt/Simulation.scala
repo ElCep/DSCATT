@@ -46,12 +46,14 @@ object Simulation {
       if (simulationLenght - simulationState.year == 0) simulationState
       else {
         val afterRotationsSimulationState = Rotation.evolve(simulationState)
+
         val foodAssessment = afterRotationsSimulationState.kitchens.map { k => Kitchen.foodBalance(afterRotationsSimulationState.world, k) }
+        val (afterDonationFoodAssessment, foodDonations) = FoodDonation.assign(simulationState.year, foodAssessment)
 
-        //FIXME: Compute food exchange
-        // val afterExchangeFoodAssessment = FoodExchange.evolve(afterRotationsSimulationState, foodAssessment)
+      //  println("FOOD balances " + afterDonationFoodAssessment.sortBy(_.kitchen.id))
+        println("FOOD donations " + foodDonations)
 
-        val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, foodAssessment)
+        val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoodAssessment)
 
         // Problème: si des kitchens split, qu'on-t-elle a bouffer cette année ? Est-ce qu'on les met dans le pool pour l'année d'après ??
 
