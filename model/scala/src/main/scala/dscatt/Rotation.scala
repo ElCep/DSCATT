@@ -34,10 +34,13 @@ object Rotation {
       (eP.flatMap(_.forLoan), eP.flatMap(_.notAssigned))
     }
 
-    //Collect all demanding kitchens
-    val demandingKitchens = theoriticalCroping.map { case (k, parcels) => Kitchen.foodBalance(parcels, k) }.filter {
-      _.balance < 0
-    }
+    //Collect all demanding kitchens except provisioning crops strategies (a kitchen provisioning food is not supposed to ask for a loan)
+    val demandingKitchens = theoriticalCroping.filter(_._1.cropingStrategy match {
+      case Provisioning(_) => false
+      case _ => true
+    }).map { case (k, parcels) =>
+      Kitchen.foodBalance(parcels, k)
+    }.filter(_.balance < 0)
 
     //Collect loan list and not assigned parcels (not used in the loan process)
     val (yearLoans, notUsedInLoanProcess) = dscatt.Loan.assign(simulationState.year, extraParcelsForLoan, demandingKitchens)
