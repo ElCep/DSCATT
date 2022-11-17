@@ -36,6 +36,15 @@ object Kitchen {
     }
   }
 
+  // Fallow is considered as Mil in case of ExtraParcelsExceptFallowLoaner and will be set as Mil once the loan will be effective 
+   def parcelProductionForLoan(parcel: Parcel) = {
+    parcel.crop match {
+      case Mil | Fallow => parcel.area * Constants.MIL_YIELD_PER_M2
+      case Peanut => parcel.area * Constants.PEANUT_YIELD_PER_M2 * Constants.PEANUT_FOOD_EQUIVALENCE
+      case _ => 0.0
+    }
+  }
+   
   def parcelsProduction(parcels: Seq[Parcel]) = {
     parcels.map {
       parcelProduction
@@ -47,7 +56,9 @@ object Kitchen {
   }
 
   def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen): FoodBalance = {
-    FoodBalance(kitchen, parcelsProduction(World.parcelsInCultureForKitchen(parcels, kitchen)) - foodNeeds(kitchen))
+    val oo = World.parcelsInCultureForKitchen(parcels, kitchen)
+  //  println("NB parcels in CUJTURE " + kitchen.id + " :: " + oo.size + " * * " + parcelsProduction(oo))
+    FoodBalance(kitchen, parcelsProduction(oo) - foodNeeds(kitchen))
   }
 
 
@@ -191,7 +202,7 @@ object Kitchen {
       if (sortedParcels.isEmpty || needsCondition || remainingManPower < 0) {
 
         // println("TOTAL PRODUCTION for " + kitchen.id + " : " + production + " for " + kitchen.size + " people, soient " + inCulture.map{_.area}.sum + " m2" + ", remaining man power: " + remainingManPower)
-        inCulture ++: sortedParcels.map { p => p.copy(crop = NotAssigned) }
+        inCulture //++: sortedParcels.map { p => p.copy(crop = NotAssigned) }
 
       }
       else {

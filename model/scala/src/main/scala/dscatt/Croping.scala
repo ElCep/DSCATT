@@ -3,14 +3,21 @@ package dscatt
 object Croping {
 
   sealed trait Crop
+
   object Mil extends Crop
+
   object Peanut extends Crop
+
   object Fallow extends Crop
+
   object NotAssigned extends Crop
 
   sealed trait CropZone
+
   object One extends CropZone
+
   object Two extends CropZone
+
   object Three extends CropZone
 
   implicit def intToCropZone(cz: Int): CropZone = cz match
@@ -43,21 +50,28 @@ object Croping {
         targetCropZone match {
           case Three => Fallow
           case _ =>
-              crop match {
-                case Peanut => Fallow
-                case Mil => Peanut
-                case Fallow => Mil
-                case _ =>
-                  targetCropZone match {
-                    case One => Mil
-                    case Two => Peanut
-                    case Three => Fallow
-                  }
-              }
+            crop match {
+              case Peanut => Fallow
+              case Mil => Peanut
+              case Fallow => Mil
+              case _ =>
+                targetCropZone match {
+                  case One => Mil
+                  case Two => Peanut
+                  case Three => Fallow
+                }
+            }
         }
     }
   }
 
+  implicit class AParcel(parcel: Parcel) {
+    def setFallowIfCropZoneThree = parcel.cropZone match {
+      case Three => parcel.copy(crop = Fallow)
+      case _ => parcel
+    }
+  }
+  
   def foodFromPeanut(peanutWeight: Double) = Constants.PEANUT_FOOD_EQUIVALENCE * peanutWeight
 }
 

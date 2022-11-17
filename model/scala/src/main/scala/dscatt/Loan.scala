@@ -5,6 +5,7 @@ import dscatt.Kitchen.{FoodBalance, KitchenID}
 import dscatt.Parcel.ParcelID
 import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
+import dscatt.Croping.AParcel
 
 import scala.annotation.tailrec
 
@@ -24,7 +25,7 @@ object Loan {
         val mostNeedy = demandingKitchens.head
         val loanedParcel = availableParcels.head
         val newDemandingKitchens = demandingKitchens
-          .updated(0, mostNeedy.copy(balance = mostNeedy.balance + Kitchen.parcelProduction(loanedParcel)))
+          .updated(0, mostNeedy.copy(balance = mostNeedy.balance + Kitchen.parcelProductionForLoan(loanedParcel)))
           .sortBy(_.balance)
           .filter(_.balance < 0)
         assign0(newDemandingKitchens, availableParcels.tail, yearLoans :+ Loan(loanedParcel.ownerID, mostNeedy.kitchen.id, loanedParcel))
@@ -36,6 +37,6 @@ object Loan {
   }
 
 
-  def reset(world: World) = world.copy(parcels = world.parcels.map(p => p.copy(farmerID = p.ownerID)))
+  def reset(world: World) = world.copy(parcels = world.parcels.map(p => p.copy(farmerID = p.ownerID).setFallowIfCropZoneThree))
 
 }

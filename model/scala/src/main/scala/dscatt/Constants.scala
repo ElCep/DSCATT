@@ -22,7 +22,7 @@ object Constants {
   val AREA_FACTOR = {
     val foodFor200 = 200 * DAILY_FOOD_NEED_PER_PERSON * 365
     val surfaceFor200 = foodFor200.toDouble / (0.5 * (MIL_YIELD_PER_M2 + PEANUT_YIELD_PER_M2 * PEANUT_FOOD_EQUIVALENCE))
-    surfaceFor200 / (500000 * 2.0 / 3) // 238050 = generated shp cultivated surface
+    surfaceFor200 / (500000 * 2.0 / 3) // 500000 = generated shp cultivated surface
   }
 
   //FERTILITY

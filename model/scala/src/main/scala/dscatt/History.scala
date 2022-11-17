@@ -92,7 +92,8 @@ object History {
           p._6.map(_.toString).getOrElse("")
         )
       )
-      
+
+      println(s"PARCELS ${pStats.map(_._2.size).sum} POPULATION ${totalPop(0)} / ${totalPop(1)} / ${totalPop(2)} KITCHENS ${totalPop(3)} / ${totalPop(4)}")
       if (verbose) println(Tabulator.formatTable(table))
     }
   }

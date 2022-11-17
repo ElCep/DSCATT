@@ -45,27 +45,16 @@ object Simulation {
     def evolve0(simulationState: SimulationState): SimulationState = {
       if (simulationLenght - simulationState.year == 0) simulationState
       else {
+        // Evolve rotation including loans
         val afterRotationsSimulationState = Rotation.evolve(simulationState)
-
+        
+        // Process food donations
         val foodAssessment = afterRotationsSimulationState.kitchens.map { k => Kitchen.foodBalance(afterRotationsSimulationState.world, k) }
         val (afterDonationFoodAssessment, foodDonations) = FoodDonation.assign(simulationState.year, foodAssessment)
-
-        println("FOOD donations " + foodDonations)
-
+        
+        // Process kitchen dynamics (population, emmigrants, absorptions, splits)
         val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoodAssessment)
-
-        // Problème: si des kitchens split, qu'on-t-elle a bouffer cette année ? Est-ce qu'on les met dans le pool pour l'année d'après ??
-
-        //        println(" ---- EVOLVED ---- " + resizedSimulationState.world.parcels.length)
-        //        println("FALLOW " + World.fallowParcels(resizedSimulationState.world).length)
-        //        println("PEANUT " + World.peanutParcels(resizedSimulationState.world).length)
-        //        println("MIL " + World.milParcels(resizedSimulationState.world).length)
-        //        println("SUM " + (World.fallowParcels(resizedSimulationState.world).length + World.milParcels(resizedSimulationState.world).length + World.peanutParcels(resizedSimulationState.world).length))
-        //        println("NOT ASSIGNED " + resizedSimulationState.world.parcels.filter { p => p.crop == NotAssigned }.length)
-        //
-        //        println("\nZONE 1 : " + World.zoneOneParcels(resizedSimulationState.world).length)
-        //        println("ZONE 2 : " + World.zoneTwoParcels(resizedSimulationState.world).length)
-        //        println("ZONE 3: " + World.zoneThreeParcels(resizedSimulationState.world).length)
+        
         evolve0(resizedSimulationState.copy(world = Loan.reset(resizedSimulationState.world), year = resizedSimulationState.year + 1))
       }
     }

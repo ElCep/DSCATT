@@ -1,6 +1,6 @@
 package dscatt
 
-import dscatt.Croping.NotAssigned
+import dscatt.Croping.{Crop, Fallow, Mil, NotAssigned, Peanut, Three}
 import dscatt.Loan.Loan
 import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
@@ -19,8 +19,6 @@ object Rotation {
       }
     }
 
-    // theoriticalCroping.foreach { case (k, parcels) => println(Kitchen.foodBalance(parcels, k)) }
-
     // Loaners process:
     // 1- have a positive foodBalance with all crops in culture
     // 2- collect all extra parcels
@@ -34,6 +32,7 @@ object Rotation {
       (eP.flatMap(_.forLoan), eP.flatMap(_.notAssigned))
     }
 
+
     //Collect all demanding kitchens except provisioning crops strategies (a kitchen provisioning food is not supposed to ask for a loan)
     val demandingKitchens = theoriticalCroping.filter(_._1.cropingStrategy match {
       case Provisioning(_) => false
@@ -42,9 +41,7 @@ object Rotation {
       Kitchen.foodBalance(parcels, k)
     }.filter(_.balance < 0)
 
-    //Collect loan list and not assigned parcels (not used in the loan process)
     val (yearLoans, notUsedInLoanProcess) = dscatt.Loan.assign(simulationState.year, extraParcelsForLoan, demandingKitchens)
-    //val loanHistoryOfTheYear = loanHistory.records.groupBy(_.year).get(simulationState.year).getOrElse(Seq())
 
     //Keep all parcels not involved in the loan process
     val unchangedParcels = theoriticalCroping.flatMap {
@@ -54,7 +51,7 @@ object Rotation {
   
     //Process the effective loan (farmerID is changed)
     val changedParcels: Seq[Parcel] = {
-      yearLoans.map(yl => yl.parcel.copy(farmerID = yl.to))
+      yearLoans.map(yl => yl.parcel.copy(farmerID = yl.to, crop = setMilIfFallow(yl.parcel)))
     } ++ (notUsedInLoanProcess ++ notAssignedExtraParcels).map { p => p.copy(crop = NotAssigned) }
 
     val newParcels = unchangedParcels ++ changedParcels
@@ -67,31 +64,31 @@ object Rotation {
 
   case class ExtraParcels(forLoan: Seq[Parcel], notAssigned: Seq[Parcel])
 
+  // Extra is defined as everything except what the kitchen needs
   def getExtraParcels(kitchen: Kitchen, parcels: Seq[Parcel]): ExtraParcels = {
 
-    val (notCultivableCandidatesForKitchenK, cultivableCandidatesForKitchenK) = kitchen.loanStrategy match {
-      //AllExtraParcelLoaner ne cultive pas a priori sur de la fallow
-      case AllExtraParcelsLoaner => (Seq(), parcels)
-      case ExtraParcelsExceptFallowLoaner | Selfish => parcels.partition { p =>
-        // Exclude fallow parcels
-        p.crop == Croping.Fallow
-      }
-    }
+    val parcelCandidatesForCulture = parcels.filterNot(_.crop == Fallow)
 
     val parcelsNeeded = kitchen.cropingStrategy match {
-      case Parsimonious => Kitchen.cropNeeds(kitchen, cultivableCandidatesForKitchenK, Some(Kitchen.foodNeeds(kitchen)))
-      case Provisioning(exceedingProportion) => Kitchen.cropNeeds(kitchen, cultivableCandidatesForKitchenK, Some(Kitchen.foodNeeds(kitchen) * (1 + exceedingProportion)))
-      case AsMuchAsWeCan =>
-        // Needs are set on purpose to a big value so that it does not limit cultivation
-        Kitchen.cropNeeds(kitchen, cultivableCandidatesForKitchenK, None) ++: notCultivableCandidatesForKitchenK
+      case Parsimonious => Kitchen.cropNeeds(kitchen, parcelCandidatesForCulture, Some(Kitchen.foodNeeds(kitchen)))
+      case Provisioning(exceedingProportion) => Kitchen.cropNeeds(kitchen, parcelCandidatesForCulture, Some(Kitchen.foodNeeds(kitchen) * (1 + exceedingProportion)))
+      case AsMuchAsWeCan => parcelCandidatesForCulture
     }
 
-    val extra = cultivableCandidatesForKitchenK diff parcelsNeeded
+    val fallowFreeExtraCandidates = parcelCandidatesForCulture diff parcelsNeeded
 
-    kitchen.loanStrategy match {
-      case Selfish => ExtraParcels(Seq(), extra)
-      case _ => ExtraParcels(extra, Seq())
+    val (notLoanable, loanable) = kitchen.loanStrategy match {
+      case Selfish => (fallowFreeExtraCandidates, Seq())
+      case AllExtraParcelsLoaner => (Seq(), parcels diff parcelsNeeded)
+      case ExtraParcelsExceptFallowLoaner => (Seq(), fallowFreeExtraCandidates)
     }
+
+    ExtraParcels(loanable, notLoanable)
+  }
+
+  def setMilIfFallow(parcel: Parcel) = parcel.crop match {
+    case Fallow => Mil
+    case c: Crop => c
   }
 
 }
