@@ -45,22 +45,29 @@ object Simulation {
     def evolve0(simulationState: SimulationState): SimulationState = {
       if (simulationLenght - simulationState.year == 0) simulationState
       else {
+        val initialFoodBalance = simulationState.currentFoodBalances
+
         // Evolve rotation including loans
         val afterRotationsSimulationState = Rotation.evolve(simulationState)
-        
+        val afterLoanFoodBalance = afterRotationsSimulationState.currentFoodBalances
+
         // Process food donations
-        val foodAssessment = afterRotationsSimulationState.kitchens.map { k => Kitchen.foodBalance(afterRotationsSimulationState.world, k) }
-        val (afterDonationFoodAssessment, foodDonations) = FoodDonation.assign(simulationState.year, foodAssessment)
-        
+        val afterDonationFoodBalance = FoodDonation.assign(afterLoanFoodBalance)
+
         // Process kitchen dynamics (population, emmigrants, absorptions, splits)
-        val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoodAssessment)
-        
-        evolve0(resizedSimulationState.copy(world = Loan.reset(resizedSimulationState.world), year = resizedSimulationState.year + 1))
+        val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoodBalance)
+
+        val finalHistory = resizedSimulationState.history.updateFoodBalances(resizedSimulationState.year, initialFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
+        evolve0(resizedSimulationState.copy(world = Loan.reset(resizedSimulationState.world), year = resizedSimulationState.year + 1, history = finalHistory))
       }
     }
 
     val finalState = evolve0(simulationState)
 
     finalState
+  }
+
+  implicit class AState(simulationState: SimulationState) {
+    def currentFoodBalances = simulationState.kitchens.map { k => Kitchen.foodBalance(simulationState.world, k) }
   }
 }

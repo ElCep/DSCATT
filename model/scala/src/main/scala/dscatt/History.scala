@@ -1,6 +1,7 @@
 package dscatt
 
-import dscatt.Kitchen.KitchenID
+import dscatt.FoodDonation.FoodDonation
+import dscatt.Kitchen.{FoodBalance, KitchenID}
 import dscatt.Loan.Loan
 import dscatt.Simulation.SimulationState
 
@@ -12,9 +13,12 @@ object History {
     override def toString = s"($size, ${ownedArea.toInt}, ${loaned}, ${loanedArea.toInt})"
   }
 
+  case class FoodBalanceOverYear(initial: Int = 0, afterLoan: Int = 0, afterDonation: Int = 0)
+
   type PopulationStats = Map[KitchenID, PopulationStat]
   type ParcelStats = Map[KitchenID, ParcelStat]
   type Loans = Seq[Loan]
+  type FoodBalanceStats = Map[KitchenID, FoodBalanceOverYear]
   type History = Map[Int, YearHistory]
 
   def initialize(simulationLenght: Int, kitchens: Seq[Kitchen]): History = {
@@ -35,6 +39,14 @@ object History {
       history.updated(year, historyOfYear.copy(population = populations.toMap))
     }
 
+    def updateFoodBalances(year: Int, initialFoodBalances: Seq[FoodBalance], afterLoanFoodBalances: Seq[FoodBalance], afterGiftFoodBalance: Seq[FoodBalance]): History = {
+      val historyOfYear = history(year)
+      val foodBalanceStats = initialFoodBalances.sortBy(_.kitchen.id).zip(afterLoanFoodBalances.sortBy(_.kitchen.id).map(_.balance).zip(afterGiftFoodBalance.sortBy(_.kitchen.id).map(_.balance))).map { case (fb, (q1, q2)) =>
+        fb.kitchen.id -> FoodBalanceOverYear(fb.balance.toInt, q1.toInt, q2.toInt)
+      }.toMap
+      history.updated(year, historyOfYear.copy(foodBalanceStats = foodBalanceStats))
+    }
+
     def updateParcelStatsAfterPopulationEvolution(year: Int, allKitchenIDs: Seq[KitchenID]) = {
       val historyOfYear = history(year)
       val newIDs = allKitchenIDs diff historyOfYear.parcelStats.keys.toSeq
@@ -48,7 +60,8 @@ object History {
                                     fertility: Double = 0.0,
                                     population: PopulationStats = Map(),
                                     parcelStats: ParcelStats = Map(),
-                                    loans: Loans = Seq()
+                                    loans: Loans = Seq(),
+                                    foodBalanceStats: FoodBalanceStats = Map()
                                   )
 
   def toParcelStats(yearLoans: Seq[Loan], parcels: Seq[Parcel]): ParcelStats = {
@@ -78,13 +91,15 @@ object History {
         _.sum
       }
       val pStats = yearHistory.parcelStats
+      val fbStats = yearHistory.foodBalanceStats
 
-
-      val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map(p =>
+      val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Food Balance (init/aL/aD)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map(p =>
+        val fbStatsK = fbStats.getOrElse(p._1, FoodBalanceOverYear())
         Seq(
           p._1.toString,
           s"${pStats(p._1).size}, ${pStats(p._1).ownedArea.toInt}",
           s"${pStats(p._1).loaned}, ${pStats(p._1).loanedArea.toInt}",
+          s"${fbStatsK.initial}, ${fbStatsK.afterLoan}, ${fbStatsK.afterDonation}",
           p._2.toString,
           p._3.toString,
           p._4.toString,

@@ -11,11 +11,11 @@ import scala.annotation.tailrec
 object FoodDonation {
   case class FoodDonation(from: KitchenID, to: KitchenID, quantity: Double)
 
-  def assign(year: Int, foodBalances: Seq[FoodBalance]): (Seq[FoodBalance],Seq[FoodDonation]) = {
+  def assign(foodBalances: Seq[FoodBalance]): Seq[FoodBalance] = {
 
     @tailrec
-    def assign0(hungryKitchens: List[FoodBalance], extraFoodKitchens: List[FoodBalance], foodBalancesMap: Map[KitchenID, FoodBalance], foodDonations: Seq[FoodDonation]): (Seq[FoodBalance], Seq[FoodDonation]) = {
-      if (hungryKitchens.isEmpty || extraFoodKitchens.isEmpty) (foodBalancesMap.values.toSeq, foodDonations)
+    def assign0(hungryKitchens: List[FoodBalance], extraFoodKitchens: List[FoodBalance], foodBalancesMap: Map[KitchenID, FoodBalance]): Seq[FoodBalance] = {
+      if (hungryKitchens.isEmpty || extraFoodKitchens.isEmpty) foodBalancesMap.values.toSeq
       else {
         val mostNeedy = hungryKitchens.head
         val donator = extraFoodKitchens.head
@@ -41,7 +41,7 @@ object FoodDonation {
             .updated(mostNeedy.kitchen.id, mostNeedy.copy(balance = mostNeedy.balance + gift))
             .updated(donator.kitchen.id, donator.copy(balance = donator.balance - gift))
 
-        assign0(newHungryList.sortBy(_.balance), newExtraList, newFoodBalances, foodDonations :+ newFoodDonation)
+        assign0(newHungryList.sortBy(_.balance), newExtraList, newFoodBalances)
       }
     }
 
@@ -49,6 +49,6 @@ object FoodDonation {
     val (hungryKitchenBalances, extraFoodKitchenBalances) = foodBalances.partition(_.balance < 0)
     val altruistExtraFoodBalances = extraFoodKitchenBalances.filter(_.kitchen.foodDonationStrategy == FoodForAllStrategy)
 
-    assign0(hungryKitchenBalances.sortBy(_.balance).toList, altruistExtraFoodBalances.toList, foodBalances.map { b => b.kitchen.id -> b }.toMap, Seq())
+    assign0(hungryKitchenBalances.sortBy(_.balance).toList, altruistExtraFoodBalances.toList, foodBalances.map { b => b.kitchen.id -> b }.toMap)
   }
 }
