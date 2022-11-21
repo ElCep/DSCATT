@@ -30,7 +30,7 @@ object Simulation {
     println("NB KITCH " + kitchens.length)
     println("Area factor " + Constants.AREA_FACTOR)
 
-    val nakedWorld = World.buildWorldGeometry(kitchens.length, giniParcels, giniTolerance, maximumNumberOfParcels, seed, parcelOutputPath)
+    val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels, giniTolerance, maximumNumberOfParcels, seed, parcelOutputPath)
     val initialState = SimulationState(nakedWorld, kitchens, History.initialize(simulationLength, kitchens), 1)
 
     val finalState = evolve(initialState, populationGrowth, simulationLength + 1)
@@ -43,7 +43,7 @@ object Simulation {
 
     @tailrec
     def evolve0(simulationState: SimulationState): SimulationState = {
-      if (simulationLenght - simulationState.year == 0) simulationState
+      if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 0) simulationState
       else {
         val initialFoodNeeds = simulationState.currentFoodNeeds
 
@@ -51,8 +51,6 @@ object Simulation {
         val (afterRotationsSimulationState, autonomousFoodBalance) = Rotation.evolve(simulationState)
         val afterLoanFoodBalance = afterRotationsSimulationState.currentFoodBalances
 
-        val first = afterRotationsSimulationState.kitchens.head
-        
         // Process food donations
         val afterDonationFoodBalance = FoodDonation.assign(afterLoanFoodBalance)
 

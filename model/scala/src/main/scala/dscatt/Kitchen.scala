@@ -56,9 +56,7 @@ object Kitchen {
   }
 
   def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen): FoodBalance = {
-    val oo = World.parcelsInCultureForKitchen(parcels, kitchen)
-  //  println("NB parcels in CUJTURE " + kitchen.id + " :: " + oo.size + " * * " + parcelsProduction(oo))
-    FoodBalance(kitchen, parcelsProduction(oo) - foodNeeds(kitchen))
+    FoodBalance(kitchen, parcelsProduction(World.parcelsInCultureForKitchen(parcels, kitchen)) - foodNeeds(kitchen))
   }
 
 

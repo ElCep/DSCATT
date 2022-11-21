@@ -20,10 +20,14 @@ object Croping {
 
   object Three extends CropZone
 
-  implicit def intToCropZone(cz: Int): CropZone = cz match
+  def intToCropZone(cz: Int, rotationCycle: RotationCycle, threeIsOneProbabilityIf2Years: Boolean): CropZone = cz match
     case 1 => One
     case 2 => Two
-    case 3 => Three
+    case 3 => rotationCycle match {
+      case TwoYears if(threeIsOneProbabilityIf2Years)=> One
+      case TwoYears=> Two
+      case ThreeYears=> Three
+    }
 
   def evolveCropZone(cropZone: CropZone, rotationCycle: RotationCycle): CropZone = {
     rotationCycle match {
@@ -42,9 +46,9 @@ object Croping {
 
   def evolveCrop(crop: Crop, rotationCycle: RotationCycle, targetCropZone: CropZone) = {
     rotationCycle match {
-      case TwoYears => crop match {
-        case Peanut => Mil
-        case _ => Peanut
+      case TwoYears => targetCropZone match {
+        case One=> Mil
+        case _=> Peanut
       }
       case ThreeYears =>
         targetCropZone match {

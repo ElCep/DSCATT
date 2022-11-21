@@ -14,23 +14,24 @@ import scala.annotation.tailrec
 
 object World {
 
-  def buildWorldGeometry(numberOfKitchen: Int,
+  def buildWorldGeometry(kitchens: Seq[Kitchen],
                          giniIndex: Double,
                          giniTolerance: Double = 0.01,
                          maximumNumberOfParcels: Int = 200,
                          seed: Long,
                          geometryImagePath: Option[String] = None
-                        ): World = {
-
+                        )(using mT: MersenneTwister): World = {
+    val kitchensMap = kitchens.groupBy(_.id)
     geometryImagePath.foreach { p =>
       new File(p).mkdirs
     }
     val syntheticParcels = usecase.GenerateSyntheticParcel.generate(
-      numberOfKitchen, giniIndex, maximumNumberOfParcels, giniTolerance.toFloat, seed, new java.io.File(geometryImagePath.getOrElse(null)))
+      kitchens.size, giniIndex, maximumNumberOfParcels, giniTolerance.toFloat, seed, new java.io.File(geometryImagePath.getOrElse(null)))
 
-    println("all parcels : " + syntheticParcels.toArray.map{p=>
+    println("all parcels : " + syntheticParcels.toArray.map { p =>
       val pp = p.asInstanceOf[SyntheticParcel]
-      pp.area}.sum)
+      pp.area
+    }.sum)
 
     println("# of parcel INIT " + syntheticParcels.size)
     val parcels = syntheticParcels.toArray.map { sp =>
@@ -41,7 +42,7 @@ object World {
         ownerID = p.ownerID,
         farmerID = p.ownerID,
         crop = NotAssigned,
-        cropZone = p.regionID,
+        cropZone = intToCropZone(p.regionID, kitchensMap(p.ownerID).head.rotationCycle, mT.nextDouble() > 0.5),
         area = p.area * Constants.AREA_FACTOR,
         distanceToVillage = p.distanceToCenter,
         neighbours = p.lIdNeighborhood.asScala.toSeq,
@@ -49,7 +50,7 @@ object World {
       )
     }
 
-    World(parcels, numberOfKitchen)
+    World(parcels, kitchens.size)
   }
 
   def display(world: World): Unit = {
