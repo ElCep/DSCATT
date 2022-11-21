@@ -45,29 +45,31 @@ object Simulation {
     def evolve0(simulationState: SimulationState): SimulationState = {
       if (simulationLenght - simulationState.year == 0) simulationState
       else {
-        val initialFoodBalance = simulationState.currentFoodBalances
+        val initialFoodNeeds = simulationState.currentFoodNeeds
 
         // Evolve rotation including loans
-        val afterRotationsSimulationState = Rotation.evolve(simulationState)
+        val (afterRotationsSimulationState, autonomousFoodBalance) = Rotation.evolve(simulationState)
         val afterLoanFoodBalance = afterRotationsSimulationState.currentFoodBalances
 
+        val first = afterRotationsSimulationState.kitchens.head
+        
         // Process food donations
         val afterDonationFoodBalance = FoodDonation.assign(afterLoanFoodBalance)
 
         // Process kitchen dynamics (population, emmigrants, absorptions, splits)
         val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoodBalance)
 
-        val finalHistory = resizedSimulationState.history.updateFoodBalances(resizedSimulationState.year, initialFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
-        evolve0(resizedSimulationState.copy(world = Loan.reset(resizedSimulationState.world), year = resizedSimulationState.year + 1, history = finalHistory))
+        val finalHistory = resizedSimulationState.history.updateFoodBalances(resizedSimulationState.year, initialFoodNeeds, autonomousFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
+        val finalState = resizedSimulationState.copy(world = Loan.reset(resizedSimulationState.world), year = resizedSimulationState.year + 1, history = finalHistory)
+        evolve0(finalState)
       }
     }
 
-    val finalState = evolve0(simulationState)
-
-    finalState
+    evolve0(simulationState)
   }
 
   implicit class AState(simulationState: SimulationState) {
     def currentFoodBalances = simulationState.kitchens.map { k => Kitchen.foodBalance(simulationState.world, k) }
+    def currentFoodNeeds = simulationState.kitchens.map { k => k.id-> - Kitchen.foodNeeds(k) }
   }
 }

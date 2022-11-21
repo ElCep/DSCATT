@@ -19,27 +19,30 @@ object FoodDonation {
       else {
         val mostNeedy = hungryKitchens.head
         val donator = extraFoodKitchens.head
-        val foodPotential = donator.balance
+       // val foodPotential = donator.balance
 
-        val gift = foodPotential - mostNeedy.balance
-        val (newHungryList, newExtraList, newFoodDonation) = gift match {
+        val required = - mostNeedy.balance
+
+        val (newHungryList, newExtraList, newFoodDonation) = donator.balance - required match {
           case f if f <= 0 =>
-            (hungryKitchens.updated(0, mostNeedy.copy(balance = mostNeedy.balance + foodPotential)),
+            (hungryKitchens.updated(0, mostNeedy.copy(balance = mostNeedy.balance + required)),
               extraFoodKitchens.tail,
-              FoodDonation(donator.kitchen.id, mostNeedy.kitchen.id, foodPotential)
+              FoodDonation(donator.kitchen.id, mostNeedy.kitchen.id, donator.balance)
             )
           case _ =>
             (hungryKitchens.tail,
-              extraFoodKitchens.updated(0, donator.copy(balance = gift)),
-              FoodDonation(donator.kitchen.id, mostNeedy.kitchen.id, gift)
+              extraFoodKitchens.updated(0, donator.copy(balance = donator.balance - required)),
+              FoodDonation(donator.kitchen.id, mostNeedy.kitchen.id, required)
             )
 
         }
 
+       // mostNeedy.balance is always negative
+        val gift = donator.balance + mostNeedy.balance
         val newFoodBalances =
           foodBalancesMap
-            .updated(mostNeedy.kitchen.id, mostNeedy.copy(balance = mostNeedy.balance + gift))
-            .updated(donator.kitchen.id, donator.copy(balance = donator.balance - gift))
+            .updated(mostNeedy.kitchen.id, mostNeedy.copy(balance = mostNeedy.balance + newFoodDonation.quantity))
+            .updated(donator.kitchen.id, donator.copy(balance = donator.balance - newFoodDonation.quantity))
 
         assign0(newHungryList.sortBy(_.balance), newExtraList, newFoodBalances)
       }

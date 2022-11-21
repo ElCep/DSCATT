@@ -67,11 +67,8 @@ object Kitchen {
     val (populationUpdated, births): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolve(simulationState.kitchens, populationGrowth)
     val (emigrantsUpdated, nbEmigrants): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolveEmigrants(populationUpdated, foodAssessment)
     val (afterAbsorbtionKitchens, afterAbsorbtionWorld, absorbingKitchens) = kitchenAbsorption(emigrantsUpdated, simulationState.world)
-    //println("AFETER ABSORPTION " + afterAbsorbtionKitchens.size)
     val (afterSplitKitchens, afterSplitWorld, splittedInto) = kitchenSplit(afterAbsorbtionKitchens, afterAbsorbtionWorld)
 
-    //val births = populationUpdated.toMap
-    // val emigrants = emigrantsUpdated
     val populations = afterSplitKitchens.map { k =>
       val birthK = births.getOrElse(k.id, 0)
       val emigrantsK = nbEmigrants.getOrElse(k.id, 0)
@@ -185,6 +182,7 @@ object Kitchen {
 
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
   def cropNeeds(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Option[Double]) = {
+
     val sortedByDistanceParcels = cultivableParcelsForKitchen.sortBy(_.distanceToVillage).toList
     val manPower = Kitchen.manPower(kitchen)
 

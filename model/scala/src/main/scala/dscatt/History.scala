@@ -13,7 +13,7 @@ object History {
     override def toString = s"($size, ${ownedArea.toInt}, ${loaned}, ${loanedArea.toInt})"
   }
 
-  case class FoodBalanceOverYear(initial: Int = 0, afterLoan: Int = 0, afterDonation: Int = 0)
+  case class FoodBalanceOverYear(initialFoodNeeds: Int = 0, autonomousFoodBalance: Int = 0, afterLoanFoodBalance: Int = 0, afterDonationFoodBalance: Int = 0)
 
   type PopulationStats = Map[KitchenID, PopulationStat]
   type ParcelStats = Map[KitchenID, ParcelStat]
@@ -39,10 +39,14 @@ object History {
       history.updated(year, historyOfYear.copy(population = populations.toMap))
     }
 
-    def updateFoodBalances(year: Int, initialFoodBalances: Seq[FoodBalance], afterLoanFoodBalances: Seq[FoodBalance], afterGiftFoodBalance: Seq[FoodBalance]): History = {
+    private def toSorted(fb: Seq[FoodBalance]) = {
+      fb.sortBy(_.kitchen.id).map(_.balance)
+    }
+
+    def updateFoodBalances(year: Int, initialFoodNeeds: Seq[(KitchenID, Double)], autounomousFoodBalances: Seq[FoodBalance], afterLoanFoodBalances: Seq[FoodBalance], afterGiftFoodBalance: Seq[FoodBalance]): History = {
       val historyOfYear = history(year)
-      val foodBalanceStats = initialFoodBalances.sortBy(_.kitchen.id).zip(afterLoanFoodBalances.sortBy(_.kitchen.id).map(_.balance).zip(afterGiftFoodBalance.sortBy(_.kitchen.id).map(_.balance))).map { case (fb, (q1, q2)) =>
-        fb.kitchen.id -> FoodBalanceOverYear(fb.balance.toInt, q1.toInt, q2.toInt)
+      val foodBalanceStats = initialFoodNeeds.sortBy(_._1).zip(toSorted(autounomousFoodBalances).zip(toSorted(afterLoanFoodBalances)).zip(toSorted(afterGiftFoodBalance))).map { case ((id, ifn), ((q1, q2), q3)) =>
+        id -> FoodBalanceOverYear(ifn.toInt, q1.toInt, q2.toInt, q3.toInt)
       }.toMap
       history.updated(year, historyOfYear.copy(foodBalanceStats = foodBalanceStats))
     }
@@ -93,13 +97,13 @@ object History {
       val pStats = yearHistory.parcelStats
       val fbStats = yearHistory.foodBalanceStats
 
-      val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Food Balance (init/aL/aD)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map(p =>
+      val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Food Balance (initFN/AFB/ALFB/ADFB)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map(p =>
         val fbStatsK = fbStats.getOrElse(p._1, FoodBalanceOverYear())
-        Seq(
+          Seq(
           p._1.toString,
           s"${pStats(p._1).size}, ${pStats(p._1).ownedArea.toInt}",
           s"${pStats(p._1).loaned}, ${pStats(p._1).loanedArea.toInt}",
-          s"${fbStatsK.initial}, ${fbStatsK.afterLoan}, ${fbStatsK.afterDonation}",
+          s"${fbStatsK.initialFoodNeeds}, ${fbStatsK.autonomousFoodBalance}, ${fbStatsK.afterLoanFoodBalance}, ${fbStatsK.afterDonationFoodBalance}",
           p._2.toString,
           p._3.toString,
           p._4.toString,

@@ -1,12 +1,13 @@
 package dscatt
 
 import dscatt.Croping.{Crop, Fallow, Mil, NotAssigned, Peanut, Three}
+import dscatt.Kitchen.FoodBalance
 import dscatt.Loan.Loan
 import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 object Rotation {
-  def evolve(simulationState: SimulationState)(using MersenneTwister): SimulationState = {
+  def evolve(simulationState: SimulationState)(using MersenneTwister): (SimulationState, Seq[FoodBalance]) = {
 
 
     // Compute theoritical crops for coming year before we know if it is in culture or not
@@ -33,6 +34,8 @@ object Rotation {
     }
 
 
+    val autonomousFoodBalance = theoriticalCroping.map{case (k,ps)=> Kitchen.foodBalance(ps,k)}
+    
     //Collect all demanding kitchens except provisioning crops strategies (a kitchen provisioning food is not supposed to ask for a loan)
     val demandingKitchens = theoriticalCroping.filter(_._1.cropingStrategy match {
       case Provisioning(_) => false
@@ -56,10 +59,10 @@ object Rotation {
 
     val newParcels = unchangedParcels ++ changedParcels
 
-    simulationState.copy(
+    (simulationState.copy(
       world = simulationState.world.copy(parcels = newParcels),
       history = simulationState.history.updateLoans(simulationState.year, yearLoans, newParcels)
-    )
+    ), autonomousFoodBalance)
   }
 
   case class ExtraParcels(forLoan: Seq[Parcel], notAssigned: Seq[Parcel])
