@@ -81,7 +81,7 @@ object Kitchen {
       history =
         simulationState.history
           .updatePopulations(simulationState.year, populations)
-          .updateParcelStatsAfterPopulationEvolution(simulationState.year, afterSplitKitchens.map(_.id))
+          .updateParcelStatsAfterPopulationEvolution(simulationState.year, afterSplitKitchens, afterSplitWorld)
     )
 
   }
@@ -168,7 +168,7 @@ object Kitchen {
     val (newKitchenIDParcels, untouchedParcel) = world.parcels.partition(p => parcelsToBeChanged.contains(p))
 
 
-    val newWorld = world.copy(parcels = untouchedParcel ++ newKitchenIDParcels.map { p => p.copy(ownerID = parcelsToBeChangedWithID(p)) }, highestKitckenID = nextHighestID)
+    val newWorld = world.copy(parcels = untouchedParcel ++ newKitchenIDParcels.map { p => p.copy(ownerID = parcelsToBeChangedWithID(p), farmerID = parcelsToBeChangedWithID(p)) }, highestKitckenID = nextHighestID)
     val originKitchens = offsprings.map {
       _.originKichen.id
     }

@@ -43,9 +43,8 @@ object Fertility {
   def assign(state: SimulationState): SimulationState = {
 
     val herdStrategies = state.kitchens.map { k =>
-      val ownedParcels = World.ownedParcelsForKitchen(state.world, k)
-
-      k.id -> HStrategy(k.drySeasonHerdStrategy, k.wetSeasonHerdStrategy, ownedParcels.map(_.area).sum, ownedParcels.filter(_.crop == Fallow).map(_.area).sum, k.herdSize)
+      val farmedParcels = World.farmedParcelsForKitchen(state.world, k)
+      k.id -> HStrategy(k.drySeasonHerdStrategy, k.wetSeasonHerdStrategy, farmedParcels.map(_.area).sum, farmedParcels.filter(_.crop == Fallow).map(_.area).sum, k.herdSize)
     }
 
     val allParcelsArea = state.world.parcels.map(_.area).sum
@@ -60,7 +59,8 @@ object Fertility {
       p.copy(fertility = p.fertility * cropFertilityBoost(p.crop) * manureFertilityBoost(p.ownerID))
     }
 
-    state.copy(world = state.world.copy(parcels = updatedFertilityParcels), history = state.history.updateFertilitySats(state.year, state.world, state.kitchens))
+    val newWorld = state.world.copy(parcels = updatedFertilityParcels)
+    state.copy(world = newWorld, history = state.history.updateFertilitySats(state.year, newWorld, state.kitchens))
   }
 
 }

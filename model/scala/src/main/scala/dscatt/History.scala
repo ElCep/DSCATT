@@ -55,17 +55,20 @@ object History {
       history.updated(year, historyOfYear.copy(foodBalanceStats = foodBalanceStats))
     }
 
-    def updateParcelStatsAfterPopulationEvolution(year: Int, allKitchenIDs: Seq[KitchenID]) = {
+    def updateParcelStatsAfterPopulationEvolution(year: Int, allKitchens: Seq[Kitchen], world: World) = {
       val historyOfYear = history(year)
-      val newIDs = allKitchenIDs diff historyOfYear.parcelStats.keys.toSeq
-      val newParcelStats = newIDs.map(i => i -> ParcelStat(0, 0.0, 0, 0.0)).toMap
+      val newKitchens = allKitchens.filterNot(i => historyOfYear.parcelStats.keys.toSeq.contains(i.id))
+      val newParcelStats = newKitchens.map { k =>
+        val owned = World.ownedParcelsForKitchen(world, k)
+        k.id -> ParcelStat(owned.size, owned.map(_.area).sum, 0, 0.0)
+      }.toMap
       history.updated(year, historyOfYear.copy(parcelStats = historyOfYear.parcelStats ++ newParcelStats))
     }
 
     def updateFertilitySats(year: Int, world: World, kitchens: Seq[Kitchen]) = {
       val historyOfYear = history(year)
       val newFertilities = kitchens.map { k =>
-        val fertilities = World.ownedParcelsForKitchen(world, k).map {
+        val fertilities = World.farmedParcelsForKitchen(world, k).map {
           _.fertility
         }
         val avg = fertilities.sum / fertilities.size
@@ -116,15 +119,15 @@ object History {
       val fbStats = yearHistory.foodBalanceStats
       val fertilityStats = yearHistory.fertilityStats
 
-      val table = Seq(Seq("KID", "Owned Size/Area", "Herd","Fertility Avg/Std", "Loaned Size/Area", "Food Balance (initFN/AFB/ALFB/ADFB)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map { p =>
+      val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Herd", "Fertility Avg/Std",  "Food Balance (initFN/AFB/ALFB/ADFB)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map { p =>
         val fbStatsK = fbStats.getOrElse(p._1, FoodBalanceOverYear())
         val fertilityStatK = fertilityStats.getOrElse(p._1, FertilityStat())
         Seq(
           p._1.toString,
           s"${pStats(p._1).size}, ${pStats(p._1).ownedArea.toInt}",
+          s"${pStats(p._1).loaned}, ${pStats(p._1).loanedArea.toInt}",
           s"${p._5}",
           s"${fertilityStatK.fertilityAverage}, ${fertilityStatK.fertilityStd} ",
-          s"${pStats(p._1).loaned}, ${pStats(p._1).loanedArea.toInt}",
           s"${fbStatsK.initialFoodNeeds}, ${fbStatsK.autonomousFoodBalance}, ${fbStatsK.afterLoanFoodBalance}, ${fbStatsK.afterDonationFoodBalance}",
           p._2.toString,
           p._3.toString,

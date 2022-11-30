@@ -45,10 +45,9 @@ object Simulation {
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 0) simulationState
       else {
         val initialFoodNeeds = simulationState.currentFoodNeeds
-        val afterFertilizatonState = Fertility.assign(simulationState)
 
         // Evolve rotation including loans
-        val (afterRotationsSimulationState, autonomousFoodBalance) = Rotation.evolve(afterFertilizatonState)
+        val (afterRotationsSimulationState, autonomousFoodBalance) = Rotation.evolve(simulationState)
         val afterLoanFoodBalance = afterRotationsSimulationState.currentFoodBalances
 
         // Process food donations
@@ -56,9 +55,12 @@ object Simulation {
 
         // Process kitchen dynamics (population, emmigrants, absorptions, splits)
         val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoodBalance)
+        
+        // Process Fertiliy
+        val afterFertilizatonState = Fertility.assign(resizedSimulationState)
 
-        val finalHistory = resizedSimulationState.history.updateFoodBalances(resizedSimulationState.year, initialFoodNeeds, autonomousFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
-        val finalState = resizedSimulationState.copy(world = Loan.reset(resizedSimulationState.world), year = resizedSimulationState.year + 1, history = finalHistory)
+        val finalHistory = afterFertilizatonState.history.updateFoodBalances(afterFertilizatonState.year, initialFoodNeeds, autonomousFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
+        val finalState = afterFertilizatonState.copy(world = Loan.reset(afterFertilizatonState.world), year = afterFertilizatonState.year + 1, history = finalHistory)
         evolve0(finalState)
       }
     }
