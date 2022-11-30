@@ -118,6 +118,7 @@ object History {
       val pStats = yearHistory.parcelStats
       val fbStats = yearHistory.foodBalanceStats
       val fertilityStats = yearHistory.fertilityStats
+      val doubleFormat = "%.5f"
 
       val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Herd", "Fertility Avg/Std",  "Food Balance (initFN/AFB/ALFB/ADFB)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map { p =>
         val fbStatsK = fbStats.getOrElse(p._1, FoodBalanceOverYear())
@@ -127,7 +128,7 @@ object History {
           s"${pStats(p._1).size}, ${pStats(p._1).ownedArea.toInt}",
           s"${pStats(p._1).loaned}, ${pStats(p._1).loanedArea.toInt}",
           s"${p._5}",
-          s"${fertilityStatK.fertilityAverage}, ${fertilityStatK.fertilityStd} ",
+          s"${doubleFormat.format(fertilityStatK.fertilityAverage)}, ${doubleFormat.format(fertilityStatK.fertilityStd)} ",
           s"${fbStatsK.initialFoodNeeds}, ${fbStatsK.autonomousFoodBalance}, ${fbStatsK.afterLoanFoodBalance}, ${fbStatsK.afterDonationFoodBalance}",
           p._2.toString,
           p._3.toString,
