@@ -19,6 +19,8 @@ object Rotation {
         )
       }
     }
+    
+    val autonomousFoodBalance = theoriticalCroping.map { case (k, ps) => Kitchen.foodBalance(ps, k) }
 
     // Loaners process:
     // 1- have a positive foodBalance with all crops in culture
@@ -32,9 +34,6 @@ object Rotation {
       }
       (eP.flatMap(_.forLoan), eP.flatMap(_.notAssigned))
     }
-
-
-    val autonomousFoodBalance = theoriticalCroping.map{case (k,ps)=> Kitchen.foodBalance(ps,k)}
     
     //Collect all demanding kitchens except provisioning crops strategies (a kitchen provisioning food is not supposed to ask for a loan)
     val demandingKitchens = theoriticalCroping.filter(_._1.cropingStrategy match {

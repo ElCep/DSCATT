@@ -15,10 +15,9 @@ object Simulation {
              giniParcels: Double,
              giniTolerance: Double = 0.01,
              maximumNumberOfParcels: Int = 200,
-             herdSize: Int = 100,
-             giniHerd: Double,
              populationGrowth: Double,
              kitchenPartition: KitchenPartition = KitchenPartition((KitchenProfile.default, 1)),
+             supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
              parcelOutputPath: Option[String] = None
            ) = {
@@ -56,9 +55,12 @@ object Simulation {
 
         // Process kitchen dynamics (population, emmigrants, absorptions, splits)
         val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoodBalance)
+        
+        // Process Fertiliy
+        val afterFertilizatonState = Fertility.assign(resizedSimulationState)
 
-        val finalHistory = resizedSimulationState.history.updateFoodBalances(resizedSimulationState.year, initialFoodNeeds, autonomousFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
-        val finalState = resizedSimulationState.copy(world = Loan.reset(resizedSimulationState.world), year = resizedSimulationState.year + 1, history = finalHistory)
+        val finalHistory = afterFertilizatonState.history.updateFoodBalances(afterFertilizatonState.year, initialFoodNeeds, autonomousFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
+        val finalState = afterFertilizatonState.copy(world = Loan.reset(afterFertilizatonState.world), year = afterFertilizatonState.year + 1, history = finalHistory)
         evolve0(finalState)
       }
     }
@@ -68,6 +70,7 @@ object Simulation {
 
   implicit class AState(simulationState: SimulationState) {
     def currentFoodBalances = simulationState.kitchens.map { k => Kitchen.foodBalance(simulationState.world, k) }
-    def currentFoodNeeds = simulationState.kitchens.map { k => k.id-> - Kitchen.foodNeeds(k) }
+
+    def currentFoodNeeds = simulationState.kitchens.map { k => k.id -> -Kitchen.foodNeeds(k) }
   }
 }
