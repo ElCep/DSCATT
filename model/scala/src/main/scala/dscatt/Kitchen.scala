@@ -15,7 +15,7 @@ object Kitchen {
 
   def buildKitchens(kitchenPartition: KitchenPartition): Seq[Kitchen] = {
     kitchenPartition.profiles.flatMap { p => Seq.fill[KitchenProfile](p._2)(p._1) }.zipWithIndex.map { case (kp, id) =>
-      Kitchen(id + 1, kp.size, kp.rotationCycle, kp.cropingStrategy, kp.loanStrategy, kp.foodDonationStrategy)
+      Kitchen(id + 1, kp.size, kp.rotationCycle, kp.cropingStrategy, kp.loanStrategy, kp.foodDonationStrategy, kp.herdSize, kp.drySeasonHerdStrategy, kp.wetSeasonHerdStrategy, kp.fertilizerStrategy)
     }
   }
 
@@ -29,22 +29,22 @@ object Kitchen {
   }
 
   def parcelProduction(parcel: Parcel) = {
-    parcel.crop match {
+    parcel.fertility * (parcel.crop match {
       case Mil => parcel.area * Constants.MIL_YIELD_PER_M2
       case Peanut => parcel.area * Constants.PEANUT_YIELD_PER_M2 * Constants.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
-    }
+    })
   }
 
   // Fallow is considered as Mil in case of ExtraParcelsExceptFallowLoaner and will be set as Mil once the loan will be effective 
-   def parcelProductionForLoan(parcel: Parcel) = {
-    parcel.crop match {
+  def parcelProductionForLoan(parcel: Parcel) = {
+    parcel.fertility * (parcel.crop match {
       case Mil | Fallow => parcel.area * Constants.MIL_YIELD_PER_M2
       case Peanut => parcel.area * Constants.PEANUT_YIELD_PER_M2 * Constants.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
-    }
+    })
   }
-   
+
   def parcelsProduction(parcels: Seq[Parcel]) = {
     parcels.map {
       parcelProduction
@@ -72,7 +72,7 @@ object Kitchen {
       val emigrantsK = nbEmigrants.getOrElse(k.id, 0)
       val absorbtionsK = absorbingKitchens.getOrElse(k.id, Seq())
       val splittedIntoK = splittedInto.get(k.id)
-      k.id -> History.PopulationStat(k.size, birthK, emigrantsK, absorbtionsK, splittedIntoK)
+      k.id -> History.PopulationStat(k.size, birthK, emigrantsK, k.herdSize, absorbtionsK, splittedIntoK)
     }
 
     simulationState.copy(
@@ -153,8 +153,9 @@ object Kitchen {
 
         val nextID = highestID + 1
         val acquiredParcelK = acquireParcels(parcelsK.toList, targetArea, List())
-        val offspring = Offspring(kitchenK.copy(id = nextID, size = Constants.SPLIT_KITCHEN_OFFSPRING_SIZE),
-          kitchenK.copy(size = kitchenK.size - Constants.SPLIT_KITCHEN_OFFSPRING_SIZE),
+        val offspringHerdSize = ((kitchenK.herdSize *  Constants.SPLIT_KITCHEN_OFFSPRING_SIZE).toDouble / kitchenK.size).floor.toInt
+        val offspring = Offspring(kitchenK.copy(id = nextID, size = Constants.SPLIT_KITCHEN_OFFSPRING_SIZE, herdSize = offspringHerdSize),
+          kitchenK.copy(size = kitchenK.size - Constants.SPLIT_KITCHEN_OFFSPRING_SIZE, herdSize = kitchenK.herdSize - offspringHerdSize),
           acquiredParcelK)
 
         split(toBeSplitted.tail, nextID, offsprings :+ offspring)
@@ -226,5 +227,9 @@ case class Kitchen(id: Kitchen.KitchenID,
                    rotationCycle: RotationCycle,
                    cropingStrategy: CropingStrategy,
                    loanStrategy: LoanStrategy,
-                   foodDonationStrategy: FoodDonationStrategy
+                   foodDonationStrategy: FoodDonationStrategy,
+                   herdSize: Int,
+                   drySeasonHerdStrategy: HerdStrategy,
+                   wetSeasonHerdStrategy: HerdStrategy,
+                   fertilizerStrategy: FertilizerStrategy
                   )

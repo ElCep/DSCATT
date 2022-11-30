@@ -15,10 +15,9 @@ object Simulation {
              giniParcels: Double,
              giniTolerance: Double = 0.01,
              maximumNumberOfParcels: Int = 200,
-             herdSize: Int = 100,
-             giniHerd: Double,
              populationGrowth: Double,
              kitchenPartition: KitchenPartition = KitchenPartition((KitchenProfile.default, 1)),
+             supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
              parcelOutputPath: Option[String] = None
            ) = {
@@ -46,9 +45,10 @@ object Simulation {
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 0) simulationState
       else {
         val initialFoodNeeds = simulationState.currentFoodNeeds
+        val afterFertilizatonState = Fertility.assign(simulationState)
 
         // Evolve rotation including loans
-        val (afterRotationsSimulationState, autonomousFoodBalance) = Rotation.evolve(simulationState)
+        val (afterRotationsSimulationState, autonomousFoodBalance) = Rotation.evolve(afterFertilizatonState)
         val afterLoanFoodBalance = afterRotationsSimulationState.currentFoodBalances
 
         // Process food donations
@@ -68,6 +68,7 @@ object Simulation {
 
   implicit class AState(simulationState: SimulationState) {
     def currentFoodBalances = simulationState.kitchens.map { k => Kitchen.foodBalance(simulationState.world, k) }
-    def currentFoodNeeds = simulationState.kitchens.map { k => k.id-> - Kitchen.foodNeeds(k) }
+
+    def currentFoodNeeds = simulationState.kitchens.map { k => k.id -> -Kitchen.foodNeeds(k) }
   }
 }

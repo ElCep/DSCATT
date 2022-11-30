@@ -31,8 +31,19 @@ object LeaveForEver extends MigrantStrategy // when someone leaves a kitchen, it
 object SeasonalPresence extends MigrantStrategy // some people are present in kitchen when there is work, in town the rest of the time
 
 sealed trait HerdStrategy extends Control
-object SmallYearRound extends HerdStrategy // small herd present in village all year round
-object BigSeasonal extends HerdStrategy // big herd present part time in village and part time in transhumance
+object EverywhereAllTime extends HerdStrategy // all herd beasts are grazing on the full area (fallow or crop)
+object EverywhereByDayOwnerByNight extends HerdStrategy  // the herd is grazing evrywhere by day and only on the kitchen parcels by night
+object OwnerOnly extends HerdStrategy// the herd of the kitchen are grazing on the kitchen parcels only
+
+sealed trait FertilizerStrategy extends Control
+object UniformFertilizing extends FertilizerStrategy
+object Nominal150Fertilizing extends FertilizerStrategy// nominal 150kg per hectare (ie 0.015kg / m2)
+case class PriorityFetilizedParcels(criteria: Parcel=> Boolean) extends FertilizerStrategy // Fertilizer is set in priority on a given set of Parcels
+
+sealed trait FertilizerAttribution
+object UniformAttribution extends FertilizerAttribution
+object UniformForTaxPayer extends FertilizerAttribution
+object BagRouletteForTaxPayer extends FertilizerAttribution
 
 sealed trait FaidherbiaStrategy extends Control
 object  NoFaidherbiaAttention extends FaidherbiaStrategy
@@ -43,11 +54,15 @@ case class KitchenProfile(
                            rotationCycle: RotationCycle,
                            cropingStrategy: CropingStrategy,
                            loanStrategy: LoanStrategy,
-                           foodDonationStrategy: FoodDonationStrategy
+                           foodDonationStrategy: FoodDonationStrategy,
+                           herdSize: Int,
+                           drySeasonHerdStrategy: HerdStrategy,
+                           wetSeasonHerdStrategy: HerdStrategy,
+                           fertilizerStrategy: FertilizerStrategy
                          )
 
 object KitchenProfile {
-  val default = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
+  val default = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy, 15, EverywhereByDayOwnerByNight, EverywhereByDayOwnerByNight, UniformFertilizing)
 }
 
 case class KitchenPartition(profiles: (KitchenProfile, KitchenSize)*)

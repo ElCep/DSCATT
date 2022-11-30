@@ -26,11 +26,16 @@ object Constants {
   }
 
   //FERTILITY
-  val INITIAL_FERTILITY_PER_PARCEL = 1000
-  // Between 12% and 20%, sources: https://www.researchgate.net/publication/248850078_Influence_d%27apports_de_matiere_organique_sur_la_culture_de_mil_et_d%27arachide_sur_un_sol_sableux_du_Nord-Senegal_I_-_Bilans_de_consommation_production_et_developpement_racinaire
-  // Effects are very close for mil and peanut
-  val MANURE_EFFECT_ON_YIELD = 0.15
-  val FALLOW_EFFECT_ON_YIELD = 0.1
-  val FERTILIZER_EFFECT_ON_MIL_YIELD = 0.2
-  val FERTILIZER_EFFECT_ON_PEANUT_YIELD = 0.8
+  type FertilityBoost = Double
+  val INITIAL_FERTILITY_PER_PARCEL = 1.0
+
+  val FERTILITY_BOOST_PER_MANURE_KG_PER_HA = 0.000075  // Converted from the data: "A boost of +15% with 2T per ha"
+  val KG_OF_MANURE_PER_COW_PER_YEAR = 400
+
+  val FERTILITY_BOOST_PER_FERTILIZER_KG = 0.012
+
+  val MIL_EFFECT_ON_FERTILITY_BOOST = 0.98  // drop of 2% per year
+  val PEANUT_EFFECT_ON_FERTILITY_BOOST = 0.98 // drop of 2% per year
+  val FALLOW_EFFECT_FERTILITY_BOOST = 0.99 // FIXME: to be confirmed
+
 }
