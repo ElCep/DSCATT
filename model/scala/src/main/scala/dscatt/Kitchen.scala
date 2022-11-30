@@ -152,7 +152,7 @@ object Kitchen {
         }
 
         val nextID = highestID + 1
-        val acquiredParcelK = acquireParcels(parcelsK.toList, targetArea, List())
+        val acquiredParcelK = acquireParcels(parcelsK.toList.sortBy(_.area), 0.0, List())
         val offspringHerdSize = ((kitchenK.herdSize *  Constants.SPLIT_KITCHEN_OFFSPRING_SIZE).toDouble / kitchenK.size).floor.toInt
         val offspring = Offspring(kitchenK.copy(id = nextID, size = Constants.SPLIT_KITCHEN_OFFSPRING_SIZE, herdSize = offspringHerdSize),
           kitchenK.copy(size = kitchenK.size - Constants.SPLIT_KITCHEN_OFFSPRING_SIZE, herdSize = kitchenK.herdSize - offspringHerdSize),
