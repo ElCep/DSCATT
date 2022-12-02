@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="418.79065mm"
+   height="256.103mm"
+   viewBox="0 0 418.79066 256.10299"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="poster3.svg"
+   inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+   inkscape:export-xdpi="107"
+   inkscape:export-ydpi="107"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.39765066"
+     inkscape:cx="891.48602"
+     inkscape:cy="761.97536"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient40686">
+      <stop
+         style="stop-color:#b3b3b3;stop-opacity:1"
+         offset="0"
+         id="stop40682" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1"
+         offset="1"
+         id="stop40684" />
+    </linearGradient>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path12844" />
+    </marker>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient59390">
+      <stop
+         style="stop-color:#00ab05;stop-opacity:1"
+         offset="0"
+         id="stop59382" />
+      <stop
+         style="stop-color:#abc837;stop-opacity:1"
+         offset="0.40439403"
+         id="stop59384" />
+      <stop
+         style="stop-color:#ffe680;stop-opacity:1"
+         offset="0.93348765"
+         id="stop59386" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop59388" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient55845">
+      <stop
+         style="stop-color:#fee67f;stop-opacity:1"
+         offset="0"
+         id="stop55839" />
+      <stop
+         style="stop-color:#00ccff;stop-opacity:1"
+         offset="0.34845859"
+         id="stop55841" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop55843" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient55110">
+      <stop
+         style="stop-color:#00ccff;stop-opacity:1"
+         offset="0"
+         id="stop55106" />
+      <stop
+         style="stop-color:#00aa00;stop-opacity:1"
+         offset="1"
+         id="stop55386" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop55108" />
+    </linearGradient>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path12847" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path12823" />
+    </marker>
+    <inkscape:path-effect
+       effect="bend_path"
+       id="path-effect11507"
+       is_visible="true"
+       lpeversion="1"
+       bendpath="M 260.97189,-87.181386 C 201.49797,-127.30159 65.502089,101.71435 130.5992,132.51183 191.68664,161.41233 442.70599,-56.328398 260.97189,-87.181386"
+       prop_scale="0.83059233"
+       scale_y_rel="false"
+       vertical="false"
+       hide_knot="true"
+       bendpath-nodetypes="csc" />
+    <inkscape:path-effect
+       effect="skeletal"
+       id="path-effect11447"
+       is_visible="true"
+       lpeversion="1"
+       pattern="m -450.34153,-333.80352 h 0.57846"
+       copytype="single_stretched"
+       prop_scale="1"
+       scale_y_rel="false"
+       spacing="0"
+       normal_offset="0"
+       tang_offset="0"
+       prop_units="false"
+       vertical_pattern="false"
+       hide_knot="false"
+       fuse_tolerance="0" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient55110"
+       id="linearGradient55112"
+       x1="198.61949"
+       y1="1.5179968"
+       x2="306.09525"
+       y2="1.5179968"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.97566095,0,0,1,-412.27521,248.48441)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient55845"
+       id="linearGradient55742"
+       gradientUnits="userSpaceOnUse"
+       x1="298.92032"
+       y1="-0.41860241"
+       x2="315.81216"
+       y2="-0.67133284"
+       gradientTransform="matrix(1.9536682,0,0,1,-431.29142,248.48441)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient59390"
+       id="linearGradient57466"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.63122787,0,0,1,-238.76804,248.48441)"
+       x1="197.23167"
+       y1="0.30206108"
+       x2="312.83047"
+       y2="0.56099135" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient40686"
+       id="radialGradient40688"
+       cx="221.80106"
+       cy="38.225933"
+       fx="221.80106"
+       fy="38.225933"
+       r="106.15902"
+       gradientTransform="matrix(-1.2745449,0,-3.330152e-8,-0.15775267,299.85162,45.520302)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(253.35483,-11.10357)">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.00001;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:8, 8;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       id="rect55177"
+       width="530.12744"
+       height="276.71811"
+       x="-357.94843"
+       y="6.5277953"
+       inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+       inkscape:export-xdpi="107"
+       inkscape:export-ydpi="107" />
+    <text
+       xml:space="preserve"
+       style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="41.388996"
+       y="70.273796"
+       id="text23765"
+       inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+       inkscape:export-xdpi="107"
+       inkscape:export-ydpi="107"><tspan
+         sodipodi:role="line"
+         id="tspan23763"
+         style="stroke-width:0.264583px"
+         x="41.388996"
+         y="70.273796" /></text>
+    <g
+       id="g67950">
+      <rect
+         style="fill:url(#radialGradient40688);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:3.99998, 3.99998;stroke-dashoffset:0;paint-order:stroke fill markers"
+         id="rect97203"
+         width="225.01573"
+         height="35.509949"
+         x="-97.422134"
+         y="20.748291"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107" />
+      <text
+         xml:space="preserve"
+         style="font-size:11.0694px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-47.744995"
+         y="44.51796"
+         id="text93997"
+         transform="scale(1.054439,0.94837159)"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107"><tspan
+           sodipodi:role="line"
+           id="tspan93995"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-47.744995"
+           y="44.51796">Pâture des transhumants</tspan></text>
+      <rect
+         style="fill:#e6e6e6;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:3.99999, 3.99999;stroke-dashoffset:0;paint-order:stroke fill markers"
+         id="rect97203-6"
+         width="230.72997"
+         height="32.046764"
+         x="-103.50251"
+         y="67.051872"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107" />
+      <text
+         xml:space="preserve"
+         style="font-size:11.0694px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-34.713921"
+         y="90.394882"
+         id="text93997-5"
+         transform="scale(1.054439,0.94837159)"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107"><tspan
+           sodipodi:role="line"
+           id="tspan93995-6"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-34.713921"
+           y="90.394882">Pâture et parcage  </tspan></text>
+    </g>
+    <rect
+       style="fill:#d38d5f;fill-opacity:0.609141;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linejoin:round;stroke-dasharray:4, 4;stroke-opacity:1;paint-order:stroke fill markers"
+       id="rect51397"
+       width="386.42566"
+       height="53.687092"
+       x="-223.24022"
+       y="120.6466"
+       inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+       inkscape:export-xdpi="107"
+       inkscape:export-ydpi="107" />
+    <g
+       id="g54184"
+       transform="translate(0,-45.386068)"
+       inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+       inkscape:export-xdpi="107"
+       inkscape:export-ydpi="107">
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-160.01236"
+         y="198.5314"
+         id="text19853"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-160.01236"
+           y="198.5314">Janvier</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-130.08194"
+         y="215.97102"
+         id="text19853-3"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851-6"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-130.08194"
+           y="215.97102">Février</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-94.763908"
+         y="231.71515"
+         id="text19853-7"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851-5"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-94.763908"
+           y="231.71515">Mars</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-63.80481"
+         y="250.32298"
+         id="text19853-35"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851-62"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-63.80481"
+           y="250.32298">Avril</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-3.6969302"
+         y="284.32153"
+         id="text19853-2"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851-7"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-3.6969302"
+           y="284.32153">Juin</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-32.701584"
+         y="267.2757"
+         id="text19853-9"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851-1"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-32.701584"
+           y="267.2757">Mai</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-306.75162"
+         y="104.31538"
+         id="text19853-36"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851-0"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-306.75162"
+           y="104.31538">Août</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-339.40884"
+         y="87.540115"
+         id="text19853-0"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851-9"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-339.40884"
+           y="87.540115">Juillet</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-294.2793"
+         y="126.92625"
+         id="text19853-6"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851-2"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-294.2793"
+           y="126.92625">Septembre</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-256.51355"
+         y="141.80205"
+         id="text19853-61"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851-8"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-256.51355"
+           y="141.80205">Octobre</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-233.83333"
+         y="161.83559"
+         id="text19853-79"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851-20"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-233.83333"
+           y="161.83559">Novembre</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-204.41708"
+         y="179.63536"
+         id="text19853-23"
+         transform="rotate(-31.178123)"><tspan
+           sodipodi:role="line"
+           id="tspan19851-75"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-204.41708"
+           y="179.63536">Décembre</tspan></text>
+    </g>
+    <g
+       id="g54198"
+       transform="matrix(1,0,0,0.67338495,0,28.783671)"
+       style="opacity:0.912459;stroke-width:1.21862"
+       inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+       inkscape:export-xdpi="107"
+       inkscape:export-ydpi="107">
+      <path
+         style="opacity:0.265164;fill:#4d4d4d;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m -13.68793,-18.11804 c 0,245.41354 0,245.41354 0,245.41354"
+         id="path54810" />
+      <path
+         style="opacity:0.265164;fill:#666666;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 21.46534,-18.11804 c 0,245.41354 0,245.41354 0,245.41354"
+         id="path54810-9" />
+      <path
+         style="opacity:0.265164;fill:#666666;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 56.6186,-18.11804 c 0,245.41354 0,245.41354 0,245.41354"
+         id="path54810-7" />
+      <path
+         style="opacity:0.265164;fill:#666666;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 91.77187,-18.11804 c 0,245.41354 0,245.41354 0,245.41354"
+         id="path54810-3" />
+      <path
+         style="opacity:0.265164;fill:#666666;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 126.92513,-18.11804 c 0,245.41354 0,245.41354 0,245.41354"
+         id="path54810-6" />
+      <path
+         style="opacity:0.265164;fill:#666666;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 162.07839,-18.11804 c 0,245.41354 0,245.41354 0,245.41354"
+         id="path54810-1" />
+      <path
+         style="opacity:0.265164;fill:#666666;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m -222.92202,-18.11804 c 0,245.41354 0,245.41354 0,245.41354"
+         id="path54810-2" />
+      <path
+         style="opacity:0.265164;fill:#666666;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m -187.76877,-18.11804 c 0,245.41354 0,245.41354 0,245.41354"
+         id="path54810-93" />
+      <path
+         style="opacity:0.265164;fill:#666666;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m -152.6155,-18.11804 c 0,245.41354 0,245.41354 0,245.41354"
+         id="path54810-19" />
+      <path
+         style="opacity:0.265164;fill:#666666;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m -117.46223,-18.11803 c 0,245.41353 0,245.41353 0,245.41353"
+         id="path54810-4" />
+      <path
+         style="opacity:0.265164;fill:#666666;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m -82.30895,-18.11804 c 0,245.41354 0,245.41354 0,245.41354"
+         id="path54810-78" />
+      <path
+         style="opacity:0.265164;fill:#666666;fill-rule:evenodd;stroke:#000000;stroke-width:0.322426px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m -47.15574,-18.11804 c 0,245.41354 0,245.41354 0,245.41354"
+         id="path54810-45" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:22.5778px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#ff7f2a;stroke:#c87137;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-93.993401"
+       y="-112.28411"
+       id="text103386"
+       transform="matrix(0,-0.99296327,1.0070866,0,0,0)"
+       inkscape:transform-center-x="-23.12819"
+       inkscape:transform-center-y="-29.882832"><tspan
+         sodipodi:role="line"
+         id="tspan103384"
+         style="font-size:22.5778px;fill:#ff7f2a;stroke:#c87137;stroke-width:0.264583px"
+         x="-93.993401"
+         y="-112.28411">Récolte</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:8.08766px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#ff7f2a;fill-opacity:0.780392;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-135.83957"
+       y="102.08461"
+       id="text7052"><tspan
+         sodipodi:role="line"
+         id="tspan7050"
+         style="fill:#ff7f2a;fill-opacity:0.780392;stroke:none;stroke-width:0.264583px"
+         x="-135.83957"
+         y="102.08461">Mil sanio</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#ff7f2a;fill-opacity:0.780392;stroke:none;stroke-width:0.264583px"
+         x="-135.83957"
+         y="110.17227"
+         id="tspan7054">Arachide</tspan></text>
+    <g
+       id="g31906"
+       transform="matrix(0.69209393,0,0,0.69209393,-326.99336,5.327764)"
+       style="fill:#ff7f2a;stroke-width:1.44489">
+      <text
+         xml:space="preserve"
+         style="font-size:13.8768px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#ff7f2a;stroke:#c87137;stroke-width:0.382293px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-81.331429"
+         y="255.97646"
+         id="text103386-9"
+         transform="matrix(0,-0.99600116,1.0040149,0,0,0)"
+         inkscape:transform-center-x="-15.941035"
+         inkscape:transform-center-y="-20.722947"><tspan
+           sodipodi:role="line"
+           id="tspan103384-3"
+           style="fill:#ff7f2a;stroke:#c87137;stroke-width:0.382293px"
+           x="-81.331429"
+           y="255.97646">Récolte</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:8.31574px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#ff7f2a;fill-opacity:0.780392;stroke:none;stroke-width:0.382293px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="251.45483"
+         y="92.312889"
+         id="text7052-3"><tspan
+           sodipodi:role="line"
+           id="tspan7050-6"
+           style="text-align:center;text-anchor:middle;fill:#ff7f2a;fill-opacity:0.780392;stroke:none;stroke-width:0.382293px"
+           x="251.45483"
+           y="92.312889">Mil souna</tspan><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;fill:#ff7f2a;fill-opacity:0.780392;stroke:none;stroke-width:0.382293px"
+           x="251.45483"
+           y="100.62863"
+           id="tspan7054-7">Niébé</tspan><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;fill:#ff7f2a;fill-opacity:0.780392;stroke:none;stroke-width:0.382293px"
+           x="252.61002"
+           y="108.94437"
+           id="tspan19782">Pastèque </tspan></text>
+    </g>
+    <rect
+       style="fill:#e6e6e6;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:4, 4;stroke-dashoffset:0;paint-order:stroke fill markers"
+       id="rect97203-3"
+       width="103.61426"
+       height="29.3652"
+       x="-221.1028"
+       y="130.47154"
+       inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+       inkscape:export-xdpi="107"
+       inkscape:export-ydpi="107" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.8905px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-188.66238"
+       y="146.56204"
+       id="text93997-57"
+       transform="scale(0.98313965,1.0171495)"
+       inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+       inkscape:export-xdpi="107"
+       inkscape:export-ydpi="107"><tspan
+         sodipodi:role="line"
+         id="tspan93995-0"
+         style="fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="-188.66238"
+         y="146.56204">Pâture </tspan></text>
+    <path
+       style="fill:#ff6600;fill-rule:evenodd;stroke:#ff6600;stroke-width:2.00002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:12, 4;stroke-dashoffset:0;stroke-opacity:0.146877"
+       d="M -336.71556,117.16152 H 162.63193"
+       id="path66356"
+       inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+       inkscape:export-xdpi="107"
+       inkscape:export-ydpi="107" />
+    <path
+       style="fill:#ff6600;fill-rule:evenodd;stroke:#ff6600;stroke-width:2.00002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:12, 4;stroke-dashoffset:0;stroke-opacity:0.146877"
+       d="M -336.71557,181.84104 H 162.63192"
+       id="path66356-9"
+       inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+       inkscape:export-xdpi="107"
+       inkscape:export-ydpi="107" />
+    <path
+       style="fill:#ff6600;fill-rule:evenodd;stroke:#ff6600;stroke-width:2.00002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:12, 4;stroke-dashoffset:0;stroke-opacity:0.146877"
+       d="M -336.71556,16.583256 H 162.63192"
+       id="path66356-7"
+       inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+       inkscape:export-xdpi="107"
+       inkscape:export-ydpi="107" />
+    <g
+       id="g80049"
+       transform="translate(-2.78402,3.5191111)">
+      <text
+         xml:space="preserve"
+         style="font-size:22.5778px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#ff7f2a;stroke:#c87137;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-84.679283"
+         y="156.06369"
+         id="text103386-8"
+         transform="matrix(0,-0.99296327,1.0070866,0,0,0)"
+         inkscape:transform-center-x="-23.12819"
+         inkscape:transform-center-y="-29.882832"><tspan
+           sodipodi:role="line"
+           id="tspan103384-1"
+           style="font-size:22.5778px;fill:#ff7f2a;stroke:#c87137;stroke-width:0.264583px"
+           x="-84.679283"
+           y="156.06369">Semis</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#ff7f2a;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="142.90825"
+         y="93.083511"
+         id="text72086"><tspan
+           sodipodi:role="line"
+           id="tspan72084"
+           style="fill:#ff7f2a;fill-opacity:1;stroke:none;stroke-width:0.264583px"
+           x="142.90825"
+           y="93.083511">Mil</tspan></text>
+    </g>
+    <g
+       id="g81929"
+       transform="translate(-3.4668837,2.2005193)">
+      <text
+         xml:space="preserve"
+         style="font-size:22.5778px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#ff7f2a;stroke:#c87137;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-94.672142"
+         y="-193.85764"
+         id="text103386-8-2"
+         transform="matrix(0,-0.99296327,1.0070866,0,0,0)"
+         inkscape:transform-center-x="-23.12819"
+         inkscape:transform-center-y="-29.882832"><tspan
+           sodipodi:role="line"
+           id="tspan103384-1-9"
+           style="font-size:22.5778px;fill:#ff7f2a;stroke:#c87137;stroke-width:0.264583px"
+           x="-94.672142"
+           y="-193.85764">Semis</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#ff7f2a;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-222.64998"
+         y="103.00605"
+         id="text72086-7"><tspan
+           sodipodi:role="line"
+           id="tspan72084-5"
+           style="fill:#ff7f2a;fill-opacity:1;stroke:none;stroke-width:0.264583px"
+           x="-222.64998"
+           y="103.00605">Arachide</tspan></text>
+    </g>
+    <g
+       id="g107083"
+       transform="translate(0,-1.0368041)">
+      <rect
+         style="fill:url(#linearGradient55742);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect55104-1"
+         width="211.40199"
+         height="36.840206"
+         x="-45.966175"
+         y="230.36636"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107" />
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-12.557205"
+         y="276.45633"
+         id="text89229"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107"><tspan
+           sodipodi:role="line"
+           id="tspan89227"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-12.557205"
+           y="276.45633">SAISON SÈCHE</tspan></text>
+      <rect
+         style="fill:url(#linearGradient55112);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect55104"
+         width="105.57406"
+         height="36.840206"
+         x="-219.84396"
+         y="230.36636"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107" />
+      <rect
+         style="fill:url(#linearGradient57466);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect55104-1-0"
+         width="68.303734"
+         height="36.840206"
+         x="-114.26991"
+         y="230.36636"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107" />
+      <text
+         xml:space="preserve"
+         style="font-size:10.9968px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-203.42581"
+         y="278.24228"
+         id="text86628"
+         transform="scale(0.99842897,1.0015735)"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107"><tspan
+           sodipodi:role="line"
+           id="tspan86626"
+           style="fill:#000000;stroke:none;stroke-width:0.264582px"
+           x="-203.42581"
+           y="278.24228">HIVERNAGE</tspan></text>
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow2Mstart);marker-end:url(#Arrow2Mend)"
+         d="m -218.87066,264.05349 h 104.48649"
+         id="path88323"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:4, 4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m -219.84395,230.36637 v 36.8402"
+         id="path92865"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:4, 4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m -114.26991,230.36637 v 36.8402"
+         id="path92865-5"
+         inkscape:export-filename="/home/paulchapron/DSCATT/une_annee.png"
+         inkscape:export-xdpi="107"
+         inkscape:export-ydpi="107" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#06cdfc;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="132.01506"
+       y="208.58238"
+       id="text84916"><tspan
+         sodipodi:role="line"
+         id="tspan84914"
+         style="text-align:end;text-anchor:end;fill:#06cdfc;fill-opacity:1;stroke:none;stroke-width:0.264583px"
+         x="132.01506"
+         y="208.58238">Première </tspan><tspan
+         sodipodi:role="line"
+         style="text-align:end;text-anchor:end;fill:#06cdfc;fill-opacity:1;stroke:none;stroke-width:0.264583px"
+         x="132.01506"
+         y="218.46016"
+         id="tspan103272">Pluie</tspan></text>
+    <path
+       style="fill:#06cdfb;fill-opacity:0.541176;fill-rule:evenodd;stroke:#06cefc;stroke-width:1.165;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.784516;marker-end:url(#Arrow2Mend)"
+       d="m 133.58569,208.9736 19.62556,13.44206"
+       id="path91967"
+       sodipodi:nodetypes="cc" />
+    <g
+       id="g112109">
+      <rect
+         style="opacity:0.912459;fill:#ffffff;fill-opacity:0.541176;fill-rule:evenodd;stroke:#000000;stroke-width:1.165;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.784516;paint-order:stroke fill markers"
+         id="rect107400"
+         width="85.00309"
+         height="29.578173"
+         x="-347.41388"
+         y="132.77628" />
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-339.40494"
+         y="150.08063"
+         id="text108020"><tspan
+           sodipodi:role="line"
+           id="tspan108018"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-339.40494"
+           y="150.08063">Dans la jachère</tspan></text>
+    </g>
+    <g
+       id="g112104">
+      <rect
+         style="opacity:0.912459;fill:#ffffff;fill-opacity:0.541176;fill-rule:evenodd;stroke:#000000;stroke-width:1.165;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.784516;paint-order:stroke fill markers"
+         id="rect107400-3"
+         width="85.895798"
+         height="26.847374"
+         x="-347.86023"
+         y="50.665939" />
+      <text
+         xml:space="preserve"
+         style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="-342.9837"
+         y="66.643471"
+         id="text110992"><tspan
+           sodipodi:role="line"
+           id="tspan110990"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-342.9837"
+           y="66.643471">Dans les champs</tspan><tspan
+           sodipodi:role="line"
+           style="fill:#000000;stroke:none;stroke-width:0.264583px"
+           x="-342.9837"
+           y="76.52124"
+           id="tspan110994" /></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:9.87777px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ff2a2a;stroke:#ff0000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="127.02193"
+       y="225.7699"
+       id="text113214"><tspan
+         sodipodi:role="line"
+         id="tspan113212"
+         style="text-align:center;text-anchor:middle;fill:#ff2a2a;stroke:#ff0000;stroke-width:0.264583px"
+         x="127.02193"
+         y="225.7699" /><tspan
+         sodipodi:role="line"
+         style="text-align:center;text-anchor:middle;fill:#ff2a2a;stroke:#ff0000;stroke-width:0.264583px"
+         x="127.02193"
+         y="235.64767"
+         id="tspan117230">Grande </tspan><tspan
+         sodipodi:role="line"
+         style="text-align:center;text-anchor:middle;fill:#ff2a2a;stroke:#ff0000;stroke-width:0.264583px"
+         x="127.02193"
+         y="245.52544"
+         id="tspan121460">chasse</tspan><tspan
+         sodipodi:role="line"
+         style="text-align:center;text-anchor:middle;fill:#ff2a2a;stroke:#ff0000;stroke-width:0.264583px"
+         x="127.02193"
+         y="255.40321"
+         id="tspan124116">(xooy)</tspan></text>
+  </g>
+</svg>
