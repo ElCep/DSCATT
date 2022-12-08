@@ -7,6 +7,9 @@ import dscatt.Parcel._
 object Parcel {
   type ParcelID = String
 
+
+  case class ManureDeposit(year: Int, quantity: Double)
+  
   def isCultivated(parcel: Parcel) = parcel.crop match {
     case Peanut | Mil=> true
     case _=> false
@@ -21,4 +24,6 @@ case class Parcel(id: ParcelID,
                   area: Double,
                   distanceToVillage: Double,
                   neighbours: Seq[ParcelID],
-                  fertility: Double)
+                  fedherbiaTrees: Int,
+                  soilQuality: Double,
+                  manureDeposits: Seq[ManureDeposit])

@@ -42,10 +42,10 @@ object Simulation {
 
     @tailrec
     def evolve0(simulationState: SimulationState): SimulationState = {
-      if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 0) simulationState
+      if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 1) simulationState
       else {
         val initialFoodNeeds = simulationState.currentFoodNeeds
-
+        
         // Evolve rotation including loans
         val (afterRotationsSimulationState, autonomousFoodBalance) = Rotation.evolve(simulationState)
         val afterLoanFoodBalance = afterRotationsSimulationState.currentFoodBalances
@@ -55,7 +55,7 @@ object Simulation {
 
         // Process kitchen dynamics (population, emmigrants, absorptions, splits)
         val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoodBalance)
-        
+
         // Process Fertiliy
         val afterFertilizatonState = Fertility.assign(resizedSimulationState)
 

@@ -19,7 +19,7 @@ object Rotation {
         )
       }
     }
-    
+
     val autonomousFoodBalance = theoriticalCroping.map { case (k, ps) => Kitchen.foodBalance(ps, k) }
 
     // Loaners process:
@@ -28,13 +28,13 @@ object Rotation {
     // 3- Set not loaned parcels and not use for the kitchen to Not Assigned
 
     //Collect all unused parcels of potential loaners
-    val (extraParcelsForLoan, notAssignedExtraParcels) = {
+    val parcelUsages = {
       val eP = theoriticalCroping.map { case (k, parcels) =>
-        getExtraParcels(k, parcels)
+        getParcelUsages(k, parcels)
       }
-      (eP.flatMap(_.forLoan), eP.flatMap(_.notAssigned))
+      ParcelUsages(eP.flatMap(_.cultivated), eP.flatMap(_.forLoan), eP.flatMap(_.notLoanable))
     }
-    
+
     //Collect all demanding kitchens except provisioning crops strategies (a kitchen provisioning food is not supposed to ask for a loan)
     val demandingKitchens = theoriticalCroping.filter(_._1.cropingStrategy match {
       case Provisioning(_) => false
@@ -43,54 +43,65 @@ object Rotation {
       Kitchen.foodBalance(parcels, k)
     }.filter(_.balance < 0)
 
-    val (yearLoans, notUsedInLoanProcess) = dscatt.Loan.assign(simulationState.year, extraParcelsForLoan, demandingKitchens)
-
-    //Keep all parcels not involved in the loan process
-    val unchangedParcels = theoriticalCroping.flatMap {
-      _._2
-    } diff (extraParcelsForLoan ++ notAssignedExtraParcels)
-
+    val (yearLoans, notUsedInLoanProcess) = dscatt.Loan.assign(simulationState.year, parcelUsages.forLoan, demandingKitchens)
+    val loanedParcels = yearLoans.map(l=> l.parcel.copy(farmerID = l.to, crop = toMilIfFallow(l.parcel)))
   
-    //Process the effective loan (farmerID is changed)
-    val changedParcels: Seq[Parcel] = {
-      yearLoans.map(yl => yl.parcel.copy(farmerID = yl.to, crop = setMilIfFallow(yl.parcel)))
-    } ++ (notUsedInLoanProcess ++ notAssignedExtraParcels).map { p => p.copy(crop = NotAssigned) }
-
-    val newParcels = unchangedParcels ++ changedParcels
-
+    // The world parcels are a partition of needed parcels, not loanable parcels, loaned percels, and loanable (but not use in loan process) parcels
+    val newParcels = parcelUsages.cultivated ++
+      parcelUsages.notLoanable.map(toNotAssignedIfNotFallow(_)) ++
+      loanedParcels ++
+      notUsedInLoanProcess.map(toNotAssignedIfNotFallow(_))
+    
     (simulationState.copy(
       world = simulationState.world.copy(parcels = newParcels),
       history = simulationState.history.updateLoans(simulationState.year, yearLoans, newParcels)
     ), autonomousFoodBalance)
   }
 
-  case class ExtraParcels(forLoan: Seq[Parcel], notAssigned: Seq[Parcel])
+  case class ParcelUsages(cultivated: Seq[Parcel], forLoan: Seq[Parcel], notLoanable: Seq[Parcel])
 
   // Extra is defined as everything except what the kitchen needs
-  def getExtraParcels(kitchen: Kitchen, parcels: Seq[Parcel]): ExtraParcels = {
+  def getParcelUsages(kitchen: Kitchen, parcels: Seq[Parcel]): ParcelUsages = {
 
-    val parcelCandidatesForCulture = parcels.filterNot(_.crop == Fallow)
+    //FIXME Use the OwnFallowUse if the kitchen is deficitaire
+    val (fallowsNotCultivated, parcelCandidatesForCulture) = kitchen.ownFallowUse match {
+      case NeverUseFallow=> parcels.partition(_.crop == Fallow)
+      case UseFallowIfNeeded=> (Seq(),parcels)
+    }
 
-    val parcelsNeeded = kitchen.cropingStrategy match {
-      case Parsimonious => Kitchen.cropNeeds(kitchen, parcelCandidatesForCulture, Some(Kitchen.foodNeeds(kitchen)))
-      case Provisioning(exceedingProportion) => Kitchen.cropNeeds(kitchen, parcelCandidatesForCulture, Some(Kitchen.foodNeeds(kitchen) * (1 + exceedingProportion)))
+    //val parcelCandidatesForCulture = parcels.filterNot(_.crop == Fallow)
+
+    val (parcelsCultivated, candidatesNotUsed) = kitchen.cropingStrategy match {
+      case Parsimonious => Kitchen.getCropNeeded(kitchen, parcelCandidatesForCulture, Some(Kitchen.foodNeeds(kitchen)))
+      case Provisioning(exceedingProportion) => Kitchen.getCropNeeded(kitchen, parcelCandidatesForCulture, Some(Kitchen.foodNeeds(kitchen) * (1 + exceedingProportion)))
       case AsMuchAsWeCan => parcelCandidatesForCulture
     }
 
-    val fallowFreeExtraCandidates = parcelCandidatesForCulture diff parcelsNeeded
+    val notInCulture = fallowsNotCultivated ++ candidatesNotUsed
+   // val fallowFreeExtraLoanCandidates = parcelCandidatesForCulture diff parcelsNeeded
 
     val (notLoanable, loanable) = kitchen.loanStrategy match {
-      case Selfish => (fallowFreeExtraCandidates, Seq())
-      case AllExtraParcelsLoaner => (Seq(), parcels diff parcelsNeeded)
-      case ExtraParcelsExceptFallowLoaner => (Seq(), fallowFreeExtraCandidates)
+      case Selfish => (notInCulture, Seq())
+      case AllExtraParcelsLoaner => (Seq(), notInCulture)
+      case ExtraParcelsExceptFallowLoaner => (fallowsNotCultivated, candidatesNotUsed)
     }
 
-    ExtraParcels(loanable, notLoanable)
+    ParcelUsages(parcelsCultivated, loanable, notLoanable)
   }
 
-  def setMilIfFallow(parcel: Parcel) = parcel.crop match {
-    case Fallow => Mil
-    case c: Crop => c
+  def toMilIfFallow(parcel: Parcel): Crop = {
+    parcel.crop match {
+      case Fallow => Mil
+      case c: Crop => c
+    }
+  }
+
+  def toNotAssignedIfNotFallow(parcel: Parcel): Parcel = {
+    val c = parcel.crop match {
+      case Fallow => parcel.crop
+      case _ => NotAssigned
+    }
+    parcel.copy(crop = c)
   }
 
 }

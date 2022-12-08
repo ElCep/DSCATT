@@ -46,7 +46,9 @@ object World {
         area = p.area * Constants.AREA_FACTOR,
         distanceToVillage = p.distanceToCenter,
         neighbours = p.lIdNeighborhood.asScala.toSeq,
-        fertility = Constants.INITIAL_FERTILITY_PER_PARCEL
+        fedherbiaTrees = 0,
+        soilQuality = Constants.INITIAL_FERTILITY_PER_PARCEL,
+        Seq()
       )
     }
 
@@ -67,6 +69,8 @@ object World {
   private def zoneParcels(world: World, cropZone: CropZone) = world.parcels.filter {
     _.cropZone == cropZone
   }
+
+  def fullArea(world: World) = world.parcels.map{_.area}.sum
 
   def zoneOneParcels(world: World) = zoneParcels(world, One)
 
@@ -91,6 +95,11 @@ object World {
   def peanutParcels(world: World) = world.parcels.filter(_.crop == Peanut)
 
   def fallowParcels(world: World) = world.parcels.filter(_.crop == Fallow)
+  
+  def setFallowLast(parcels: Seq[Parcel]): Seq[Parcel] = {
+    val (fallow, others) = parcels.partition(_.crop == Fallow)
+    others ++ fallow
+  }
 }
 
 case class World(parcels: Seq[Parcel], highestKitckenID: KitchenID)

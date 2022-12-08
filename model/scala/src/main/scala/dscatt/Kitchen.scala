@@ -15,7 +15,20 @@ object Kitchen {
 
   def buildKitchens(kitchenPartition: KitchenPartition): Seq[Kitchen] = {
     kitchenPartition.profiles.flatMap { p => Seq.fill[KitchenProfile](p._2)(p._1) }.zipWithIndex.map { case (kp, id) =>
-      Kitchen(id + 1, kp.size, kp.rotationCycle, kp.cropingStrategy, kp.loanStrategy, kp.foodDonationStrategy, kp.herdSize, kp.drySeasonHerdStrategy, kp.wetSeasonHerdStrategy, kp.fertilizerStrategy)
+      Kitchen(
+        id + 1,
+        kp.size,
+        kp.rotationCycle,
+        kp.cropingStrategy,
+        kp.ownFallowUse,
+        kp.loanStrategy,
+        kp.foodDonationStrategy,
+        kp.herdSize,
+        kp.drySeasonHerdStrategy,
+        kp.wetSeasonHerdStrategy,
+        kp.drySeasonManureCriteria,
+        kp.fertilizerStrategy
+      )
     }
   }
 
@@ -29,7 +42,7 @@ object Kitchen {
   }
 
   def parcelProduction(parcel: Parcel) = {
-    parcel.fertility * (parcel.crop match {
+    parcel.soilQuality * (parcel.crop match {
       case Mil => parcel.area * Constants.MIL_YIELD_PER_M2
       case Peanut => parcel.area * Constants.PEANUT_YIELD_PER_M2 * Constants.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
@@ -38,7 +51,7 @@ object Kitchen {
 
   // Fallow is considered as Mil in case of ExtraParcelsExceptFallowLoaner and will be set as Mil once the loan will be effective 
   def parcelProductionForLoan(parcel: Parcel) = {
-    parcel.fertility * (parcel.crop match {
+    parcel.soilQuality * (parcel.crop match {
       case Mil | Fallow => parcel.area * Constants.MIL_YIELD_PER_M2
       case Peanut => parcel.area * Constants.PEANUT_YIELD_PER_M2 * Constants.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
@@ -63,6 +76,7 @@ object Kitchen {
   def evolve(simulationState: SimulationState, populationGrowth: Double, foodAssessment: Seq[FoodBalance])(using mT: MersenneTwister) = {
 
     val (populationUpdated, births): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolve(simulationState.kitchens, populationGrowth)
+
     val (emigrantsUpdated, nbEmigrants): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolveEmigrants(populationUpdated, foodAssessment)
     val (afterAbsorbtionKitchens, afterAbsorbtionWorld, absorbingKitchens) = kitchenAbsorption(emigrantsUpdated, simulationState.world)
     val (afterSplitKitchens, afterSplitWorld, splittedInto) = kitchenSplit(afterAbsorbtionKitchens, afterAbsorbtionWorld)
@@ -98,7 +112,9 @@ object Kitchen {
     @tailrec
     def absorption(toBeAbsorbed: Seq[Kitchen], absorbing: Seq[AbsorbingKitchen]): Seq[AbsorbingKitchen] = {
       val nbAbsorbing = absorbing.length
-      if (toBeAbsorbed.length == 0 || nbAbsorbing < 1) absorbing
+      if (toBeAbsorbed.length == 0 || nbAbsorbing < 1) {
+        absorbing
+      }
       else {
         val index = mT.nextInt(nbAbsorbing)
         val oneAbsorbing = absorbing(index)
@@ -113,6 +129,7 @@ object Kitchen {
     }
 
     val reorganizedKitchens = absorption(toBeAbsorbedKitcken, absorbingKitchens)
+
     val reorganizedWorld = {
       // get the match between each absorbed id and its absorbing id
       val absorbedMap = reorganizedKitchens.flatMap(k => k.absorbedIDs.map(_ -> k.kitchen.id)).toMap
@@ -180,15 +197,17 @@ object Kitchen {
   }
 
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
-  def cropNeeds(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Option[Double]) = {
+  // In fallows are present in the cultivableParcelForKitchen, it means the fallow can be used as a culture. In that case it is switched to a mil
+  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Option[Double]) = {
 
-    val sortedByDistanceParcels = cultivableParcelsForKitchen.sortBy(_.distanceToVillage).toList
+    val (fallow, notFallow) = cultivableParcelsForKitchen.partition(_.crop == Fallow)
+    val sortedByDistanceParcels = (notFallow.sortBy(_.distanceToVillage) ++ fallow.sortBy(_.distanceToVillage)).toList
     val manPower = Kitchen.manPower(kitchen)
 
     // println("NEEDS " + needs + " MAN POVER " + manPower + " for " + kitchen.id + " with  " + kitchen.size + " people")
 
     @tailrec
-    def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel], remainingManPower: Double): Seq[Parcel] = {
+    def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel], remainingManPower: Double): (Seq[Parcel], Seq[Parcel]) = {
 
       val needsCondition = needs match {
         case Some(n) => production > n
@@ -199,11 +218,17 @@ object Kitchen {
       if (sortedParcels.isEmpty || needsCondition || remainingManPower < 0) {
 
         // println("TOTAL PRODUCTION for " + kitchen.id + " : " + production + " for " + kitchen.size + " people, soient " + inCulture.map{_.area}.sum + " m2" + ", remaining man power: " + remainingManPower)
-        inCulture //++: sortedParcels.map { p => p.copy(crop = NotAssigned) }
+        (inCulture, sortedParcels) //++: sortedParcels.map { p => p.copy(crop = NotAssigned) }
 
       }
       else {
-        val parcel = sortedParcels.head
+        val head = sortedParcels.head
+
+        val parcel = head.crop match {
+          case Fallow=> head.copy(crop = Mil)
+          case _=> head
+        }
+
         val pproduction = Kitchen.parcelProduction(parcel)
         cropsToBeCultivated(kitchen, production + pproduction, sortedParcels.tail, inCulture :+ parcel, remainingManPower - manPowerFor(parcel.area))
       }
@@ -226,10 +251,12 @@ case class Kitchen(id: Kitchen.KitchenID,
                    size: Int,
                    rotationCycle: RotationCycle,
                    cropingStrategy: CropingStrategy,
+                   ownFallowUse: OwnFallowUse,
                    loanStrategy: LoanStrategy,
                    foodDonationStrategy: FoodDonationStrategy,
                    herdSize: Int,
                    drySeasonHerdStrategy: HerdStrategy,
                    wetSeasonHerdStrategy: HerdStrategy,
+                   drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean,
                    fertilizerStrategy: FertilizerStrategy
                   )

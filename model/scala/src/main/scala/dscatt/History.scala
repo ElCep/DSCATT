@@ -15,15 +15,14 @@ object History {
 
   case class FoodBalanceOverYear(initialFoodNeeds: Int = 0, autonomousFoodBalance: Int = 0, afterLoanFoodBalance: Int = 0, afterDonationFoodBalance: Int = 0)
 
+  case class Fertility(manureDepositsMean: Double = 0.0, nitrogenMean: Double = 0.0)
+
   type PopulationStats = Map[KitchenID, PopulationStat]
   type ParcelStats = Map[KitchenID, ParcelStat]
   type Loans = Seq[Loan]
   type FoodBalanceStats = Map[KitchenID, FoodBalanceOverYear]
-
-  case class FertilityStat(fertilityAverage: Double = 1.0, fertilityStd: Double = 0.0)
-
-  type FertilityStats = Map[KitchenID, FertilityStat]
   type History = Map[Int, YearHistory]
+  type Fertilities = Map[KitchenID, Fertility]
 
   def initialize(simulationLenght: Int, kitchens: Seq[Kitchen]): History = {
     (1 to simulationLenght).map { y =>
@@ -68,14 +67,14 @@ object History {
     def updateFertilitySats(year: Int, world: World, kitchens: Seq[Kitchen]) = {
       val historyOfYear = history(year)
       val newFertilities = kitchens.map { k =>
-        val fertilities = World.farmedParcelsForKitchen(world, k).map {
-          _.fertility
-        }
-        val avg = fertilities.sum / fertilities.size
-        k.id -> FertilityStat(avg, Math.sqrt(fertilities.map(f => Math.pow(f - avg, 2)).sum))
-      }.toMap
+        val manures = World.farmedParcelsForKitchen(world, k).flatMap {
+          _.manureDeposits.filter(md => md.year == year)
+        }.map { _.quantity
+          }
+        k.id->  Fertility(manures.sum / manures.size, 0.0)
+        }.toMap
 
-      history.updated(year, historyOfYear.copy(fertilityStats = historyOfYear.fertilityStats ++ newFertilities))
+      history.updated(year, historyOfYear.copy(fertilities = historyOfYear.fertilities ++ newFertilities))
     }
   }
 
@@ -86,7 +85,7 @@ object History {
                                     parcelStats: ParcelStats = Map(),
                                     loans: Loans = Seq(),
                                     foodBalanceStats: FoodBalanceStats = Map(),
-                                    fertilityStats: FertilityStats = Map()
+                                    fertilities: Fertilities = Map()
                                   )
 
   def toParcelStats(yearLoans: Seq[Loan], parcels: Seq[Parcel]): ParcelStats = {
@@ -117,18 +116,19 @@ object History {
       }
       val pStats = yearHistory.parcelStats
       val fbStats = yearHistory.foodBalanceStats
-      val fertilityStats = yearHistory.fertilityStats
+      val fertilityStats = yearHistory.fertilities
       val doubleFormat = "%.5f"
+      val intFormat = "%.0f"
 
-      val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Herd", "Fertility Avg/Std",  "Food Balance (initFN/AFB/ALFB/ADFB)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map { p =>
+      val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Herd", "Manure/SQ", "Food Balance (initFN/AFB/ALFB/ADFB)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map { p =>
         val fbStatsK = fbStats.getOrElse(p._1, FoodBalanceOverYear())
-        val fertilityStatK = fertilityStats.getOrElse(p._1, FertilityStat())
+        val fertilityStatK = fertilityStats.getOrElse(p._1, Fertility())
         Seq(
           p._1.toString,
           s"${pStats(p._1).size}, ${pStats(p._1).ownedArea.toInt}",
           s"${pStats(p._1).loaned}, ${pStats(p._1).loanedArea.toInt}",
           s"${p._5}",
-          s"${doubleFormat.format(fertilityStatK.fertilityAverage)}, ${doubleFormat.format(fertilityStatK.fertilityStd)} ",
+          s"${intFormat.format(fertilityStatK.manureDepositsMean)}, ${intFormat.format(fertilityStatK.nitrogenMean)} ",
           s"${fbStatsK.initialFoodNeeds}, ${fbStatsK.autonomousFoodBalance}, ${fbStatsK.afterLoanFoodBalance}, ${fbStatsK.afterDonationFoodBalance}",
           p._2.toString,
           p._3.toString,
@@ -137,7 +137,6 @@ object History {
           p._7.map(_.toString).getOrElse("")
         )
       }
-
 
       println(s"PARCELS ${pStats.map(_._2.size).sum} POPULATION ${totalPop(0)} / ${totalPop(1)} / ${totalPop(2)} KITCHENS ${totalPop(3)} / ${totalPop(4)}")
       if (verbose) println(Tabulator.formatTable(table))

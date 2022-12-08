@@ -30,12 +30,21 @@ object Constants {
   val INITIAL_FERTILITY_PER_PARCEL = 1.0
 
   val FERTILITY_BOOST_PER_MANURE_KG_PER_HA = 0.000075  // Converted from the data: "A boost of +15% with 2T per ha"
-  val KG_OF_MANURE_PER_COW_PER_YEAR = 400
+  val KG_OF_MANURE_PER_COW_PER_YEAR = 2000
 
   val FERTILITY_BOOST_PER_FERTILIZER_KG = 0.012
 
-  val MIL_EFFECT_ON_FERTILITY_BOOST = 0.98  // drop of 2% per year
-  val PEANUT_EFFECT_ON_FERTILITY_BOOST = 0.98 // drop of 2% per year
-  val FALLOW_EFFECT_FERTILITY_BOOST = 0.99 // FIXME: to be confirmed
+  // Nitrogen
+  val PEANUT_NRF = 1.0
+  
+  // Soil quality
+  val MIL_DELTA_QS = -0.4
+  val PEANUT_DELTA_QS = 0.1
+  val FALLOW_DELTA_QS = 0.0
+  
+
+  val MIL_EFFECT_ON_FERTILITY_BOOST = -0.032  // drop of 3.2% per year
+  val PEANUT_EFFECT_ON_FERTILITY_BOOST = -0.032 // drop of 3.2% per year
+  val FALLOW_EFFECT_FERTILITY_BOOST = -0.02 // FIXME: to be confirmed
 
 }
