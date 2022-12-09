@@ -1,0 +1,9 @@
+
+The groundnut basin is a region of Senegal that has relied heavily on the combination of organic manure and mineral fertilizer since colonization. Today, despite the lack of mineral fertilizer supply, fertility has been maintained or reduced in fairly small proportions thanks to the maintenance of the "Faidherbia park" and organic manure. As part of the DSCATT project (https://dscatt.net/), we co-defined a set of aspirations with farmers in the village of Diohine. One of the outlined aspirations was to maintain the community fallow in time and space.
+
+
+We developed a multi-agent model involving the interaction of agropastoralist households, their herds and the fertility of the soil . The objective is to understand how collective action, manifested in particular by the maintenance of fallow land and several solidarity networks, benefits the entire village and contributes to maintaining its food security.
+We propose here to consider the diversity of collective actions as the diversity of possible regimes of the simulation model.  Exposing these regimes, in order to qualify and compare them, requires a systematic exploration of the behaviors of the model, using specific tools and methods.
+
+The difficulty (and the interest) of this exploration lies in the space that is explored, which is the the model dynamics space. Its analysis can take several forms depending on the focus : the analysis of the viability of the modeled system fertilty, demographics, trees or the classification of its dynamics by the values of the input variables that led to it.
+
