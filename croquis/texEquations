@@ -1,0 +1,45 @@
+https://latextosvg.com/
+
+ \begin{equation}
+N_{available}^{n}(p)=N_{remaining}^{n-1}(p) + (1 - NRF(N_{available}^{n}(p))) * N_{available}
+N_{available}^{n}(p)=N_{soil}^{n}(p)+N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{n}(p)+N_{mineral}(p)
+A(p) * 0.002 (grillot et al)
+0.0012 * A(p) * QS^{n}(p)
+\end{equation}
+
+  \[
+  NRF(N_{available}(Mil))=\left\{
+                \begin{array}{ll}
+                  0.25 \ if \ N_{available} < 18\\
+                0.501 \ if \ 18 \leq N_{available} \leq 83  \\
+                  1 \ otherwise
+                \end{array}
+              \right.
+  \]
+  
+    \[
+   NRF(N_{available}(Fallow))=\left\{
+                \begin{array}{ll}
+                  0.25 \ if \ N_{available} < 10\\
+                -1.2179 \ if \ 10 \leq N_{available} \leq 50  \\
+                  1 \ otherwise
+                \end{array}
+              \right.
+  \]
+  
+  
+
+\begin{equation}
+QS^{n}(Crop) = Yield(Crop) * NQuantityRatio(Crop) * ResidueRatio(Crop) \\
+QS^{n}(Mil)= 0,06 * 0.015 * 0.7 = 0,00063\\
+QS^{n}(Peanut)= 0,04 * 0.03 * 0.6 = 0,00084\\
+QS^{n}(Fallow)= 0.0475* 0,02 * 1 = 0,00095\\
+\end{equation}
+  
+  \begin{equation}
+  N_{mineral}(p) = OM_{sand} * A(p)
+  \end{equation}
+  
+   \begin{equation}
+Yield(Crop, N_{available}^{n}) = N_{available}^{n}(p) * \alpha(Crop) \\
+\end{equation}
