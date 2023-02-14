@@ -1,0 +1,171 @@
+\documentclass[10pt,a4paper,french]{article} % Specify the font size (10pt, 11pt and 12pt) and paper size (letterpaper, a4paper, etc)
+
+\usepackage{graphicx} % Required for including pictures
+%\usepackage{microtype} % Improves typography
+
+\usepackage{babel}
+\usepackage[T1]{fontenc} % Required for accented characters
+\usepackage{hyperref}
+% Create a new command for the horizontal rule in the document which allows thickness specification
+\PassOptionsToPackage{svgnames}{xcolor}
+\usepackage[most]{tcolorbox}
+
+
+\begin{document}
+
+
+
+Modèle de sol 
+
+Objectifs du modèle :
+
+
+Modéliser les variations de rendement agricole induites par : 
+
+\begin{itemize}
+	\item l'amendement du sol par fumure animale  (fertilité instantanée)
+	\item la paille laissée au sol (fertilité instantanée)
+	\item la qualité du sol (fertilité long terme)
+	\item l'érosion de la fertilité (fertilité long terme)
+\end{itemize} 
+
+\vspace{0.5cm}
+Le modèle simplifié fourni par Arthur modélise la variation d'azote dans le sol. 
+Les compléments fournis par Antoine introduisent l'effet de la qualité du sol sur l'azote disponible (minéralisation) et l'érosion de l'azote (lixiviation). 
+
+
+
+\section{L'azote disponible}
+
+
+
+La première équation donne l'azote (en kg) disponible à l'année $n$ sur la parcelle $p$ : $N_{available}^{n}(p)$
+
+\begin{equation}
+N_{available}^{n}(p)=N_{soil}^{n}(p)+N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{n}(p)-N_{erosion}(p)
+\end{equation}
+
+
+L'azote issu du sol inclut  un terme fonction de l'aire $A(p)$ de $p$ et l'effet de la \textbf{qualité du sol} à l'année $n$:  $QS^{n}(p)$
+
+\begin{equation}
+N_{soil}^{n}(p) = 0.0012 * A(p) + QS^{n}(p)
+\end{equation}
+
+
+La qualité du sol à l'année $n$ est fonction de la biomasse produite sur la parcelle $p$ , en kg de végétal ($Crop$) cultivé l'année précédente ($n-1$)
+
+
+\begin{equation}
+QS^{n}(p) = Yield(Crop^{n-1},p) * NQuantityRatio(Crop) * ResidueRatio(Crop) \\
+\end{equation}
+
+Avec  :
+
+\begin{itemize}
+	\item $Yield(Crop^{n-1},p)$  la biomasse produite l'année dernière sur $p$ , en kg de végétal
+	\item $NQuantityRatio(Crop)$ le pourcentage d'azote de la plante 
+	\item $ResidueRatio(Crop)$  la quantité de résidus (paille) de la plante laissée sur  $p$ après la récolte
+\end{itemize}
+
+
+La quantité de résidus laissés sur la parcelle varie selon les pratiques agricoles.
+Au maximum, le résidu laissé correspond à la proportion de plante non récoltée (la paille).
+Les graines de Mil représentent 30\% de la tige de Mil, les fanes d'arachides représentent 1.5 fois la masse des gousses.
+
+
+\begin{table}[]
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Crop}          & \textbf{NQtyRatio}    & \textbf{Max residue ratio} \\ \hline
+Mil                    & 1.5\%                 & 0.7                        \\ \hline
+Peanut                 & 3\%                   & 0.666                      \\ \hline
+Fallow                 & 2\%                   & 1                          \\ \hline
+\multicolumn{1}{|l|}{} & \multicolumn{1}{r|}{} & \multicolumn{1}{r|}{}      \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{tcolorbox}[noparskip,
+    colback=LightGreen,colframe=DarkGreen,%
+    colbacklower=LimeGreen!75!LightGreen,%
+    title=Question]
+
+La jachère n'est pas récoltée (très marginalement pour des reserves de fourrage, qu'on néglige ) \textbf{mais} elle est paturée par le troupeau $\rightarrow$ Faut-il en tenir compte dans l'effet de sa biomasse sur l'azote du sol ? 
+
+\end{tcolorbox}
+
+
+
+
+
+
+\begin{equation}
+QS^{n}(Mil)= 0,06 * 0.015 * 0.7 = 0,00063\\
+QS^{n}(Peanut)= 0,04 * 0.03 * 0.6 = 0,00084\\
+QS^{n}(Fallow)= 0.0475* 0,02 * 1 = 0,00095\\
+\end{equation}
+
+
+
+
+
+\begin{equation}
+N_{air}^{n}(p) = A(p) * 0.002
+\end{equation}
+
+\begin{equation}
+N_{soil}^{n}(p) = 0.0012 * A(p) + QS^{n}(p)
+\end{equation}
+
+
+\begin{equation}
+  NRF(N_{available}(Mil))=\left\{
+                \begin{array}{ll}
+                  0.25 \ if \ N_{available} < 18\\
+                0.501 \ if \ 18 \leq N_{available} \leq 83  \\
+                  1 \ otherwise
+                \end{array}
+              \right\} 
+ \end{equation} 
+
+ \begin{equation}
+   NRF(N_{available}(Fallow))=\left\{
+                \begin{array}{ll}
+                  0.25 \ if \ N_{available} < 10\\
+                -1.2179 \ if \ 10 \leq N_{available} \leq 50  \\
+                  1 \ otherwise
+                \end{array}
+              \right\}
+  \end{equation} 
+  
+  
+
+\begin{equation}
+QS^{n}(Crop) = Yield(Crop) * NQuantityRatio(Crop) * ResidueRatio(Crop) \\
+QS^{n}(Mil)= 0,06 * 0.015 * 0.7 = 0,00063\\
+QS^{n}(Peanut)= 0,04 * 0.03 * 0.6 = 0,00084\\
+QS^{n}(Fallow)= 0.0475* 0,02 * 1 = 0,00095\\
+\end{equation}
+  
+  \begin{equation}
+  N_{mineral}(p) = OM_{sand} * A(p)
+  \end{equation}
+  
+\begin{equation}
+Yield(Crop, N_{available}^{n}) = N_{available}^{n}(p) * \alpha(Crop) 
+\end{equation}
+
+
+Ce qu'il nous manque : 
+
+La conversion de la masse d'azote à la biomasse : 
+
+
+\begin{equation}
+N_{available}^{n}(p)=N_{remaining}^{n-1}(p) + (1 - NRF(N_{available}^{n}(p))) * N_{available}
+\end{equation}
+
+
+\end{document}
