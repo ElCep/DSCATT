@@ -11,6 +11,21 @@
 \usepackage[most]{tcolorbox}
 
 
+% police sans serif 
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+%marges 
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+
+
+
 \begin{document}
 
 
@@ -46,42 +61,58 @@ N_{available}^{n}(p)=N_{soil}^{n}(p)+N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{
 \end{equation}
 
 
-L'azote issu du sol inclut  un terme fonction de l'aire $A(p)$ de $p$ et l'effet de la \textbf{qualité du sol} à l'année $n$:  $QS^{n}(p)$
+L'azote issu du sol est une somme de deux termes . Le premier est la \textbf{mineralisation}, fonction de l'aire $A(p)$ de $p$ le second est l'effet de la \textbf{qualité du sol} à l'année $n$:  $QS^{n}(p)$
 
 \begin{equation}
 N_{soil}^{n}(p) = 0.0012 * A(p) + QS^{n}(p)
 \end{equation}
 
 
+
+\subsection{Qualité du sol}
+
 La qualité du sol à l'année $n$ est fonction de la biomasse produite sur la parcelle $p$ , en kg de végétal ($Crop$) cultivé l'année précédente ($n-1$)
 
 
 \begin{equation}
-QS^{n}(p) = Yield(Crop^{n-1},p) * NQuantityRatio(Crop) * ResidueRatio(Crop) \\
+QS^{n}(p) = Biomass(Crop^{n-1},p) * NQuantityRatio(Crop) * ResidueRatio(Crop) \\
 \end{equation}
 
 Avec  :
 
 \begin{itemize}
-	\item $Yield(Crop^{n-1},p)$  la biomasse produite l'année dernière sur $p$ , en kg de végétal
+	\item $Biomass(Crop^{n-1},p)$  la biomasse produite l'année dernière sur $p$ , en kg de végétal
 	\item $NQuantityRatio(Crop)$ le pourcentage d'azote de la plante 
 	\item $ResidueRatio(Crop)$  la quantité de résidus (paille) de la plante laissée sur  $p$ après la récolte
 \end{itemize}
 
 
+
+\begin{tcolorbox}[noparskip,
+    colback=LightGreen,colframe=DarkGreen,%
+    colbacklower=LimeGreen!75!LightGreen,%
+    title=Question]
+La biomasse , c'est le poids de toute la plante ? (i.e. pas que la partie  récoltée)
+Faut-il compter les racines ? 
+\end{tcolorbox}
+
+
+
+
+
+
 La quantité de résidus laissés sur la parcelle varie selon les pratiques agricoles.
 Au maximum, le résidu laissé correspond à la proportion de plante non récoltée (la paille).
-Les graines de Mil représentent 30\% de la tige de Mil, les fanes d'arachides représentent 1.5 fois la masse des gousses.
 
 
-\begin{table}[]
+
+\begin{table}[h!]
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Crop}          & \textbf{NQtyRatio}    & \textbf{Max residue ratio} \\ \hline
 Mil                    & 1.5\%                 & 0.7                        \\ \hline
 Peanut                 & 3\%                   & 0.666                      \\ \hline
 Fallow                 & 2\%                   & 1                          \\ \hline
-\multicolumn{1}{|l|}{} & \multicolumn{1}{r|}{} & \multicolumn{1}{r|}{}      \\ \hline
 \end{tabular}
 \end{table}
 
@@ -92,20 +123,48 @@ Fallow                 & 2\%                   & 1                          \\ \
     colbacklower=LimeGreen!75!LightGreen,%
     title=Question]
 
-La jachère n'est pas récoltée (très marginalement pour des reserves de fourrage, qu'on néglige ) \textbf{mais} elle est paturée par le troupeau $\rightarrow$ Faut-il en tenir compte dans l'effet de sa biomasse sur l'azote du sol ? 
-
+La jachère n'est pas récoltée (parfois très marginalement pour des reserves de fourrage, qu'on néglige ) \textbf{mais} elle est paturée par le troupeau $\rightarrow$ Faut-il  tenir compte de l'herbe pâturée (=mangée par le troupeau et donc emportée hors de $p$) et modifier le ratio de résidus de Jachère dans l'effet de sa biomasse sur l'azote du sol ?  Si on met 1, c'est que toute la biomasse reste là...
 \end{tcolorbox}
 
 
 
 
+\subsection{Production de biomasse}
 
+
+Nous avons des rendements nominaux pour le Mil (600kg/ha, min. 450kg/ha , max. 1T/ha), pour l'arachide ( 450 kgs/ha, min. 300kg/ha max 600kg/ha) et pour la jachère (450kg/ha de fresh weeds, [Scriban ODD model] ).
+
+Ces rendements sont à dire d'acteurs et ne nous sont pas données pour chaque combinaison de pratiques (engrais,fumure).
+
+Comme on connaît les proportions de  produit/coproduits , on peut calculer la biomasse de végétal par hectare étant donné le rendement en produit : 
+
+Mil : 30\% de produit ,  70\% de paille \\
+Arachide : 1.5 fois plus de coproduit (fanes) que de gousses
 
 \begin{equation}
-QS^{n}(Mil)= 0,06 * 0.015 * 0.7 = 0,00063\\
-QS^{n}(Peanut)= 0,04 * 0.03 * 0.6 = 0,00084\\
-QS^{n}(Fallow)= 0.0475* 0,02 * 1 = 0,00095\\
+Biomasse(Mil) =  \frac{Rendement(Mil)}{0.3}
 \end{equation}
+
+\begin{equation}
+Biomasse(Arachide) =  2.5 \times Rendement(Arachide)
+\end{equation}\\
+
+
+\subsubsection{Application numérique:} 
+
+Pour un rendement de 600kg/ha de Mil graines, production de biomasse de 2T/ha (0.2kg/m²)\\
+Pour un rendement de 450kg/ha d'arachide, production de biomasse de 1.125T/ha (0.11kg/m²)
+Pour un rendement de 475kg/ha d'herbe en jachère (0.0475kg/m²) 
+
+
+
+On laisse toute la paille et les racines sur une parcelle $p$ d'aire $A(p)=100m²$
+
+
+$QS^{n}(Mil, p)= 0.2 A(p)* 0.015 * 0.7 = 0,0021* A(p)= 210g$ d'azote dans $p$ \\
+$QS^{n}(Peanut, p)= 0.11 A(p) * 0.03 * 0.6 = 0.21978 = 220g$ d'azote dans $p$\\
+$QS^{n}(Fallow, p)= 0.0475 A(p)* 0.02 * 1 = 0.095 = 10g$ d'azote dans $p$ \\
+
 
 
 
