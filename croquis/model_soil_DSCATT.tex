@@ -61,6 +61,18 @@ N_{available}^{n}(p)=N_{soil}^{n}(p)+N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{
 \end{equation}
 
 
+\subsection{Azote issu de l'air}
+
+
+
+
+\begin{equation}
+N_{air}^{n}(p) = A(p) * 0.002
+\end{equation}
+
+\subsection{Azote issu du sol}
+
+
 L'azote issu du sol est une somme de deux termes . Le premier est la \textbf{mineralisation}, fonction de l'aire $A(p)$ de $p$ le second est l'effet de la \textbf{qualité du sol} à l'année $n$:  $QS^{n}(p)$
 
 \begin{equation}
@@ -69,7 +81,7 @@ N_{soil}^{n}(p) = 0.0012 * A(p) + QS^{n}(p)
 
 
 
-\subsection{Qualité du sol}
+\subsubsection{Qualité du sol}
 
 La qualité du sol à l'année $n$ est fonction de la biomasse produite sur la parcelle $p$ , en kg de végétal ($Crop$) cultivé l'année précédente ($n-1$)
 
@@ -129,7 +141,7 @@ La jachère n'est pas récoltée (parfois très marginalement pour des reserves 
 
 
 
-\subsection{Production de biomasse}
+\subsubsection{Production de biomasse}
 
 
 Nous avons des rendements nominaux pour le Mil (600kg/ha, min. 450kg/ha , max. 1T/ha), pour l'arachide ( 450 kgs/ha, min. 300kg/ha max 600kg/ha) et pour la jachère (450kg/ha de fresh weeds, [Scriban ODD model] ).
@@ -161,22 +173,32 @@ Pour un rendement de 475kg/ha d'herbe en jachère (0.0475kg/m²)
 On laisse toute la paille et les racines sur une parcelle $p$ d'aire $A(p)=100m²$
 
 
-$QS^{n}(Mil, p)= 0.2 A(p)* 0.015 * 0.7 = 0,0021* A(p)= 210g$ d'azote dans $p$ \\
-$QS^{n}(Peanut, p)= 0.11 A(p) * 0.03 * 0.6 = 0.21978 = 220g$ d'azote dans $p$\\
-$QS^{n}(Fallow, p)= 0.0475 A(p)* 0.02 * 1 = 0.095 = 10g$ d'azote dans $p$ \\
+$QS^{n}(Mil, p)= 0.2 A(p)* 0.015 * 0.7 = 0,0021* A(p)= 210g$ d'azote issu de la biomasse de Mil dans $p$ \\
+$QS^{n}(Peanut, p)= 0.11 A(p) * 0.03 * 0.6 = 0.21978 = 220g$ d'azote issu de la biomasse d'Arachide  dans $p$\\
+$QS^{n}(Fallow, p)= 0.0475 A(p)* 0.02 * 1 = 0.095 = 10g$ d'azote issu de la biomasse de jachère  dans $p$ \\
+
+
+
+\subsection{Azote issu du fumier}
 
 
 
 
 
 
-\begin{equation}
-N_{air}^{n}(p) = A(p) * 0.002
-\end{equation}
+\subsection{Azote issu des Faidherbia}
 
-\begin{equation}
-N_{soil}^{n}(p) = 0.0012 * A(p) + QS^{n}(p)
-\end{equation}
+
+4kg par arbre [Scriban ODD model]
+
+
+\subsection{Azote de l'année précédente}
+
+
+
+Après la récolte , et en fonction des pratiques agricoles, il reste une fraction d'azote 
+
+
 
 
 \begin{equation}
