@@ -57,7 +57,7 @@ Les compléments fournis par Antoine introduisent l'effet de la qualité du sol 
 La première équation donne l'azote (en kg) disponible à l'année $n$ sur la parcelle $p$ : $N_{available}^{n}(p)$
 
 \begin{equation}
-N_{available}^{n}(p)=N_{soil}^{n}(p)+N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{n}(p)-N_{erosion}(p)
+N_{available}^{n}(p)=N_{soil}^{n}(p)+N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{n}(p)-N_{erosion}^n(p) + N_{remaining}^{n-1}
 \end{equation}
 
 
@@ -154,11 +154,11 @@ Mil : 30\% de produit ,  70\% de paille \\
 Arachide : 1.5 fois plus de coproduit (fanes) que de gousses
 
 \begin{equation}
-Biomasse(Mil) =  \frac{Rendement(Mil)}{0.3}
+Biomasse(Mil,p) =  \frac{Rendement(Mil,p)}{0.3}
 \end{equation}
 
 \begin{equation}
-Biomasse(Arachide) =  2.5 \times Rendement(Arachide)
+Biomasse(Arachide,p) =  2.5 \times Rendement(Arachide,p)
 \end{equation}\\
 
 
@@ -183,6 +183,11 @@ $QS^{n}(Fallow, p)= 0.0475 A(p)* 0.02 * 1 = 0.095 = 10g$ d'azote issu de la biom
 
 
 
+$N_{manure}^n(p)= ManureMass(p) * 0.0238$
+
+
+[Scriban ODD model]
+
 
 
 
@@ -196,7 +201,28 @@ $QS^{n}(Fallow, p)= 0.0475 A(p)* 0.02 * 1 = 0.095 = 10g$ d'azote issu de la biom
 
 
 
-Après la récolte , et en fonction des pratiques agricoles, il reste une fraction d'azote 
+$N_{remaining}^n$
+
+
+Après la récolte , et en fonction des pratiques agricoles, il reste sur la parcelle l'azote qui n'a pas été emporté par la récolte. (l'azote minéralisé ?)
+Cette fraction d'azote est déjà calculée à l'étape de la qualité du sol, mais pour la récolte de l'année passée . (fonction de la biomasse produte , du pourcentage d'azote dans la plante, et du pourcentage de la plante qu'on laisse sur place) 
+
+
+
+\begin{tcolorbox}[noparskip,
+    colback=LightGreen,colframe=DarkGreen,%
+    colbacklower=LimeGreen!75!LightGreen,%
+    title=Question/Problème]
+On n'avait pas identifié que l'azote restant apparaissait \textbf{deux fois} dans le modèle : une fois dans $N_{remaining}$, et une autre fois dans le terme $QS$. Est-ce qu'il faut le prendre deux fois en compte ? (je ne pense pas)
+\end{tcolorbox}
+
+
+\section{Conversion Azote $\rightarrow$ Plante}
+
+
+
+
+
 
 
 
@@ -223,16 +249,9 @@ Après la récolte , et en fonction des pratiques agricoles, il reste une fracti
   
   
 
-\begin{equation}
-QS^{n}(Crop) = Yield(Crop) * NQuantityRatio(Crop) * ResidueRatio(Crop) \\
-QS^{n}(Mil)= 0,06 * 0.015 * 0.7 = 0,00063\\
-QS^{n}(Peanut)= 0,04 * 0.03 * 0.6 = 0,00084\\
-QS^{n}(Fallow)= 0.0475* 0,02 * 1 = 0,00095\\
-\end{equation}
-  
-  \begin{equation}
-  N_{mineral}(p) = OM_{sand} * A(p)
-  \end{equation}
+
+
+
   
 \begin{equation}
 Yield(Crop, N_{available}^{n}) = N_{available}^{n}(p) * \alpha(Crop) 
