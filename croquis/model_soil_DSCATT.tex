@@ -24,13 +24,14 @@
  top=20mm,
  }
 
-
+\title{Modèle de Sol Diohine DSCATT}
 
 \begin{document}
 
+\maketitle
 
 
-Modèle de sol 
+\section{Contexte}
 
 Objectifs du modèle :
 
@@ -38,7 +39,7 @@ Objectifs du modèle :
 Modéliser les variations de rendement agricole induites par : 
 
 \begin{itemize}
-	\item l'amendement du sol par fumure animale  (fertilité instantanée)
+	\item l'amendement du sol par fumure animale ou engrais (fertilité instantanée)
 	\item la paille laissée au sol (fertilité instantanée)
 	\item la qualité du sol (fertilité long terme)
 	\item l'érosion de la fertilité (fertilité long terme)
@@ -46,7 +47,7 @@ Modéliser les variations de rendement agricole induites par :
 
 \vspace{0.5cm}
 Le modèle simplifié fourni par Arthur modélise la variation d'azote dans le sol. 
-Les compléments fournis par Antoine introduisent l'effet de la qualité du sol sur l'azote disponible (minéralisation) et l'érosion de l'azote (lixiviation). 
+Les compléments fournis par Antoine introduisent l'effet de la qualité du sol sur l'azote disponible (minéralisation) et l'érosion de l'azote (lixiviation)(il fallait replacer ce sublime terme). 
 
 
 
@@ -76,7 +77,7 @@ N_{air}^{n}(p) = A(p) * 0.002
 L'azote issu du sol est une somme de deux termes . Le premier est fonction de l'aire $A(p)$ de $p$ le second est l'effet de la \textbf{qualité du sol} (fixation par les micro-organismes? ) à l'année $n$:  $QS^{n}(p)$
 
 \begin{equation}
-N_{soil}^{n}(p) = 0.0012 * A(p) + QS^{n}(p)
+N_{soil}^{n}(p) = A(p)(0.0012 + QS^{n}(p))
 \end{equation}
 
 
@@ -87,15 +88,15 @@ La qualité du sol à l'année $n$ est fonction de la biomasse produite sur la p
 
 
 \begin{equation}
-QS^{n}(p) = Biomass(Crop^{n-1},p) * NQuantityRatio(Crop) * ResidueRatio(Crop) \\
+QS^{n}(Biomass(Crop^{n-1},p),p) = Biomass(Crop^{n-1},p) * BiomassToResidueRatio(Crop) * ResidueToN(Crop)  \\
 \end{equation}
 
 Avec  :
 
 \begin{itemize}
 	\item $Biomass(Crop^{n-1},p)$  la biomasse produite l'année dernière sur $p$ , en kg de végétal
-	\item $NQuantityRatio(Crop)$ le pourcentage d'azote de la plante 
-	\item $ResidueRatio(Crop)$  la quantité de résidus (paille) de la plante laissée sur  $p$ après la récolte
+	\item $BiomassToResidueRatio(Crop)$ le pourcentage de co-produits(résidus) laissés sur la parcelle $p$ 
+	\item $ResidueToN(Crop)$  le pourcentage d'azote de la plante dans les résidus (paille) de la plante laissée sur  $p$ après la récolte
 \end{itemize}
 
 
@@ -121,7 +122,7 @@ Au maximum, le résidu laissé correspond à la proportion de plante non récolt
 \begin{table}[h!]
 \begin{tabular}{|c|c|c|}
 \hline
-\textbf{Crop}          & \textbf{NQtyRatio}    & \textbf{Max residue ratio} \\ \hline
+\textbf{Crop}          & \textbf{ResidueToN}    & \textbf{Max BiomassToResidueRatio} \\ \hline
 Mil                    & 1.5\%                 & 0.7                        \\ \hline
 Peanut                 & 3\%                   & 0.666                      \\ \hline
 Fallow                 & 2\%                   & 1                          \\ \hline
@@ -135,7 +136,7 @@ Fallow                 & 2\%                   & 1                          \\ \
     colbacklower=LimeGreen!75!LightGreen,%
     title=Question]
 
-La jachère n'est pas récoltée (parfois très marginalement pour des reserves de fourrage, qu'on néglige ) \textbf{mais} elle est paturée par le troupeau $\rightarrow$ Faut-il  tenir compte de l'herbe pâturée (=mangée par le troupeau et donc emportée hors de $p$) et modifier le ratio de résidus de Jachère dans l'effet de sa biomasse sur l'azote du sol ?  Si on met 1, c'est que toute la biomasse reste là...
+La jachère n'est pas récoltée (parfois très marginalement pour des reserves de fourrage, qu'on néglige ) \textbf{mais} elle est paturée par le troupeau $\rightarrow$ Faut-il  tenir compte de l'herbe pâturée (=mangée par le troupeau et donc emportée hors de $p$) et modifier le ratio de résidus de Jachère dans l'effet de sa biomasse sur l'azote du sol ?  Si on met 1, c'est que toute la biomasse reste là... \\
 \end{tcolorbox}
 
 
@@ -191,7 +192,7 @@ L'année $n=0$ , il n'y a pas de récole précédente pour  avoir une quantité 
     colbacklower=LimeGreen!75!LightGreen,%
     title=Question]
 
-
+Y a t'il des données qui donnent la quantité d'azote par m² de sol dans le bassin rachidier non cultivé ?
 \end{tcolorbox}
 
 
@@ -202,8 +203,14 @@ L'année $n=0$ , il n'y a pas de récole précédente pour  avoir une quantité 
 \subsection{Azote issu du fumier}
 
 
+60\% du fumier est mobilisable la première année par la plante (le mil).
+Les 40\% restants sont mobilisables l'année suivante (par l'arachide)
 
-$N_{manure}^n(p)= ManureMass(p) * 0.0238$
+
+$N_{manure}^n(p)= ManureMass(p) * 0.0238 * 0.6 NManureStock^{n-1}(p)$
+$NManureStock^{n}(p) = ManureMass^n(p)*  0.0238 * 0.4 $
+
+
 
 
 [Scriban ODD model]
@@ -215,6 +222,9 @@ $N_{manure}^n(p)= ManureMass(p) * 0.0238$
 
 
 4kg par arbre [Scriban ODD model]
+
+
+
 
 
 \subsection{Azote de l'année précédente}
@@ -244,7 +254,7 @@ On n'avait pas identifié que l'azote restant apparaissait \textbf{deux fois} da
 Les équations de "NRF" donnent la part d'azote disponible convertie en végétal selon les équation suivantes , issue de [Scriban ODD model]  , repris de la thèse de Myriam Grillot 
 
 
-Il s 'applique normalement à une au rendement limité par l'eau,  aux équations définies par morceaux de façons similaires à celles des NRF  ci-dessous. 
+Il s 'applique normalement au rendement limité par l'eau,  aux équations définies par morceaux de façons similaires à celles des NRF  ci-dessous. 
 
 \begin{equation}
   NRF(N_{available}^n,Mil)=\left\{
@@ -262,7 +272,7 @@ Il s 'applique normalement à une au rendement limité par l'eau,  aux équation
  
 
  \begin{equation}
-   NRF(N_{available}^n,(Fallow))=\left\{
+   NRF(N_{available}^n,Fallow)=\left\{
                 \begin{array}{ll}
                   0.25 \ if \ N_{available} < 10\\
                 -1.2179 \ if \ 10 \leq N_{available} \leq 50  \\
@@ -275,9 +285,20 @@ Il s 'applique normalement à une au rendement limité par l'eau,  aux équation
 
 
 
+\begin{tcolorbox}[noparskip,
+    colback=LightGreen,colframe=DarkGreen,%
+    colbacklower=LimeGreen!75!LightGreen,%
+    title=Question/Problème]
+
+les seuils indiqués dans ces équations sont donnés pour un hectare de sol ? on suppose que oui (car sinon il n'y aurait pas d'effet de taille de parcelle) sur l'azote converti en végétal .Est-ce correct ? 
+
+\end{tcolorbox}
+
+
+
 
 Pour calculer la récolte (en kgs de végétal) , il faut convertir une partie de l'azote disponible en végétal.
-Ce qu'il nous manque c'est le coefficient $\alpha_{N \rightarrow plant}$  \emph{toutes choses égales par ailleurs}. Il n'est pas sur qu'un tel coefficient existe.
+Ce qu'il nous manque c'est le coefficient $\alpha_{N \rightarrow plant}$  \emph{toutes choses égales par ailleurs}. 
 
 
 
@@ -287,7 +308,7 @@ Ce qu'il nous manque c'est le coefficient $\alpha_{N \rightarrow plant}$  \emph{
     colbacklower=LimeGreen!75!LightGreen,%
     title=Question/Problème]
 
-Du point de vue calculatoire, on peut le dériver à partir des rendement nominaux fournis , comme pour la biomasse. Est-ce valable du point de vue agro ? 
+Comment trouver $\alpha_{N \rightarrow plant}$  ? Du point de vue calculatoire, on peut le dériver à partir des rendement nominaux fournis , comme pour la biomasse. Est-ce valable du point de vue agro ? (cf exemple ci-dessous)
 
 \end{tcolorbox}
 
@@ -295,7 +316,7 @@ Du point de vue calculatoire, on peut le dériver à partir des rendement nomina
 Exemple numérique : 
 sur une parcelle $p$ de 100m², sans fumier, avec 1 faidherbia, l'année 0, on néglige l'érosion.
 
-Rendement nominal du Mil : 600kg/ha (graines) , soit 6kgs de graines sur $p$
+Rendement nominal du Mil à dire d'acteurs : 600kg/ha (graines) , soit 6kgs de graines sur $p$
 
 \begin{eqnarray*}
 N_{available}^{0}(p)&=&N_{soil}^{n}(p)  +N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{n}(p)-N_{erosion}^n(p) + N_{remaining}^{n-1} \\
@@ -311,20 +332,35 @@ On est en dessous de 18kg de N par ha, donc on applique un NRF de 0.25 : $\frac{
 
 Sur ce kilo de plante Mil , 30\% est de la graine soit 300g de Mil produit
 
-On est loin du rendement nominal du Mil annoncé par les agros pasteurs : 600kg de graines par ha, soit 2T de plante Mil 
+On est loin du rendement nominal du Mil annoncé par les agros pasteurs : 600kg de graines par ha, soit 2T de plante Mil, pour une parcelle de 100m² ça fait 20kgs de plante mil.  
 
 
 
 
+\subsection{Azote issu de l'engrais}
 
 
+C'est une masse de N mise au mètre carré par épandage.
+
+
+\subsection{Érosion de l'azote}
+
+le lessivement et  le vent usent le sol et font baisser le taux d'azote dans le sol. 
+
+$N_{erosion}^n = \beta_{erosion}* N_{available}$
+
+
+On suppose le coefficient constant , mais il pourrait varier en fonction de la pluviométrie et de la météo de l'année.
+La quantité doit être négative (c'est une perte) 
 
 \subsection{Azote restant après récolte}
 
 
 \begin{equation}
-N_{available}^{n}(p)=N_{remaining}^{n-1}(p) + (1 - NRF(N_{available}^{n}(p))) * N_{available}
+N_{remaining}^{n}(p)=N_{available}^{n}(p) (1 - NRF(N_{available}^{n}(p, crop))) 
 \end{equation}
+
+
 
 
 \end{document}
