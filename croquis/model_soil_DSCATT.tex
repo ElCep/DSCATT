@@ -64,7 +64,7 @@ N_{available}^{n}(p)=N_{soil}^{n}(p)+N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{
 \subsection{Azote issu de l'air}
 
 
-
+Azote de l'air fixé par le sol
 
 \begin{equation}
 N_{air}^{n}(p) = A(p) * 0.002
@@ -73,7 +73,7 @@ N_{air}^{n}(p) = A(p) * 0.002
 \subsection{Azote issu du sol}
 
 
-L'azote issu du sol est une somme de deux termes . Le premier est la \textbf{mineralisation}, fonction de l'aire $A(p)$ de $p$ le second est l'effet de la \textbf{qualité du sol} à l'année $n$:  $QS^{n}(p)$
+L'azote issu du sol est une somme de deux termes . Le premier est fonction de l'aire $A(p)$ de $p$ le second est l'effet de la \textbf{qualité du sol} (fixation par les micro-organismes? ) à l'année $n$:  $QS^{n}(p)$
 
 \begin{equation}
 N_{soil}^{n}(p) = 0.0012 * A(p) + QS^{n}(p)
@@ -179,6 +179,26 @@ $QS^{n}(Fallow, p)= 0.0475 A(p)* 0.02 * 1 = 0.095 = 10g$ d'azote issu de la biom
 
 
 
+
+\subsubsection{Initialisation du modèle}
+
+
+L'année $n=0$ , il n'y a pas de récole précédente pour  avoir une quantité d'azote issue des effets de précédent : $QS^n(p)=0$
+
+
+\begin{tcolorbox}[noparskip,
+    colback=LightGreen,colframe=DarkGreen,%
+    colbacklower=LimeGreen!75!LightGreen,%
+    title=Question]
+
+
+\end{tcolorbox}
+
+
+
+
+
+
 \subsection{Azote issu du fumier}
 
 
@@ -212,8 +232,8 @@ Cette fraction d'azote est déjà calculée à l'étape de la qualité du sol, m
 \begin{tcolorbox}[noparskip,
     colback=LightGreen,colframe=DarkGreen,%
     colbacklower=LimeGreen!75!LightGreen,%
-    title=Question/Problème]
-On n'avait pas identifié que l'azote restant apparaissait \textbf{deux fois} dans le modèle : une fois dans $N_{remaining}$, et une autre fois dans le terme $QS$. Est-ce qu'il faut le prendre deux fois en compte ? (je ne pense pas)
+    title=Question]
+On n'avait pas identifié que l'azote restant apparaissait \textbf{deux fois} dans le modèle : une fois dans $N_{remaining}$ (la quantité d'azote qui reste de l'année passée), et une autre fois dans le terme $QS$, qui utilise la biomasse produite l'année passée et la proportion de végétal laissée sur place. Est-ce qu'il faut le prendre deux fois en compte ? (je ne pense pas)
 \end{tcolorbox}
 
 
@@ -221,14 +241,13 @@ On n'avait pas identifié que l'azote restant apparaissait \textbf{deux fois} da
 
 
 
+Les équations de "NRF" donnent la part d'azote disponible convertie en végétal selon les équation suivantes , issue de [Scriban ODD model]  , repris de la thèse de Myriam Grillot 
 
 
-
-
-
+Il s 'applique normalement à une au rendement limité par l'eau,  aux équations définies par morceaux de façons similaires à celles des NRF  ci-dessous. 
 
 \begin{equation}
-  NRF(N_{available}(Mil))=\left\{
+  NRF(N_{available}^n,Mil)=\left\{
                 \begin{array}{ll}
                   0.25 \ if \ N_{available} < 18\\
                 0.501 \ if \ 18 \leq N_{available} \leq 83  \\
@@ -237,8 +256,13 @@ On n'avait pas identifié que l'azote restant apparaissait \textbf{deux fois} da
               \right\} 
  \end{equation} 
 
+\begin{equation}
+   NRF(N_{available}^n,Peanut)=1
+  \end{equation} 
+ 
+
  \begin{equation}
-   NRF(N_{available}(Fallow))=\left\{
+   NRF(N_{available}^n,(Fallow))=\left\{
                 \begin{array}{ll}
                   0.25 \ if \ N_{available} < 10\\
                 -1.2179 \ if \ 10 \leq N_{available} \leq 50  \\
@@ -252,15 +276,50 @@ On n'avait pas identifié que l'azote restant apparaissait \textbf{deux fois} da
 
 
 
-  
-\begin{equation}
-Yield(Crop, N_{available}^{n}) = N_{available}^{n}(p) * \alpha(Crop) 
-\end{equation}
+Pour calculer la récolte (en kgs de végétal) , il faut convertir une partie de l'azote disponible en végétal.
+Ce qu'il nous manque c'est le coefficient $\alpha_{N \rightarrow plant}$  \emph{toutes choses égales par ailleurs}. Il n'est pas sur qu'un tel coefficient existe.
 
 
-Ce qu'il nous manque : 
 
-La conversion de la masse d'azote à la biomasse : 
+
+\begin{tcolorbox}[noparskip,
+    colback=LightGreen,colframe=DarkGreen,%
+    colbacklower=LimeGreen!75!LightGreen,%
+    title=Question/Problème]
+
+Du point de vue calculatoire, on peut le dériver à partir des rendement nominaux fournis , comme pour la biomasse. Est-ce valable du point de vue agro ? 
+
+\end{tcolorbox}
+
+
+Exemple numérique : 
+sur une parcelle $p$ de 100m², sans fumier, avec 1 faidherbia, l'année 0, on néglige l'érosion.
+
+Rendement nominal du Mil : 600kg/ha (graines) , soit 6kgs de graines sur $p$
+
+\begin{eqnarray*}
+N_{available}^{0}(p)&=&N_{soil}^{n}(p)  +N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{n}(p)-N_{erosion}^n(p) + N_{remaining}^{n-1} \\
+                    &=& 0.0012 * A(p) + QS^{n}(p) + A(p) * 0.002 +0                +4              -0                + 0  \\
+                    &=&  0.0012 * 100 + 0 + 100 * 0.002 +0+4-0 + 0  \\
+                    &=&  0.12 + 0.2 +4  \\
+                    &=& 4.32
+\end{eqnarray*}
+
+On cultive  du Mil, et on dispose de 4.32kg d'azote sur $p$
+
+On est en dessous de 18kg de N par ha, donc on applique un NRF de 0.25 : $\frac{1}{4}$ de ce N est converti en plante : environ 1kg de mil (matière sèche de toute la plante)
+
+Sur ce kilo de plante Mil , 30\% est de la graine soit 300g de Mil produit
+
+On est loin du rendement nominal du Mil annoncé par les agros pasteurs : 600kg de graines par ha, soit 2T de plante Mil 
+
+
+
+
+
+
+
+\subsection{Azote restant après récolte}
 
 
 \begin{equation}
