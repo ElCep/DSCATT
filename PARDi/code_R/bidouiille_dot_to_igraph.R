@@ -50,27 +50,41 @@ plot.igraph(x = gg_fertilite,
             layout= layout_with_kk(gg_fertilite),
             edge.arrow.size = 0.5)
 
-## agriculteurs et eleveurs
-### L'objectif est de produire automatiquement le graphe qui mets en relation avec Eleveur et/ou agriculteur
 
-gg_agro_pasteur <- subgraph.edges(gg, E(gg)[inc(V(gg)[name=c("Eleveur","Agriculteur")])]) # on se concentre sur eleveur et agriculteur
-gg_agro_pasteur2 <-subgraph.edges(gg_agro_pasteur, E(gg_agro_pasteur)[pardi_type=="interaction"]) #j'enlève les dynamique qui auront une autre visualisation
+
+########################################
+## graphes agriculteurs et eleveurs
+##########################################"
+# L'objectif est de produire automatiquement le graphe qui mets en relation avec Eleveur et/ou agriculteur
+
+
+# filtrage des noeuds on se concentre sur eleveur et agriculteur
+gg_agro_pasteur <- subgraph.edges(gg, E(gg)[inc(V(gg)[name=c("Eleveur","Agriculteur")])]) 
+
+#Filtrage des liens 
+# on enlève les dynamique qui auront une autre visualisation, on ne garde que les liens d'interactions
+gg_agro_pasteur2 <-subgraph.edges(gg_agro_pasteur, E(gg_agro_pasteur)[pardi_type=="interaction"])
+
+
+
 
 plot.igraph(x = gg_agro_pasteur2, 
-            layout= layout_with_kk(gg_agro_pasteur),
+            layout= layout_with_kk(gg_agro_pasteur2),
             edge.arrow.size = 0.5)
 
 
 
 
 
+
+# Variante 
 nodes_agroPasteur <-  nodes_df %>%  filter (name %in% c("Eleveur","Agriculteur") ) 
 
 voisins_agropasteur_ordre2 <-  make_ego_graph(graph = gg,
-             order = 2,
-             nodes = V(gg)[name  %in% c("Eleveur","Agriculteur")],
-             mode = "all",
-             mindist = 1)
+              order = 1,
+              nodes = V(gg)[name  %in% c("Eleveur","Agriculteur")],
+              mode = "all",
+              mindist = 1)
 
 
 
@@ -80,6 +94,7 @@ voisins_agropasteur_ordre2[[1]] %>% plot.igraph()
 
 edf <- voisins_agropasteur_ordre2[[1]] %>% get.edgelist() %>%  as.data.frame()
 names(edf) <-  c("from", "to")
+
 ndf <-   data.frame(name=V(voisins_agropasteur_ordre2[[1]])$name, id= V(voisins_agropasteur_ordre2[[1]])$ID)
 
 nn <- create_node_df(nrow(ndf), 
@@ -93,7 +108,7 @@ ee <- create_edge_df(from = match(as.character(edf$from) , as.character(nn$label
                      to= match(as.character(edf$to) , as.character(nn$label)), 
                                         color= "grey")
 
-
+ee
 
 
 dig_gg <- create_graph(graph_name = "interactions",
@@ -112,9 +127,9 @@ render_graph(dig_gg, output = "visNetwork" ) %>%
 
 library(visNetwork)
 library(htmlwidgets)
-E(gg_agro_pasteur)$color <- "grey"
-V(gg_agro_pasteur)$color <- "blue"
-saveWidget(visIgraph(gg_agro_pasteur, layout = "layout_nicely"), file = "./test.html")
+E(gg_agro_pasteur2)$color <- "grey"
+V(gg_agro_pasteur2)$color <- "blue"
+saveWidget(visIgraph(gg_agro_pasteur2, layout = "layout_nicely"), file = "./test.html")
 
 
 
@@ -126,17 +141,21 @@ nn <- create_node_df(nrow(df_nodes),
                      label = df_nodes$name, 
                      type=df_nodes$type,
                      shape  = ifelse(df_nodes$type== "acteur", "ellipse", "box"),
-                     width = (df_nodes$name) %>% as.character() %>%  nchar / 10,
-                     color= ifelse(df_nodes$type== "acteur", "CornflowerBlue", "DarkTurquoise"), 
+                     width = (df_nodes$name) %>% as.character() %>%  nchar / 10 ,
+                     #color= ifelse(df_nodes$type== "acteur", "black", "gray80"), 
+                     color= ifelse(df_nodes$type== "acteur", "CornflowerBlue", "DarkTurquoise") 
                      #color="darkgrey",
-                     fillcolor= ifelse(df_nodes$type== "acteur", "CornflowerBlue", "DarkTurquoise") 
+                     #fillcolor= ifelse(df_nodes$type== "acteur", "CornflowerBlue", "DarkTurquoise") 
+                     #fillcolor= ifelse(df_nodes$type== "acteur", "black", "gray80") 
+                     #fontcolor="pink"
                      )
 
 # edges
 ee <- create_edge_df(from = match(as.character(df_edges$ego) , as.character(nn$label)),
                      to= match(as.character(df_edges$alter) , as.character(nn$label)), 
-                     rel = df_edges$label,
-                     color= "grey")
+                     rel = df_edges$label
+                     #color= "grey"
+                     )
 
 #directed graph
 dig_gg <- create_graph(graph_name = "interactions",
@@ -148,7 +167,7 @@ dig_gg <- create_graph(graph_name = "interactions",
 #rendu interactif
 render_graph(dig_gg, output = "visNetwork" ) %>% 
   visNodes(physics = F ) 
-
+return(dig_gg)
 }
 
 I
@@ -157,6 +176,35 @@ vizu_interactive(nodes_interac,edges_interac )
 vizu_interactive(nodes_conflit,edges_conflit )
 vizu_interactive(nodes_fertilite,edges_fertilite )
 
+
+
+
+
+### conversion de l'objet igraph vers deux dataframe pour la fonction vizu_interactive
+
+
+nodes_agri_elev <-  igraph::as_data_frame(gg_agro_pasteur2, what="vertices")
+edges_agri_elev <-  igraph::as_data_frame(gg_agro_pasteur2, what="edges")
+names(edges_agri_elev)[1] <- "ego"
+names(edges_agri_elev)[2] <- "alter"
+
+grph_to_display <- vizu_interactive(nodes_agri_elev, edges_agri_elev)
+
+grph_to_display <- grph_to_display %>% render_graph(output = "visNetwork" ) 
+grph_to_display
+grph_to_display %>%  visNodes(physics = F ,
+           font= list(color= "white")
+           ) %>% 
+  visEdges()
+
+
+# render_graph(grph_to_display, output = "visNetwork" ) %>% 
+#   visNodes(physics = F ) 
+# 
+# visNodes(render_graph(grph_to_display,output = "visNetwork"), physics = F)
+# 
+# 
+# render_graph(grph_to_display) 
 
 
 ## TODO

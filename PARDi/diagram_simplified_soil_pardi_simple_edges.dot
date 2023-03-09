@@ -14,8 +14,8 @@ digraph g {
   "Eleveur" [color = @@1 pardi=acteur];
   "Ecole" [color = @@1 pardi=acteur];
   "Banque de Céréale" [color = @@1 pardi=acteur];
-  "Revendeur de Semmence" [color = @@1 pardi=acteur];
-  "Revendeur dengrais" [color = @@1 pardi=acteur];
+  "Revendeur de Semence" [color = @@1 pardi=acteur];
+  "Revendeur engrais" [color = @@1 pardi=acteur];
   "Vieilles mamans" [color = @@1 pardi=acteur];
   "Saltigué" [color = @@1 pardi=acteur];
   "Animaux de trait" [color = @@1 pardi=acteur];
@@ -61,36 +61,35 @@ digraph g {
   "Chef de Consession" -> "Cuisine (chef)" [label="Régule" color = @@3 pardi=interaction]
   "Cuisine (chef)" ->   "Conseil Municipal" [label="Plainte" color = @@3 pardi=interaction]
   "Cuisine (chef)" ->  "Chef de village" [label="Plainte" color = @@3 pardi=interaction]
-  "Saltigué" -> "Eleveur"  [label="Predit&Protège" color = @@3 pardi=interaction]
-  "Saltigué" -> "Agriculteur"  [label="Predit&Protège" color = @@3 pardi=interaction]
-  "Saltigué" -> "Pluviometrie" [label="Predit&Protège" color = @@3 pardi=interaction]
-  "Saltigué" -> "Parcelles" [label="Predit&Protège" color = @@3 pardi=interaction]
+  "Saltigué" -> "Eleveur"  [label="prédit et protège" color = @@3 pardi=interaction]
+  "Saltigué" -> "Agriculteur"  [label="prédit et protège" color = @@3 pardi=interaction]
+  "Saltigué" -> "Pluviometrie" [label="prédit et protège" color = @@3 pardi=interaction]
+  "Saltigué" -> "Parcelles" [label="prédit et protège" color = @@3 pardi=interaction]
   
 
-  "Vieilles mamans" -> "Eleveur"  [label="Predit&Protège" color = @@3 pardi=interaction]
-  "Vieilles mamans" -> "Agriculteur"  [label="Predit&Protège" color = @@3 pardi=interaction]
-  "Vieilles mamans" -> "Pluviometrie" [label="Predit&Protège" color = @@3 pardi=interaction]
-  "Vieilles mamans" -> "Parcelles" [label="Predit&Protège" color = @@3 pardi=interaction]
+  "Vieilles mamans" -> "Eleveur"  [label="prédit et protège" color = @@3 pardi=interaction]
+  "Vieilles mamans" -> "Agriculteur"  [label="prédit et protège" color = @@3 pardi=interaction]
+  "Vieilles mamans" -> "Pluviometrie" [label="prédit et protège" color = @@3 pardi=interaction]
+  "Vieilles mamans" -> "Parcelles" [label="prédit et protège" color = @@3 pardi=interaction]
 
   
   
 
 
   "Eleveur" -> "Cuisine (chef)" [label=constitue color = @@3 pardi=interaction]
-  "Eleveur" -> "Paix sociale" [label=preserve color = @@3 pardi=interaction]
+  "Eleveur" -> "Paix sociale" [label=préserve color = @@3 pardi=interaction]
   "Eleveur" -> "Animaux" [label=entretien color = @@3 pardi=interaction]
   "Paix sociale" -> "Eleveur" [label=assure color = @@3 pardi=interaction]
   "Animaux" -> "Eleveur" [label=usufruit color = @@3 pardi=interaction]
   "Eleveur" -> "Ecole" [label=occupe color = @@3 pardi=interaction]
   "Agriculteur" -> "Cuisine (chef)" [label=constitue color = @@3 pardi=interaction]
-  "Agriculteur" -> "Revendeur de Semmence" [label="approvisionnement" color = @@3 pardi=interaction]
-  "Agriculteur" -> "Revendeur dengrais"  [label="approvisionnement" color = @@3 pardi=interaction]
+  "Agriculteur" -> "Revendeur de Semence" [label="approvisionne" color = @@3 pardi=interaction]
+  "Agriculteur" -> "Revendeur engrais"  [label="approvisionne" color = @@3 pardi=interaction]
     "Agriculteur" -> "Engrais Chimique" [label="épandage" color = @@3 pardi=interaction]
-  "Agriculteur" -> "Paix sociale" [label=preserve color = @@3 pardi=interaction]
+  "Agriculteur" -> "Paix sociale" [label=préserve color = @@3 pardi=interaction]
   "Paix sociale" -> "Agriculteur" [label=assure color = @@3 pardi=interaction]
   "Engrais Chimique" -> "Parcelles"[label="épandage" color = @@3 pardi=interaction]
-  "Eleveur" -> "Cuisine (chef)" [label=constitue color = @@3 pardi=interaction]
-  "Agriculteur" -> "Animaux" [label="Contribut à lallimentation" color = @@3 pardi=interaction]
+  "Agriculteur" -> "Animaux" [label="contribue alimentation" color = @@3 pardi=interaction]
   "Agriculteur" -> "Parcelles" [label="valorise et entretient" color = @@3 pardi=interaction]
   
 
@@ -165,10 +164,3 @@ digraph g {
 
 }
 
-[1]: 'black'
-[2]: 'black'
-[3]: 'black'
-[4]: 'black'
-[5]: 'black'
-[6]: 'black'
-[7]: 'black'
