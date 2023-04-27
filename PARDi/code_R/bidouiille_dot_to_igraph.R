@@ -131,6 +131,7 @@ E(gg_agro_pasteur2)$color <- "grey"
 V(gg_agro_pasteur2)$color <- "blue"
 saveWidget(visIgraph(gg_agro_pasteur2, layout = "layout_nicely"), file = "./test.html")
 
+getwd()
 
 
 
@@ -173,7 +174,7 @@ return(dig_gg)
 I
 
 vizu_interactive(nodes_interac,edges_interac )
-vizu_interactive(nodes_conflit,edges_conflit )
+vizu_interactive(nodes_conflit,edges_conflit ) %>% render_graph(output = "visNetwork" ) 
 vizu_interactive(nodes_fertilite,edges_fertilite )
 
 
@@ -195,6 +196,17 @@ grph_to_display
 grph_to_display %>%  visNodes(physics = F ,
            font= list(color= "white")
            ) %>% 
+  visEdges()
+
+
+#### vignettes droit 
+  
+conflit_to_dsiplay <- vizu_interactive(nodes_conflit,edges_conflit ) %>% render_graph(output = "visNetwork" ) 
+
+conflit_to_dsiplay
+conflit_to_dsiplay %>%  visNodes(physics = F ,
+                              font= list(color= "white")
+) %>% 
   visEdges()
 
 
