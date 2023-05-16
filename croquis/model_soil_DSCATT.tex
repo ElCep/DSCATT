@@ -1,0 +1,357 @@
+\documentclass[10pt,a4paper,french]{article} % Specify the font size (10pt, 11pt and 12pt) and paper size (letterpaper, a4paper, etc)
+
+\usepackage{graphicx} % Required for including pictures
+%\usepackage{microtype} % Improves typography
+
+\usepackage{babel}
+\usepackage[T1]{fontenc} % Required for accented characters
+\usepackage{hyperref}
+% Create a new command for the horizontal rule in the document which allows thickness specification
+\PassOptionsToPackage{svgnames}{xcolor}
+\usepackage[most]{tcolorbox}
+
+
+
+% police sans serif 
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+%marges 
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+
+\title{Modèle de Sol Diohine DSCATT}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Contexte}
+
+Objectifs du modèle :
+
+
+Modéliser les variations de rendement agricole induites par : 
+
+\begin{itemize}
+	\item l'amendement du sol par fumure animale ou engrais (fertilité instantanée)
+	\item la paille laissée au sol (fertilité instantanée)(Mulching)
+	\item la qualité du sol (fertilité long terme)
+	\item l'érosion de la fertilité (fertilité long terme)
+\end{itemize} 
+
+\vspace{0.5cm}
+Le modèle simplifié fourni par Arthur modélise la variation d'azote dans le sol. 
+Les compléments fournis par Antoine introduisent l'effet de la qualité du sol sur l'azote disponible (minéralisation) et l'érosion de l'azote (lixiviation)(il fallait replacer ce sublime terme). 
+
+
+
+\section{L'azote disponible}
+
+
+
+La première équation donne l'azote (en kg) disponible à l'année $n$ sur la parcelle $p$ : $N_{available}^{n}(p)$
+
+\begin{equation}
+N_{available}^{n}(p)=N_{soil}^{n}(p)+N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{n}(p)-N_{erosion}^n(p) + N_{remaining}^{n-1}
+\end{equation}
+
+
+\subsection{Azote issu de l'air}
+
+
+Azote de l'air fixé par le sol
+
+\begin{equation}
+N_{air}^{n}(p) = A(p) * 0.002
+\end{equation}
+
+avec 
+\begin{itemize}
+  \item $A(p)$ l'aire de la parcelle $p$
+  \item 0.002  un coefficient en kg de N par $m^2$
+\end{itemize}
+
+Dans [Scriban ODD Model], on trouve le chiffre de 20kgs de N /ha dans les racines des plantes(bactéries rhyzobium) et 7.5kg de N/ha  fixé par les micro-organismes. Ce qui fait 27.5kgN/ha, soit $0.00275 kgN/m^2$ 
+
+
+\subsection{Azote issu du sol}
+
+
+
+
+
+
+\begin{tcolorbox}[noparskip,
+    colback=Orange,colframe=SandyBrown,%
+    colbacklower=LimeGreen!75!PeachPuff,%
+    title=Changement]
+En intégrant vos remarques, la qualité du sol a maintenant un effet multiplicatif sur le terme $N_{soil}$, mis à jour chaque année \\
+\end{tcolorbox}
+
+
+
+
+
+L'azote issu du sol dépend de la minéralisation de la matière organique du sol, quelle que soit sa qualité, de la matière organique des résidus de l'année précédente et de la \textbf{qualité du sol} :  $QS^{n}(p)$
+
+\begin{equation}
+N^{n}_{soil}(p) = QS^n(p) * A(p) * ( 0.0012 + NFBR(p))
+\end{equation}
+
+
+avec 
+\begin{itemize}
+  \item $A(p)$ l'aire de la parcelle $p$
+  \item 0.0012  un coefficient de minéralisation "de base" en kg de N par $m^2$
+  \item $QS^{n}(p)$ est la qualité du sol de $p$ à l'année $n$
+  \item $NFBR^n(p)$ est le \textbf{Nitrogen From Biomass Residue} en kgs d'azote. C'est l'azote disponible l'année $n$  issu de la décomposition de la matière organique de l’année $n-1$ qui a été laissée sur place : racines , éventuellement paille.
+
+\end{itemize}
+
+
+
+\subsubsection{Qualité du sol}
+
+Ce coefficient multiplicateur doit témoigner de la qualité du sol, à l'année $n$ est fonction de la biomasse produite sur la parcelle $p$ , en kg de végétal ($Crop$) cultivé par le passé (pas uniquement $n-1$ mais sur un horizon temporel plus large).
+
+une valeur $QS^n(p)>1$ donnerait un bonus de fertilté, $QS^n(p)<1$ donnerait un malus de fertilité, en termes de rendement de la parcelle.
+
+
+
+\begin{equation}
+QS^{n}(p) = f(SBS(p))
+\end{equation}
+
+Avec  :
+
+
+\begin{itemize}
+  \item  $SBS(p)$ Soil Biomass Stock: la biomasse dans le sol de $p$, intégrée dans la durée, en kilos de MO, supposée répartie uniformément dans $p$
+\end{itemize}
+
+
+
+
+\subsection{Nitrogen From Biomass Residue}
+
+
+Nitrogen From Biomass Residue (NFBR)(NiFroBire)
+La quantité de résidus laissés sur la parcelle varie selon les pratiques agricoles.
+Au maximum, le résidu laissé correspond à la proportion de coproduits de  plante non récoltée (la paille + les racines ).
+
+
+
+\begin{table}[h!]
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Crop}          & \textbf{NFBR}    & \textbf{Max BiomassToResidueRatio} & \textbf{Usual Value Diohine}  \\ \hline
+Mil                    & 1.5\%                 & 0.7                                  &  0 \\ \hline
+Peanut                 & 3\%                   & 0.666                               &  0 \\ \hline
+Fallow                 & 2\%                   & 1                                   &  0.1 \\\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\subsubsection{Production de biomasse}
+
+
+Nous avons des rendements nominaux pour le Mil (600kg/ha, min. 450kg/ha , max. 1T/ha Matière Sèche), pour l'arachide ( 450 kgs/ha, min. 300kg/ha max 600kg/ha , en Matière Sèche ) et pour la jachère (450kg/ha de fresh weeds, [Scriban ODD model], Matière sèche aussi  ).
+
+Ces rendements sont à dire d'acteurs et ne nous sont pas données pour chaque combinaison de pratiques (engrais,fumure).
+
+Comme on connaît les proportions de  produit/coproduits , on peut calculer la biomasse de végétal par hectare étant donné le rendement en produit : 
+
+Mil : 30\% de produit ,  70\% de paille \\
+Arachide : 1.5 fois plus de coproduit (fanes) que de gousses
+
+\begin{equation}
+Biomasse(Mil,p) =  \frac{Rendement(Mil,p)}{0.3}
+\end{equation}
+
+\begin{equation}
+Biomasse(Arachide,p) =  2.5 \times Rendement(Arachide,p)
+\end{equation}\\
+
+
+
+
+
+\subsubsection{Application numérique:} 
+
+Pour un rendement de 600kg/ha de Mil graines, production de biomasse de 2T/ha (0.2kg/m²)\\
+Pour un rendement de 450kg/ha d'arachide, production de biomasse de 1.125T/ha (0.11kg/m²)
+Pour un rendement de 475kg/ha d'herbe en jachère (0.0475kg/m²) 
+
+
+
+On laisse toute la paille et les racines sur une parcelle $p$ d'aire $A(p)=100m^2$
+
+
+$QS^{n}(Mil, p)= 0.2 A(p)* 0.015 * 0.7 = 0,0021* A(p)= 210g$ d'azote issu de la biomasse de Mil dans $p$ \\
+$QS^{n}(Peanut, p)= 0.11 A(p) * 0.03 * 0.6 = 0.21978 = 220g$ d'azote issu de la biomasse d'Arachide  dans $p$\\
+$QS^{n}(Fallow, p)= 0.0475 A(p)* 0.02 * 1 = 0.095 = 10g$ d'azote issu de la biomasse de jachère  dans $p$ \\
+
+
+
+TODO : le N est pas homogène dans la plante : en gros il y en a deux fois plus par kg de matière seche dans les parties exportées que dans les tiges.[ à dire d'expert Arthur scriban]
+Donc -> facteur de 0.3333 pour le N par kg de matières sèche  issue de la biomasse, quand on veut calculer le N qui reste sur la parcelle
+
+
+
+\subsubsection{Initialisation du modèle}
+
+
+L'année $n=0$ , il n'y a pas de récole précédente pour  avoir une quantité d'azote issue des résidus laissés au sol l'année précédente  : $NFBR^0(p)=0,\  \forall p$
+
+
+
+
+
+\subsection{Azote issu du fumier}
+
+
+60\% du fumier est mobilisable la première année par la plante (le mil).
+Les 40\% restants sont mobilisables l'année suivante (par l'arachide)
+
+
+$N_{manure}^n(p)= ManureMass(p) * 0.0238 * 0.6 NManureStock^{n-1}(p)$
+$NManureStock^{n}(p) = ManureMass^n(p)*  0.0238 * 0.4 $
+
+
+
+
+[Scriban ODD model]
+
+
+
+
+\subsection{Azote issu des Faidherbia}
+
+
+4kg par arbre [Scriban ODD model]
+
+
+
+
+
+\section{Conversion Azote $\rightarrow$ Plante}
+
+
+
+Les équations de "NRF" donnent la part d'azote disponible convertie en végétal selon les équation suivantes , issue de [Scriban ODD model]  , repris de la thèse de Myriam Grillot 
+
+
+Il s 'applique normalement au rendement limité par l'eau,  aux équations définies par morceaux de façons similaires à celles des NRF  ci-dessous. 
+
+\begin{equation}
+  NRF(N_{available}^n,Mil)=\left\{
+                \begin{array}{ll}
+                  0.25 \ if \ N_{available} < 18\\
+                0.501 ln(N_{available})-1.2179 \ if \ 18 \leq N_{available} \leq 83  \\
+                  1 \ otherwise
+                \end{array}
+              \right\} 
+ \end{equation} 
+
+\begin{equation}
+   NRF(N_{available}^n,Peanut)=1
+  \end{equation} 
+ 
+
+ \begin{equation}
+   NRF(N_{available}^n,Fallow)=\left\{
+                \begin{array}{ll}
+                  0.25 \ if \ N_{available} < 10\\
+                0.501 ln(N_{available})-1.2179 \ if \ 10 \leq N_{available} \leq 50  \\
+                  1 \ otherwise
+                \end{array}
+              \right\}
+  \end{equation} 
+  
+  
+
+
+Les seuils indiqués dans ces équations sont donnés pour un hectare de sol.
+
+
+
+
+
+Pour calculer la récolte (en kgs de végétal) , il faut convertir une partie de l'azote disponible en végétal.
+Ce qu'il nous manque c'est le coefficient $\alpha_{N \rightarrow plant}$  \emph{toutes choses égales par ailleurs}. 
+
+
+
+Du point de vue calculatoire, on peut le dériver à partir des rendement nominaux fournis , comme pour la biomasse. (cf exemple ci-dessous)
+
+Exemple numérique : 
+sur une parcelle $p$ de 100m², sans fumier, avec 1 faidherbia, l'année 0, on néglige l'érosion.
+
+Rendement nominal du Mil à dire d'acteurs : 600kg/ha (graines) , soit 6kgs de graines sur $p$
+
+\begin{eqnarray*}
+N_{available}^{0}(p)&=&N_{soil}^{n}(p)  +N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{n}(p)-N_{erosion}^n(p)  \\
+                    &=& 0.0012 * A(p) + QS^{n}(p) + A(p) * 0.002 +0                +4              -0                + 0  \\
+                    &=&  0.0012 * 100 + 0 + 100 * 0.002 +0+4-0 + 0  \\
+                    &=&  0.12 + 0.2 +4  \\
+                    &=& 4.32
+\end{eqnarray*}
+
+On cultive  du Mil, et on dispose de 4.32kg d'azote sur $p$
+
+On est en dessous de 18kg de N par ha, donc on applique un NRF de 0.25 : $\frac{1}{4}$ de ce N est converti en plante : environ 1kg de mil (matière sèche de toute la plante)
+
+Sur ce kilo de plante Mil , 30\% est de la graine soit 300g de Mil produit
+
+On est loin du rendement nominal du Mil annoncé par les agros pasteurs : 600kg de graines par ha, soit 2T de plante Mil, pour une parcelle de 100m² ça fait 20kgs de plante mil.  
+
+
+
+
+
+Variante : on utilise les équation de rendement limité par l'eau de la thèse de Myriam, reprise dans [Scriban ODD model]
+
+
+
+
+TODO Trouver des valeurs indicatives de kg de N par ha dans la litterature pour du sol pauvre , moyen riche 
+
+
+
+\subsection{Azote issu de l'engrais}
+
+
+C'est une masse de N mise au mètre carré par épandage.
+
+
+\subsection{Érosion de l'azote}
+
+le lessivement et  le vent usent le sol et font baisser le taux d'azote dans le sol. 
+
+$N_{erosion}^n = \beta_{erosion}* N_{available}$
+
+
+On suppose le coefficient constant , mais il pourrait varier en fonction de la pluviométrie et de la météo de l'année.
+La quantité doit être négative (c'est une perte) 
+
+
+
+
+\section{Notes de la journée de travail du 15 mai 2023}
+
+
+
+
+
+
+
+\end{document}

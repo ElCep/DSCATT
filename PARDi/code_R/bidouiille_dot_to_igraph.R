@@ -199,16 +199,20 @@ grph_to_display %>%  visNodes(physics = F ,
   visEdges()
 
 
-#### vignettes droit 
+#### vignettes droit et gestion des conflits  
   
 conflit_to_dsiplay <- vizu_interactive(nodes_conflit,edges_conflit ) %>% render_graph(output = "visNetwork" ) 
 
+
+conflitsvg  <- vizu_interactive(nodes_conflit,edges_conflit ) %>% render_graph(output = "visNetwork",as_svg = TRUE ) 
+conflitsvg
+
 conflit_to_dsiplay
-conflit_to_dsiplay %>%  visNodes(physics = F ,
+conflit <- conflit_to_dsiplay %>%  visNodes(physics = F ,
                               font= list(color= "white")
 ) %>% 
   visEdges()
-
+conflit 
 
 # render_graph(grph_to_display, output = "visNetwork" ) %>% 
 #   visNodes(physics = F ) 

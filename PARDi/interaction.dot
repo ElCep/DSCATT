@@ -1,0 +1,672 @@
+/* Created by igraph 1.2.8 */
+digraph {
+  0 [
+    name="Conseil Municipal"
+    color=white
+    type=acteur
+  ];
+  1 [
+    name="Chef de village"
+    color=white
+    type=acteur
+  ];
+  2 [
+    name=Notables
+    color=white
+    type=acteur
+  ];
+  3 [
+    name="Chef de Consession"
+    color=white
+    type=acteur
+  ];
+  4 [
+    name="Cuisine chef"
+    color=white
+    type=acteur
+  ];
+  5 [
+    name="Travailleur Sortie"
+    color=white
+    type=acteur
+  ];
+  6 [
+    name=Agriculteur
+    color=white
+    type=acteur
+  ];
+  7 [
+    name=Eleveur
+    color=white
+    type=acteur
+  ];
+  8 [
+    name=Ecole
+    color=white
+    type=acteur
+  ];
+  9 [
+    name="Revendeur de Semmence"
+    color=white
+    type=acteur
+  ];
+  10 [
+    name="Revendeur dengrais"
+    color=white
+    type=acteur
+  ];
+  11 [
+    name="Vieilles mamans"
+    color=white
+    type=acteur
+  ];
+  12 [
+    name="Saltigué"
+    color=white
+    type=acteur
+  ];
+  13 [
+    name=Animaux
+    color=white
+    type=acteur
+  ];
+  14 [
+    name="Arbres à palabres"
+    color=white
+    type=ressource
+  ];
+  15 [
+    name="Paix sociale"
+    color=white
+    type=ressource
+  ];
+  16 [
+    name="Eau du forage"
+    color=white
+    type=ressource
+  ];
+  17 [
+    name="Eau des Mares"
+    color=white
+    type=ressource
+  ];
+  18 [
+    name="Eau des puis"
+    color=white
+    type=ressource
+  ];
+  19 [
+    name=Pluviometrie
+    color=white
+    type=ressource
+  ];
+  20 [
+    name="Engrais Chimique"
+    color=white
+    type=ressource
+  ];
+  21 [
+    name=Arachide
+    color=white
+    type=ressource
+  ];
+  22 [
+    name="Paille darachide"
+    color=white
+    type=ressource
+  ];
+  23 [
+    name="Céréale"
+    color=white
+    type=ressource
+  ];
+  24 [
+    name="Paille de Céréale"
+    color=white
+    type=ressource
+  ];
+  25 [
+    name="Tige de céréale"
+    color=white
+    type=ressource
+  ];
+  26 [
+    name=Bisapp
+    color=white
+    type=ressource
+  ];
+  27 [
+    name=Maraichage
+    color=white
+    type=ressource
+  ];
+  28 [
+    name=Niebe
+    color=white
+    type=ressource
+  ];
+  29 [
+    name="Paille de Niebe"
+    color=white
+    type=ressource
+  ];
+  30 [
+    name=Sorgo
+    color=white
+    type=ressource
+  ];
+  31 [
+    name="Sol Dior sableux"
+    color=white
+    type=ressource
+  ];
+  32 [
+    name="Sol Dekk argilleux"
+    color=white
+    type=ressource
+  ];
+  33 [
+    name="Sol Dekk Dior"
+    color=white
+    type=ressource
+  ];
+  34 [
+    name=Parcelles
+    color=white
+    type=ressource
+  ];
+  35 [
+    name="Tapis herbacé"
+    color=white
+    type=ressource
+  ];
+  36 [
+    name=Arbres
+    color=white
+    type=ressource
+  ];
+  37 [
+    name="Paturage Jachère"
+    color=white
+    type=ressource
+  ];
+  38 [
+    name="Matière Organique"
+    color=white
+    type=ressource
+  ];
+  39 [
+    name="Fertilité"
+    color=white
+    type=ressource
+  ];
+
+  4 -> 18 [
+    label=Boivent
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  4 -> 16 [
+    label=Boivent
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  5 -> 13 [
+    label=confient
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  4 -> 5 [
+    label=soutient
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  4 -> 5 [
+    label=soutient
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  4 -> 14 [
+    label=contribue
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  1 -> 14 [
+    label=covoque
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  2 -> 14 [
+    label=contribue
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  14 -> 1 [
+    label=informe
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  2 -> 3 [
+    label="bons offices"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  2 -> 4 [
+    label="bons offices"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  3 -> 4 [
+    label="Régule"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  4 -> 0 [
+    label=Plainte
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  4 -> 1 [
+    label=Plainte
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  12 -> 7 [
+    label="Predit Protège"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  12 -> 6 [
+    label="Predit Protège"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  12 -> 19 [
+    label="Predit Protège"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  12 -> 34 [
+    label="Predit Protège"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  11 -> 7 [
+    label="Predit Protège"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  11 -> 6 [
+    label="Predit Protège"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  11 -> 19 [
+    label="Predit Protège"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  11 -> 34 [
+    label="Predit Protège"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  7 -> 4 [
+    label=constitue
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  7 -> 15 [
+    label=preserve
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  7 -> 13 [
+    label=entretien
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  15 -> 7 [
+    label=asure
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  13 -> 7 [
+    label=usufruit
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  7 -> 8 [
+    label=occupe
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  6 -> 4 [
+    label=constitue
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  6 -> 9 [
+    label=approvisionnement
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  6 -> 10 [
+    label=approvisionnement
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  6 -> 20 [
+    label="épandage"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  6 -> 15 [
+    label=preserve
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  15 -> 6 [
+    label=asure
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  20 -> 34 [
+    label="épandage"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  7 -> 4 [
+    label=constitue
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  6 -> 13 [
+    label="Contribut à lallimentation"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  6 -> 34 [
+    label="valorise et entretient"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  31 -> 34 [
+    label=compose
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  32 -> 34 [
+    label=compose
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  33 -> 34 [
+    label=compose
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  21 -> 31 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  22 -> 31 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  23 -> 31 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  24 -> 31 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  25 -> 31 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  26 -> 31 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  26 -> 32 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  26 -> 33 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  27 -> 31 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  27 -> 32 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  27 -> 33 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  28 -> 31 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  28 -> 32 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  28 -> 33 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  29 -> 31 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  29 -> 32 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  29 -> 33 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  30 -> 32 [
+    label="adaptation à"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  25 -> 6 [
+    label=construit
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  25 -> 7 [
+    label=construit
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  22 -> 7 [
+    label=stock
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  35 -> 7 [
+    label=stock
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  35 -> 34 [
+    label=Pousse
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  35 -> 39 [
+    label="améliore"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  36 -> 19 [
+    label=attire
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  36 -> 39 [
+    label="améliore"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  13 -> 34 [
+    label=enrichit
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  34 -> 13 [
+    label=nourrit
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  13 -> 17 [
+    label=boivent
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  13 -> 16 [
+    label=boivent
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  13 -> 18 [
+    label=boivent
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  34 -> 37 [
+    label=repos
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  37 -> 34 [
+    label=revitalise
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  13 -> 38 [
+    label=produit
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  37 -> 38 [
+    label="Dégrade"
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  38 -> 34 [
+    label=transport
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+  34 -> 6 [
+    label=transport
+    color=grey
+    pardi_type=interaction
+    conflict_lvl=NA
+  ];
+}
