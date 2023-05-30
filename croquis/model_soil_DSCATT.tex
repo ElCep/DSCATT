@@ -134,7 +134,36 @@ Avec  :
 
 \begin{itemize}
   \item  $SBS(p)$ Soil Biomass Stock: la biomasse dans le sol de $p$, intégrée dans la durée, en kilos de MO, supposée répartie uniformément dans $p$
+  \item $f$ serait de forme sigmoïde , avec un seuil où $QS=1$ ? 
 \end{itemize}
+
+
+
+
+\begin{tcolorbox}[noparskip,
+    colback=LimeGreen,colframe=Green,%
+    colbacklower=LimeGreen!75!LightGreen,%
+    title=Changement]
+Comment intégrer QS sur plusieurs années et non pas seulement en fonction de stock de biomasse de l'année précédente ? 
+Quelles sont les caractéristiques de la fonction $f$ ? 
+\end{tcolorbox}
+
+
+
+
+
+
+
+\begin{tcolorbox}[noparskip,
+    colback=LimeGreen,colframe=Green,%
+    colbacklower=LimeGreen!75!LightGreen,%
+    title=Changement]
+Existe-t-il des valeurs indicatives de kg de N par hectare dans la litterature pour du sol sénégalais pauvre , moyen  et  riche  ? 
+\end{tcolorbox}
+
+
+
+
 
 
 
@@ -292,7 +321,7 @@ Ce qu'il nous manque c'est le coefficient $\alpha_{N \rightarrow plant}$  \emph{
 
 
 Du point de vue calculatoire, on peut le dériver à partir des rendement nominaux fournis , comme pour la biomasse. (cf exemple ci-dessous)
-
+x²
 Exemple numérique : 
 sur une parcelle $p$ de 100m², sans fumier, avec 1 faidherbia, l'année 0, on néglige l'érosion.
 
@@ -323,7 +352,19 @@ Variante : on utilise les équation de rendement limité par l'eau de la thèse 
 
 
 
-TODO Trouver des valeurs indicatives de kg de N par ha dans la litterature pour du sol pauvre , moyen riche 
+
+\begin{tcolorbox}[noparskip,
+    colback=LimeGreen,colframe=Green,%
+    colbacklower=LimeGreen!75!LightGreen,%
+    title=Changement]
+Existe-t-il des valeurs indicatives de kg de N par hectare dans la litterature pour du sol sénégalais pauvre , moyen  et  riche  ? 
+\end{tcolorbox}
+
+
+
+
+
+
 
 
 
@@ -342,15 +383,6 @@ $N_{erosion}^n = \beta_{erosion}* N_{available}$
 
 On suppose le coefficient constant , mais il pourrait varier en fonction de la pluviométrie et de la météo de l'année.
 La quantité doit être négative (c'est une perte) 
-
-
-
-
-\section{Notes de la journée de travail du 15 mai 2023}
-
-
-
-
 
 
 
