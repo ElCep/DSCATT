@@ -24,7 +24,7 @@
  top=20mm,
  }
 
-\title{Modèle de Sol Diohine DSCATT}
+\title{Modèle de Sol Diohine DSCATT, version juillet 2023}
 
 \begin{document}
 
@@ -58,7 +58,7 @@ Les compléments fournis par Antoine introduisent l'effet de la qualité du sol 
 La première équation donne l'azote (en kg) disponible à l'année $n$ sur la parcelle $p$ : $N_{available}^{n}(p)$
 
 \begin{equation}
-N_{available}^{n}(p)=N_{soil}^{n}(p)+N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{n}(p)-N_{erosion}^n(p) + N_{remaining}^{n-1}
+N_{available}^{n}(p)=N_{soil}^{n}(p)+N_{air}^{n}(p)+N_{manure}^{n}(p)+N_{faid}^{n}(p)
 \end{equation}
 
 
@@ -77,7 +77,7 @@ N_{air}^{n}(p) = A(p) * 0.002
 L'azote issu du sol est une somme de deux termes . Le premier est fonction de l'aire $A(p)$ de $p$ le second est l'effet de la \textbf{qualité du sol} (fixation par les micro-organismes? ) à l'année $n$:  $QS^{n}(p)$
 
 \begin{equation}
-N_{soil}^{n}(p) = A(p)(0.0012 + QS^{n}(p))
+N_{soil}^{n}(p) = A(p)*(0.0012 ) * QS^{n}(p)
 \end{equation}
 
 
@@ -341,25 +341,6 @@ On est loin du rendement nominal du Mil annoncé par les agros pasteurs : 600kg 
 
 
 C'est une masse de N mise au mètre carré par épandage.
-
-
-\subsection{Érosion de l'azote}
-
-le lessivement et  le vent usent le sol et font baisser le taux d'azote dans le sol. 
-
-$N_{erosion}^n = \beta_{erosion}* N_{available}$
-
-
-On suppose le coefficient constant , mais il pourrait varier en fonction de la pluviométrie et de la météo de l'année.
-La quantité doit être négative (c'est une perte) 
-
-\subsection{Azote restant après récolte}
-
-
-\begin{equation}
-N_{remaining}^{n}(p)=N_{available}^{n}(p) (1 - NRF(N_{available}^{n}(p, crop))) 
-\end{equation}
-
 
 
 
