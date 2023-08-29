@@ -44,6 +44,7 @@ to MAJ-fertilite
   ;; mixte: la nuit les troupeaux des cuisines paturent sur les parcelles de leur cuisine et la journée sur toutes les jachères
   
   
+<<<<<<< Updated upstream:model/netlogo/fertilite.nls
   let coefficients-strategie [] ;; [ratio colletif (paturage en journée), ratio cuisine (paturage au piquet la nuit)] 
   (ifelse 
     (strategie-paturage = "mixte") [set coefficients-strategie [0.25 0.75]]
@@ -53,6 +54,20 @@ to MAJ-fertilite
 
   ;; fumure uniforme de tout le troupeau dans les champs de brousse en jachère pendant la journée 
   ask parcellesEnJachere with [not cultived?][
+=======
+  let coefficients-strategie [] ;; [ratio colletif, ratio cuisine] 
+  (ifelse 
+    (strategie-paturage = "mixte") [set coefficients-strategie [0.5 0.5]]
+    (strategie-paturage = "collectif") [set coefficients-strategie [1.0 0.0]]
+    (strategie-paturage = "par cuisine") [set coefficients-strategie [0.0 1.0]]
+  )     
+  
+  show word "COEF STRATEGIE first " (first coefficients-strategie) 
+  show word "last" (last coefficients-strategie)
+
+  ;; fumure uniforme de tout le troupeau dans les champs de brousse en jachère pendant la journée 
+  ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and not cultived?  ][
+>>>>>>> Stashed changes:toymodel/fertilite.nls
     set fertilite fertilite + (((sum [taille-troupeau] of cuisines ) * COS-par-tete) / nb-patches-Jach) * first coefficients-strategie  ;; le 0.5 indique que c'est le jour, i.e. la moitié du temps 
   ]
   
@@ -67,7 +82,23 @@ to MAJ-fertilite
     ; il pourra y avoir du pret de troupeau de nuit ... un jour  
     ]
   ]
+<<<<<<< Updated upstream:model/netlogo/fertilite.nls
  
+=======
+  
+  ;; test
+;    ask one-of cuisines [
+;    ask patches with [cycle = 3 and zone != "case" and proprietaire = self] [
+;      sprout 1 [ 
+;        set size 1
+;        set color black
+;      ]
+;    ]
+;  ]
+  
+  
+
+>>>>>>> Stashed changes:toymodel/fertilite.nls
   ask cuisines [
     foreach sentence idmyParcellesCultiveA idmyParcellesCultiveM [
       ;; la fertilite des champs de case est fixe (pour le moment)

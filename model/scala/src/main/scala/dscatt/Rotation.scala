@@ -7,7 +7,7 @@ import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 object Rotation {
-  def evolve(simulationState: SimulationState)(using MersenneTwister): (SimulationState, Seq[FoodBalance]) = {
+  def evolve(simulationState: SimulationState)(using Fertility.AgronomicMetricsByParcel): (SimulationState, Seq[FoodBalance]) = {
 
 
     // Compute theoritical crops for coming year before we know if it is in culture or not
@@ -21,7 +21,6 @@ object Rotation {
     }
 
     val autonomousFoodBalance = theoriticalCroping.map { case (k, ps) => Kitchen.foodBalance(ps, k) }
-
     // Loaners process:
     // 1- have a positive foodBalance with all crops in culture
     // 2- collect all extra parcels
@@ -61,7 +60,7 @@ object Rotation {
   case class ParcelUsages(cultivated: Seq[Parcel], forLoan: Seq[Parcel], notLoanable: Seq[Parcel])
 
   // Extra is defined as everything except what the kitchen needs
-  def getParcelUsages(kitchen: Kitchen, parcels: Seq[Parcel]): ParcelUsages = {
+  def getParcelUsages(kitchen: Kitchen, parcels: Seq[Parcel])(using Fertility.AgronomicMetricsByParcel): ParcelUsages = {
 
     //FIXME Use the OwnFallowUse if the kitchen is deficitaire
     val (fallowsNotCultivated, parcelCandidatesForCulture) = kitchen.ownFallowUse match {

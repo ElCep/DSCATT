@@ -19,6 +19,7 @@ object Simulation {
              kitchenPartition: KitchenPartition = KitchenPartition((KitchenProfile.default, 1)),
              supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
+             soilQualityBasis: Double = 1.0,
              parcelOutputPath: Option[String] = None
            ) = {
 
@@ -32,23 +33,29 @@ object Simulation {
     val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels, giniTolerance, maximumNumberOfParcels, seed, parcelOutputPath)
     val initialState = SimulationState(nakedWorld, kitchens, History.initialize(simulationLength, kitchens), 1)
 
-    val finalState = evolve(initialState, populationGrowth, simulationLength + 1)
+    val finalState = evolve(initialState, populationGrowth, simulationLength + 1, soilQualityBasis)
 
     History.print(finalState, true)
   }
 
 
-  def evolve(simulationState: SimulationState, populationGrowth: Double, simulationLenght: Int)(using MersenneTwister): SimulationState = {
+  def evolve(simulationState: SimulationState, populationGrowth: Double, simulationLenght: Int, soilQualityBasis: Double)(using MersenneTwister): SimulationState = {
+
 
     @tailrec
     def evolve0(simulationState: SimulationState): SimulationState = {
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 1) simulationState
       else {
-        val initialFoodNeeds = simulationState.currentFoodNeeds
-        
+        val initialFoodNeeds = simulationState.kitchens.map { k => k.id -> -Kitchen.foodNeeds(k) }
+
+        // Compute soil quality and available nitrogen for each parcel before the rotation process until fertilities of the current year is computed
+        implicit val fertilityMetricsByParcel: Fertility.AgronomicMetricsByParcel = simulationState.world.parcels.map { p =>
+          p.id -> Fertility.agronomicMetrics(p, soilQualityBasis)
+        }.toMap
+
         // Evolve rotation including loans
         val (afterRotationsSimulationState, autonomousFoodBalance) = Rotation.evolve(simulationState)
-        val afterLoanFoodBalance = afterRotationsSimulationState.currentFoodBalances
+        val afterLoanFoodBalance = afterRotationsSimulationState.kitchens.map { k => Kitchen.foodBalance(afterRotationsSimulationState.world, k) }
 
         // Process food donations
         val afterDonationFoodBalance = FoodDonation.assign(afterLoanFoodBalance)
@@ -57,20 +64,14 @@ object Simulation {
         val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoodBalance)
 
         // Process Fertiliy
-        val afterFertilizatonState = Fertility.assign(resizedSimulationState)
+        val afterFertilizationState = Fertility.assign(resizedSimulationState, soilQualityBasis)
 
-        val finalHistory = afterFertilizatonState.history.updateFoodBalances(afterFertilizatonState.year, initialFoodNeeds, autonomousFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
-        val finalState = afterFertilizatonState.copy(world = Loan.reset(afterFertilizatonState.world), year = afterFertilizatonState.year + 1, history = finalHistory)
+        val finalHistory = afterFertilizationState.history.updateFoodBalances(afterFertilizationState.year, initialFoodNeeds, autonomousFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
+        val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
         evolve0(finalState)
       }
     }
 
     evolve0(simulationState)
-  }
-
-  implicit class AState(simulationState: SimulationState) {
-    def currentFoodBalances = simulationState.kitchens.map { k => Kitchen.foodBalance(simulationState.world, k) }
-
-    def currentFoodNeeds = simulationState.kitchens.map { k => k.id -> -Kitchen.foodNeeds(k) }
   }
 }

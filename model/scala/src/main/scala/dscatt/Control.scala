@@ -44,6 +44,9 @@ object UniformFertilizing extends FertilizerStrategy
 object Nominal150Fertilizing extends FertilizerStrategy // nominal 150kg per hectare (ie 0.015kg / m2)
 case class PriorityFetilizedParcels(criteria: Parcel => Boolean) extends FertilizerStrategy // Fertilizer is set in priority on a given set of Parcels
 
+sealed trait MulchingStrategy extends Control
+case class Mulching(leftOnTheGroundRatio: Double = 0.0) extends MulchingStrategy // Mulch ratio led on the ground to enrich it (and not used for winter herd food)
+
 sealed trait FertilizerAttribution
 object UniformAttribution extends FertilizerAttribution
 object UniformForTaxPayer extends FertilizerAttribution

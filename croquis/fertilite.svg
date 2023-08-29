@@ -24,14 +24,14 @@
      inkscape:pageopacity="1"
      inkscape:pagecheckerboard="0"
      showgrid="false"
-     inkscape:zoom="0.028284271"
-     inkscape:cx="16387.2"
-     inkscape:cy="-760.13979"
-     inkscape:window-width="1920"
-     inkscape:window-height="1005"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:zoom="0.044913549"
+     inkscape:cx="8661.0836"
+     inkscape:cy="17444.625"
+     inkscape:window-width="929"
+     inkscape:window-height="962"
+     inkscape:window-x="20"
+     inkscape:window-y="20"
+     inkscape:window-maximized="0"
      inkscape:current-layer="svg157"
      fit-margin-top="1000"
      fit-margin-left="1000"
@@ -467,265 +467,293 @@
      inkscape:export-filename="/tmp/fertilite.png"
      inkscape:export-xdpi="2.99"
      inkscape:export-ydpi="2.99" />
+  <use
+     xlink:href="#MJMATHI-4E"
+     id="use2-2"
+     x="0"
+     y="0"
+     width="100%"
+     height="100%"
+     transform="matrix(0.37346843,0,0,-0.37339953,5470.2906,10342.773)"
+     style="fill:#000000;stroke:#000000;stroke-width:0" />
+  <use
+     transform="matrix(0.26408206,0,0,-0.26403334,5484.4824,10348.001)"
+     xlink:href="#MJMATHI-6E"
+     x="1299"
+     y="508"
+     id="use4-72"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0" />
+  <use
+     xlink:href="#MJMAIN-28"
+     x="3703"
+     y="0"
+     id="use26-5"
+     width="100%"
+     height="100%"
+     transform="matrix(0.37346843,0,0,-0.37339953,5724.5743,10273.043)"
+     style="fill:#000000;stroke:#000000;stroke-width:0" />
+  <use
+     xlink:href="#MJMATHI-70"
+     x="4097"
+     y="0"
+     id="use28-9"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMAIN-29"
+     x="4605"
+     y="0"
+     id="use30-7"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMAIN-3D"
+     x="5276"
+     y="0"
+     id="use32-7"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMATHI-4E"
+     id="use34-7"
+     x="0"
+     y="0"
+     width="100%"
+     height="100%"
+     transform="matrix(0.37346843,0,0,-0.37339953,8094.9784,10273.043)"
+     style="fill:#000000;stroke:#000000;stroke-width:0" />
   <g
-     stroke="#000000"
-     fill="#000000"
-     stroke-width="0"
-     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)"
-     id="g150">
+     transform="matrix(0.37346843,0,0,-0.37339953,8437.8225,10138.993)"
+     id="g42-3"
+     style="fill:#000000;stroke:#000000;stroke-width:0">
     <use
-       xlink:href="#MJMATHI-4E"
-       id="use2-2"
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6E"
+       id="use36-6"
        x="0"
        y="0"
        width="100%"
        height="100%"
-       transform="translate(-690.87061,-186.744)"
+       style="stroke-width:0" />
+    <path
+       id="use38-56"
+       stroke-width="18.9353"
+       d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMAIN-31"
+       x="1388"
+       y="0"
+       id="use40-3"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+  </g>
+  <g
+     transform="matrix(0.37346843,0,0,-0.37339953,8396.7409,10389.17)"
+     id="g62-9"
+     style="fill:#000000;stroke:#000000;stroke-width:0">
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-72"
+       id="use44-4"
+       x="0"
+       y="0"
+       width="100%"
+       height="100%"
        style="stroke-width:0" />
     <use
-       transform="matrix(0.70710678,0,0,0.70710678,-652.87061,-200.744)"
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-65"
+       x="456"
+       y="0"
+       id="use46-81"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6D"
+       x="927"
+       y="0"
+       id="use48-2"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-61"
+       x="1810"
+       y="0"
+       id="use50-93"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-69"
+       x="2344"
+       y="0"
+       id="use52-9"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6E"
+       x="2694"
+       y="0"
+       id="use54-0"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-69"
+       x="3299"
+       y="0"
+       id="use56-8"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6E"
+       x="3649"
+       y="0"
+       id="use58-8"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <path
+       id="use60-5"
+       stroke-width="18.9353"
+       d="M 3227.9425,30.405592 Q 3217.3359,21.213203 3196.8298,10.606602 3176.3237,0 3153.6962,0 q -44.5477,0 -71.4177,31.819805 -26.8701,31.819805 -27.5772,81.317275 0,74.24622 54.4472,136.47161 54.4472,62.2254 120.9153,62.93251 33.234,0 61.5183,-33.94113 l 2.1213,2.82843 q 1.4142,2.12132 3.5355,4.24264 2.1213,2.12132 6.364,5.65685 4.2426,3.53554 9.1924,4.94975 4.9497,1.41421 11.3137,2.12132 9.8995,0 16.2634,-6.36396 6.364,-6.36396 7.0711,-13.43503 0,-10.6066 -40.3051,-171.11984 -40.3051,-160.513239 -42.4264,-164.048772 -12.7279,-38.183767 -54.4472,-62.932508 -41.7193,-24.74873 -95.4594,-25.45584 -99.7021,0 -99.7021,48.083261 0,18.384776 12.7279,32.526912 12.728,14.142136 32.5269,14.142136 10.6067,0 19.799,-6.363961 9.1924,-6.363962 9.8995,-21.920311 0,-7.071068 -1.4142,-13.435029 -1.4142,-6.363961 -4.9497,-9.899498 -3.5356,-3.53553 -5.6569,-7.07106 -2.1213,-3.53554 -4.9497,-5.65686 l -1.4142,-1.41421 h 0.7071 q 7.071,-2.12132 42.4264,-2.12132 26.87,0 42.4264,8.48528 16.2634,7.77817 30.4056,23.334523 14.1421,15.556349 19.799,33.234018 4.2426,13.435029 11.3137,43.8406208 9.1924,33.9411252 9.1924,39.5979802 z m 51.6188,201.525428 -2.8285,7.77818 q -2.1213,7.77817 -3.5355,10.6066 -1.4142,2.82843 -4.2427,9.8995 -2.8284,7.07106 -7.071,9.89949 -4.2427,2.82843 -9.1924,7.77818 -4.9498,4.94974 -12.7279,6.36396 -7.7782,1.41421 -15.5564,2.12132 -31.1127,0 -60.1041,-37.47666 -21.2132,-27.57717 -35.3553,-84.14571 -14.1421,-56.56854 -14.1421,-82.024387 0,-55.861435 43.8406,-55.861435 39.598,0 77.7817,49.497474 l 5.6569,7.071068 z" />
+  </g>
+  <use
+     xlink:href="#MJMAIN-28"
+     x="10596"
+     y="0"
+     id="use66-0"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMATHI-70"
+     x="10990"
+     y="0"
+     id="use68-9"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMAIN-29"
+     x="11498"
+     y="0"
+     id="use70-6"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMAIN-2B"
+     x="12114"
+     y="0"
+     id="use72-38"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMAIN-28"
+     x="13120"
+     y="0"
+     id="use74-5"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMAIN-31"
+     x="13514"
+     y="0"
+     id="use76-6"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <path
+     id="use78-1"
+     stroke-width="10"
+     d="m 11078.244,10184.547 q 0,0 0,-4.854 0,-4.854 5.229,-7.468 h 216.985 q 5.602,2.987 5.602,7.468 0,4.481 -5.602,7.468 h -216.985 q -5.229,-2.614 -5.229,-7.468 z"
+     style="fill:#000000;stroke:#000000" />
+  <use
+     xlink:href="#MJMATHI-4E"
+     x="15246"
+     y="0"
+     id="use80-15"
+     width="100%"
+     height="100%"
+     style="fill:#00aad4;fill-opacity:0.67451;stroke:#00aad4;stroke-width:0;stroke-opacity:0.67451"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <path
+     id="use82-98"
+     stroke-width="10"
+     d="m 11841.614,10035.187 q -10.084,0 -11.951,-0.373 -1.868,-0.373 -1.868,-4.107 0,-10.082 4.109,-12.322 0.746,-0.374 64.983,-0.374 64.237,0.374 69.465,1.12 20.914,2.988 35.106,10.456 14.192,7.467 20.168,17.176 5.975,9.708 7.842,16.056 1.868,6.348 2.241,12.696 0,16.803 -10.83,31.365 -10.831,14.563 -25.023,22.404 -14.192,7.842 -25.022,12.696 -10.831,4.854 -14.192,4.854 l 2.614,1.867 q 25.023,14.189 25.023,41.074 0,4.107 -1.868,22.777 -1.867,18.67 -1.867,30.619 v 3.361 q 0,6.721 0.373,10.455 0.374,3.734 4.109,6.721 3.734,2.987 9.71,3.361 10.457,0 17.179,-8.215 6.723,-8.215 9.711,-17.55 1.867,-5.228 2.987,-6.348 1.121,-1.12 5.602,-1.12 7.47,0 7.47,4.481 0,6.721 -8.964,21.284 -14.191,21.283 -33.612,21.283 h -3.361 q -22.782,0 -37.72,-9.335 -14.939,-9.335 -16.433,-29.125 0,-10.082 5.602,-31.365 5.602,-21.284 5.602,-27.258 0,-19.044 -16.059,-27.632 -5.602,-2.614 -9.337,-2.987 -3.734,-0.374 -26.516,-0.747 h -25.769 l -11.951,48.542 q -12.325,49.289 -12.325,50.035 0,1.494 0.374,1.867 0.373,0.374 2.614,1.494 2.241,1.12 6.349,0.747 4.108,-0.374 12.324,0.747 h 11.578 q 2.241,2.987 2.241,3.36 0,0.374 -1.121,6.721 -1.493,4.855 -3.734,7.095 h -5.602 q -13.445,-0.747 -48.925,-0.747 -12.698,0 -23.528,0 -10.831,0 -17.18,0 -6.349,0 -7.843,0.374 -6.349,0 -6.349,-3.361 0,-0.747 1.121,-5.228 1.867,-7.094 3.735,-7.841 1.493,-0.373 5.602,-0.373 h 2.24 q 10.084,0 22.408,-1.121 5.229,-1.12 7.096,-4.48 1.121,-1.494 26.89,-103.805 25.769,-102.312 25.769,-107.913 0,-2.614 -21.287,-3.361 z m 149.387,30.993 q 0,-11.949 -7.843,-20.164 -7.843,-8.215 -32.118,-10.455 -0.747,0 -8.59,0 -7.843,0 -14.192,-0.374 h -8.216 q -17.553,0 -20.167,3.734 -0.374,1.121 -12.698,49.663 -12.325,48.542 -12.325,49.662 0,0.373 25.77,0.373 29.13,-0.373 38.84,-2.614 23.902,-3.734 37.347,-22.03 5.976,-8.588 10.084,-22.404 4.108,-13.816 4.108,-25.391 z"
+     style="fill:#00aad4;fill-opacity:0.67451;stroke:#00aad4;stroke-opacity:0.67451" />
+  <path
+     id="use84-48"
+     stroke-width="10"
+     d="m 12058.972,10272.67 q -6.349,0 -6.349,-3.734 0,-0.747 1.121,-5.228 1.494,-5.974 2.988,-6.721 1.493,-0.747 8.589,-1.12 10.084,0 22.408,-1.121 5.229,-1.12 7.096,-4.48 0.747,-1.867 26.517,-104.926 25.769,-103.058 26.142,-104.552 0,-2.613 -1.493,-2.613 -2.988,-1.121 -19.794,-1.867 h -11.578 q -2.241,-2.241 -2.241,-2.987 0,-0.747 0.747,-6.348 1.494,-6.348 3.735,-7.842 h 201.299 q 2.615,1.494 2.615,4.108 0,1.867 -4.855,41.82 -4.855,39.954 -5.229,41.074 -0.747,2.614 -7.469,2.614 h -4.482 q -2.614,-1.867 -2.614,-4.854 0,-0.373 1.12,-8.962 1.121,-8.588 1.121,-19.79 0,-11.202 -2.615,-18.296 -2.614,-7.095 -7.096,-11.576 -4.481,-4.481 -13.818,-5.974 -9.337,-1.494 -19.047,-2.614 -9.71,-1.12 -26.89,-0.373 h -8.589 q -30.625,0.373 -32.492,1.12 -1.867,0.747 -2.614,2.987 -0.374,0.373 -12.698,48.915 l -11.951,48.169 h 20.541 q 1.12,0 8.589,0 7.47,0 10.457,-0.373 2.988,-0.374 8.217,-1.121 5.228,-0.746 8.963,-2.613 3.735,-1.867 6.349,-4.481 4.855,-4.481 8.216,-12.322 3.361,-7.842 4.855,-14.19 1.494,-6.347 1.868,-6.721 1.12,-1.867 7.096,-1.867 h 4.481 q 2.614,1.867 2.614,3.734 0,1.12 -11.577,48.916 -11.578,47.795 -12.698,49.288 -0.747,2.614 -7.469,2.614 h -4.482 q -2.614,-2.24 -2.614,-4.481 0,-1.12 1.867,-8.214 1.867,-7.095 1.867,-14.936 0,-10.829 -7.469,-13.443 -7.469,-2.614 -33.239,-2.614 h -20.54 l -11.951,47.422 q -11.951,46.302 -11.951,48.542 0,5.228 33.238,5.228 h 9.337 q 2.241,2.24 2.241,2.613 0,0.374 -0.747,7.468 -1.494,4.855 -3.735,7.095 h -6.349 q -15.312,-0.747 -56.393,-0.747 -24.276,0 -36.974,0 -12.698,0 -14.192,0.374 z"
+     style="fill:#00aad4;fill-opacity:0.67451;stroke:#00aad4;stroke-opacity:0.67451" />
+  <use
+     xlink:href="#MJMAIN-28"
+     x="17657"
+     y="0"
+     id="use86-1"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <g
+     transform="matrix(0.37346843,0,0,-0.37339953,12469.788,10273.043)"
+     id="g112-0"
+     style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1">
+    <use
+       xlink:href="#MJMATHI-4E"
+       id="use88-3"
+       x="0"
+       y="0"
+       width="100%"
+       height="100%"
+       style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
+    <use
+       transform="scale(0.70710678)"
        xlink:href="#MJMATHI-6E"
        x="1299"
        y="508"
-       id="use4-72"
+       id="use90-04"
        width="100%"
        height="100%"
-       style="stroke-width:0" />
-    <use
-       xlink:href="#MJMAIN-28"
-       x="3703"
-       y="0"
-       id="use26-5"
-       width="100%"
-       height="100%"
-       transform="translate(-10)"
-       style="stroke-width:0" />
-    <use
-       xlink:href="#MJMATHI-70"
-       x="4097"
-       y="0"
-       id="use28-9"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <use
-       xlink:href="#MJMAIN-29"
-       x="4605"
-       y="0"
-       id="use30-7"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <use
-       xlink:href="#MJMAIN-3D"
-       x="5276"
-       y="0"
-       id="use32-7"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <use
-       xlink:href="#MJMATHI-4E"
-       id="use34-7"
-       x="0"
-       y="0"
-       width="100%"
-       height="100%"
-       transform="translate(6337)"
-       style="stroke-width:0" />
+       style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
     <g
-       transform="translate(7255,359)"
-       id="g42-3"
-       style="stroke-width:0">
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6E"
-         id="use36-6"
-         x="0"
-         y="0"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use38-56"
-         stroke-width="18.9353"
-         d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMAIN-31"
-         x="1388"
-         y="0"
-         id="use40-3"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-    </g>
-    <g
-       transform="translate(7145,-311)"
-       id="g62-9"
-       style="stroke-width:0">
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-72"
-         id="use44-4"
-         x="0"
-         y="0"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-65"
-         x="456"
-         y="0"
-         id="use46-81"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6D"
-         x="927"
-         y="0"
-         id="use48-2"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-61"
-         x="1810"
-         y="0"
-         id="use50-93"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-69"
-         x="2344"
-         y="0"
-         id="use52-9"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6E"
-         x="2694"
-         y="0"
-         id="use54-0"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-69"
-         x="3299"
-         y="0"
-         id="use56-8"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6E"
-         x="3649"
-         y="0"
-         id="use58-8"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use60-5"
-         stroke-width="18.9353"
-         d="M 3227.9425,30.405592 Q 3217.3359,21.213203 3196.8298,10.606602 3176.3237,0 3153.6962,0 q -44.5477,0 -71.4177,31.819805 -26.8701,31.819805 -27.5772,81.317275 0,74.24622 54.4472,136.47161 54.4472,62.2254 120.9153,62.93251 33.234,0 61.5183,-33.94113 l 2.1213,2.82843 q 1.4142,2.12132 3.5355,4.24264 2.1213,2.12132 6.364,5.65685 4.2426,3.53554 9.1924,4.94975 4.9497,1.41421 11.3137,2.12132 9.8995,0 16.2634,-6.36396 6.364,-6.36396 7.0711,-13.43503 0,-10.6066 -40.3051,-171.11984 -40.3051,-160.513239 -42.4264,-164.048772 -12.7279,-38.183767 -54.4472,-62.932508 -41.7193,-24.74873 -95.4594,-25.45584 -99.7021,0 -99.7021,48.083261 0,18.384776 12.7279,32.526912 12.728,14.142136 32.5269,14.142136 10.6067,0 19.799,-6.363961 9.1924,-6.363962 9.8995,-21.920311 0,-7.071068 -1.4142,-13.435029 -1.4142,-6.363961 -4.9497,-9.899498 -3.5356,-3.53553 -5.6569,-7.07106 -2.1213,-3.53554 -4.9497,-5.65686 l -1.4142,-1.41421 h 0.7071 q 7.071,-2.12132 42.4264,-2.12132 26.87,0 42.4264,8.48528 16.2634,7.77817 30.4056,23.334523 14.1421,15.556349 19.799,33.234018 4.2426,13.435029 11.3137,43.8406208 9.1924,33.9411252 9.1924,39.5979802 z m 51.6188,201.525428 -2.8285,7.77818 q -2.1213,7.77817 -3.5355,10.6066 -1.4142,2.82843 -4.2427,9.8995 -2.8284,7.07106 -7.071,9.89949 -4.2427,2.82843 -9.1924,7.77818 -4.9498,4.94974 -12.7279,6.36396 -7.7782,1.41421 -15.5564,2.12132 -31.1127,0 -60.1041,-37.47666 -21.2132,-27.57717 -35.3553,-84.14571 -14.1421,-56.56854 -14.1421,-82.024387 0,-55.861435 43.8406,-55.861435 39.598,0 77.7817,49.497474 l 5.6569,7.071068 z" />
-    </g>
-    <use
-       xlink:href="#MJMAIN-28"
-       x="10596"
-       y="0"
-       id="use66-0"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <use
-       xlink:href="#MJMATHI-70"
-       x="10990"
-       y="0"
-       id="use68-9"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <use
-       xlink:href="#MJMAIN-29"
-       x="11498"
-       y="0"
-       id="use70-6"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <use
-       xlink:href="#MJMAIN-2B"
-       x="12114"
-       y="0"
-       id="use72-38"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <use
-       xlink:href="#MJMAIN-28"
-       x="13120"
-       y="0"
-       id="use74-5"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <use
-       xlink:href="#MJMAIN-31"
-       x="13514"
-       y="0"
-       id="use76-6"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <path
-       id="use78-1"
-       stroke-width="26.7785"
-       d="m 14325,237 q 0,0 0,13 0,13 14,20 h 581 q 15,-8 15,-20 0,-12 -15,-20 h -581 q -14,7 -14,20 z" />
-    <use
-       xlink:href="#MJMATHI-4E"
-       x="15246"
-       y="0"
-       id="use80-15"
-       width="100%"
-       height="100%"
-       style="fill:#00aad4;fill-opacity:0.67451;stroke:#00aad4;stroke-width:0;stroke-opacity:0.67451" />
-    <path
-       id="use82-98"
-       stroke-width="26.7785"
-       d="m 16369,637 q -27,0 -32,1 -5,1 -5,11 0,27 11,33 2,1 174,1 172,-1 186,-3 56,-8 94,-28 38,-20 54,-46 16,-26 21,-43 5,-17 6,-34 0,-45 -29,-84 -29,-39 -67,-60 -38,-21 -67,-34 -29,-13 -38,-13 l 7,-5 q 67,-38 67,-110 0,-11 -5,-61 -5,-50 -5,-82 v -9 q 0,-18 1,-28 1,-10 11,-18 10,-8 26,-9 28,0 46,22 18,22 26,47 5,14 8,17 3,3 15,3 20,0 20,-12 0,-18 -24,-57 -38,-57 -90,-57 h -9 q -61,0 -101,25 -40,25 -44,78 0,27 15,84 15,57 15,73 0,51 -43,74 -15,7 -25,8 -10,1 -71,2 h -69 l -32,-130 q -33,-132 -33,-134 0,-4 1,-5 1,-1 7,-4 6,-3 17,-2 11,1 33,-2 h 31 q 6,-8 6,-9 0,-1 -3,-18 -4,-13 -10,-19 h -15 q -36,2 -131,2 -34,0 -63,0 -29,0 -46,0 -17,0 -21,-1 -17,0 -17,9 0,2 3,14 5,19 10,21 4,1 15,1 h 6 q 27,0 60,3 14,3 19,12 3,4 72,278 69,274 69,289 0,7 -57,9 z m 400,-83 q 0,32 -21,54 -21,22 -86,28 -2,0 -23,0 -21,0 -38,1 h -22 q -47,0 -54,-10 -1,-3 -34,-133 -33,-130 -33,-133 0,-1 69,-1 78,1 104,7 64,10 100,59 16,23 27,60 11,37 11,68 z"
-       style="fill:#00aad4;fill-opacity:0.67451;stroke:#00aad4;stroke-opacity:0.67451" />
-    <path
-       id="use84-48"
-       stroke-width="26.7785"
-       d="m 16951,1 q -17,0 -17,10 0,2 3,14 4,16 8,18 4,2 23,3 27,0 60,3 14,3 19,12 2,5 71,281 69,276 70,280 0,7 -4,7 -8,3 -53,5 h -31 q -6,6 -6,8 0,2 2,17 4,17 10,21 h 539 q 7,-4 7,-11 0,-5 -13,-112 -13,-107 -14,-110 -2,-7 -20,-7 h -12 q -7,5 -7,13 0,1 3,24 3,23 3,53 0,30 -7,49 -7,19 -19,31 -12,12 -37,16 -25,4 -51,7 -26,3 -72,1 h -23 q -82,-1 -87,-3 -5,-2 -7,-8 -1,-1 -34,-131 l -32,-129 h 55 q 3,0 23,0 20,0 28,1 8,1 22,3 14,2 24,7 10,5 17,12 13,12 22,33 9,21 13,38 4,17 5,18 3,5 19,5 h 12 q 7,-5 7,-10 0,-3 -31,-131 -31,-128 -34,-132 -2,-7 -20,-7 h -12 q -7,6 -7,12 0,3 5,22 5,19 5,40 0,29 -20,36 -20,7 -89,7 h -55 l -32,-127 q -32,-124 -32,-130 0,-14 89,-14 h 25 q 6,-6 6,-7 0,-1 -2,-20 -4,-13 -10,-19 h -17 q -41,2 -151,2 -65,0 -99,0 -34,0 -38,-1 z"
-       style="fill:#00aad4;fill-opacity:0.67451;stroke:#00aad4;stroke-opacity:0.67451" />
-    <use
-       xlink:href="#MJMAIN-28"
-       x="17657"
-       y="0"
-       id="use86-1"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <g
-       transform="translate(18051)"
-       id="g112-0"
+       transform="translate(808,-335)"
+       id="g110-4"
        style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1">
       <use
-         xlink:href="#MJMATHI-4E"
-         id="use88-3"
+         transform="scale(0.70710678)"
+         xlink:href="#MJMATHI-61"
+         id="use92-4"
          x="0"
          y="0"
          width="100%"
@@ -733,505 +761,488 @@
          style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
       <use
          transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6E"
-         x="1299"
-         y="508"
-         id="use90-04"
+         xlink:href="#MJMATHI-76"
+         x="534"
+         y="0"
+         id="use94-4"
          width="100%"
          height="100%"
          style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-      <g
-         transform="translate(808,-335)"
-         id="g110-4"
-         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1">
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-61"
-           id="use92-4"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-76"
-           x="534"
-           y="0"
-           id="use94-4"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-61"
-           x="1024"
-           y="0"
-           id="use96-7"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-69"
-           x="1558"
-           y="0"
-           id="use98-6"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-6C"
-           x="1907"
-           y="0"
-           id="use100-3"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-61"
-           x="2211"
-           y="0"
-           id="use102-1"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-62"
-           x="2745"
-           y="0"
-           id="use104-75"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-6C"
-           x="3179"
-           y="0"
-           id="use106-9"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-65"
-           x="3482"
-           y="0"
-           id="use108-62"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-      </g>
-    </g>
-    <use
-       xlink:href="#MJMAIN-28"
-       x="21754"
-       y="0"
-       id="use114-1"
-       width="100%"
-       height="100%"
-       style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-    <use
-       xlink:href="#MJMATHI-70"
-       x="22148"
-       y="0"
-       id="use116-78"
-       width="100%"
-       height="100%"
-       style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-    <use
-       xlink:href="#MJMAIN-29"
-       x="22656"
-       y="0"
-       id="use118-5"
-       width="100%"
-       height="100%"
-       style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-    <use
-       xlink:href="#MJMAIN-29"
-       x="23050"
-       y="0"
-       id="use120-7"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <use
-       xlink:href="#MJMAIN-29"
-       x="23444"
-       y="0"
-       id="use122-41"
-       width="100%"
-       height="100%"
-       style="stroke-width:0" />
-    <path
-       id="use124-8"
-       stroke-width="26.7785"
-       d="m 24290,286 q -13,134 -13,150 0,18 24,28 1,0 5,0 4,0 6,1 12,-1 22,-9 10,-8 10,-20 0,-17 -6,-80 -6,-63 -7,-70 l 58,42 q 56,41 61,44 5,3 10,3 13,0 24,-10 11,-10 12,-27 0,-13 -10,-23 -5,-3 -68,-33 -63,-30 -68,-32 l 66,-31 70,-35 q 9,-9 9,-23 0,-15 -9,-25 -9,-10 -24,-11 -8,0 -18,6 -10,6 -55,40 l -58,42 q 13,-134 13,-150 0,-10 -7,-19 -7,-9 -26,-9 -19,0 -26,9 -7,9 -8,19 0,17 6,80 6,63 7,70 l -58,-42 q -56,-41 -61,-44 -4,-3 -10,-3 -13,0 -24,10 -11,10 -12,27 0,5 0,8 0,3 3,6 3,3 5,6 2,3 9,7 7,4 13,7 6,3 19,9 13,6 25,11 12,5 32,15 20,10 40,20 l -136,65 q -9,9 -9,23 0,15 9,25 9,10 24,11 8,0 18,-6 10,-6 55,-40 z" />
-    <g
-       transform="translate(158.69639,-415.35534)"
-       id="g62-9-3"
-       style="display:inline;stroke-width:0">
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-72"
-         id="use44-4-6"
-         x="0"
-         y="0"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-65"
-         x="456"
-         y="0"
-         id="use46-81-7"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6D"
-         x="927"
-         y="0"
-         id="use48-2-5"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
       <use
          transform="scale(0.70710678)"
          xlink:href="#MJMATHI-61"
-         x="1810"
+         x="1024"
          y="0"
-         id="use50-93-3"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-69"
-         x="2344"
-         y="0"
-         id="use52-9-5"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6E"
-         x="2694"
-         y="0"
-         id="use54-0-6"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-69"
-         x="3299"
-         y="0"
-         id="use56-8-2"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6E"
-         x="3649"
-         y="0"
-         id="use58-8-9"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use60-5-1"
-         stroke-width="18.9353"
-         d="M 3227.9425,30.405592 Q 3217.3359,21.213203 3196.8298,10.606602 3176.3237,0 3153.6962,0 q -44.5477,0 -71.4177,31.819805 -26.8701,31.819805 -27.5772,81.317275 0,74.24622 54.4472,136.47161 54.4472,62.2254 120.9153,62.93251 33.234,0 61.5183,-33.94113 l 2.1213,2.82843 q 1.4142,2.12132 3.5355,4.24264 2.1213,2.12132 6.364,5.65685 4.2426,3.53554 9.1924,4.94975 4.9497,1.41421 11.3137,2.12132 9.8995,0 16.2634,-6.36396 6.364,-6.36396 7.0711,-13.43503 0,-10.6066 -40.3051,-171.11984 -40.3051,-160.513239 -42.4264,-164.048772 -12.7279,-38.183767 -54.4472,-62.932508 -41.7193,-24.74873 -95.4594,-25.45584 -99.7021,0 -99.7021,48.083261 0,18.384776 12.7279,32.526912 12.728,14.142136 32.5269,14.142136 10.6067,0 19.799,-6.363961 9.1924,-6.363962 9.8995,-21.920311 0,-7.071068 -1.4142,-13.435029 -1.4142,-6.363961 -4.9497,-9.899498 -3.5356,-3.53553 -5.6569,-7.07106 -2.1213,-3.53554 -4.9497,-5.65686 l -1.4142,-1.41421 h 0.7071 q 7.071,-2.12132 42.4264,-2.12132 26.87,0 42.4264,8.48528 16.2634,7.77817 30.4056,23.334523 14.1421,15.556349 19.799,33.234018 4.2426,13.435029 11.3137,43.8406208 9.1924,33.9411252 9.1924,39.5979802 z m 51.6188,201.525428 -2.8285,7.77818 q -2.1213,7.77817 -3.5355,10.6066 -1.4142,2.82843 -4.2427,9.8995 -2.8284,7.07106 -7.071,9.89949 -4.2427,2.82843 -9.1924,7.77818 -4.9498,4.94974 -12.7279,6.36396 -7.7782,1.41421 -15.5564,2.12132 -31.1127,0 -60.1041,-37.47666 -21.2132,-27.57717 -35.3553,-84.14571 -14.1421,-56.56854 -14.1421,-82.024387 0,-55.861435 43.8406,-55.861435 39.598,0 77.7817,49.497474 l 5.6569,7.071068 z" />
-    </g>
-    <g
-       transform="translate(25168.678,12.802913)"
-       id="g112-0-2"
-       style="display:inline;fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1">
-      <use
-         xlink:href="#MJMATHI-4E"
-         id="use88-3-7"
-         x="0"
-         y="0"
+         id="use96-7"
          width="100%"
          height="100%"
          style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
       <use
          transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6E"
-         x="1299"
-         y="508"
-         id="use90-04-0"
+         xlink:href="#MJMATHI-69"
+         x="1558"
+         y="0"
+         id="use98-6"
          width="100%"
          height="100%"
          style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-      <g
-         transform="translate(808,-335)"
-         id="g110-4-9"
-         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1">
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-61"
-           id="use92-4-3"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-76"
-           x="534"
-           y="0"
-           id="use94-4-6"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-61"
-           x="1024"
-           y="0"
-           id="use96-7-0"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-69"
-           x="1558"
-           y="0"
-           id="use98-6-6"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-6C"
-           x="1907"
-           y="0"
-           id="use100-3-2"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-61"
-           x="2211"
-           y="0"
-           id="use102-1-6"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-62"
-           x="2745"
-           y="0"
-           id="use104-75-1"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-6C"
-           x="3179"
-           y="0"
-           id="use106-9-8"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-        <use
-           transform="scale(0.70710678)"
-           xlink:href="#MJMATHI-65"
-           x="3482"
-           y="0"
-           id="use108-62-7"
-           width="100%"
-           height="100%"
-           style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
-      </g>
+      <use
+         transform="scale(0.70710678)"
+         xlink:href="#MJMATHI-6C"
+         x="1907"
+         y="0"
+         id="use100-3"
+         width="100%"
+         height="100%"
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
+      <use
+         transform="scale(0.70710678)"
+         xlink:href="#MJMATHI-61"
+         x="2211"
+         y="0"
+         id="use102-1"
+         width="100%"
+         height="100%"
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
+      <use
+         transform="scale(0.70710678)"
+         xlink:href="#MJMATHI-62"
+         x="2745"
+         y="0"
+         id="use104-75"
+         width="100%"
+         height="100%"
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
+      <use
+         transform="scale(0.70710678)"
+         xlink:href="#MJMATHI-6C"
+         x="3179"
+         y="0"
+         id="use106-9"
+         width="100%"
+         height="100%"
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
+      <use
+         transform="scale(0.70710678)"
+         xlink:href="#MJMATHI-65"
+         x="3482"
+         y="0"
+         id="use108-62"
+         width="100%"
+         height="100%"
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
     </g>
+  </g>
+  <use
+     xlink:href="#MJMAIN-28"
+     x="21754"
+     y="0"
+     id="use114-1"
+     width="100%"
+     height="100%"
+     style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMATHI-70"
+     x="22148"
+     y="0"
+     id="use116-78"
+     width="100%"
+     height="100%"
+     style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMAIN-29"
+     x="22656"
+     y="0"
+     id="use118-5"
+     width="100%"
+     height="100%"
+     style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMAIN-29"
+     x="23050"
+     y="0"
+     id="use120-7"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <use
+     xlink:href="#MJMAIN-29"
+     x="23444"
+     y="0"
+     id="use122-41"
+     width="100%"
+     height="100%"
+     style="fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346843,0,0,-0.37339953,5728.309,10273.043)" />
+  <path
+     id="use124-8"
+     stroke-width="10"
+     d="m 14799.857,10166.251 q -4.855,-50.036 -4.855,-56.01 0,-6.721 8.963,-10.455 0.374,0 1.868,0 1.494,0 2.24,-0.374 4.482,0.374 8.217,3.361 3.734,2.987 3.734,7.468 0,6.348 -2.24,29.872 -2.241,23.524 -2.615,26.138 l 21.662,-15.683 q 20.914,-15.309 22.781,-16.43 1.867,-1.12 3.735,-1.12 4.855,0 8.963,3.734 4.108,3.734 4.482,10.082 0,4.854 -3.735,8.588 -1.867,1.12 -25.396,12.322 -23.528,11.202 -25.396,11.949 l 24.649,11.576 26.143,13.068 q 3.361,3.361 3.361,8.589 0,5.601 -3.361,9.335 -3.361,3.734 -8.963,4.107 -2.988,0 -6.723,-2.24 -3.734,-2.241 -20.54,-14.936 l -21.662,-15.683 q 4.855,50.035 4.855,56.01 0,3.734 -2.614,7.094 -2.614,3.361 -9.71,3.361 -7.096,0 -9.71,-3.361 -2.614,-3.36 -2.988,-7.094 0,-6.348 2.241,-29.872 2.241,-23.524 2.614,-26.138 l -21.661,15.683 q -20.914,15.309 -22.782,16.429 -1.493,1.12 -3.734,1.12 -4.855,0 -8.964,-3.734 -4.108,-3.734 -4.481,-10.081 0,-1.867 0,-2.988 0,-1.12 1.12,-2.24 1.121,-1.12 1.868,-2.24 0.747,-1.121 3.361,-2.614 2.614,-1.494 4.855,-2.614 2.241,-1.12 7.096,-3.361 4.855,-2.24 9.337,-4.107 4.481,-1.867 11.951,-5.601 7.469,-3.734 14.938,-7.468 l -50.791,-24.271 q -3.362,-3.36 -3.362,-8.588 0,-5.601 3.362,-9.335 3.361,-3.734 8.963,-4.107 2.988,0 6.722,2.24 3.735,2.24 20.541,14.936 z"
+     style="fill:#000000;stroke:#000000" />
+  <g
+     transform="matrix(0.37346843,0,0,-0.37339953,5787.5771,10428.136)"
+     id="g62-9-3"
+     style="display:inline;fill:#000000;stroke:#000000;stroke-width:0">
     <use
-       xlink:href="#MJMAIN-28"
-       x="21754"
-       y="0"
-       id="use114-1-9"
-       width="100%"
-       height="100%"
-       style="display:inline;fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1"
-       transform="translate(6930.4158,150.59673)" />
-    <use
-       xlink:href="#MJMATHI-70"
-       x="22148"
-       y="0"
-       id="use116-78-2"
-       width="100%"
-       height="100%"
-       style="display:inline;fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1"
-       transform="translate(6930.4158,150.59673)" />
-    <use
-       xlink:href="#MJMAIN-29"
-       x="22656"
-       y="0"
-       id="use118-5-0"
-       width="100%"
-       height="100%"
-       style="display:inline;fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1"
-       transform="translate(6930.4158,150.59673)" />
-    <use
-       xlink:href="#MJMATHI-4E"
-       id="use34-7-2"
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-72"
+       id="use44-4-6"
        x="0"
        y="0"
        width="100%"
        height="100%"
-       transform="translate(13837.108,-12534.318)"
-       style="display:inline;stroke-width:0" />
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-65"
+       x="456"
+       y="0"
+       id="use46-81-7"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6D"
+       x="927"
+       y="0"
+       id="use48-2-5"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-61"
+       x="1810"
+       y="0"
+       id="use50-93-3"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-69"
+       x="2344"
+       y="0"
+       id="use52-9-5"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6E"
+       x="2694"
+       y="0"
+       id="use54-0-6"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-69"
+       x="3299"
+       y="0"
+       id="use56-8-2"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6E"
+       x="3649"
+       y="0"
+       id="use58-8-9"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <path
+       id="use60-5-1"
+       stroke-width="18.9353"
+       d="M 3227.9425,30.405592 Q 3217.3359,21.213203 3196.8298,10.606602 3176.3237,0 3153.6962,0 q -44.5477,0 -71.4177,31.819805 -26.8701,31.819805 -27.5772,81.317275 0,74.24622 54.4472,136.47161 54.4472,62.2254 120.9153,62.93251 33.234,0 61.5183,-33.94113 l 2.1213,2.82843 q 1.4142,2.12132 3.5355,4.24264 2.1213,2.12132 6.364,5.65685 4.2426,3.53554 9.1924,4.94975 4.9497,1.41421 11.3137,2.12132 9.8995,0 16.2634,-6.36396 6.364,-6.36396 7.0711,-13.43503 0,-10.6066 -40.3051,-171.11984 -40.3051,-160.513239 -42.4264,-164.048772 -12.7279,-38.183767 -54.4472,-62.932508 -41.7193,-24.74873 -95.4594,-25.45584 -99.7021,0 -99.7021,48.083261 0,18.384776 12.7279,32.526912 12.728,14.142136 32.5269,14.142136 10.6067,0 19.799,-6.363961 9.1924,-6.363962 9.8995,-21.920311 0,-7.071068 -1.4142,-13.435029 -1.4142,-6.363961 -4.9497,-9.899498 -3.5356,-3.53553 -5.6569,-7.07106 -2.1213,-3.53554 -4.9497,-5.65686 l -1.4142,-1.41421 h 0.7071 q 7.071,-2.12132 42.4264,-2.12132 26.87,0 42.4264,8.48528 16.2634,7.77817 30.4056,23.334523 14.1421,15.556349 19.799,33.234018 4.2426,13.435029 11.3137,43.8406208 9.1924,33.9411252 9.1924,39.5979802 z m 51.6188,201.525428 -2.8285,7.77818 q -2.1213,7.77817 -3.5355,10.6066 -1.4142,2.82843 -4.2427,9.8995 -2.8284,7.07106 -7.071,9.89949 -4.2427,2.82843 -9.1924,7.77818 -4.9498,4.94974 -12.7279,6.36396 -7.7782,1.41421 -15.5564,2.12132 -31.1127,0 -60.1041,-37.47666 -21.2132,-27.57717 -35.3553,-84.14571 -14.1421,-56.56854 -14.1421,-82.024387 0,-55.861435 43.8406,-55.861435 39.598,0 77.7817,49.497474 l 5.6569,7.071068 z" />
+  </g>
+  <g
+     transform="matrix(0.37346843,0,0,-0.37339953,15128.016,10268.262)"
+     id="g112-0-2"
+     style="display:inline;fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1">
+    <use
+       xlink:href="#MJMATHI-4E"
+       id="use88-3-7"
+       x="0"
+       y="0"
+       width="100%"
+       height="100%"
+       style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6E"
+       x="1299"
+       y="508"
+       id="use90-04-0"
+       width="100%"
+       height="100%"
+       style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
     <g
-       transform="translate(14755.108,-12175.318)"
-       id="g42-3-3"
-       style="display:inline;stroke-width:0">
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6E"
-         id="use36-6-7"
-         x="0"
-         y="0"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use38-56-5"
-         stroke-width="18.9353"
-         d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMAIN-31"
-         x="1388"
-         y="0"
-         id="use40-3-9"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-    </g>
-    <g
-       transform="translate(14645.108,-12845.318)"
-       id="g62-9-2"
-       style="display:inline;stroke-width:0">
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-72"
-         id="use44-4-2"
-         x="0"
-         y="0"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-65"
-         x="456"
-         y="0"
-         id="use46-81-8"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6D"
-         x="927"
-         y="0"
-         id="use48-2-9"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
+       transform="translate(808,-335)"
+       id="g110-4-9"
+       style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1">
       <use
          transform="scale(0.70710678)"
          xlink:href="#MJMATHI-61"
-         x="1810"
+         id="use92-4-3"
+         x="0"
          y="0"
-         id="use50-93-7"
          width="100%"
          height="100%"
-         style="stroke-width:0" />
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
+      <use
+         transform="scale(0.70710678)"
+         xlink:href="#MJMATHI-76"
+         x="534"
+         y="0"
+         id="use94-4-6"
+         width="100%"
+         height="100%"
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
+      <use
+         transform="scale(0.70710678)"
+         xlink:href="#MJMATHI-61"
+         x="1024"
+         y="0"
+         id="use96-7-0"
+         width="100%"
+         height="100%"
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
       <use
          transform="scale(0.70710678)"
          xlink:href="#MJMATHI-69"
-         x="2344"
+         x="1558"
          y="0"
-         id="use52-9-3"
+         id="use98-6-6"
          width="100%"
          height="100%"
-         style="stroke-width:0" />
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
       <use
          transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6E"
-         x="2694"
+         xlink:href="#MJMATHI-6C"
+         x="1907"
          y="0"
-         id="use54-0-61"
+         id="use100-3-2"
          width="100%"
          height="100%"
-         style="stroke-width:0" />
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
       <use
          transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-69"
-         x="3299"
+         xlink:href="#MJMATHI-61"
+         x="2211"
          y="0"
-         id="use56-8-29"
+         id="use102-1-6"
          width="100%"
          height="100%"
-         style="stroke-width:0" />
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
       <use
          transform="scale(0.70710678)"
-         xlink:href="#MJMATHI-6E"
-         x="3649"
+         xlink:href="#MJMATHI-62"
+         x="2745"
          y="0"
-         id="use58-8-3"
+         id="use104-75-1"
          width="100%"
          height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use60-5-19"
-         stroke-width="18.9353"
-         d="M 3227.9425,30.405592 Q 3217.3359,21.213203 3196.8298,10.606602 3176.3237,0 3153.6962,0 q -44.5477,0 -71.4177,31.819805 -26.8701,31.819805 -27.5772,81.317275 0,74.24622 54.4472,136.47161 54.4472,62.2254 120.9153,62.93251 33.234,0 61.5183,-33.94113 l 2.1213,2.82843 q 1.4142,2.12132 3.5355,4.24264 2.1213,2.12132 6.364,5.65685 4.2426,3.53554 9.1924,4.94975 4.9497,1.41421 11.3137,2.12132 9.8995,0 16.2634,-6.36396 6.364,-6.36396 7.0711,-13.43503 0,-10.6066 -40.3051,-171.11984 -40.3051,-160.513239 -42.4264,-164.048772 -12.7279,-38.183767 -54.4472,-62.932508 -41.7193,-24.74873 -95.4594,-25.45584 -99.7021,0 -99.7021,48.083261 0,18.384776 12.7279,32.526912 12.728,14.142136 32.5269,14.142136 10.6067,0 19.799,-6.363961 9.1924,-6.363962 9.8995,-21.920311 0,-7.071068 -1.4142,-13.435029 -1.4142,-6.363961 -4.9497,-9.899498 -3.5356,-3.53553 -5.6569,-7.07106 -2.1213,-3.53554 -4.9497,-5.65686 l -1.4142,-1.41421 h 0.7071 q 7.071,-2.12132 42.4264,-2.12132 26.87,0 42.4264,8.48528 16.2634,7.77817 30.4056,23.334523 14.1421,15.556349 19.799,33.234018 4.2426,13.435029 11.3137,43.8406208 9.1924,33.9411252 9.1924,39.5979802 z m 51.6188,201.525428 -2.8285,7.77818 q -2.1213,7.77817 -3.5355,10.6066 -1.4142,2.82843 -4.2427,9.8995 -2.8284,7.07106 -7.071,9.89949 -4.2427,2.82843 -9.1924,7.77818 -4.9498,4.94974 -12.7279,6.36396 -7.7782,1.41421 -15.5564,2.12132 -31.1127,0 -60.1041,-37.47666 -21.2132,-27.57717 -35.3553,-84.14571 -14.1421,-56.56854 -14.1421,-82.024387 0,-55.861435 43.8406,-55.861435 39.598,0 77.7817,49.497474 l 5.6569,7.071068 z" />
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
+      <use
+         transform="scale(0.70710678)"
+         xlink:href="#MJMATHI-6C"
+         x="3179"
+         y="0"
+         id="use106-9-8"
+         width="100%"
+         height="100%"
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
+      <use
+         transform="scale(0.70710678)"
+         xlink:href="#MJMATHI-65"
+         x="3482"
+         y="0"
+         id="use108-62-7"
+         width="100%"
+         height="100%"
+         style="fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1" />
     </g>
-    <use
-       xlink:href="#MJMAIN-28"
-       x="10596"
-       y="0"
-       id="use66-0-4"
-       width="100%"
-       height="100%"
-       style="display:inline;stroke-width:0"
-       transform="translate(7500.1079,-12534.318)" />
-    <use
-       xlink:href="#MJMATHI-70"
-       x="10990"
-       y="0"
-       id="use68-9-7"
-       width="100%"
-       height="100%"
-       style="display:inline;stroke-width:0"
-       transform="translate(7500.1079,-12534.318)" />
-    <use
-       xlink:href="#MJMAIN-29"
-       x="11498"
-       y="0"
-       id="use70-6-8"
-       width="100%"
-       height="100%"
-       style="display:inline;stroke-width:0"
-       transform="translate(7500.1079,-12534.318)" />
   </g>
+  <use
+     xlink:href="#MJMAIN-28"
+     x="21754"
+     y="0"
+     id="use114-1-9"
+     width="100%"
+     height="100%"
+     style="display:inline;fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1"
+     transform="matrix(0.37346843,0,0,-0.37339953,8316.6005,10216.81)" />
+  <use
+     xlink:href="#MJMATHI-70"
+     x="22148"
+     y="0"
+     id="use116-78-2"
+     width="100%"
+     height="100%"
+     style="display:inline;fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1"
+     transform="matrix(0.37346843,0,0,-0.37339953,8316.6005,10216.81)" />
+  <use
+     xlink:href="#MJMAIN-29"
+     x="22656"
+     y="0"
+     id="use118-5-0"
+     width="100%"
+     height="100%"
+     style="display:inline;fill:#d40000;fill-opacity:1;stroke:#d40000;stroke-width:0;stroke-opacity:1"
+     transform="matrix(0.37346843,0,0,-0.37339953,8316.6005,10216.81)" />
+  <use
+     xlink:href="#MJMATHI-4E"
+     id="use34-7-2"
+     x="0"
+     y="0"
+     width="100%"
+     height="100%"
+     transform="matrix(0.37346902,0,0,-0.37339525,10896.03,14953.349)"
+     style="display:inline;fill:#000000;stroke:#000000;stroke-width:0" />
+  <g
+     transform="matrix(0.37346902,0,0,-0.37339525,11238.875,14819.301)"
+     id="g42-3-3"
+     style="display:inline;fill:#000000;stroke:#000000;stroke-width:0">
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6E"
+       id="use36-6-7"
+       x="0"
+       y="0"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <path
+       id="use38-56-5"
+       stroke-width="18.9353"
+       d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMAIN-31"
+       x="1388"
+       y="0"
+       id="use40-3-9"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+  </g>
+  <g
+     transform="matrix(0.37346902,0,0,-0.37339525,11197.793,15069.476)"
+     id="g62-9-2"
+     style="display:inline;fill:#000000;stroke:#000000;stroke-width:0">
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-72"
+       id="use44-4-2"
+       x="0"
+       y="0"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-65"
+       x="456"
+       y="0"
+       id="use46-81-8"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6D"
+       x="927"
+       y="0"
+       id="use48-2-9"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-61"
+       x="1810"
+       y="0"
+       id="use50-93-7"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-69"
+       x="2344"
+       y="0"
+       id="use52-9-3"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6E"
+       x="2694"
+       y="0"
+       id="use54-0-61"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-69"
+       x="3299"
+       y="0"
+       id="use56-8-29"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <use
+       transform="scale(0.70710678)"
+       xlink:href="#MJMATHI-6E"
+       x="3649"
+       y="0"
+       id="use58-8-3"
+       width="100%"
+       height="100%"
+       style="stroke-width:0" />
+    <path
+       id="use60-5-19"
+       stroke-width="18.9353"
+       d="M 3227.9425,30.405592 Q 3217.3359,21.213203 3196.8298,10.606602 3176.3237,0 3153.6962,0 q -44.5477,0 -71.4177,31.819805 -26.8701,31.819805 -27.5772,81.317275 0,74.24622 54.4472,136.47161 54.4472,62.2254 120.9153,62.93251 33.234,0 61.5183,-33.94113 l 2.1213,2.82843 q 1.4142,2.12132 3.5355,4.24264 2.1213,2.12132 6.364,5.65685 4.2426,3.53554 9.1924,4.94975 4.9497,1.41421 11.3137,2.12132 9.8995,0 16.2634,-6.36396 6.364,-6.36396 7.0711,-13.43503 0,-10.6066 -40.3051,-171.11984 -40.3051,-160.513239 -42.4264,-164.048772 -12.7279,-38.183767 -54.4472,-62.932508 -41.7193,-24.74873 -95.4594,-25.45584 -99.7021,0 -99.7021,48.083261 0,18.384776 12.7279,32.526912 12.728,14.142136 32.5269,14.142136 10.6067,0 19.799,-6.363961 9.1924,-6.363962 9.8995,-21.920311 0,-7.071068 -1.4142,-13.435029 -1.4142,-6.363961 -4.9497,-9.899498 -3.5356,-3.53553 -5.6569,-7.07106 -2.1213,-3.53554 -4.9497,-5.65686 l -1.4142,-1.41421 h 0.7071 q 7.071,-2.12132 42.4264,-2.12132 26.87,0 42.4264,8.48528 16.2634,7.77817 30.4056,23.334523 14.1421,15.556349 19.799,33.234018 4.2426,13.435029 11.3137,43.8406208 9.1924,33.9411252 9.1924,39.5979802 z m 51.6188,201.525428 -2.8285,7.77818 q -2.1213,7.77817 -3.5355,10.6066 -1.4142,2.82843 -4.2427,9.8995 -2.8284,7.07106 -7.071,9.89949 -4.2427,2.82843 -9.1924,7.77818 -4.9498,4.94974 -12.7279,6.36396 -7.7782,1.41421 -15.5564,2.12132 -31.1127,0 -60.1041,-37.47666 -21.2132,-27.57717 -35.3553,-84.14571 -14.1421,-56.56854 -14.1421,-82.024387 0,-55.861435 43.8406,-55.861435 39.598,0 77.7817,49.497474 l 5.6569,7.071068 z" />
+  </g>
+  <use
+     xlink:href="#MJMAIN-28"
+     x="10596"
+     y="0"
+     id="use66-0-4"
+     width="100%"
+     height="100%"
+     style="display:inline;fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346902,0,0,-0.37339525,8529.3573,14953.349)" />
+  <use
+     xlink:href="#MJMATHI-70"
+     x="10990"
+     y="0"
+     id="use68-9-7"
+     width="100%"
+     height="100%"
+     style="display:inline;fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346902,0,0,-0.37339525,8529.3573,14953.349)" />
+  <use
+     xlink:href="#MJMAIN-29"
+     x="11498"
+     y="0"
+     id="use70-6-8"
+     width="100%"
+     height="100%"
+     style="display:inline;fill:#000000;stroke:#000000;stroke-width:0"
+     transform="matrix(0.37346902,0,0,-0.37339525,8529.3573,14953.349)" />
   <path
      style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:80;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="m 5801.952,12968.742 105.685,1261.893"
@@ -3372,619 +3383,478 @@
        width="100%"
        height="100%"
        style="stroke-width:0" />
+    <path
+       id="use2-1"
+       stroke-width="26.7785"
+       d="m 6576.4592,576.63639 q -12,0 -17,0 -5,0 -10,1 -5,1 -7,3 -2,2 -2,6 0,4 3,17 3,13 9,18 2,1 14,1 48,-3 109,-3 123,0 141,3 h 10 q 6,-6 6,-9 0,-3 -2,-18 -4,-13 -10,-19 h -12 q -56,0 -56,-13 0,-5 50,-147 50,-142 51,-144 l 3,3 q 4,4 12,13 8,9 21,24 13,15 32,37 19,22 43,51 92,107 107,126 15,19 16,31 0,16 -32,19 -17,0 -17,10 0,2 2,14 3,15 5,18 2,3 14,4 2,0 29,-1 27,-1 79,-2 27,0 56,1 29,1 33,1 17,0 17,-9 0,-4 -3,-16 -3,-12 -5,-14 -2,-6 -21,-6 -72,-5 -117,-50 -9,-9 -140,-163 l -129,-151 -26,-104 q -27,-106.999997 -27,-111.999997 0,-11 68,-11 16,0 21,-1 5,-1 6,-10 0,-2 -2,-12 -4,-17 -6,-19 -2,-2 -16,-3 -5,0 -42,0 -37,0 -92,1 -62,0 -94,0 -32,0 -36,-1 -18,0 -18,8 0,5 3,15 1,3 2,6 1,3 1,5 0,2 1,4 1,2 2,3 1,1 3,2 2,1 5,1 3,0 6,0 3,0 9,1 6,1 13,0 39,1 51,4 12,3 18,13 3,5 29,107.999997 l 25,103 -123,349 q -1,1 -2,2 -1,1 -2,2 -1,1 -3,2 -2,1 -4,2 -2,1 -5,2 -3,1 -8,1 -5,0 -9,1 -4,1 -13,1 -9,0 -17,1 z"
+       style="fill:#000000;stroke:#000000" />
+    <use
+       xlink:href="#MJMATHI-69"
+       x="768"
+       y="0"
+       id="use4-8"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(6510.4592,-60.363607)" />
+    <use
+       xlink:href="#MJMATHI-65"
+       x="1118"
+       y="0"
+       id="use6-964"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(6510.4592,-60.363607)" />
+    <use
+       xlink:href="#MJMATHI-6C"
+       x="1589"
+       y="0"
+       id="use8-33"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(6510.4592,-60.363607)" />
     <g
-       stroke="#000000"
-       fill="#000000"
-       stroke-width="0"
-       transform="translate(6510.4592,-60.363607)"
-       id="g178">
-      <path
-         id="use2-1"
-         stroke-width="26.7785"
-         d="m 66,637 q -12,0 -17,0 -5,0 -10,1 -5,1 -7,3 -2,2 -2,6 0,4 3,17 3,13 9,18 2,1 14,1 48,-3 109,-3 123,0 141,3 h 10 q 6,-6 6,-9 0,-3 -2,-18 -4,-13 -10,-19 h -12 q -56,0 -56,-13 0,-5 50,-147 50,-142 51,-144 l 3,3 q 4,4 12,13 8,9 21,24 13,15 32,37 19,22 43,51 92,107 107,126 15,19 16,31 0,16 -32,19 -17,0 -17,10 0,2 2,14 3,15 5,18 2,3 14,4 2,0 29,-1 27,-1 79,-2 27,0 56,1 29,1 33,1 17,0 17,-9 0,-4 -3,-16 -3,-12 -5,-14 -2,-6 -21,-6 -72,-5 -117,-50 -9,-9 -140,-163 L 348,273 322,169 Q 295,62 295,57 q 0,-11 68,-11 16,0 21,-1 5,-1 6,-10 0,-2 -2,-12 Q 384,6 382,4 380,2 366,1 361,1 324,1 287,1 232,2 170,2 138,2 106,2 102,1 84,1 84,9 q 0,5 3,15 1,3 2,6 1,3 1,5 0,2 1,4 1,2 2,3 1,1 3,2 2,1 5,1 3,0 6,0 3,0 9,1 6,1 13,0 39,1 51,4 12,3 18,13 3,5 29,108 l 25,103 -123,349 q -1,1 -2,2 -1,1 -2,2 -1,1 -3,2 -2,1 -4,2 -2,1 -5,2 -3,1 -8,1 -5,0 -9,1 -4,1 -13,1 -9,0 -17,1 z" />
-      <use
-         xlink:href="#MJMATHI-69"
-         x="768"
-         y="0"
-         id="use4-8"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-65"
-         x="1118"
-         y="0"
-         id="use6-964"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-6C"
-         x="1589"
-         y="0"
-         id="use8-33"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <g
-         transform="translate(1892)"
-         id="g20-3"
-         style="stroke-width:0">
-        <use
-           xlink:href="#MJMATHI-64"
-           id="use10-8"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%"
-           style="stroke-width:0" />
-        <g
-           transform="translate(528,412)"
-           id="g18-6"
-           style="stroke-width:0">
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-6E"
-             id="use12-04"
-             x="0"
-             y="0"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <path
-             id="use14-8"
-             stroke-width="18.9353"
-             d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMAIN-31"
-             x="1388"
-             y="0"
-             id="use16-8"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-        </g>
-      </g>
-      <use
-         xlink:href="#MJMAIN-28"
-         x="3859"
-         y="0"
-         id="use22-8"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use24-97"
-         stroke-width="26.7785"
-         d="m 4303,252 q 0,115 67,221 67,106 169,168 102,62 204,63 90,0 143,-51 9,-10 15,-17 6,-7 8,-10 l 1,-3 q 3,0 27,26 7,6 15,14 8,8 16,16 8,8 10,11 l 15,15 h 6 q 14,0 14,-7 0,-4 -32,-137 -36,-139 -36,-140 -2,-5 -5,-6 -3,-1 -18,-2 h -16 q -6,6 -6,9 0,1 1,7 1,6 2,20 1,14 1,32 0,71 -32,124 -32,53 -109,54 -26,0 -56,-7 -30,-7 -72,-24 -42,-17 -83,-56 -41,-39 -73,-93 -32,-57 -51,-133 -19,-76 -19,-124 0,-114 76,-164 48,-34 118,-34 91,0 162,68 71,68 94,148 4,13 6,15 2,2 16,2 20,0 20,-9 0,-5 -1,-9 -29,-107 -124,-184 -95,-77 -204,-77 -113,0 -191,75 -78,75 -78,199 z" />
-      <use
-         xlink:href="#MJMATHI-72"
-         x="5018"
-         y="0"
-         id="use26-76"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-6F"
-         x="5474"
-         y="0"
-         id="use28-4"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <g
-         transform="translate(5964)"
-         id="g40-3"
-         style="stroke-width:0">
-        <use
-           xlink:href="#MJMATHI-70"
-           id="use30-0"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%"
-           style="stroke-width:0" />
-        <g
-           transform="translate(508,412)"
-           id="g38-3"
-           style="stroke-width:0">
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-6E"
-             id="use32-0"
-             x="0"
-             y="0"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <path
-             id="use34-92"
-             stroke-width="18.9353"
-             d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMAIN-31"
-             x="1388"
-             y="0"
-             id="use36-54"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-        </g>
-      </g>
-      <path
-         id="use42-05"
-         stroke-width="26.7785"
-         d="m 7989,35 q 0,0 0,25 0,25 16,43 16,18 43,18 28,0 50,-25 22,-25 23,-88 0,-35 -9,-68 -9,-33 -21,-57 -12,-24 -26,-41 -14,-17 -24,-27 -10,-10 -13,-9 -4,0 -13,9 -9,9 -9,13 0,4 11,16 11,12 25,30 14,18 26,50 12,32 16,73 V 9 l -1,-1 q -2,-1 -5,-2 -3,-1 -6,-3 -3,-2 -9,-2 -6,0 -12,-1 -27,0 -44,17 z" />
-      <g
-         transform="translate(8360)"
-         id="g74"
-         style="stroke-width:0">
-        <use
-           xlink:href="#MJMATHI-4E"
-           id="use44-94"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%"
-           style="stroke-width:0" />
-        <g
-           transform="translate(918,359)"
-           id="g52-6"
-           style="stroke-width:0">
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-6E"
-             id="use46-9"
-             x="0"
-             y="0"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <path
-             id="use48-22"
-             stroke-width="18.9353"
-             d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMAIN-31"
-             x="1388"
-             y="0"
-             id="use50-4"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-        </g>
-        <g
-           transform="translate(808,-335)"
-           id="g72"
-           style="stroke-width:0">
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-61"
-             id="use54-7"
-             x="0"
-             y="0"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-76"
-             x="534"
-             y="0"
-             id="use56-7"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-61"
-             x="1024"
-             y="0"
-             id="use58-5"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-69"
-             x="1558"
-             y="0"
-             id="use60-48"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-6C"
-             x="1907"
-             y="0"
-             id="use62-12"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-61"
-             x="2211"
-             y="0"
-             id="use64-8"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-62"
-             x="2745"
-             y="0"
-             id="use66-93"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-6C"
-             x="3179"
-             y="0"
-             id="use68-6"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-65"
-             x="3482"
-             y="0"
-             id="use70-80"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-        </g>
-      </g>
-      <use
-         xlink:href="#MJMAIN-29"
-         x="12063"
-         y="0"
-         id="use76-2"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use78-10"
-         stroke-width="26.7785"
-         d="m 12909,286 q -13,134 -13,150 0,18 24,28 1,0 5,0 4,0 6,1 12,-1 22,-9 10,-8 10,-20 0,-17 -6,-80 -6,-63 -7,-70 l 58,42 q 56,41 61,44 5,3 10,3 13,0 24,-10 11,-10 12,-27 0,-13 -10,-23 -5,-3 -68,-33 -63,-30 -68,-32 l 66,-31 70,-35 q 9,-9 9,-23 0,-15 -9,-25 -9,-10 -24,-11 -8,0 -18,6 -10,6 -55,40 l -58,42 q 13,-134 13,-150 0,-10 -7,-19 -7,-9 -26,-9 -19,0 -26,9 -7,9 -8,19 0,17 6,80 6,63 7,70 l -58,-42 q -56,-41 -61,-44 -4,-3 -10,-3 -13,0 -24,10 -11,10 -12,27 0,5 0,8 0,3 3,6 3,3 5,6 2,3 9,7 7,4 13,7 6,3 19,9 13,6 25,11 12,5 32,15 20,10 40,20 l -136,65 q -9,9 -9,23 0,15 9,25 9,10 24,11 8,0 18,-6 10,-6 55,-40 z" />
-      <use
-         xlink:href="#MJMATHI-4E"
-         x="13407"
-         y="0"
-         id="use80-5"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use82-1"
-         stroke-width="26.7785"
-         d="m 14699,-80 q 0,33 1,50 1,17 2,19 v 4 l -15,-4 q -46,-11 -84,-11 -95,0 -165,57 -70,57 -87,166 -1,8 -1,43 0,102 48,194 48,92 129,163 124,103 249,103 38,0 48,-1 97,-14 156,-86 59,-72 60,-182 0,-180 -148,-328 -63,-60 -131,-91 l -17,-8 V 3 q 0,-1 5,-27 5,-26 21,-42 16,-16 46,-16 35,0 67,22 32,22 42,57 6,14 13,14 9,0 11,-9 0,-8 -10,-36 -10,-28 -28,-66 -18,-38 -54,-65 -36,-27 -76,-29 -82,0 -82,107 z m 237,548 q 0,55 -15,96 -15,41 -41,61 -26,20 -50,30 -24,10 -53,10 -48,0 -98,-25 -102,-49 -164,-176 -62,-127 -62,-248 0,-106 54,-157 24,-21 29,-21 v 8 q 0,40 33,74 33,34 78,35 25,0 43,-11 18,-11 27,-30 9,-19 12,-32 3,-13 6,-27 l 13,9 q 64,44 109,121 45,77 62,149 17,72 17,134 z M 14614,18 q 48,0 90,21 l -1,10 q -4,55 -37,66 -12,2 -19,2 -3,0 -6,0 -3,0 -4,1 -20,0 -41,-20 -21,-20 -22,-46 0,-34 40,-34 z" />
-      <use
-         xlink:href="#MJMATHI-75"
-         x="15096"
-         y="0"
-         id="use84-1"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-61"
-         x="15673"
-         y="0"
-         id="use86-08"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-6E"
-         x="16207"
-         y="0"
-         id="use88-50"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use90-6"
-         stroke-width="26.7785"
-         d="m 16838,385 q -7,7 -7,10 0,4 3,16 3,12 5,14 2,5 9,5 7,0 51,1 h 53 l 19,80 q 3,11 7,29 4,18 7,26 3,8 6,20 3,12 8,17 5,5 10,12 5,7 14,9 9,2 18,2 18,-1 25,-11 7,-10 7,-19 0,-7 -9,-47 -9,-40 -20,-79 l -10,-37 q 0,-2 50,-2 h 51 q 7,-7 7,-11 0,-22 -13,-35 h -107 l -36,-145 q -39,-160 -39,-172 0,-42 27,-42 35,0 68,34 33,34 53,84 2,6 5,7 3,1 15,2 h 4 q 15,0 15,-8 0,-3 -3,-12 -5,-16 -18,-38 -13,-22 -34,-47 -21,-25 -51,-42 -30,-17 -61,-17 -30,0 -57,15 -27,15 -39,52 -2,8 -2,27 v 18 l 35,140 q 35,141 36,142 0,2 -51,2 z" />
-      <use
-         xlink:href="#MJMATHI-69"
-         x="17178"
-         y="0"
-         id="use92-46"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use94-2"
-         stroke-width="26.7785"
-         d="m 17554,385 q -7,7 -7,10 0,4 3,16 3,12 5,14 2,5 9,5 7,0 51,1 h 53 l 19,80 q 3,11 7,29 4,18 7,26 3,8 6,20 3,12 8,17 5,5 10,12 5,7 14,9 9,2 18,2 18,-1 25,-11 7,-10 7,-19 0,-7 -9,-47 -9,-40 -20,-79 l -10,-37 q 0,-2 50,-2 h 51 q 7,-7 7,-11 0,-22 -13,-35 h -107 l -36,-145 q -39,-160 -39,-172 0,-42 27,-42 35,0 68,34 33,34 53,84 2,6 5,7 3,1 15,2 h 4 q 15,0 15,-8 0,-3 -3,-12 -5,-16 -18,-38 -13,-22 -34,-47 -21,-25 -51,-42 -30,-17 -61,-17 -30,0 -57,15 -27,15 -39,52 -2,8 -2,27 v 18 l 35,140 q 35,141 36,142 0,2 -51,2 z" />
-      <path
-         id="use96-5"
-         stroke-width="26.7785"
-         d="m 17915,287 q 0,14 15,48 15,34 48,71 33,37 74,36 41,0 66,-23 25,-23 26,-64 -2,-19 -3,-21 0,-3 -16,-46 -16,-43 -33,-97 -17,-54 -16,-86 0,-43 14,-60 14,-17 42,-18 23,0 43,11 20,11 31,23 11,12 27,33 0,1 5,20 5,19 14,59 9,40 19,74 38,150 42,157 13,27 43,27 13,0 21,-7 8,-7 11,-12 3,-5 2,-9 0,-13 -49,-210 -49,-197 -56,-216 -28,-83 -97,-132 -69,-49 -138,-50 -45,0 -79,22 -34,22 -34,66 0,22 7,37 7,15 19,22 12,7 20,10 8,3 17,3 44,0 44,-42 0,-20 -12,-35 -12,-15 -23,-20 -11,-5 -13,-5 l -3,-1 q 2,-5 19,-12 17,-7 34,-7 h 8 q 17,0 26,2 33,9 61,38 28,29 43,62 15,33 23,56 8,23 8,30 l -6,-4 q -6,-4 -19,-11 -13,-7 -26,-12 -20,-5 -39,-5 -46,0 -81,22 -35,22 -46,71 -1,7 -1,31 0,57 35,149 35,92 35,117 0,1 0,2 0,9 0,12 0,3 -4,7 -4,4 -11,4 h -4 q -23,0 -42,-19 -19,-19 -30,-41 -11,-22 -17,-42 -6,-20 -8,-22 -2,-2 -16,-2 h -14 q -6,6 -6,9 z" />
-      <path
-         id="use98-8"
-         stroke-width="26.7785"
-         d="m 18626,637 q -27,0 -32,1 -5,1 -5,11 0,27 11,33 2,1 174,1 172,-1 186,-3 56,-8 94,-28 38,-20 54,-46 16,-26 21,-43 5,-17 6,-34 0,-45 -29,-84 -29,-39 -67,-60 -38,-21 -67,-34 -29,-13 -38,-13 l 7,-5 q 67,-38 67,-110 0,-11 -5,-61 -5,-50 -5,-82 v -9 q 0,-18 1,-28 1,-10 11,-18 10,-8 26,-9 28,0 46,22 18,22 26,47 5,14 8,17 3,3 15,3 20,0 20,-12 0,-18 -24,-57 -38,-57 -90,-57 h -9 q -61,0 -101,25 -40,25 -44,78 0,27 15,84 15,57 15,73 0,51 -43,74 -15,7 -25,8 -10,1 -71,2 h -69 l -32,-130 q -33,-132 -33,-134 0,-4 1,-5 1,-1 7,-4 6,-3 17,-2 11,1 33,-2 h 31 q 6,-8 6,-9 0,-1 -3,-18 -4,-13 -10,-19 h -15 q -36,2 -131,2 -34,0 -63,0 -29,0 -46,0 -17,0 -21,-1 -17,0 -17,9 0,2 3,14 5,19 10,21 4,1 15,1 h 6 q 27,0 60,3 14,3 19,12 3,4 72,278 69,274 69,289 0,7 -57,9 z m 400,-83 q 0,32 -21,54 -21,22 -86,28 -2,0 -23,0 -21,0 -38,1 h -22 q -47,0 -54,-10 -1,-3 -34,-133 -33,-130 -33,-133 0,-1 69,-1 78,1 104,7 64,10 100,59 16,23 27,60 11,37 11,68 z" />
-      <use
-         xlink:href="#MJMATHI-61"
-         x="19160"
-         y="0"
-         id="use100-6"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use102-2"
-         stroke-width="26.7785"
-         d="m 19720,385 q -7,7 -7,10 0,4 3,16 3,12 5,14 2,5 9,5 7,0 51,1 h 53 l 19,80 q 3,11 7,29 4,18 7,26 3,8 6,20 3,12 8,17 5,5 10,12 5,7 14,9 9,2 18,2 18,-1 25,-11 7,-10 7,-19 0,-7 -9,-47 -9,-40 -20,-79 l -10,-37 q 0,-2 50,-2 h 51 q 7,-7 7,-11 0,-22 -13,-35 h -107 l -36,-145 q -39,-160 -39,-172 0,-42 27,-42 35,0 68,34 33,34 53,84 2,6 5,7 3,1 15,2 h 4 q 15,0 15,-8 0,-3 -3,-12 -5,-16 -18,-38 -13,-22 -34,-47 -21,-25 -51,-42 -30,-17 -61,-17 -30,0 -57,15 -27,15 -39,52 -2,8 -2,27 v 18 l 35,140 q 35,141 36,142 0,2 -51,2 z" />
-      <use
-         xlink:href="#MJMATHI-69"
-         x="20060"
-         y="0"
-         id="use104-8"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-6F"
-         x="20410"
-         y="0"
-         id="use106-47"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMAIN-28"
-         x="20900"
-         y="0"
-         id="use108-24"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use110-0"
-         stroke-width="26.7785"
-         d="m 21344,252 q 0,115 67,221 67,106 169,168 102,62 204,63 90,0 143,-51 9,-10 15,-17 6,-7 8,-10 l 1,-3 q 3,0 27,26 7,6 15,14 8,8 16,16 8,8 10,11 l 15,15 h 6 q 14,0 14,-7 0,-4 -32,-137 -36,-139 -36,-140 -2,-5 -5,-6 -3,-1 -18,-2 h -16 q -6,6 -6,9 0,1 1,7 1,6 2,20 1,14 1,32 0,71 -32,124 -32,53 -109,54 -26,0 -56,-7 -30,-7 -72,-24 -42,-17 -83,-56 -41,-39 -73,-93 -32,-57 -51,-133 -19,-76 -19,-124 0,-114 76,-164 48,-34 118,-34 91,0 162,68 71,68 94,148 4,13 6,15 2,2 16,2 20,0 20,-9 0,-5 -1,-9 -29,-107 -124,-184 -95,-77 -204,-77 -113,0 -191,75 -78,75 -78,199 z" />
-      <use
-         xlink:href="#MJMATHI-72"
-         x="22059"
-         y="0"
-         id="use112-62"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-6F"
-         x="22515"
-         y="0"
-         id="use114-99"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <g
-         transform="translate(23005)"
-         id="g126-0"
-         style="stroke-width:0">
-        <use
-           xlink:href="#MJMATHI-70"
-           id="use116-8"
-           x="0"
-           y="0"
-           width="100%"
-           height="100%"
-           style="stroke-width:0" />
-        <g
-           transform="translate(508,412)"
-           id="g124"
-           style="stroke-width:0">
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-6E"
-             id="use118-1"
-             x="0"
-             y="0"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <path
-             id="use120-3"
-             stroke-width="18.9353"
-             d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMAIN-31"
-             x="1388"
-             y="0"
-             id="use122-11"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-        </g>
-      </g>
-      <use
-         xlink:href="#MJMAIN-29"
-         x="24951"
-         y="0"
-         id="use128-0"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use130-3"
-         stroke-width="26.7785"
-         d="m 25797,286 q -13,134 -13,150 0,18 24,28 1,0 5,0 4,0 6,1 12,-1 22,-9 10,-8 10,-20 0,-17 -6,-80 -6,-63 -7,-70 l 58,42 q 56,41 61,44 5,3 10,3 13,0 24,-10 11,-10 12,-27 0,-13 -10,-23 -5,-3 -68,-33 -63,-30 -68,-32 l 66,-31 70,-35 q 9,-9 9,-23 0,-15 -9,-25 -9,-10 -24,-11 -8,0 -18,6 -10,6 -55,40 l -58,42 q 13,-134 13,-150 0,-10 -7,-19 -7,-9 -26,-9 -19,0 -26,9 -7,9 -8,19 0,17 6,80 6,63 7,70 l -58,-42 q -56,-41 -61,-44 -4,-3 -10,-3 -13,0 -24,10 -11,10 -12,27 0,5 0,8 0,3 3,6 3,3 5,6 2,3 9,7 7,4 13,7 6,3 19,9 13,6 25,11 12,5 32,15 20,10 40,20 l -136,65 q -9,9 -9,23 0,15 9,25 9,10 24,11 8,0 18,-6 10,-6 55,-40 z" />
-      <path
-         id="use132-4"
-         stroke-width="26.7785"
-         d="m 26525,637 q -27,0 -32,1 -5,1 -5,11 0,27 11,33 2,1 174,1 172,-1 186,-3 56,-8 94,-28 38,-20 54,-46 16,-26 21,-43 5,-17 6,-34 0,-45 -29,-84 -29,-39 -67,-60 -38,-21 -67,-34 -29,-13 -38,-13 l 7,-5 q 67,-38 67,-110 0,-11 -5,-61 -5,-50 -5,-82 v -9 q 0,-18 1,-28 1,-10 11,-18 10,-8 26,-9 28,0 46,22 18,22 26,47 5,14 8,17 3,3 15,3 20,0 20,-12 0,-18 -24,-57 -38,-57 -90,-57 h -9 q -61,0 -101,25 -40,25 -44,78 0,27 15,84 15,57 15,73 0,51 -43,74 -15,7 -25,8 -10,1 -71,2 h -69 l -32,-130 q -33,-132 -33,-134 0,-4 1,-5 1,-1 7,-4 6,-3 17,-2 11,1 33,-2 h 31 q 6,-8 6,-9 0,-1 -3,-18 -4,-13 -10,-19 h -15 q -36,2 -131,2 -34,0 -63,0 -29,0 -46,0 -17,0 -21,-1 -17,0 -17,9 0,2 3,14 5,19 10,21 4,1 15,1 h 6 q 27,0 60,3 14,3 19,12 3,4 72,278 69,274 69,289 0,7 -57,9 z m 400,-83 q 0,32 -21,54 -21,22 -86,28 -2,0 -23,0 -21,0 -38,1 h -22 q -47,0 -54,-10 -1,-3 -34,-133 -33,-130 -33,-133 0,-1 69,-1 78,1 104,7 64,10 100,59 16,23 27,60 11,37 11,68 z" />
-      <use
-         xlink:href="#MJMATHI-65"
-         x="27059"
-         y="0"
-         id="use134-0"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-73"
-         x="27530"
-         y="0"
-         id="use136-3"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-69"
-         x="28004"
-         y="0"
-         id="use138-91"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
+       transform="translate(8402.4592,-60.363607)"
+       id="g20-3"
+       style="fill:#000000;stroke:#000000;stroke-width:0">
       <use
          xlink:href="#MJMATHI-64"
-         x="28354"
+         id="use10-8"
+         x="0"
          y="0"
-         id="use140-96"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-75"
-         x="28882"
-         y="0"
-         id="use142-9"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-65"
-         x="29459"
-         y="0"
-         id="use144-3"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use146-38"
-         stroke-width="26.7785"
-         d="m 30160,637 q -27,0 -32,1 -5,1 -5,11 0,27 11,33 2,1 174,1 172,-1 186,-3 56,-8 94,-28 38,-20 54,-46 16,-26 21,-43 5,-17 6,-34 0,-45 -29,-84 -29,-39 -67,-60 -38,-21 -67,-34 -29,-13 -38,-13 l 7,-5 q 67,-38 67,-110 0,-11 -5,-61 -5,-50 -5,-82 v -9 q 0,-18 1,-28 1,-10 11,-18 10,-8 26,-9 28,0 46,22 18,22 26,47 5,14 8,17 3,3 15,3 20,0 20,-12 0,-18 -24,-57 -38,-57 -90,-57 h -9 q -61,0 -101,25 -40,25 -44,78 0,27 15,84 15,57 15,73 0,51 -43,74 -15,7 -25,8 -10,1 -71,2 h -69 l -32,-130 q -33,-132 -33,-134 0,-4 1,-5 1,-1 7,-4 6,-3 17,-2 11,1 33,-2 h 31 q 6,-8 6,-9 0,-1 -3,-18 -4,-13 -10,-19 h -15 q -36,2 -131,2 -34,0 -63,0 -29,0 -46,0 -17,0 -21,-1 -17,0 -17,9 0,2 3,14 5,19 10,21 4,1 15,1 h 6 q 27,0 60,3 14,3 19,12 3,4 72,278 69,274 69,289 0,7 -57,9 z m 400,-83 q 0,32 -21,54 -21,22 -86,28 -2,0 -23,0 -21,0 -38,1 h -22 q -47,0 -54,-10 -1,-3 -34,-133 -33,-130 -33,-133 0,-1 69,-1 78,1 104,7 64,10 100,59 16,23 27,60 11,37 11,68 z" />
-      <use
-         xlink:href="#MJMATHI-61"
-         x="30694"
-         y="0"
-         id="use148-05"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use150-6"
-         stroke-width="26.7785"
-         d="m 31254,385 q -7,7 -7,10 0,4 3,16 3,12 5,14 2,5 9,5 7,0 51,1 h 53 l 19,80 q 3,11 7,29 4,18 7,26 3,8 6,20 3,12 8,17 5,5 10,12 5,7 14,9 9,2 18,2 18,-1 25,-11 7,-10 7,-19 0,-7 -9,-47 -9,-40 -20,-79 l -10,-37 q 0,-2 50,-2 h 51 q 7,-7 7,-11 0,-22 -13,-35 h -107 l -36,-145 q -39,-160 -39,-172 0,-42 27,-42 35,0 68,34 33,34 53,84 2,6 5,7 3,1 15,2 h 4 q 15,0 15,-8 0,-3 -3,-12 -5,-16 -18,-38 -13,-22 -34,-47 -21,-25 -51,-42 -30,-17 -61,-17 -30,0 -57,15 -27,15 -39,52 -2,8 -2,27 v 18 l 35,140 q 35,141 36,142 0,2 -51,2 z" />
-      <use
-         xlink:href="#MJMATHI-69"
-         x="31594"
-         y="0"
-         id="use152-6"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-6F"
-         x="31944"
-         y="0"
-         id="use154-4"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMAIN-28"
-         x="32434"
-         y="0"
-         id="use156-0"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <path
-         id="use158-04"
-         stroke-width="26.7785"
-         d="m 32878,252 q 0,115 67,221 67,106 169,168 102,62 204,63 90,0 143,-51 9,-10 15,-17 6,-7 8,-10 l 1,-3 q 3,0 27,26 7,6 15,14 8,8 16,16 8,8 10,11 l 15,15 h 6 q 14,0 14,-7 0,-4 -32,-137 -36,-139 -36,-140 -2,-5 -5,-6 -3,-1 -18,-2 h -16 q -6,6 -6,9 0,1 1,7 1,6 2,20 1,14 1,32 0,71 -32,124 -32,53 -109,54 -26,0 -56,-7 -30,-7 -72,-24 -42,-17 -83,-56 -41,-39 -73,-93 -32,-57 -51,-133 -19,-76 -19,-124 0,-114 76,-164 48,-34 118,-34 91,0 162,68 71,68 94,148 4,13 6,15 2,2 16,2 20,0 20,-9 0,-5 -1,-9 -29,-107 -124,-184 -95,-77 -204,-77 -113,0 -191,75 -78,75 -78,199 z" />
-      <use
-         xlink:href="#MJMATHI-72"
-         x="33593"
-         y="0"
-         id="use160-6"
-         width="100%"
-         height="100%"
-         style="stroke-width:0" />
-      <use
-         xlink:href="#MJMATHI-6F"
-         x="34049"
-         y="0"
-         id="use162-2"
          width="100%"
          height="100%"
          style="stroke-width:0" />
       <g
-         transform="translate(34539)"
-         id="g174-6"
+         transform="translate(528,412)"
+         id="g18-6"
          style="stroke-width:0">
         <use
-           xlink:href="#MJMATHI-70"
-           id="use164-7"
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-6E"
+           id="use12-04"
            x="0"
            y="0"
            width="100%"
            height="100%"
            style="stroke-width:0" />
-        <g
-           transform="translate(508,412)"
-           id="g172-5"
-           style="stroke-width:0">
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMATHI-6E"
-             id="use166-6"
-             x="0"
-             y="0"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-          <path
-             id="use168-98"
-             stroke-width="18.9353"
-             d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
-          <use
-             transform="scale(0.70710678)"
-             xlink:href="#MJMAIN-31"
-             x="1388"
-             y="0"
-             id="use170-7"
-             width="100%"
-             height="100%"
-             style="stroke-width:0" />
-        </g>
+        <path
+           id="use14-8"
+           stroke-width="18.9353"
+           d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMAIN-31"
+           x="1388"
+           y="0"
+           id="use16-8"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
       </g>
+    </g>
+    <use
+       xlink:href="#MJMAIN-28"
+       x="3859"
+       y="0"
+       id="use22-8"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(6510.4592,-60.363607)" />
+    <path
+       id="use24-97"
+       stroke-width="26.7785"
+       d="m 10813.459,191.63639 q 0,115 67,221 67,106 169,168 102,62 204,63 90,0 143,-51 9,-10 15,-17 6,-7 8,-10 l 1,-3 q 3,0 27,26 7,6 15,14 8,8 16,16 8,8 10,11 l 15,15 h 6 q 14,0 14,-7 0,-4 -32,-137 -36,-139 -36,-140 -2,-5 -5,-6 -3,-1 -18,-2 h -16 q -6,6 -6,9 0,1 1,7 1,6 2,20 1,14 1,32 0,71 -32,124 -32,53 -109,54 -26,0 -56,-7 -30,-7 -72,-24 -42,-17 -83,-56 -41,-39 -73,-93 -32,-57 -51,-133 -19,-76 -19,-124 0,-113.999997 76,-163.999997 48,-34 118,-34 91,0 162,68 71,68 94,147.999997 4,13 6,15 2,2 16,2 20,0 20,-9 0,-5 -1,-9 -29,-106.999997 -124,-183.999997 -95,-77 -204,-77 -113,0 -191,75 -78,75 -78,198.999997 z"
+       style="fill:#000000;stroke:#000000" />
+    <use
+       xlink:href="#MJMATHI-72"
+       x="5018"
+       y="0"
+       id="use26-76"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(6510.4592,-60.363607)" />
+    <use
+       xlink:href="#MJMATHI-6F"
+       x="5474"
+       y="0"
+       id="use28-4"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(6510.4592,-60.363607)" />
+    <g
+       transform="translate(12474.459,-60.363607)"
+       id="g40-3"
+       style="fill:#000000;stroke:#000000;stroke-width:0">
       <use
-         xlink:href="#MJMAIN-29"
-         x="36485"
+         xlink:href="#MJMATHI-70"
+         id="use30-0"
+         x="0"
          y="0"
-         id="use176-2"
          width="100%"
          height="100%"
          style="stroke-width:0" />
+      <g
+         transform="translate(508,412)"
+         id="g38-3"
+         style="stroke-width:0">
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-6E"
+           id="use32-0"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <path
+           id="use34-92"
+           stroke-width="18.9353"
+           d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMAIN-31"
+           x="1388"
+           y="0"
+           id="use36-54"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+      </g>
     </g>
+    <path
+       id="use42-05"
+       stroke-width="26.7785"
+       d="m 14499.459,-25.363607 q 0,0 0,25 0,25 16,43 16,18 43,18 28,0 50,-25 22,-25 23,-88 0,-35 -9,-68.000003 -9,-33 -21,-57 -12,-24 -26,-41 -14,-17 -24,-27 -10,-10 -13,-9 -4,0 -13,9 -9,9 -9,13 0,4 11,16 11,12 25,30 14,18 26,50 12,32 16,73.000003 v 12 l -1,-1 q -2,-1 -5,-2 -3,-1 -6,-3 -3,-2 -9,-2 -6,0 -12,-1 -27,0 -44,17 z"
+       style="fill:#000000;stroke:#000000" />
+    <g
+       transform="translate(14870.459,-60.363607)"
+       id="g74"
+       style="fill:#000000;stroke:#000000;stroke-width:0">
+      <use
+         xlink:href="#MJMATHI-4E"
+         id="use44-94"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%"
+         style="stroke-width:0" />
+      <g
+         transform="translate(918,359)"
+         id="g52-6"
+         style="stroke-width:0">
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-6E"
+           id="use46-9"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <path
+           id="use48-22"
+           stroke-width="18.9353"
+           d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMAIN-31"
+           x="1388"
+           y="0"
+           id="use50-4"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+      </g>
+      <g
+         transform="translate(808,-335)"
+         id="g72"
+         style="stroke-width:0">
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-61"
+           id="use54-7"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-76"
+           x="534"
+           y="0"
+           id="use56-7"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-61"
+           x="1024"
+           y="0"
+           id="use58-5"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-69"
+           x="1558"
+           y="0"
+           id="use60-48"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-6C"
+           x="1907"
+           y="0"
+           id="use62-12"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-61"
+           x="2211"
+           y="0"
+           id="use64-8"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-62"
+           x="2745"
+           y="0"
+           id="use66-93"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-6C"
+           x="3179"
+           y="0"
+           id="use68-6"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-65"
+           x="3482"
+           y="0"
+           id="use70-80"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+      </g>
+    </g>
+    <use
+       xlink:href="#MJMAIN-29"
+       x="12063"
+       y="0"
+       id="use76-2"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(6510.4592,-60.363607)" />
+    <path
+       id="use130-3"
+       stroke-width="26.7785"
+       d="m 19814.571,312.46654 q -13,134 -13,150 0,18 24,28 1,0 5,0 4,0 6,1 12,-1 22,-9 10,-8 10,-20 0,-17 -6,-80 -6,-63 -7,-70 l 58,42 q 56,41 61,44 5,3 10,3 13,0 24,-10 11,-10 12,-27 0,-13 -10,-23 -5,-3 -68,-33 -63,-30 -68,-32 l 66,-31 70,-35 q 9,-9 9,-23 0,-14.99999 -9,-24.99999 -9,-10 -24,-11 -8,0 -18,6 -10,6 -55,39.99999 l -58,42 q 13,-133.99999 13,-149.999987 0,-10 -7,-19 -7,-9 -26,-9 -19,0 -26,9 -7,9 -8,19 0,16.999997 6,79.999997 6,62.99999 7,69.99999 l -58,-42 q -56,-40.99999 -61,-43.99999 -4,-3 -10,-3 -13,0 -24,10 -11,10 -12,26.99999 0,5 0,8 0,3 3,6 3,3 5,6 2,3 9,7 7,4 13,7 6,3 19,9 13,6 25,11 12,5 32,15 20,10 40,20 l -136,65 q -9,9 -9,23 0,15 9,25 9,10 24,11 8,0 18,-6 10,-6 55,-40 z"
+       style="fill:#000000;stroke:#000000" />
+    <use
+       xlink:href="#MJMAIN-28"
+       x="32434"
+       y="0"
+       id="use156-0"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(-5982.4302,26.599323)" />
+    <path
+       id="use158-04"
+       stroke-width="26.7785"
+       d="m 26895.571,58.988568 q 0,115.000002 67,221.000002 67,106 169,168 102,62 204,63 90,0 143,-51 9,-10 15,-17 6,-7 8,-10 l 1,-3 q 3,0 27,26 7,6 15,14 8,8 16,16 8,8 10,11 l 15,15 h 6 q 14,0 14,-7 0,-4 -32,-137 -36,-139 -36,-140 -2,-5 -5,-6 -3,-1 -18,-2 h -16 q -6,6 -6,9 0,1 1,7 1,6 2,20 1,14 1,32 0,71 -32,124 -32,53 -109,54 -26,0 -56,-7 -30,-7 -72,-24 -42,-17 -83,-56 -41,-39 -73,-93 -32,-57 -51,-133 -19,-76.000002 -19,-124.000002 0,-113.999997 76,-163.999998 48,-34 118,-34 91,0 162,68 71,68.000001 94,147.999998 4,13 6,15 2,2 16,2 20,0 20,-9 0,-5 -1,-9 -29,-106.999997 -124,-183.999998 -95,-77 -204,-77 -113,0 -191,75 -78,75.000001 -78,198.999998 z"
+       style="fill:#000000;stroke:#000000" />
+    <use
+       xlink:href="#MJMATHI-72"
+       x="33593"
+       y="0"
+       id="use160-6"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(-5982.4302,-212.40068)" />
+    <use
+       xlink:href="#MJMATHI-6F"
+       x="34049"
+       y="0"
+       id="use162-2"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(-5982.4302,-212.40068)" />
+    <g
+       transform="translate(28556.571,-29.400677)"
+       id="g174-6"
+       style="fill:#000000;stroke:#000000;stroke-width:0">
+      <use
+         xlink:href="#MJMATHI-70"
+         id="use164-7"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%"
+         style="stroke-width:0" />
+      <g
+         transform="translate(508,412)"
+         id="g172-5"
+         style="stroke-width:0">
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-6E"
+           id="use166-6"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <path
+           id="use168-98"
+           stroke-width="18.9353"
+           d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMAIN-31"
+           x="1388"
+           y="0"
+           id="use170-7"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+      </g>
+    </g>
+    <use
+       xlink:href="#MJMAIN-29"
+       x="36485"
+       y="0"
+       id="use176-2"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(-5982.4302,26.599323)" />
+    <path
+       id="use78-10"
+       stroke-width="26.7785"
+       d="m 31648.076,312.59932 q -13,134 -13,150 0,18 24,28 1,0 5,0 4,0 6,1 12,-1 22,-9 10,-8 10,-20 0,-17 -6,-80 -6,-63 -7,-70 l 58,42 q 56,41 61,44 5,3 10,3 13,0 24,-10 11,-10 12,-27 0,-13 -10,-23 -5,-3 -68,-33 -63,-30 -68,-32 l 66,-31 70,-35 q 9,-9 9,-23 0,-15 -9,-25 -9,-10 -24,-11 -8,0 -18,6 -10,6 -55,40 l -58,42 q 13,-134 13,-149.999997 0,-10 -7,-19 -7,-9 -26,-9 -19,0 -26,9 -7,9 -8,19 0,16.999997 6,79.999997 6,63 7,70 l -58,-42 q -56,-41 -61,-44 -4,-3 -10,-3 -13,0 -24,10 -11,10 -12,27 0,5 0,8 0,3 3,6 3,3 5,6 2,3 9,7 7,4 13,7 6,3 19,9 13,6 25,11 12,5 32,15 20,10 40,20 l -136,65 q -9,9 -9,23 0,15 9,25 9,10 24,11 8,0 18,-6 10,-6 55,-40 z"
+       style="fill:#000000;stroke:#000000;stroke-width:0" />
+    <use
+       xlink:href="#MJMAIN-28"
+       x="20900"
+       y="0"
+       id="use108-24"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(17311,-575.00076)" />
+    <path
+       id="use110-0"
+       stroke-width="26.7785"
+       d="m 38655,-556.00076 q 0,115 67,221 67,106 169,168 102,62 204,63 90,0 143,-51 9,-10 15,-17 6,-7 8,-10 l 1,-3 q 3,0 27,26 7,6 15,14 8,8 16,16 8,8 10,11 l 15,15 h 6 q 14,0 14,-7 0,-4 -32,-137 -36,-139 -36,-140 -2,-5 -5,-6 -3,-1 -18,-2 h -16 q -6,6 -6,9 0,1 1,7 1,6 2,20 1,14 1,32 0,71 -32,124 -32,53 -109,54 -26,0 -56,-7 -30,-7 -72,-24 -42,-17 -83,-56 -41,-39 -73,-93 -32,-57 -51,-133 -19,-76 -19,-124 0,-113.99999 76,-164 48,-34 118,-34 91,0 162,68 71,68.00001 94,148 4,13 6,15 2,2 16,2 20,0 20,-9 0,-5 -1,-9 -29,-106.99999 -124,-184 -95,-77 -204,-77 -113,0 -191,75 -78,75.00001 -78,199 z"
+       style="fill:#000000;stroke:#000000;stroke-width:0" />
+    <use
+       xlink:href="#MJMATHI-72"
+       x="22059"
+       y="0"
+       id="use112-62"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(17311,-814.00076)" />
+    <use
+       xlink:href="#MJMATHI-6F"
+       x="22515"
+       y="0"
+       id="use114-99"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(17311,-814.00076)" />
+    <g
+       transform="translate(40316,-631.00076)"
+       id="g126-0"
+       style="fill:#000000;stroke:#000000;stroke-width:0">
+      <use
+         xlink:href="#MJMATHI-70"
+         id="use116-8"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%"
+         style="stroke-width:0" />
+      <g
+         transform="translate(508,412)"
+         id="g124"
+         style="stroke-width:0">
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMATHI-6E"
+           id="use118-1"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+        <path
+           id="use120-3"
+           stroke-width="18.9353"
+           d="m 487.19657,167.58431 q 0,0 0,9.19239 0,9.19238 9.8995,14.14213 h 410.82904 q 10.6066,-5.65685 10.6066,-14.14213 0,-8.48529 -10.6066,-14.14214 H 497.09607 q -9.8995,4.94975 -9.8995,14.14214 z" />
+        <use
+           transform="scale(0.70710678)"
+           xlink:href="#MJMAIN-31"
+           x="1388"
+           y="0"
+           id="use122-11"
+           width="100%"
+           height="100%"
+           style="stroke-width:0" />
+      </g>
+    </g>
+    <use
+       xlink:href="#MJMAIN-29"
+       x="24951"
+       y="0"
+       id="use128-0"
+       width="100%"
+       height="100%"
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       transform="translate(17311,-575.00076)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(31.746063,0,0,-54.833632,-381043.17,1014272.8)"
+       id="text7597"
+       style="font-style:normal;font-weight:normal;font-size:21.3333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect7599);fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="13025.289"
+         y="18504.615"
+         id="tspan15858">ResidueToNRatio</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(21.557539,0,0,-37.005646,-260328.34,684592.39)"
+       id="text7597-7"
+       style="font-style:normal;font-weight:normal;font-size:21.3333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect7599-6);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0"><tspan
+         x="13025.289"
+         y="18504.615"
+         id="tspan15860">BiomassToResidueRatio</tspan></text>
   </g>
   <path
      id="use128"
@@ -4622,6 +4492,14 @@
            width="100%"
            height="100%"
            style="stroke-width:0" />
+        <text
+           xml:space="preserve"
+           transform="matrix(48.205701,0,0,-48.387562,-706898.02,433471.99)"
+           id="text2498"
+           style="font-style:normal;font-weight:normal;font-size:21.3333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect2500);fill:#000000;fill-opacity:1;stroke:none"><tspan
+             x="15092.383"
+             y="8899.2949"
+             id="tspan15862">[KgBiomass/KgN]</tspan></text>
       </g>
     </g>
   </g>
@@ -5113,7 +4991,7 @@
      style="font-style:normal;font-weight:normal;font-size:21.3333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5167);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0"><tspan
        x="9201.7773"
        y="3478.4531"
-       id="tspan35690">N</tspan></text>
+       id="tspan15864">N</tspan></text>
   <text
      xml:space="preserve"
      transform="matrix(0.37346843,0,0,0.37339953,626.532,9550.2053)"
@@ -5121,7 +4999,7 @@
      style="font-style:normal;font-weight:normal;font-size:21.3333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect7483);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0"><tspan
        x="9069.0078"
        y="4014.1172"
-       id="tspan35692">aie</tspan></text>
+       id="tspan15866">aie</tspan></text>
   <text
      xml:space="preserve"
      transform="translate(-2.215,-8515.0018)"
@@ -5134,7 +5012,7 @@
      id="use106-4-4"
      width="100%"
      height="100%"
-     transform="matrix(0.37346843,0,0,-0.37339953,3018.599,14932.757)"
+     transform="matrix(0.37346902,0,0,-0.37339525,3018.585,14932.755)"
      style="display:inline;fill:#000000;stroke:#000000;stroke-width:0" />
   <use
      xlink:href="#MJMAIN-2B"
@@ -5399,6 +5277,24 @@
      sodipodi:nodetypes="csc" />
   <defs
      id="MathJax_SVG_glyphs">
+    <rect
+       x="226.89391"
+       y="16543.415"
+       width="1831.8267"
+       height="1070.0067"
+       id="rect13228" />
+    <rect
+       x="13025.29"
+       y="18485.74"
+       width="2324.1041"
+       height="578.75689"
+       id="rect7599" />
+    <rect
+       x="15092.382"
+       y="8880.4199"
+       width="2294.5353"
+       height="1290.0517"
+       id="rect2500" />
     <marker
        style="overflow:visible"
        id="Arrow1Lend"
@@ -5631,5 +5527,27 @@
          d="M 0,0 5,-5 -12.5,0 5,5 Z"
          id="path25480-9-3-6" />
     </marker>
+    <rect
+       x="13025.29"
+       y="18485.74"
+       width="2324.104"
+       height="578.7569"
+       id="rect7599-6" />
   </defs>
+  <path
+     style="display:inline;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:40;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 15223.998,7959.0657 -549.782,496.2639"
+     id="path7251-1-3"
+     inkscape:export-filename="/tmp/fertilite.png"
+     inkscape:export-xdpi="2.99"
+     inkscape:export-ydpi="2.99"
+     sodipodi:nodetypes="cc" />
+  <text
+     xml:space="preserve"
+     transform="matrix(23.556928,0,0,23.556928,-6375.7025,-373744.57)"
+     id="text13226"
+     style="font-style:normal;font-weight:normal;font-size:21.3333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect13228);fill:#000000;fill-opacity:1;stroke:none"><tspan
+       x="226.89453"
+       y="16562.289"
+       id="tspan15868">A(p)(0,0012+QSN)</tspan></text>
 </svg>

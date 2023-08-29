@@ -11,24 +11,17 @@ import scala.annotation.tailrec
 
 object Fertility {
 
-  //TODO
-  // 1) depot de manure sur toutes les parcelles selon la strategie: Map[ParcelID, ManureDeposit]
-  // 2) Mettre a jour les manureDeposits et qS de toutes les parcelles du monde: World
-  // 3) Calcul des biomassProduction pour chaque parcelle (N * parcelArea * cropConstantConversion): Seq[FoodBalance]
-
   type FertilityBoost = Double
+
+  case class AgronomicMetrics(availableNitrogen: Double = 0.0, soilQuality: Double = 0.0)
+
+  case class Metrics(year: Int, manureMass: Double = 0.0, mulchingMass: Double = 0.0, agronomicMetrics: AgronomicMetrics = AgronomicMetrics(0.0, 0.0))
+
+  type AgronomicMetricsByParcel = Map[ParcelID, AgronomicMetrics]
 
   def dungMassFor(parcel: Parcel, herdSize: Int, toBeAmendedArea: Double): Double = KG_OF_MANURE_PER_COW_PER_YEAR * herdSize * parcel.area / toBeAmendedArea
 
-  def uniformFertilizerEffect(fertilizerWeight: Int): FertilityBoost = FERTILITY_BOOST_PER_FERTILIZER_KG * fertilizerWeight
-
-  def cropFertilityBoost(crop: Crop): FertilityBoost = {
-    crop match {
-      case Mil => MIL_EFFECT_ON_FERTILITY_BOOST
-      case Peanut => PEANUT_EFFECT_ON_FERTILITY_BOOST
-      case _ => FALLOW_EFFECT_FERTILITY_BOOST // the parcel is resting whatever it is NotAssigned or Fallow
-    }
-  }
+  //def uniformFertilizerEffect(fertilizerWeight: Int): FertilityBoost = FERTILITY_BOOST_PER_FERTILIZER_KG * fertilizerWeight
 
   case class DryKitchenManuringProcess(herdStrategy: HerdStrategy, toBeManuredParcels: Seq[Parcel], otherParcels: Seq[Parcel], herdSize: Int)
 
@@ -43,7 +36,7 @@ object Fertility {
   //  }
   //    )
 
-  def assign(state: SimulationState): SimulationState = {
+  def assign(state: SimulationState, soilQualityBasis: Double): SimulationState = {
 
     val dryManuringProcesses = state.kitchens.map { k =>
       val farmedParcels = World.farmedParcelsForKitchen(state.world, k)
@@ -63,7 +56,7 @@ object Fertility {
     def herdVillageContributionToFallowParcelMass(parcel: Parcel) = parcel.area / allFallowArea * totalDungMass
 
     @tailrec
-    def dryDeposeManure(kitchenManuringProcesses: List[DryKitchenManuringProcess], deposits: List[(Parcel, ManureDeposit)]): Seq[(Parcel, ManureDeposit)] = {
+    def dryDepositManure(kitchenManuringProcesses: List[DryKitchenManuringProcess], deposits: List[(Parcel, Double)]): Seq[(Parcel, Double)] = {
       if (kitchenManuringProcesses.isEmpty) deposits
       else {
         val currentProcess = kitchenManuringProcesses.head
@@ -73,24 +66,23 @@ object Fertility {
             currentProcess.toBeManuredParcels.map { p =>
               val dungMassForP = dungMassFor(p, currentProcess.herdSize, manuredAreaK)
               val deposit = (0.8 * dungMassForP) + (0.2 * herdVillageContributionToParcelManureMass(p))
-              p -> ManureDeposit(state.year, deposit)
-              // p.copy(manureDeposits = p.manureDeposits :+ ManureDeposit(state.year, deposit))
-            } ++ currentProcess.otherParcels.map(p => p -> ManureDeposit(state.year, 0.2 * herdVillageContributionToParcelManureMass(p)))
+              p -> deposit
+            } ++ currentProcess.otherParcels.map(p => p -> 0.2 * herdVillageContributionToParcelManureMass(p))
           case AnywhereAnyTime =>
             (currentProcess.toBeManuredParcels ++ currentProcess.otherParcels).map { p =>
-              p -> ManureDeposit(state.year, herdVillageContributionToParcelManureMass(p))
+              p -> herdVillageContributionToParcelManureMass(p)
             }
           case OwnerOnly => currentProcess.toBeManuredParcels.map { p =>
             val deposit = dungMassFor(p, currentProcess.herdSize, manuredAreaK)
-            p -> ManureDeposit(state.year, deposit)
+            p -> deposit
           }
         }
-        dryDeposeManure(kitchenManuringProcesses.tail, deposits ++ newDepositsByParcel)
+        dryDepositManure(kitchenManuringProcesses.tail, deposits ++ newDepositsByParcel)
       }
     }
 
     @tailrec
-    def wetDeposeManure(kitchens: List[Kitchen], deposits: List[(Parcel, ManureDeposit)]): Seq[(Parcel, ManureDeposit)] = {
+    def wetDepositManure(kitchens: List[Kitchen], deposits: List[(Parcel, Double)]): Seq[(Parcel, Double)] = {
       if (kitchens.isEmpty) deposits
       else {
         val k = kitchens.head
@@ -100,77 +92,85 @@ object Fertility {
           case EverywhereByDayOwnerByNight =>
             fallows.map { p =>
               val deposit = 0.8 * dungMassFor(p, k.herdSize, totalFallowAreaK) + 0.2 * herdVillageContributionToFallowParcelMass(p)
-              p -> ManureDeposit(state.year, deposit)
+              p -> deposit
             }
           case AnywhereAnyTime => fallows.map { p =>
-            p -> ManureDeposit(state.year, herdVillageContributionToFallowParcelMass(p))
+            p -> herdVillageContributionToFallowParcelMass(p)
           }
           case OwnerOnly => fallows.map { p =>
-            p -> ManureDeposit(state.year, dungMassFor(p, k.herdSize, totalFallowAreaK))
+            p -> dungMassFor(p, k.herdSize, totalFallowAreaK)
           }
         }
-        wetDeposeManure(kitchens.tail, deposits ++ newManureDepositByParcel)
+        wetDepositManure(kitchens.tail, deposits ++ newManureDepositByParcel)
       }
     }
 
-    val newParcels = (dryDeposeManure(dryManuringProcesses.toList, List()) ++ wetDeposeManure(state.kitchens.toList, List())).groupBy {
-      _._1.id
-    }.values.map { ps =>
-      ps.reduce { case (dry: (Parcel, ManureDeposit), wet: (Parcel, ManureDeposit)) =>
-        dry._1.copy(manureDeposits = dry._1.manureDeposits :+ ManureDeposit(dry._2.year, 0.7 * dry._2.quantity + 0.3 * wet._2.quantity)) -> ManureDeposit(0, 0.0) // 0.7 is the dry season contribution, 0.3 the wet one
-      }
-    }.map(_._1).toSeq
+
+    val newParcels = {
+      (dryDepositManure(dryManuringProcesses.toList, List()) ++ wetDepositManure(state.kitchens.toList, List())).groupBy {
+        _._1.id
+      }.values.map { ps =>
+        val parcel = ps.head._1
+        val manureMass = ps.map {
+          _._2
+        }.reduce((dry, wet) => dry * 0.7 + wet * 0.3)
+        //FIXME Set mulching mass after mil yield
+        val mulchingMass = 0.0
+        val currentYearSoilQuality = Fertility.soilQuality(parcel, soilQualityBasis)
+        val metrics = Fertility.Metrics(state.year, manureMass, mulchingMass, AgronomicMetrics(availableNitrogen(parcel, currentYearSoilQuality), currentYearSoilQuality))
+        parcel.copy(fertilityHistory = parcel.fertilityHistory :+ metrics) // 0.7 is the dry season contribution, 0.3 the wet one
+      }.toSeq
+    }
 
     val newWorld = state.world.copy(parcels = newParcels)
     state.copy(world = newWorld, history = state.history.updateFertilitySats(state.year, newWorld, state.kitchens))
   }
 
+  private def soilQuality(parcel: Parcel, soilQualityBasis: Double) = {
 
-  //    val manureFertilityBoost = kitchenManuringProcesses.map { case (id, hs) =>
-  //      id -> manure(hs, allParcelsArea, allFallowParcelsArea)
-  //    }.toMap
-  //
-  //    println("MATURE fertilities boost " + manureFertilityBoost)
-  //    val updatedFertilityParcels = state.world.parcels.map { p =>
-  //      p.copy(soilQuality = p.soilQuality * (1.0 +
-  //        cropFertilityBoost(p.crop) +
-  //        manureFertilityBoost(p.ownerID)))
-  //    }
-  //
-  //    val newWorld = state.world.copy(parcels = updatedFertilityParcels)
-  //    state.copy(world = newWorld, history = state.history.updateFertilitySats(state.year, state.world, state.kitchens))
+    val manureBoost =
+      // Last 2 years of manure are used to compute the boost: 0.6 for the most recent deposit and 0.4 for the oldest
+      val last2Years = parcel.fertilityHistory.takeRight(2)
+      last2Years.lastOption.map(_.manureMass * 0.00012).getOrElse(0.0) + last2Years.headOption.map(_.manureMass * 0.00008).getOrElse(0.0)
 
-  def biomassProduction(parcel: Parcel, history: History, year: Int) = {
+    val mulchingBoost = parcel.fertilityHistory.lastOption.map(_.mulchingMass).getOrElse(0.0) * 0.001
 
-    //FIXME: 60/40 manureQuantityLastYear, tout ça
-    val depositNitrogen = 1.0
-
-    val availableNitrogen = soilNitrogen(parcel) + airNitrogen(parcel) + depositNitrogen + faidherbiaNitrogen(parcel)
-
-    parcel.crop match {
-      case Mil => milNRF(availableNitrogen)
-      case Fallow | NotAssigned => fallowNRF(availableNitrogen)
-      case _ => PEANUT_NRF
+    // The soil quality it computed at the begining of the year before the the rotation process, so that the parcel crop here
+    // is equivalent to the crop of the previous year
+    val fallowBoost = parcel.crop match {
+      case Croping.Fallow => 0.01
+      case _ => 0.0
     }
+
+    val faidherbiaBoost = parcel.faidherbiaTrees * 0.06
+
+    soilQualityBasis + manureBoost + mulchingBoost + fallowBoost + faidherbiaBoost
   }
 
-  def soilNitrogen(parcel: Parcel) = {
-    0.0012 * parcel.area * qs(parcel)
+  // in kg. Computed from previous year soil quality and manure production
+  private def availableNitrogen(parcel: Parcel, qs: Double) = {
+
+    val airNitrogen = Constants.ATMOSPHERIC_NITROGEN * parcel.area
+
+    val soilNitrogen = Constants.NITROGEN_MINERALIZATION * parcel.area * qs
+
+    val manureNitrogen =
+      val last2Years = parcel.fertilityHistory.takeRight(2)
+      Constants.NITROGEN_PROPORTION_PER_MANURE_KG * (last2Years.lastOption.map {
+        _.manureMass * 0.6
+      }.getOrElse(0.0) + last2Years.headOption.map {
+        _.manureMass * 0.4
+      }.getOrElse(0.0))
+
+    val faidherbiaNitrogen = 4 * parcel.faidherbiaTrees
+
+    airNitrogen + soilNitrogen + manureNitrogen + faidherbiaNitrogen
+
   }
 
-  def airNitrogen(parcel: Parcel) = parcel.area * 0.002
-
-  def faidherbiaNitrogen(parcel: Parcel) = {
-    0.0
-    // parcel.fedherbiaTrees * 4
-  }
-
-  def qs(parcel: Parcel) = {
-    1.0
-  }
-
-  def manureDeltaQS(herdSize: Int) = {
-    1.0
+  def agronomicMetrics(parcel: Parcel, soilQualityBasis: Double) = {
+    val qs = soilQuality(parcel, soilQualityBasis)
+    Fertility.AgronomicMetrics(availableNitrogen(parcel, qs), qs)
   }
 
   def milNRF(nAvailable: Double) = nAvailable match {
@@ -184,4 +184,6 @@ object Fertility {
     case n if n >= 10 && n <= 50 => 0.501 * Math.log(nAvailable) - 1.2179
     case _ => 1.0
   }
+
+  def peanutNRF = 1.0
 }

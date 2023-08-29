@@ -28,11 +28,6 @@ object World {
     val syntheticParcels = usecase.GenerateSyntheticParcel.generate(
       kitchens.size, giniIndex, maximumNumberOfParcels, giniTolerance.toFloat, seed, new java.io.File(geometryImagePath.getOrElse(null)))
 
-    println("all parcels : " + syntheticParcels.toArray.map { p =>
-      val pp = p.asInstanceOf[SyntheticParcel]
-      pp.area
-    }.sum)
-
     println("# of parcel INIT " + syntheticParcels.size)
     val parcels = syntheticParcels.toArray.map { sp =>
       val p = sp.asInstanceOf[SyntheticParcel]
@@ -46,11 +41,12 @@ object World {
         area = p.area * Constants.AREA_FACTOR,
         distanceToVillage = p.distanceToCenter,
         neighbours = p.lIdNeighborhood.asScala.toSeq,
-        fedherbiaTrees = 0,
-        soilQuality = Constants.INITIAL_FERTILITY_PER_PARCEL,
+        faidherbiaTrees = 0,
         Seq()
       )
     }
+
+    println("all parcels : " + parcels.map{_.area}.sum)
 
     World(parcels, kitchens.size)
   }

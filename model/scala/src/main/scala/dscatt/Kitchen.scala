@@ -41,35 +41,35 @@ object Kitchen {
     cultivatedParcels.map(_.area).sum
   }
 
-  def parcelProduction(parcel: Parcel) = {
-    parcel.soilQuality * (parcel.crop match {
-      case Mil => parcel.area * Constants.MIL_YIELD_PER_M2
-      case Peanut => parcel.area * Constants.PEANUT_YIELD_PER_M2 * Constants.PEANUT_FOOD_EQUIVALENCE
+  def parcelFoodProduction(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel) = {
+    parcel.crop match {
+      case Mil => Fertility.milNRF(metrics(parcel.id).availableNitrogen) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
+      case Peanut => Fertility.peanutNRF * Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE * Constants.PEANUT_SEED_RATIO
       case _ => 0.0
-    })
+    }
   }
 
-  // Fallow is considered as Mil in case of ExtraParcelsExceptFallowLoaner and will be set as Mil once the loan will be effective 
-  def parcelProductionForLoan(parcel: Parcel) = {
-    parcel.soilQuality * (parcel.crop match {
-      case Mil | Fallow => parcel.area * Constants.MIL_YIELD_PER_M2
-      case Peanut => parcel.area * Constants.PEANUT_YIELD_PER_M2 * Constants.PEANUT_FOOD_EQUIVALENCE
+  // Fallow is considered as Mil in case of ExtraParcelsExceptFallowLoaner and will be set as Mil once the loan will be effective
+  def parcelFoodProductionForLoan(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel) =
+    parcel.crop match {
+      case Mil | Fallow => Fertility.milNRF(metrics(parcel.id).availableNitrogen) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
+      case Peanut => Fertility.peanutNRF * Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE * Constants.PEANUT_SEED_RATIO
       case _ => 0.0
-    })
-  }
+    }
 
-  def parcelsProduction(parcels: Seq[Parcel]) = {
+
+  def parcelsFoodProduction(parcels: Seq[Parcel])(using Fertility.AgronomicMetricsByParcel) = {
     parcels.map {
-      parcelProduction
+      parcelFoodProduction
     }.sum
   }
 
-  def foodBalance(world: World, kitchen: Kitchen): FoodBalance = {
+  def foodBalance(world: World, kitchen: Kitchen)(using Fertility.AgronomicMetricsByParcel): FoodBalance = {
     foodBalance(world.parcels, kitchen)
   }
 
-  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen): FoodBalance = {
-    FoodBalance(kitchen, parcelsProduction(World.parcelsInCultureForKitchen(parcels, kitchen)) - foodNeeds(kitchen))
+  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen)(using Fertility.AgronomicMetricsByParcel): FoodBalance = {
+    FoodBalance(kitchen, parcelsFoodProduction(World.parcelsInCultureForKitchen(parcels, kitchen)) - foodNeeds(kitchen))
   }
 
 
@@ -170,7 +170,7 @@ object Kitchen {
 
         val nextID = highestID + 1
         val acquiredParcelK = acquireParcels(parcelsK.toList.sortBy(_.area), 0.0, List())
-        val offspringHerdSize = ((kitchenK.herdSize *  Constants.SPLIT_KITCHEN_OFFSPRING_SIZE).toDouble / kitchenK.size).floor.toInt
+        val offspringHerdSize = ((kitchenK.herdSize * Constants.SPLIT_KITCHEN_OFFSPRING_SIZE).toDouble / kitchenK.size).floor.toInt
         val offspring = Offspring(kitchenK.copy(id = nextID, size = Constants.SPLIT_KITCHEN_OFFSPRING_SIZE, herdSize = offspringHerdSize),
           kitchenK.copy(size = kitchenK.size - Constants.SPLIT_KITCHEN_OFFSPRING_SIZE, herdSize = kitchenK.herdSize - offspringHerdSize),
           acquiredParcelK)
@@ -198,7 +198,7 @@ object Kitchen {
 
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
   // In fallows are present in the cultivableParcelForKitchen, it means the fallow can be used as a culture. In that case it is switched to a mil
-  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Option[Double]) = {
+  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Option[Double])(using Fertility.AgronomicMetricsByParcel) = {
 
     val (fallow, notFallow) = cultivableParcelsForKitchen.partition(_.crop == Fallow)
     val sortedByDistanceParcels = (notFallow.sortBy(_.distanceToVillage) ++ fallow.sortBy(_.distanceToVillage)).toList
@@ -225,11 +225,11 @@ object Kitchen {
         val head = sortedParcels.head
 
         val parcel = head.crop match {
-          case Fallow=> head.copy(crop = Mil)
-          case _=> head
+          case Fallow => head.copy(crop = Mil)
+          case _ => head
         }
 
-        val pproduction = Kitchen.parcelProduction(parcel)
+        val pproduction = Kitchen.parcelFoodProduction(parcel)
         cropsToBeCultivated(kitchen, production + pproduction, sortedParcels.tail, inCulture :+ parcel, remainingManPower - manPowerFor(parcel.area))
       }
     }
@@ -257,6 +257,6 @@ case class Kitchen(id: Kitchen.KitchenID,
                    herdSize: Int,
                    drySeasonHerdStrategy: HerdStrategy,
                    wetSeasonHerdStrategy: HerdStrategy,
-                   drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean,
+                   drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean, //how to choose parcel to be fertilized during dry season
                    fertilizerStrategy: FertilizerStrategy
                   )

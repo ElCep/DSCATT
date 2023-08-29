@@ -15,14 +15,12 @@ object History {
 
   case class FoodBalanceOverYear(initialFoodNeeds: Int = 0, autonomousFoodBalance: Int = 0, afterLoanFoodBalance: Int = 0, afterDonationFoodBalance: Int = 0)
 
-  case class Fertility(manureDepositsMean: Double = 0.0, nitrogenMean: Double = 0.0)
-
   type PopulationStats = Map[KitchenID, PopulationStat]
-  type ParcelStats = Map[KitchenID, ParcelStat]
+  type ParcelStatsByKitchen = Map[KitchenID, ParcelStat]
   type Loans = Seq[Loan]
   type FoodBalanceStats = Map[KitchenID, FoodBalanceOverYear]
   type History = Map[Int, YearHistory]
-  type Fertilities = Map[KitchenID, Fertility]
+  type Fertilities = Map[KitchenID, Fertility.Metrics]
 
   def initialize(simulationLenght: Int, kitchens: Seq[Kitchen]): History = {
     (1 to simulationLenght).map { y =>
@@ -64,15 +62,20 @@ object History {
       history.updated(year, historyOfYear.copy(parcelStats = historyOfYear.parcelStats ++ newParcelStats))
     }
 
+    // Store average fertility metrics by kitchen
     def updateFertilitySats(year: Int, world: World, kitchens: Seq[Kitchen]) = {
       val historyOfYear = history(year)
       val newFertilities = kitchens.map { k =>
-        val manures = World.farmedParcelsForKitchen(world, k).flatMap {
-          _.manureDeposits.filter(md => md.year == year)
-        }.map { _.quantity
-          }
-        k.id->  Fertility(manures.sum / manures.size, 0.0)
-        }.toMap
+        val parcelFertilities = World.farmedParcelsForKitchen(world, k).flatMap {
+          _.fertilityHistory.filter(md => md.year == year)
+        }
+        val manureMassMean = parcelFertilities.map(_.manureMass).sum / parcelFertilities.size
+        val mulchingMassMean = parcelFertilities.map(_.mulchingMass).sum / parcelFertilities.size
+        val soilQualityMean = parcelFertilities.map(_.agronomicMetrics.soilQuality).sum / parcelFertilities.size
+        val availableNitrogenMean = parcelFertilities.map(_.agronomicMetrics.availableNitrogen).sum / parcelFertilities.size
+
+        k.id -> Fertility.Metrics(year, manureMassMean, mulchingMassMean, Fertility.AgronomicMetrics(availableNitrogenMean, soilQualityMean))
+      }.toMap
 
       history.updated(year, historyOfYear.copy(fertilities = historyOfYear.fertilities ++ newFertilities))
     }
@@ -80,15 +83,14 @@ object History {
 
   protected case class YearHistory(
                                     year: Int,
-                                    fertility: Double = 0.0,
                                     population: PopulationStats = Map(),
-                                    parcelStats: ParcelStats = Map(),
+                                    parcelStats: ParcelStatsByKitchen = Map(),
                                     loans: Loans = Seq(),
                                     foodBalanceStats: FoodBalanceStats = Map(),
                                     fertilities: Fertilities = Map()
                                   )
 
-  def toParcelStats(yearLoans: Seq[Loan], parcels: Seq[Parcel]): ParcelStats = {
+  def toParcelStats(yearLoans: Seq[Loan], parcels: Seq[Parcel]): ParcelStatsByKitchen = {
 
     val owned = parcels.groupBy(_.ownerID).map {
       case (kid, ps) => kid -> (ps.size, ps.map(_.area).sum)
@@ -120,15 +122,15 @@ object History {
       val doubleFormat = "%.5f"
       val intFormat = "%.0f"
 
-      val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Herd", "Manure/SQ", "Food Balance (initFN/AFB/ALFB/ADFB)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map { p =>
+      val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Herd", "Man/Mulch/N/SQ", "Food Balance (initFN/AFB/ALFB/ADFB)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map { p =>
         val fbStatsK = fbStats.getOrElse(p._1, FoodBalanceOverYear())
-        val fertilityStatK = fertilityStats.getOrElse(p._1, Fertility())
+        val fertilityStatK = fertilityStats.getOrElse(p._1, Fertility.Metrics(state.year))
         Seq(
           p._1.toString,
           s"${pStats(p._1).size}, ${pStats(p._1).ownedArea.toInt}",
           s"${pStats(p._1).loaned}, ${pStats(p._1).loanedArea.toInt}",
           s"${p._5}",
-          s"${intFormat.format(fertilityStatK.manureDepositsMean)}, ${intFormat.format(fertilityStatK.nitrogenMean)} ",
+          s"${intFormat.format(fertilityStatK.manureMass)}, ${intFormat.format(fertilityStatK.mulchingMass)}, ${intFormat.format(fertilityStatK.agronomicMetrics.availableNitrogen)}, ${intFormat.format(fertilityStatK.agronomicMetrics.soilQuality)} ",
           s"${fbStatsK.initialFoodNeeds}, ${fbStatsK.autonomousFoodBalance}, ${fbStatsK.afterLoanFoodBalance}, ${fbStatsK.afterDonationFoodBalance}",
           p._2.toString,
           p._3.toString,

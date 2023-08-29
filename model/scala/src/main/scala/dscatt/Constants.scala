@@ -4,8 +4,11 @@ object Constants {
 
   // FOOD
   val DAILY_FOOD_NEED_PER_PERSON = 0.75
+
+  // Actor word yields. Used the first year (when field boosts are unknown)
   val MIL_YIELD_PER_M2 = 600.0 / 10000
   val PEANUT_YIELD_PER_M2 = 400.0 / 10000
+
   val PEANUT_FOOD_EQUIVALENCE = 0.5 // quantity of food / quantity of peanuts
   // Considering that  0.66 workers per kitchen is enough and that they need 273*15=4095kg / year,
   // and a yield of 500kg / ha in mean, it comes 0.8ha / worker
@@ -18,33 +21,32 @@ object Constants {
   val SPLIT_KITCHEN_OFFSPRING_SIZE = 4
   val KITCHEN_SIZE_THRESHOLD_FOR_ABSORPTION = KITCHEN_MAXIMUM_SIZE - SPLIT_KITCHEN_OFFSPRING_SIZE
 
-  //SPACE // to adjust the generated area to a 200 people village
+  //SPACE // to adjust the generated area to a 200 people village in ha
   val AREA_FACTOR = {
     val foodFor200 = 200 * DAILY_FOOD_NEED_PER_PERSON * 365
     val surfaceFor200 = foodFor200.toDouble / (0.5 * (MIL_YIELD_PER_M2 + PEANUT_YIELD_PER_M2 * PEANUT_FOOD_EQUIVALENCE))
-    surfaceFor200 / (500000 * 2.0 / 3) // 500000 = generated shp cultivated surface
+    surfaceFor200 / (500000 * 2.0 / 3) / 10000 // 500000 = generated shp cultivated surface
   }
 
   //FERTILITY
   type FertilityBoost = Double
-  val INITIAL_FERTILITY_PER_PARCEL = 1.0
 
-  val FERTILITY_BOOST_PER_MANURE_KG_PER_HA = 0.000075  // Converted from the data: "A boost of +15% with 2T per ha"
+  val FERTILITY_BOOST_PER_MANURE_KG_PER_HA = 0.000075 // Converted from the data: "A boost of +15% with 2T per ha"
   val KG_OF_MANURE_PER_COW_PER_YEAR = 2000
 
-  val FERTILITY_BOOST_PER_FERTILIZER_KG = 0.012
-
   // Nitrogen
-  val PEANUT_NRF = 1.0
-  
-  // Soil quality
-  val MIL_DELTA_QS = -0.4
-  val PEANUT_DELTA_QS = 0.1
-  val FALLOW_DELTA_QS = 0.0
-  
+  val ATMOSPHERIC_NITROGEN = 27.5 // kg/ha
+  val NITROGEN_MINERALIZATION = 12 // kg/ha
+  val NITROGEN_PROPORTION_PER_MANURE_KG = 0.0238 // no dimension
 
-  val MIL_EFFECT_ON_FERTILITY_BOOST = -0.032  // drop of 3.2% per year
-  val PEANUT_EFFECT_ON_FERTILITY_BOOST = -0.032 // drop of 3.2% per year
-  val FALLOW_EFFECT_FERTILITY_BOOST = -0.02 // FIXME: to be confirmed
+  val MIL_FULL_POTENTIAL_YIELD = 3775 // kg DM / ha
+  val PEANUT_FULL_POTENTIAL_YIELD = 450 // kg DM / ha
+  val FALLOW_FULL_POTENTIAL_YIELD = 1498 // kg DM / ha
+
+  val MIL_STRAW_RATIO = 0.7
+  val PEANUT_STRAW_RATIO = 0.666
+
+  val MIL_SEED_RATIO = 0.3
+  val PEANUT_SEED_RATIO = 0.333
 
 }

@@ -51,12 +51,21 @@ to updatePlots
   histogram rep-who-bestiaux
 
   
+<<<<<<< Updated upstream:model/netlogo/plots.nls
   set-current-plot "Fertilite cuisine"
   ask cuisines [
     let myParcelles patches with [member? parcelle-id [idmyParcellesSorted] of myself]
     set-plot-pen-color color ;pour renvoyer la couleur du fermier
     plotxy ticks sum [fertilite] of myParcelles / count myParcelles
   ]
+=======
+set-current-plot "Fertilite cuisine"
+ask cuisines [
+    let myParcelles patches with [member? parcelle-id [idmyParcellesSorted] of myself]
+    set-plot-pen-color color ;pour renvoyer la couleur du fermier
+    plotxy ticks sum [fertilite] of myParcelles / count myParcelles
+    ]
+>>>>>>> Stashed changes:toymodel/plots.nls
   
 end
 
