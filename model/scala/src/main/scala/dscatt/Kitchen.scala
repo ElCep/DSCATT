@@ -2,6 +2,7 @@ package dscatt
 
 import breeze.stats.distributions.{Gaussian, RandBasis, ThreadLocalRandomGenerator}
 import dscatt.Croping.*
+import dscatt.Fertility.AgronomicMetricsByParcel
 import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
@@ -41,9 +42,13 @@ object Kitchen {
     cultivatedParcels.map(_.area).sum
   }
 
-  def parcelFoodProduction(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel) = {
+  def parcelFoodProduction(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel): Double = {
+    parcelFoodProduction(parcel, metrics(parcel.id))
+  }
+
+  def parcelFoodProduction(parcel: Parcel, agronomicMetrics: Fertility.AgronomicMetrics): Double = {
     parcel.crop match {
-      case Mil => Fertility.milNRF(metrics(parcel.id).availableNitrogen) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
+      case Mil => Fertility.milNRF(agronomicMetrics.availableNitrogen) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
       case Peanut => Fertility.peanutNRF * Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE * Constants.PEANUT_SEED_RATIO
       case _ => 0.0
     }

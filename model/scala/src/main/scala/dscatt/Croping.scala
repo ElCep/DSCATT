@@ -11,6 +11,15 @@ object Croping {
   object Fallow extends Crop
 
   object NotAssigned extends Crop
+  
+  implicit class ACrop(c: Crop) {
+    def display = c match {
+      case Mil=> "Millet"
+      case Fallow=> "Fallow"
+      case Peanut=> "Peanut"
+      case NotAssigned=> "NotAssigned"
+    }
+  }
 
   sealed trait CropZone
 

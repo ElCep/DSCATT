@@ -35,7 +35,8 @@ object Simulation {
 
     val finalState = evolve(initialState, populationGrowth, simulationLength + 1, soilQualityBasis)
 
-    History.print(finalState, true)
+    //History.printKitckens(finalState, true)
+    History.printParcels(finalState)
   }
 
 

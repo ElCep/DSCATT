@@ -15,7 +15,7 @@ object Fertility {
 
   case class AgronomicMetrics(availableNitrogen: Double = 0.0, soilQuality: Double = 0.0)
 
-  case class Metrics(year: Int, manureMass: Double = 0.0, mulchingMass: Double = 0.0, agronomicMetrics: AgronomicMetrics = AgronomicMetrics(0.0, 0.0))
+  case class Metrics(year: Int, crop: Crop = NotAssigned, manureMass: Double = 0.0, mulchingMass: Double = 0.0, agronomicMetrics: AgronomicMetrics = AgronomicMetrics(0.0, 0.0))
 
   type AgronomicMetricsByParcel = Map[ParcelID, AgronomicMetrics]
 
@@ -117,7 +117,7 @@ object Fertility {
         //FIXME Set mulching mass after mil yield
         val mulchingMass = 0.0
         val currentYearSoilQuality = Fertility.soilQuality(parcel, soilQualityBasis)
-        val metrics = Fertility.Metrics(state.year, manureMass, mulchingMass, AgronomicMetrics(availableNitrogen(parcel, currentYearSoilQuality), currentYearSoilQuality))
+        val metrics = Fertility.Metrics(state.year, parcel.crop, manureMass, mulchingMass, AgronomicMetrics(availableNitrogen(parcel, currentYearSoilQuality), currentYearSoilQuality))
         parcel.copy(fertilityHistory = parcel.fertilityHistory :+ metrics) // 0.7 is the dry season contribution, 0.3 the wet one
       }.toSeq
     }
