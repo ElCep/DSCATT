@@ -15,6 +15,10 @@ object Parcel {
   }
 }
 
+implicit class AParcel(parcel: Parcel) {
+  def tinyID = parcel.id.take(11)
+}
+
 case class Parcel(id: ParcelID,
                   ownerID: KitchenID,
                   farmerID: KitchenID,

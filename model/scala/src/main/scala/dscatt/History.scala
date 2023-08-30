@@ -161,7 +161,7 @@ object History {
             else None
           }.map { o => p.fertilityHistory(o).agronomicMetrics }
           Seq(
-            p.id.take(11),
+            p.tinyID,
             doubleFormat.format(p.area),
             (p.farmerID != p.ownerID).toString,
             doubleFormat.format(fertility.agronomicMetrics.soilQuality),

@@ -46,12 +46,13 @@ object Fertility {
     }
 
     val totalDungMass = state.kitchens.map(_.herdSize * KG_OF_MANURE_PER_COW_PER_YEAR).sum
+    val totalDungArea = dryManuringProcesses.map{_.toBeManuredParcels.map{_.area}.sum}.sum
 
-    val fullArea = World.fullArea(state.world)
+    //val fullArea = World.fullArea(state.world)
     val allFallowArea = World.fallowParcels(state.world).map(_.area).sum
 
 
-    def herdVillageContributionToParcelManureMass(parcel: Parcel) = parcel.area / fullArea * totalDungMass
+    def herdVillageContributionToParcelManureMass(parcel: Parcel) = parcel.area / totalDungArea * totalDungMass
 
     def herdVillageContributionToFallowParcelMass(parcel: Parcel) = parcel.area / allFallowArea * totalDungMass
 
@@ -63,7 +64,8 @@ object Fertility {
         val manuredAreaK = currentProcess.toBeManuredParcels.map(_.area).sum
         val newDepositsByParcel = currentProcess.herdStrategy match {
           case EverywhereByDayOwnerByNight =>
-            currentProcess.toBeManuredParcels.map { p =>
+            currentProcess.toBeManuredParcels.map {
+              p =>
               val dungMassForP = dungMassFor(p, currentProcess.herdSize, manuredAreaK)
               val deposit = (0.8 * dungMassForP) + (0.2 * herdVillageContributionToParcelManureMass(p))
               p -> deposit
