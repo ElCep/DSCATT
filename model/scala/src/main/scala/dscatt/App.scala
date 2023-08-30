@@ -14,7 +14,7 @@ object Diohine {
 
     val manureDepositStategyALL = (p: Parcel) => true
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
-      Croping.evolveCrop(p.crop, r, p.cropZone) == Mil
+      Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Mil
     }
 
     val kitchenProfile1 = KitchenProfile(

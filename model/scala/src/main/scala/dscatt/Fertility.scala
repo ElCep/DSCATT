@@ -18,111 +18,76 @@ object Fertility {
   case class Metrics(year: Int, crop: Crop = NotAssigned, manureMass: Double = 0.0, mulchingMass: Double = 0.0, agronomicMetrics: AgronomicMetrics = AgronomicMetrics(0.0, 0.0))
 
   type AgronomicMetricsByParcel = Map[ParcelID, AgronomicMetrics]
-
-  def dungMassFor(parcel: Parcel, herdSize: Int, toBeAmendedArea: Double): Double = KG_OF_MANURE_PER_COW_PER_YEAR * herdSize * parcel.area / toBeAmendedArea
-
-  //def uniformFertilizerEffect(fertilizerWeight: Int): FertilityBoost = FERTILITY_BOOST_PER_FERTILIZER_KG * fertilizerWeight
-
-  case class DryKitchenManuringProcess(herdStrategy: HerdStrategy, toBeManuredParcels: Seq[Parcel], otherParcels: Seq[Parcel], herdSize: Int)
-
-  //  def manure(kitchenManuringProcesse: KitchenManuringProcess, allParcelsArea: Double, allFallowParcelsArea: Double): Double = (hStrategy.dry match {
-  //    case EverywhereByDayOwnerByNight =>
-  //      0.83 * (0.2 * uniformManureEffect(allParcelsArea, hStrategy.herdSize) /* day */ + 0.8 * uniformManureEffect(hStrategy.kitchenParcelsArea, hStrategy.herdSize) /* night */) + // dry season
-  //        0.17 * (0.2 * uniformManureEffect(allFallowParcelsArea, hStrategy.herdSize /* day */) + 0.8 * uniformManureEffect(hStrategy.kitchenFallowParcelsArea, hStrategy.herdSize) /* night */) // wet season
-  //    case EverywhereAllTime =>
-  //      0.83 * uniformManureEffect(allParcelsArea, hStrategy.herdSize) + 0.17 * uniformManureEffect(allFallowParcelsArea, hStrategy.herdSize)
-  //    case OwnerOnly =>
-  //      0.83 * uniformManureEffect(hStrategy.kitchenParcelsArea, hStrategy.herdSize) + 0.17 * uniformManureEffect(hStrategy.kitchenFallowParcelsArea, hStrategy.herdSize)
-  //  }
-  //    )
-
+  
   def assign(state: SimulationState, soilQualityBasis: Double): SimulationState = {
 
-    val dryManuringProcesses = state.kitchens.map { k =>
-      val farmedParcels = World.farmedParcelsForKitchen(state.world, k)
-      val (dryToBeManured, dryOthers) = farmedParcels.partition(p => k.drySeasonManureCriteria(p, k.rotationCycle))
+    def manureVillageForPFor(parcel: Parcel, parcels: Seq[Parcel], state: SimulationState) =
+      state.kitchens.map {
+        _.herdSize
+      }.sum * Constants.KG_OF_MANURE_PER_COW_PER_YEAR / parcels.map {
+        _.area
+      }.sum * parcel.area
 
-      DryKitchenManuringProcess(k.drySeasonHerdStrategy, dryToBeManured, dryOthers, k.herdSize)
-    }
-
-    val totalDungMass = state.kitchens.map(_.herdSize * KG_OF_MANURE_PER_COW_PER_YEAR).sum
-    val totalDungArea = dryManuringProcesses.map{_.toBeManuredParcels.map{_.area}.sum}.sum
-
-    //val fullArea = World.fullArea(state.world)
-    val allFallowArea = World.fallowParcels(state.world).map(_.area).sum
-
-
-    def herdVillageContributionToParcelManureMass(parcel: Parcel) = parcel.area / totalDungArea * totalDungMass
-
-    def herdVillageContributionToFallowParcelMass(parcel: Parcel) = parcel.area / allFallowArea * totalDungMass
-
+    
+    // A parcel is divided into 4 periods of time. First dry (0.7 of the year) and wet (0.3 of the year) season and then
+    // night (0.8 of the dung production) and day (0.2 of the dung production).
     @tailrec
-    def dryDepositManure(kitchenManuringProcesses: List[DryKitchenManuringProcess], deposits: List[(Parcel, Double)]): Seq[(Parcel, Double)] = {
-      if (kitchenManuringProcesses.isEmpty) deposits
+    def fertilize(allParcels: Seq[Parcel], fertilityUpdated: Seq[Parcel]): Seq[Parcel] = {
+      if (allParcels.isEmpty) fertilityUpdated
       else {
-        val currentProcess = kitchenManuringProcesses.head
-        val manuredAreaK = currentProcess.toBeManuredParcels.map(_.area).sum
-        val newDepositsByParcel = currentProcess.herdStrategy match {
-          case EverywhereByDayOwnerByNight =>
-            currentProcess.toBeManuredParcels.map {
-              p =>
-              val dungMassForP = dungMassFor(p, currentProcess.herdSize, manuredAreaK)
-              val deposit = (0.8 * dungMassForP) + (0.2 * herdVillageContributionToParcelManureMass(p))
-              p -> deposit
-            } ++ currentProcess.otherParcels.map(p => p -> 0.2 * herdVillageContributionToParcelManureMass(p))
-          case AnywhereAnyTime =>
-            (currentProcess.toBeManuredParcels ++ currentProcess.otherParcels).map { p =>
-              p -> herdVillageContributionToParcelManureMass(p)
+        val parcel = allParcels.head
+        val manureMass =
+          Kitchen.kitchen(state.kitchens, parcel.farmerID).map { kitchen =>
+
+            val dryToBeManuredArea = World.assignedParcelsForKitchen(state.world, kitchen).filter(p=> kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)).map {
+              _.area
+            }.sum
+
+            val manureKforAssignedP = kitchen.herdSize * Constants.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / dryToBeManuredArea
+            val dryManureVillageForP = manureVillageForPFor(parcel, World.assignedParcels(state.world).filter(p=> kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)), state)
+
+            val dryMass = Parcel.isAssigned(parcel) match {
+              case true =>
+                kitchen.drySeasonManureCriteria(parcel, kitchen.rotationCycle) match {
+                  case true =>
+                    kitchen.drySeasonHerdStrategy match {
+                      case EverywhereByDayOwnerByNight => 0.56 * manureKforAssignedP + 0.14 * dryManureVillageForP // 0.7 * 0.8 and 0.7 * 0.2
+                      case AnywhereAnyTime => 0.7 * dryManureVillageForP
+                      case OwnerOnly => 0.7 * manureKforAssignedP
+                    }
+                  case false => 0.0
+                }
+              case false => 0.0
             }
-          case OwnerOnly => currentProcess.toBeManuredParcels.map { p =>
-            val deposit = dungMassFor(p, currentProcess.herdSize, manuredAreaK)
-            p -> deposit
-          }
-        }
-        dryDepositManure(kitchenManuringProcesses.tail, deposits ++ newDepositsByParcel)
-      }
-    }
 
-    @tailrec
-    def wetDepositManure(kitchens: List[Kitchen], deposits: List[(Parcel, Double)]): Seq[(Parcel, Double)] = {
-      if (kitchens.isEmpty) deposits
-      else {
-        val k = kitchens.head
-        val fallows = World.farmedParcelsForKitchen(state.world, k)
-        val totalFallowAreaK = fallows.map(_.area).sum
-        val newManureDepositByParcel = k.wetSeasonHerdStrategy match {
-          case EverywhereByDayOwnerByNight =>
-            fallows.map { p =>
-              val deposit = 0.8 * dungMassFor(p, k.herdSize, totalFallowAreaK) + 0.2 * herdVillageContributionToFallowParcelMass(p)
-              p -> deposit
+            val wetManureVillageForP = manureVillageForPFor(parcel, World.fallowParcels(state.world), state)
+            val manureKforFallow = kitchen.herdSize * Constants.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / World.fallowParcelsForKitchen(state.world, kitchen).map {
+              _.area
+            }.sum
+
+            val wetMass = parcel.crop match {
+              case Fallow =>
+                kitchen.wetSeasonHerdStrategy match {
+                  case EverywhereByDayOwnerByNight => 0.24 * manureKforFallow + 0.06 * wetManureVillageForP // 0.3 * 0.8 and 0.3 * 0.2
+                  case AnywhereAnyTime => 0.3 * wetManureVillageForP
+                  case OwnerOnly => 0.3 * manureKforFallow
+                }
+              case _ => 0.0
             }
-          case AnywhereAnyTime => fallows.map { p =>
-            p -> herdVillageContributionToFallowParcelMass(p)
-          }
-          case OwnerOnly => fallows.map { p =>
-            p -> dungMassFor(p, k.herdSize, totalFallowAreaK)
-          }
-        }
-        wetDepositManure(kitchens.tail, deposits ++ newManureDepositByParcel)
-      }
-    }
-
-
-    val newParcels = {
-      (dryDepositManure(dryManuringProcesses.toList, List()) ++ wetDepositManure(state.kitchens.toList, List())).groupBy {
-        _._1.id
-      }.values.map { ps =>
-        val parcel = ps.head._1
-        val manureMass = ps.map {
-          _._2
-        }.reduce((dry, wet) => dry * 0.7 + wet * 0.3)
-        //FIXME Set mulching mass after mil yield
+            dryMass + wetMass
+          }.getOrElse(0.0)
+        //FIXME: mulching mass
         val mulchingMass = 0.0
         val currentYearSoilQuality = Fertility.soilQuality(parcel, soilQualityBasis)
         val metrics = Fertility.Metrics(state.year, parcel.crop, manureMass, mulchingMass, AgronomicMetrics(availableNitrogen(parcel, currentYearSoilQuality), currentYearSoilQuality))
-        parcel.copy(fertilityHistory = parcel.fertilityHistory :+ metrics) // 0.7 is the dry season contribution, 0.3 the wet one
-      }.toSeq
+        fertilize(
+          allParcels.tail,
+          fertilityUpdated :+ parcel.copy(fertilityHistory = parcel.fertilityHistory :+ metrics)
+        )
+      }
     }
+
+    val newParcels = fertilize(state.world.parcels, Seq())
 
     val newWorld = state.world.copy(parcels = newParcels)
     state.copy(world = newWorld, history = state.history.updateFertilitySats(state.year, newWorld, state.kitchens))

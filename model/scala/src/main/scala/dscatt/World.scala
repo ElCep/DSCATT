@@ -3,9 +3,9 @@ package dscatt
 import fr.ign.artiscales.pm.parcel.SyntheticParcel
 import fr.ign.artiscales.pm.{parcel, usecase}
 
-import scala.jdk.CollectionConverters._
-import Parcel._
-import dscatt.Croping._
+import scala.jdk.CollectionConverters.*
+import Parcel.*
+import dscatt.Croping.*
 import dscatt.Kitchen.KitchenID
 import org.apache.commons.math3.random.MersenneTwister
 
@@ -74,9 +74,13 @@ object World {
 
   def zoneThreeParcels(world: World) = zoneParcels(world, Three)
 
+  def parcelsForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter(_.ownerID == kitchen.id)
+
   def farmedParcelsForKitchen(parcels: Seq[Parcel], kitchen: Kitchen): Seq[Parcel] = parcels.filter(_.farmerID == kitchen.id)
 
   def farmedParcelsForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchen(world.parcels, kitchen)
+
+  def assignedParcelsForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchen(world,kitchen).filter{p=> Parcel.isAssigned(p)}
 
   def ownedParcelsForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter(_.ownerID == kitchen.id)
 
@@ -86,11 +90,15 @@ object World {
 
   def notAssignedParcels(world: World) = world.parcels.filter(_.crop == NotAssigned)
 
+  def assignedParcels(world: World) = world.parcels.filter(_.crop != NotAssigned)
+
   def milParcels(world: World) = world.parcels.filter(_.crop == Mil)
 
   def peanutParcels(world: World) = world.parcels.filter(_.crop == Peanut)
 
   def fallowParcels(world: World) = world.parcels.filter(_.crop == Fallow)
+
+  def fallowParcelsForKitchen(world: World, kitchen: Kitchen) = parcelsForKitchen(world, kitchen).filter(_.crop == Fallow)
   
   def setFallowLast(parcels: Seq[Parcel]): Seq[Parcel] = {
     val (fallow, others) = parcels.partition(_.crop == Fallow)

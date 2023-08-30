@@ -13,6 +13,8 @@ object Parcel {
     case Peanut | Mil=> true
     case _=> false
   }
+  
+  def isAssigned(parcel: Parcel) = parcel.crop != NotAssigned
 }
 
 implicit class AParcel(parcel: Parcel) {
