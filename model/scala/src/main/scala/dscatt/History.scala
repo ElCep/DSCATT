@@ -132,9 +132,9 @@ object History {
           s"${p._5}",
           s"${intFormat.format(fertilityStatK.manureMass)}, ${intFormat.format(fertilityStatK.mulchingMass)}, ${intFormat.format(fertilityStatK.agronomicMetrics.availableNitrogen)}, ${intFormat.format(fertilityStatK.agronomicMetrics.soilQuality)} ",
           s"${fbStatsK.initialFoodNeeds}, ${fbStatsK.autonomousFoodBalance}, ${fbStatsK.afterLoanFoodBalance}, ${fbStatsK.afterDonationFoodBalance}",
+          p._2.toString,
+          p._3.toString,
           p._4.toString,
-          p._5.toString,
-          p._5.toString,
           p._6.mkString(","),
           p._7.map(_.toString).getOrElse("")
         )
