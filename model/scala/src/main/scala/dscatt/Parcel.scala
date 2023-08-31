@@ -3,6 +3,7 @@ package dscatt
 import dscatt.Croping._
 import dscatt.Kitchen._
 import dscatt.Parcel._
+import dscatt.Constants._
 
 object Parcel {
   type ParcelID = String
@@ -26,7 +27,7 @@ case class Parcel(id: ParcelID,
                   farmerID: KitchenID,
                   cropZone: CropZone,
                   crop: Crop,
-                  area: Double,
+                  area: HA,
                   distanceToVillage: Double,
                   neighbours: Seq[ParcelID],
                   faidherbiaTrees: Int,

@@ -21,6 +21,7 @@ object History {
   type FoodBalanceStats = Map[KitchenID, FoodBalanceOverYear]
   type History = Map[Int, YearHistory]
   type Fertilities = Map[KitchenID, Fertility.Metrics]
+  type Herds = Map[KitchenID, Int]
 
   def initialize(simulationLenght: Int, kitchens: Seq[Kitchen]): History = {
     (1 to simulationLenght).map { y =>
@@ -79,6 +80,11 @@ object History {
 
       history.updated(year, historyOfYear.copy(fertilities = historyOfYear.fertilities ++ newFertilities))
     }
+
+    def updateHerdStats(year:Int, world: World, herdMap: Map[KitchenID, Int]) = {
+      val historyOfTheYear = history(year)
+      history.updated(year, historyOfTheYear.copy(herds = historyOfTheYear.herds ++ herdMap))
+    }
   }
 
   protected case class YearHistory(
@@ -87,7 +93,8 @@ object History {
                                     parcelStats: ParcelStatsByKitchen = Map(),
                                     loans: Loans = Seq(),
                                     foodBalanceStats: FoodBalanceStats = Map(),
-                                    fertilities: Fertilities = Map()
+                                    fertilities: Fertilities = Map(),
+                                    herds: Herds = Map()
                                   )
 
   def toParcelStats(yearLoans: Seq[Loan], parcels: Seq[Parcel]): ParcelStatsByKitchen = {
@@ -122,14 +129,14 @@ object History {
       val doubleFormat = "%.5f"
       val intFormat = "%.0f"
 
-      val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Herd", "Man/Mulch/N/SQ", "Food Balance (initFN/AFB/ALFB/ADFB)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map { p =>
+      val table = Seq(Seq("KID", "Owned Size/Area", "Loaned Size/Area", "Herd/Eff", "Man/Mulch/N/SQ", "Food Balance (initFN/AFB/ALFB/ADFB)", "Size", "Births", "Migs", "Absor", "Split")) ++ sortedPop.map { p =>
         val fbStatsK = fbStats.getOrElse(p._1, FoodBalanceOverYear())
         val fertilityStatK = fertilityStats.getOrElse(p._1, Fertility.Metrics(state.year))
         Seq(
           p._1.toString,
           s"${pStats(p._1).size}, ${pStats(p._1).ownedArea.toInt}",
           s"${pStats(p._1).loaned}, ${pStats(p._1).loanedArea.toInt}",
-          s"${p._5}",
+          s"${p._5}/${yearHistory.herds(p._1)}",
           s"${intFormat.format(fertilityStatK.manureMass)}, ${intFormat.format(fertilityStatK.mulchingMass)}, ${intFormat.format(fertilityStatK.agronomicMetrics.availableNitrogen)}, ${intFormat.format(fertilityStatK.agronomicMetrics.soilQuality)} ",
           s"${fbStatsK.initialFoodNeeds}, ${fbStatsK.autonomousFoodBalance}, ${fbStatsK.afterLoanFoodBalance}, ${fbStatsK.afterDonationFoodBalance}",
           p._2.toString,

@@ -68,10 +68,11 @@ case class KitchenProfile(
                            wetSeasonHerdStrategy: HerdStrategy,
                            drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean,
                            fertilizerStrategy: FertilizerStrategy,
+                           mulchingStrategy: MulchingStrategy
                          )
 
 object KitchenProfile {
-  val default = KitchenProfile(10, ThreeYears, Parsimonious, NeverUseFallow, AllExtraParcelsLoaner, FoodForAllStrategy, 15, EverywhereByDayOwnerByNight, EverywhereByDayOwnerByNight, (_, _) => true, UniformFertilizing)
+  val default = KitchenProfile(10, ThreeYears, Parsimonious, NeverUseFallow, AllExtraParcelsLoaner, FoodForAllStrategy, 15, EverywhereByDayOwnerByNight, EverywhereByDayOwnerByNight, (_, _) => true, UniformFertilizing, Mulching(0.0))
 }
 
 case class KitchenPartition(profiles: (KitchenProfile, KitchenSize)*)

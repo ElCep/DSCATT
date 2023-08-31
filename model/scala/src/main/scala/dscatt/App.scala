@@ -18,7 +18,7 @@ object Diohine {
     }
 
     val kitchenProfile1 = KitchenProfile(
-      10,
+      5,
       ThreeYears,
       Parsimonious,
       NeverUseFallow,
@@ -28,11 +28,12 @@ object Diohine {
       EverywhereByDayOwnerByNight,
       EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
-      UniformFertilizing
+      UniformFertilizing,
+      Mulching(0.5)
     )
 
     val kitchenProfile2 = KitchenProfile(
-      10,
+      5,
       ThreeYears,
       Parsimonious,
       NeverUseFallow,
@@ -42,7 +43,8 @@ object Diohine {
       EverywhereByDayOwnerByNight,
       EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
-      UniformFertilizing
+      UniformFertilizing,
+      Mulching(0.5)
     )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)

@@ -28,7 +28,8 @@ object Kitchen {
         kp.drySeasonHerdStrategy,
         kp.wetSeasonHerdStrategy,
         kp.drySeasonManureCriteria,
-        kp.fertilizerStrategy
+        kp.fertilizerStrategy,
+        kp.mulchingStrategy
       )
     }
   }
@@ -47,20 +48,20 @@ object Kitchen {
   }
 
   def parcelFoodProduction(parcel: Parcel, agronomicMetrics: Fertility.AgronomicMetrics): Double = {
-    parcel.crop match {
-      case Mil => Fertility.milNRF(agronomicMetrics.availableNitrogen) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
+    (parcel.crop match {
+      case Mil => Fertility.milNRF(agronomicMetrics.availableNitrogen/parcel.area) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
       case Peanut => Fertility.peanutNRF * Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE * Constants.PEANUT_SEED_RATIO
       case _ => 0.0
-    } * parcel.area
+    }) * parcel.area
   }
 
   // Fallow is considered as Mil in case of ExtraParcelsExceptFallowLoaner and will be set as Mil once the loan will be effective
   def parcelFoodProductionForLoan(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel) =
-    parcel.crop match {
-      case Mil | Fallow => Fertility.milNRF(metrics(parcel.id).availableNitrogen) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
+    (parcel.crop match {
+      case Mil | Fallow => Fertility.milNRF(metrics(parcel.id).availableNitrogen / parcel.area) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
       case Peanut => Fertility.peanutNRF * Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE * Constants.PEANUT_SEED_RATIO
       case _ => 0.0
-    } * parcel.area
+    }) * parcel.area
 
 
   def parcelsFoodProduction(parcels: Seq[Parcel])(using Fertility.AgronomicMetricsByParcel) = {
@@ -263,5 +264,6 @@ case class Kitchen(id: Kitchen.KitchenID,
                    drySeasonHerdStrategy: HerdStrategy,
                    wetSeasonHerdStrategy: HerdStrategy,
                    drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean, //how to choose parcel to be fertilized during dry season
-                   fertilizerStrategy: FertilizerStrategy
+                   fertilizerStrategy: FertilizerStrategy,
+                   mulchingStrategy: MulchingStrategy
                   )
