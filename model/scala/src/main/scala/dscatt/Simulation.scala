@@ -49,13 +49,14 @@ object Simulation {
       else {
         val initialFoodNeeds = simulationState.kitchens.map { k => k.id -> -Kitchen.foodNeeds(k) }
 
+        // Evolve rotation including loans
+        val (afterRotationsSimulationState, autonomousFoodBalance) = Rotation.evolve(simulationState, soilQualityBasis)
+
         // Compute soil quality and available nitrogen for each parcel before the rotation process until fertilities of the current year is computed
-        implicit val fertilityMetricsByParcel: Fertility.AgronomicMetricsByParcel = simulationState.world.parcels.map { p =>
+        implicit val fertilityMetricsByParcelAfterRotation: Fertility.AgronomicMetricsByParcel = afterRotationsSimulationState.world.parcels.map { p =>
           p.id -> Fertility.agronomicMetrics(p, soilQualityBasis)
         }.toMap
 
-        // Evolve rotation including loans
-        val (afterRotationsSimulationState, autonomousFoodBalance) = Rotation.evolve(simulationState)
         val afterLoanFoodBalance = afterRotationsSimulationState.kitchens.map { k => Kitchen.foodBalance(afterRotationsSimulationState.world, k) }
 
         // Process food donations
@@ -69,6 +70,15 @@ object Simulation {
 
         val finalHistory = afterFertilizationState.history.updateFoodBalances(afterFertilizationState.year, initialFoodNeeds, autonomousFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
         val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
+
+
+        val z = afterFertilizationState.world.parcels.map {
+          _.crop.display
+        } zip finalState.world.parcels.map {
+          _.crop.display
+        }
+        println(z)
+
         evolve0(finalState)
       }
     }

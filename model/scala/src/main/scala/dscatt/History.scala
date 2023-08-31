@@ -155,23 +155,26 @@ object History {
       println(s"\nYEAR $y\n")
       val table = Seq(Seq("ID", "Area", "Loaned?", "QS", "N/ha", "Manure/ha", "Mulch", "Yield/ha", "for crop")) ++
         first20.map { p =>
-          val fertility = p.fertilityHistory(y - 1)
-          val previousYearAgronomicMetrics = {
-            if (y > 1) Some(y - 2)
-            else None
-          }.map { o => p.fertilityHistory(o).agronomicMetrics }
+          val fertility = p.fertilityHistory(y-1)
+
+//          println("Fertilities for ")
+//          println("P " + p.crop.display + " : " + Kitchen.parcelFoodProduction(p, fertility.agronomicMetrics))
+          //          fer
+          //          val previousYearAgronomicMetrics = {
+          //            if (y > 1) Some(y - 2)
+          //            else None
+          //          }.map { o => p.fertilityHistory(o).agronomicMetrics }
           Seq(
             p.tinyID,
             doubleFormat.format(p.area),
             (p.farmerID != p.ownerID).toString,
             doubleFormat.format(fertility.agronomicMetrics.soilQuality),
             doubleFormat.format(fertility.agronomicMetrics.availableNitrogen / p.area),
-            doubleFormat.format(fertility.manureMass/ p.area),
+            doubleFormat.format(fertility.manureMass / p.area),
             doubleFormat.format(fertility.mulchingMass),
-            previousYearAgronomicMetrics.map { amet =>
-              doubleFormat.format(Kitchen.parcelFoodProduction(p, amet) / p.area)
-            }.getOrElse("N/A"),
-            fertility.crop.display
+            doubleFormat.format(Kitchen.parcelFoodProduction(p, fertility.agronomicMetrics) / p.area),
+            //FIXME
+            fertility.crop.display + " vs " + p.crop.display
           )
         }
       println(Tabulator.formatTable(table))

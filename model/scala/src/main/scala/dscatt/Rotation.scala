@@ -7,7 +7,7 @@ import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 object Rotation {
-  def evolve(simulationState: SimulationState)(using Fertility.AgronomicMetricsByParcel): (SimulationState, Seq[FoodBalance]) = {
+  def evolve(simulationState: SimulationState, soilQualityBasis: Double): (SimulationState, Seq[FoodBalance]) = {
 
 
     // Compute theoritical crops for coming year before we know if it is in culture or not
@@ -19,6 +19,11 @@ object Rotation {
         )
       }
     }
+    //theariticalAgronomicMetrics
+    // Compute soil quality and available nitrogen for each parcel on the trearitical crop rotation
+    implicit val theoreticalFertilityMetricsByParcel: Fertility.AgronomicMetricsByParcel = theoriticalCroping.flatMap{_._2}.map { p =>
+      p.id -> Fertility.agronomicMetrics(p, soilQualityBasis)
+    }.toMap
 
     val autonomousFoodBalance = theoriticalCroping.map { case (k, ps) => Kitchen.foodBalance(ps, k) }
     // Loaners process:
