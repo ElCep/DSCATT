@@ -145,16 +145,6 @@ object History {
     }
   }
 
-  def printAPaul(state: SimulationState) = {
-    val lastYearFertilities = state.world.parcels.map {
-      _.fertilityHistory.last
-    }
-    lastYearFertilities.foreach { ly =>
-      println( ly.crop.display + " : " + ly.manureMass)
-    }
-    println("Total " + lastYearFertilities.size)
-  }
-
   def printParcels(state: SimulationState) = {
     val first20 = state.world.parcels.take(20)
 
@@ -163,7 +153,7 @@ object History {
 
     state.history.keys.toSeq.sorted.foreach { y =>
       println(s"\nYEAR $y\n")
-      val table = Seq(Seq("ID", "Area", "Loaned?", "QS", "N", "Manure/ha", "Mulch", "Yield/ha", "for crop")) ++
+      val table = Seq(Seq("ID", "Area", "Loaned?", "QS", "N/ha", "Manure/ha", "Mulch", "Yield/ha", "for crop")) ++
         first20.map { p =>
           val fertility = p.fertilityHistory(y - 1)
           val previousYearAgronomicMetrics = {
@@ -175,7 +165,7 @@ object History {
             doubleFormat.format(p.area),
             (p.farmerID != p.ownerID).toString,
             doubleFormat.format(fertility.agronomicMetrics.soilQuality),
-            doubleFormat.format(fertility.agronomicMetrics.availableNitrogen),
+            doubleFormat.format(fertility.agronomicMetrics.availableNitrogen / p.area),
             doubleFormat.format(fertility.manureMass/ p.area),
             doubleFormat.format(fertility.mulchingMass),
             previousYearAgronomicMetrics.map { amet =>
