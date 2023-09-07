@@ -35,8 +35,8 @@ object Simulation {
 
     val finalState = evolve(initialState, populationGrowth, simulationLength + 1, soilQualityBasis)
 
-    History.printKitckens(finalState, true)
-    //History.printParcels(finalState)
+    //History.printKitckens(finalState, true)
+    History.printParcels(finalState)
   }
 
 
@@ -70,14 +70,6 @@ object Simulation {
 
         val finalHistory = afterFertilizationState.history.updateFoodBalances(afterFertilizationState.year, initialFoodNeeds, autonomousFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
         val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
-
-
-        val z = afterFertilizationState.world.parcels.map {
-          _.crop.display
-        } zip finalState.world.parcels.map {
-          _.crop.display
-        }
-        println(z)
 
         evolve0(finalState)
       }
