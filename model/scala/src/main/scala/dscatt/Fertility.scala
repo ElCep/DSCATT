@@ -58,9 +58,15 @@ object Fertility {
         val parcel = allParcels.head
         val kitchenOption = Kitchen.kitchen(state.kitchens, parcel.farmerID)
 
-        //FIXME: mulching mass
-        val mulchingMass = 0.0
-
+        val mulchingMass =
+          parcel.crop match {
+            case Mil => kitchenOption.map{_.mulchingStrategy} match {
+              case Some(Mulching(leftOnTheGroundRatio: Double)) =>
+                milNRF(fertilityByParcel(parcel.id)._2 / parcel.area) * Constants.MIL_FULL_POTENTIAL_YIELD * parcel.area * leftOnTheGroundRatio * Constants.MIL_STRAW_RATIO
+              case _=> 0.0
+            }
+            case _ => 0.0
+          }
 
         val manureMass = kitchenOption.map { kitchen =>
           val dryToBeManuredArea = World.assignedParcelsForKitchen(state.world, kitchen).filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)).map {

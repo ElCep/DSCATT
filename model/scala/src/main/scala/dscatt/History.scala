@@ -160,7 +160,7 @@ object History {
 
     state.history.keys.toSeq.sorted.foreach { y =>
       println(s"\nYEAR $y\n")
-      val table = Seq(Seq("ID", "Area", "QS", "N/ha", "Manure/ha", "Mulch", "Yield/ha", "for crop")) ++
+      val table = Seq(Seq("ID", "Area", "QS", "N/ha", "Manure/ha", "Mulch/ha", "Yield/ha", "for crop")) ++
         first20.map { p =>
           val fertility = p.fertilityHistory(y-1)
           val id = p.tinyID
@@ -172,7 +172,7 @@ object History {
             doubleFormat.format(fertility.agronomicMetrics.soilQuality),
             doubleFormat.format(fertility.agronomicMetrics.availableNitrogen / area),
             doubleFormat.format(fertility.manureMass / area),
-            doubleFormat.format(fertility.mulchingMass),
+            doubleFormat.format(fertility.mulchingMass / area),
             doubleFormat.format(Kitchen.parcelFoodProduction(fertility.crop, area, fertility.agronomicMetrics) / area),
             fertility.crop.display
           )
