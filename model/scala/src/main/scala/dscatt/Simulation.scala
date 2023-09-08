@@ -1,6 +1,7 @@
 package dscatt
 
 import dscatt.Croping.*
+import dscatt.Diohine.{HookFile, HookParameters}
 import dscatt.History.History
 import org.apache.commons.math3.random.MersenneTwister
 
@@ -20,7 +21,7 @@ object Simulation {
              supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
              soilQualityBasis: Double = 1.0,
-             parcelOutputPath: Option[String] = None
+             hookParameters: HookParameters
            ) = {
 
     given MersenneTwister(seed)
@@ -30,13 +31,22 @@ object Simulation {
     println("NB KITCH " + kitchens.length)
     println("Area factor " + Constants.AREA_FACTOR)
 
-    val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels, giniTolerance, maximumNumberOfParcels, seed, parcelOutputPath)
+    val outputParcelMap = hookParameters.hookFile match {
+      case Some(hf: HookFile) =>
+        hf.parcelMap match {
+          case true => Some(s"${hf.outputPath}/parcelMap.gpkg")
+          case _ => None
+        }
+      case _=> None
+    }
+    
+    val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels, giniTolerance, maximumNumberOfParcels, seed, outputParcelMap)
     val initialState = SimulationState(nakedWorld, kitchens, History.initialize(simulationLength, kitchens), 1)
 
     val finalState = evolve(initialState, populationGrowth, simulationLength + 1, soilQualityBasis)
 
-    //History.printKitckens(finalState, true)
-    History.printParcels(finalState)
+    //History.printKitckens(finalState, true, hookParameters)
+    History.printParcels(finalState, hookParameters)
   }
 
 

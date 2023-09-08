@@ -22,11 +22,14 @@ object World {
                          geometryImagePath: Option[String] = None
                         )(using mT: MersenneTwister): World = {
     val kitchensMap = kitchens.groupBy(_.id)
+
     geometryImagePath.foreach { p =>
-      new File(p).mkdirs
+      new File(p).getParentFile.mkdirs
     }
+
     val syntheticParcels = usecase.GenerateSyntheticParcel.generate(
-      kitchens.size, giniIndex, maximumNumberOfParcels, giniTolerance.toFloat, seed, new java.io.File(geometryImagePath.getOrElse(null)))
+      kitchens.size, giniIndex, maximumNumberOfParcels, giniTolerance.toFloat, seed, geometryImagePath.map(p=> new java.io.File(p)).getOrElse(null)
+    )
 
     println("# of parcel INIT " + syntheticParcels.size)
     val parcels = syntheticParcels.toArray.map { sp =>

@@ -10,4 +10,9 @@ object Utils {
     else sumOfDifference / (2 * l.size * l.size * mean)
   }
 
+  implicit class CSVWrapper(val prod: Seq[Seq[Any]]) extends AnyVal {
+    def toCSV() = prod.map { l =>
+      l.mkString(",")
+    }.mkString("\n")
+  }
 }

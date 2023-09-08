@@ -1,5 +1,5 @@
 
-scalaVersion := "3.1.1"
+scalaVersion := "3.3.0"
 
 name := "Diohine"
 
@@ -18,3 +18,4 @@ mainClass in(Compile, run) := Some("dscatt.Diohine")
 
 libraryDependencies += "fr.ign.artiscales.pm" % "ParcelManager" % "1.3-SNAPSHOT" from "https://gitlab.inria.fr/api/v4/projects/39367/packages/maven/fr/ign/artiscales/pm/ParcelManager/1.3-SNAPSHOT/ParcelManager-1.3-20220729.152938-7-shaded.jar"
 libraryDependencies +=   "org.scalanlp" %% "breeze" % "2.0.1-RC1"
+libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.9.2"

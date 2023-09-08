@@ -5,14 +5,16 @@ import dscatt.KitchenPartition._
 
 object Diohine {
 
-  case class Parameters(outputParcelPath: Option[String] = None)
+  case class HookFile(outputPath: String, parcels: Boolean, kitchens: Boolean, parcelMap: Boolean)
+  case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile] )
 
   def main(args: Array[String]) = {
-    val parameters = if (args.length > 0) {
-      Parameters(Some(args(0)))
-    } else Parameters()
+    val argOptions = args.lift
+    // displayParcels, displayKitchens outputPath parcels kitchens parcelMap
+    def toBoolean(s: Option[String]) = s.map{_.toBoolean}.getOrElse(false)
+    val hookFile = argOptions(2).map{op=> HookFile(op, toBoolean(argOptions(3)), toBoolean(argOptions(4)), toBoolean(argOptions(5)))}
+    val hooks = HookParameters(toBoolean(argOptions(0)), toBoolean(argOptions(1)), hookFile)
 
-    val manureDepositStategyALL = (p: Parcel) => true
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
       Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Mil
     }
@@ -61,7 +63,7 @@ object Diohine {
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
       simulationLength = 10,
-      parcelOutputPath = parameters.outputParcelPath)
+      hookParameters = hooks)
   }
 
 }
