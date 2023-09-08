@@ -1,6 +1,5 @@
 package dscatt
 
-import breeze.stats.distributions.{Gaussian, RandBasis, ThreadLocalRandomGenerator}
 import dscatt.Croping.*
 import dscatt.Fertility.AgronomicMetricsByParcel
 import dscatt.Simulation.SimulationState
