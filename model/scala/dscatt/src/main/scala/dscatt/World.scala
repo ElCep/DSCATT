@@ -1,16 +1,16 @@
 package dscatt
 
-import fr.ign.artiscales.pm.parcel.SyntheticParcel
-import fr.ign.artiscales.pm.{parcel, usecase}
-
-import scala.jdk.CollectionConverters.*
 import Parcel.*
 import dscatt.Croping.*
 import dscatt.Kitchen.KitchenID
 import org.apache.commons.math3.random.MersenneTwister
+import io.circe.Decoder.*
+import io.circe.*
+import io.circe.parser.*
+import io.circe.generic.semiauto.*
+import shared.Data
 
-import java.io.File
-import scala.annotation.tailrec
+import scala.io.Source
 
 object World {
 
@@ -20,46 +20,39 @@ object World {
                          maximumNumberOfParcels: Int = 200,
                          seed: Long,
                          geometryImagePath: Option[String] = None
-                        )(using mT: MersenneTwister): World = {
-    val kitchensMap = kitchens.groupBy(_.id)
+                        )(using mT: MersenneTwister): World =
 
-    geometryImagePath.foreach { p =>
-      new File(p).getParentFile.mkdirs
-    }
+    val parcelPath = s"generatedParcels/k${kitchens.size}g${"%.2f".format(giniIndex)}.json"
+    val resource = scala.io.Source.fromResource(parcelPath).getLines().mkString("\n")
 
-    val syntheticParcels = usecase.GenerateSyntheticParcel.generate(
-      kitchens.size, giniIndex, maximumNumberOfParcels, giniTolerance.toFloat, seed, geometryImagePath.map(p=> new java.io.File(p)).getOrElse(null)
-    )
-
-    println("# of parcel INIT " + syntheticParcels.size)
-    val parcels = syntheticParcels.toArray.map { sp =>
-      val p = sp.asInstanceOf[SyntheticParcel]
-
-      Parcel(
-        id = p.id,
-        ownerID = p.ownerID,
-        farmerID = p.ownerID,
-        crop = NotAssigned,
-        cropZone = intToCropZone(p.regionID, kitchensMap(p.ownerID).head.rotationCycle, mT.nextDouble() > 0.5),
-        area = p.area * Constants.AREA_FACTOR,
-        distanceToVillage = p.distanceToCenter,
-        neighbours = p.lIdNeighborhood.asScala.toSeq,
-        faidherbiaTrees = 0,
-        Seq()
-      )
-    }
-
-    println("all parcels : " + parcels.map{_.area}.sum)
-
-    World(parcels, kitchens.size)
-  }
+    implicit val parcelJsonDecoder: Decoder[Data.ParcelJson] = deriveDecoder[Data.ParcelJson]
+    decode[List[Data.ParcelJson]](resource) match
+      case Right(ps) =>
+        val kitchensMap = kitchens.groupBy(_.id)
+        val parcels = ps map: p=>
+            Parcel(
+              id = p.id.toString,
+              ownerID = p.oID,
+              farmerID = p.oID,
+              crop = NotAssigned,
+              cropZone = intToCropZone(p.r, kitchensMap(p.oID).head.rotationCycle, mT.nextDouble() > 0.5),
+              area = p.a.replace(",",".").toDouble * Constants.AREA_FACTOR,
+              distanceToVillage = p.dC.replace(",",".").toDouble,
+              faidherbiaTrees = 0,
+              Seq()
+            )
+        World(parcels, kitchens.size)
+      case Left(f) =>
+        println("LEFT")
+        println(f)
+        World(Seq(), 0)
+  
 
   def display(world: World): Unit = {
     world.parcels.foreach { p =>
       println("ID              :" + p.id)
       println("KITCHEN         :" + p.ownerID)
       println("CROP ZONE       :" + p.cropZone)
-      println("NEIGHBORHOOD    :" + p.neighbours)
       println("DIST TO VILLAGE :" + p.distanceToVillage)
       println("AREA            :" + p.area + "\n")
     }
@@ -69,7 +62,9 @@ object World {
     _.cropZone == cropZone
   }
 
-  def fullArea(world: World) = world.parcels.map{_.area}.sum
+  def fullArea(world: World) = world.parcels.map {
+    _.area
+  }.sum
 
   def zoneOneParcels(world: World) = zoneParcels(world, One)
 
@@ -83,7 +78,7 @@ object World {
 
   def farmedParcelsForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchen(world.parcels, kitchen)
 
-  def assignedParcelsForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchen(world,kitchen).filter{p=> Parcel.isAssigned(p)}
+  def assignedParcelsForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchen(world, kitchen).filter { p => Parcel.isAssigned(p) }
 
   def ownedParcelsForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter(_.ownerID == kitchen.id)
 
@@ -102,7 +97,7 @@ object World {
   def fallowParcels(world: World) = world.parcels.filter(_.crop == Fallow)
 
   def fallowParcelsForKitchen(world: World, kitchen: Kitchen) = parcelsForKitchen(world, kitchen).filter(_.crop == Fallow)
-  
+
   def setFallowLast(parcels: Seq[Parcel]): Seq[Parcel] = {
     val (fallow, others) = parcels.partition(_.crop == Fallow)
     others ++ fallow

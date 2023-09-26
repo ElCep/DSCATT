@@ -47,6 +47,8 @@ object Simulation {
 
     //History.printKitckens(finalState, true, hookParameters)
     History.printParcels(finalState, hookParameters)
+    
+    finalState
   }
 
 

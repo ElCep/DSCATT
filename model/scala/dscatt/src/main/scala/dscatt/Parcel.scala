@@ -29,7 +29,6 @@ case class Parcel(id: ParcelID,
                   crop: Crop,
                   area: HA,
                   distanceToVillage: Double,
-                  neighbours: Seq[ParcelID],
                   faidherbiaTrees: Int,
                   fertilityHistory: Seq[Fertility.Metrics]
                  )
