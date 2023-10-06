@@ -14,8 +14,6 @@ object Simulation {
   def apply(
              seed: Long,
              giniParcels: Double,
-             giniTolerance: Double = 0.01,
-             maximumNumberOfParcels: Int = 200,
              populationGrowth: Double,
              kitchenPartition: KitchenPartition = KitchenPartition((KitchenProfile.default, 1)),
              supportPolicy: SupportPolicy,
@@ -31,23 +29,15 @@ object Simulation {
     println("NB KITCH " + kitchens.length)
     println("Area factor " + Constants.AREA_FACTOR)
 
-    val outputParcelMap = hookParameters.hookFile match {
-      case Some(hf: HookFile) =>
-        hf.parcelMap match {
-          case true => Some(s"${hf.outputPath}/parcelMap.gpkg")
-          case _ => None
-        }
-      case _=> None
-    }
-    
-    val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels, giniTolerance, maximumNumberOfParcels, seed, outputParcelMap)
+    val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels)
     val initialState = SimulationState(nakedWorld, kitchens, History.initialize(simulationLength, kitchens), 1)
 
+    println("")
     val finalState = evolve(initialState, populationGrowth, simulationLength + 1, soilQualityBasis)
 
     //History.printKitckens(finalState, true, hookParameters)
     History.printParcels(finalState, hookParameters)
-    
+
     finalState
   }
 
@@ -70,6 +60,10 @@ object Simulation {
         }.toMap
 
         val afterLoanFoodBalance = afterRotationsSimulationState.kitchens.map { k => Kitchen.foodBalance(afterRotationsSimulationState.world, k) }
+
+        println("iNxs " )
+        afterRotationsSimulationState.kitchens.foreach: k=>
+          println("K " + k.id + " : " + k.inexcessHistory)
 
         // Process food donations
         val afterDonationFoodBalance = FoodDonation.assign(afterLoanFoodBalance)

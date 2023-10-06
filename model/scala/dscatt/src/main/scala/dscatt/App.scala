@@ -5,14 +5,14 @@ import dscatt.KitchenPartition._
 
 object Diohine {
 
-  case class HookFile(outputPath: String, parcels: Boolean, kitchens: Boolean, parcelMap: Boolean)
+  case class HookFile(outputPath: String, parcels: Boolean, kitchens: Boolean)
   case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile] )
 
   def main(args: Array[String]) = {
     val argOptions = args.lift
     // displayParcels, displayKitchens outputPath parcels kitchens parcelMap
     def toBoolean(s: Option[String]) = s.map{_.toBoolean}.getOrElse(false)
-    val hookFile = argOptions(2).map{op=> HookFile(op, toBoolean(argOptions(3)), toBoolean(argOptions(4)), toBoolean(argOptions(5)))}
+    val hookFile = argOptions(2).map{op=> HookFile(op, toBoolean(argOptions(3)), toBoolean(argOptions(4)))}
     val hooks = HookParameters(toBoolean(argOptions(0)), toBoolean(argOptions(1)), hookFile)
 
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
@@ -22,7 +22,7 @@ object Diohine {
     val kitchenProfile1 = KitchenProfile(
       5,
       ThreeYears,
-      Parsimonious,
+      PeanutForInexcess(1.0),
       NeverUseFallow,
       ExtraParcelsExceptFallowLoaner,
       FoodForAllStrategy,
@@ -37,7 +37,7 @@ object Diohine {
     val kitchenProfile2 = KitchenProfile(
       5,
       ThreeYears,
-      Parsimonious,
+      PeanutForInexcess(1.0),
       NeverUseFallow,
       ExtraParcelsExceptFallowLoaner,
       FoodForAllStrategy,
@@ -57,8 +57,6 @@ object Diohine {
     Simulation(
         77,
         giniParcels = 0.00,
-        giniTolerance = 0.05,
-        maximumNumberOfParcels = 400,
         populationGrowth = 0.03,
         kitchenPartition = kitchenPartition,
         supportPolicy = supportPolicy,

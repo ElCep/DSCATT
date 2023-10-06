@@ -9,9 +9,14 @@ object ThreeYears extends RotationCycle
 object TwoYears extends RotationCycle
 
 sealed trait CropingStrategy extends Control
-object AsMuchAsWeCan extends CropingStrategy // Up to the available manpower
-case class Provisioning(exceedingProportion: Double) extends CropingStrategy // while crop stock and manpower exist. In culture: foodNeeds x (1 + exceedingProportion)
-object Parsimonious extends CropingStrategy // no more than necessary (needs)
+// Peanut food provisioned from the food needs: cultivated = FoodNeeds + savvingRate(MaxCultivable-FoodNeed)
+// savingRate = 0 : parsimonious
+// savingRate = 1 : as much as we can
+case class PeanutForInexcess(savingRate: Double) extends CropingStrategy
+
+//object AsMuchAsWeCan extends CropingStrategy // Up to the available manpower
+//case class Provisioning(exceedingProportion: Double) extends CropingStrategy // while crop stock and manpower exist. In culture: foodNeeds x (1 + exceedingProportion)
+//object Parsimonious extends CropingStrategy // no more than necessary (needs)
 
 sealed trait OwnFallowUse extends Control
 object NeverUseFallow extends OwnFallowUse
@@ -72,7 +77,7 @@ case class KitchenProfile(
                          )
 
 object KitchenProfile {
-  val default = KitchenProfile(10, ThreeYears, Parsimonious, NeverUseFallow, AllExtraParcelsLoaner, FoodForAllStrategy, 15, EverywhereByDayOwnerByNight, EverywhereByDayOwnerByNight, (_, _) => true, UniformFertilizing, Mulching(0.0))
+  val default = KitchenProfile(10, ThreeYears, PeanutForInexcess(0.0), NeverUseFallow, AllExtraParcelsLoaner, FoodForAllStrategy, 15, EverywhereByDayOwnerByNight, EverywhereByDayOwnerByNight, (_, _) => true, UniformFertilizing, Mulching(0.0))
 }
 
 case class KitchenPartition(profiles: (KitchenProfile, KitchenSize)*)

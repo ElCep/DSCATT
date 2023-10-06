@@ -28,7 +28,8 @@ object Kitchen {
         kp.wetSeasonHerdStrategy,
         kp.drySeasonManureCriteria,
         kp.fertilizerStrategy,
-        kp.mulchingStrategy
+        kp.mulchingStrategy,
+        Seq()
       )
     }
   }
@@ -201,31 +202,26 @@ object Kitchen {
     (newKitchens, newWorld, offsprings.map { o => o.originKichen.id -> o.kitchen.id }.toMap)
   }
 
+  case class CropNeeded(cultivatedParcels: Seq[Parcel], candidatesNotUsed: Seq[Parcel], inexcessOnCultivatedParcels: Double)
+
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
   // In fallows are present in the cultivableParcelForKitchen, it means the fallow can be used as a culture. In that case it is switched to a mil
   def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Option[Double])(using Fertility.AgronomicMetricsByParcel) = {
 
-    val (fallow, notFallow) = cultivableParcelsForKitchen.partition(_.crop == Fallow)
-    val sortedByDistanceParcels = (notFallow.sortBy(_.distanceToVillage) ++ fallow.sortBy(_.distanceToVillage)).toList
     val manPower = Kitchen.manPower(kitchen)
 
     // println("NEEDS " + needs + " MAN POVER " + manPower + " for " + kitchen.id + " with  " + kitchen.size + " people")
 
     @tailrec
-    def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel], remainingManPower: Double): (Seq[Parcel], Seq[Parcel]) = {
+    def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel], remainingManPower: Double): CropNeeded = {
 
       val needsCondition = needs match {
         case Some(n) => production > n
         case _ => false
       }
 
-      // println("CROPNEEDS " + sortedParcels.length + " // " + needs + " / " + production + " // " + remainingManPower)
-      if (sortedParcels.isEmpty || needsCondition || remainingManPower < 0) {
-
-        // println("TOTAL PRODUCTION for " + kitchen.id + " : " + production + " for " + kitchen.size + " people, soient " + inCulture.map{_.area}.sum + " m2" + ", remaining man power: " + remainingManPower)
-        (inCulture, sortedParcels) //++: sortedParcels.map { p => p.copy(crop = NotAssigned) }
-
-      }
+      if (sortedParcels.isEmpty || needsCondition || remainingManPower < 0)
+        CropNeeded(inCulture, sortedParcels, if (needsCondition) production - needs.getOrElse(0.0) else 0.0) //++: sortedParcels.map { p => p.copy(crop = NotAssigned) }
       else {
         val head = sortedParcels.head
 
@@ -239,7 +235,7 @@ object Kitchen {
       }
     }
 
-    cropsToBeCultivated(kitchen, 0.0, sortedByDistanceParcels, List(), manPower)
+    cropsToBeCultivated(kitchen, 0.0, cultivableParcelsForKitchen.toList, List(), manPower)
   }
 
   // The maximum area of crops in culture regarding to the available manpower
@@ -264,5 +260,6 @@ case class Kitchen(id: Kitchen.KitchenID,
                    wetSeasonHerdStrategy: HerdStrategy,
                    drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean, //how to choose parcel to be fertilized during dry season
                    fertilizerStrategy: FertilizerStrategy,
-                   mulchingStrategy: MulchingStrategy
+                   mulchingStrategy: MulchingStrategy,
+                   inexcessHistory: Seq[Double]
                   )

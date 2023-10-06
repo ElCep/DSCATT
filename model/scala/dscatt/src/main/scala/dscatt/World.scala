@@ -15,11 +15,7 @@ import scala.io.Source
 object World {
 
   def buildWorldGeometry(kitchens: Seq[Kitchen],
-                         giniIndex: Double,
-                         giniTolerance: Double = 0.01,
-                         maximumNumberOfParcels: Int = 200,
-                         seed: Long,
-                         geometryImagePath: Option[String] = None
+                         giniIndex: Double
                         )(using mT: MersenneTwister): World =
 
     val parcelPath = s"generatedParcels/k${kitchens.size}g${"%.2f".format(giniIndex)}.json"
@@ -37,7 +33,6 @@ object World {
               crop = NotAssigned,
               cropZone = intToCropZone(p.r, kitchensMap(p.oID).head.rotationCycle, mT.nextDouble() > 0.5),
               area = p.a.replace(",",".").toDouble * Constants.AREA_FACTOR,
-              distanceToVillage = p.dC.replace(",",".").toDouble,
               faidherbiaTrees = 0,
               Seq()
             )
@@ -53,7 +48,6 @@ object World {
       println("ID              :" + p.id)
       println("KITCHEN         :" + p.ownerID)
       println("CROP ZONE       :" + p.cropZone)
-      println("DIST TO VILLAGE :" + p.distanceToVillage)
       println("AREA            :" + p.area + "\n")
     }
   }
@@ -97,11 +91,7 @@ object World {
   def fallowParcels(world: World) = world.parcels.filter(_.crop == Fallow)
 
   def fallowParcelsForKitchen(world: World, kitchen: Kitchen) = parcelsForKitchen(world, kitchen).filter(_.crop == Fallow)
-
-  def setFallowLast(parcels: Seq[Parcel]): Seq[Parcel] = {
-    val (fallow, others) = parcels.partition(_.crop == Fallow)
-    others ++ fallow
-  }
+  
 }
 
 case class World(parcels: Seq[Parcel], highestKitckenID: KitchenID)

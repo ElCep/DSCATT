@@ -28,15 +28,17 @@ object App:
 //          def pretify = s.slice(6,14).replace(".","").toInt
 
         val worlds = combinatory.foreach: (k,g)=>
-          val lands = usecase.GenerateSyntheticParcel.generate(k, g, 300, 0.01.toFloat, 77L, null).toArray.map: sp=>
+          val fileName = s"k${k}g${"%.2f".format(g)}"
+          val outPath = s"$path".toFile
+          //new java.io.File(s"$outPath/$fileName.gpkg")
+          val lands = usecase.GenerateSyntheticParcel.generate(k, g, 204, 0.01.toFloat, 77L, null).toArray.map: sp=>
             val syntheticParcel = sp.asInstanceOf[SyntheticParcel]
-            Data.ParcelJson(syntheticParcel.id.toInt, syntheticParcel.ownerID, "%.2f".format(syntheticParcel.area), syntheticParcel.regionID, "%.2f".format(syntheticParcel.distanceToCenter))
+            Data.ParcelJson(syntheticParcel.id.toInt, syntheticParcel.ownerID, "%.2f".format(syntheticParcel.area), syntheticParcel.regionID)
           println("NB parcels " + lands.size)
           val jsonText = lands.asJson.noSpaces
-          val outPath = s"$path".toFile
 
           outPath.toJava.mkdir
-          s"$outPath/k${k}g${"%.2f".format(g)}.json".toFile.overwrite(jsonText)
+          s"$outPath/$fileName.json".toFile.overwrite(jsonText)
 
       case None=> println("Please, specify an output path")
 

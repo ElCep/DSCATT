@@ -21,7 +21,9 @@ object Rotation {
     }
     //theariticalAgronomicMetrics
     // Compute soil quality and available nitrogen for each parcel on the trearitical crop rotation
-    implicit val theoreticalFertilityMetricsByParcel: Fertility.AgronomicMetricsByParcel = theoriticalCroping.flatMap{_._2}.map { p =>
+    implicit val theoreticalFertilityMetricsByParcel: Fertility.AgronomicMetricsByParcel = theoriticalCroping.flatMap {
+      _._2
+    }.map { p =>
       p.id -> Fertility.agronomicMetrics(p, soilQualityBasis)
     }.toMap
 
@@ -32,80 +34,75 @@ object Rotation {
     // 3- Set not loaned parcels and not use for the kitchen to Not Assigned
 
     //Collect all unused parcels of potential loaners
-    val parcelUsages = {
-      val eP = theoriticalCroping.map { case (k, parcels) =>
-        getParcelUsages(k, parcels)
-      }
-      ParcelUsages(eP.flatMap(_.cultivated), eP.flatMap(_.forLoan), eP.flatMap(_.notLoanable))
+
+    val eP = theoriticalCroping.map { case (k, parcels) =>
+      k-> getParcelUsages(k, parcels)
     }
+    val inexcessFromCultivatedParcelsByKitchen = eP.map{case(k,pu)=> k.id-> pu.inexcessFromCultivatedParcels}.toMap
+    val allParcelUsages = ParcelUsages(eP.flatMap(_._2.cultivated), eP.flatMap(_._2.forLoan), eP.flatMap(_._2.notLoanable))
 
     //Collect all demanding kitchens except provisioning crops strategies (a kitchen provisioning food is not supposed to ask for a loan)
     val demandingKitchens = theoriticalCroping.filter(_._1.cropingStrategy match {
-      case Provisioning(_) => false
+      case PeanutForInexcess(savingRate) if savingRate > 0 => false
       case _ => true
     }).map { case (k, parcels) =>
       Kitchen.foodBalance(parcels, k)
     }.filter(_.balance < 0)
 
-    val (yearLoans, notUsedInLoanProcess) = dscatt.Loan.assign(simulationState.year, parcelUsages.forLoan, demandingKitchens)
-    val loanedParcels = yearLoans.map(l=> l.parcel.copy(farmerID = l.to, crop = toMilIfFallow(l.parcel)))
-  
+    // Compute loans and store them in history sequence
+    val (yearLoans, notUsedInLoanProcess) = dscatt.Loan.assign(simulationState.year, allParcelUsages.forLoan, demandingKitchens)
+    val loanedParcels = yearLoans.map(l => l.parcel.copy(farmerID = l.to, crop = toMilIfFallow(l.parcel)))
+
     // The world parcels are a partition of needed parcels, not loanable parcels, loaned percels, and loanable (but not use in loan process) parcels
-    val newParcels = parcelUsages.cultivated ++
-      parcelUsages.notLoanable.map(toNotAssignedIfNotFallow(_)) ++
-      loanedParcels ++
-      notUsedInLoanProcess.map(toNotAssignedIfNotFallow(_))
-    
+    val newParcels = allParcelUsages.cultivated ++ loanedParcels ++ allParcelUsages.notLoanable ++ notUsedInLoanProcess
+
     (simulationState.copy(
       world = simulationState.world.copy(parcels = newParcels),
-      history = simulationState.history.updateLoans(simulationState.year, yearLoans, newParcels)
+      history = simulationState.history.updateLoans(simulationState.year, yearLoans, newParcels),
+      kitchens = simulationState.kitchens.map(k=> k.copy(inexcessHistory = k.inexcessHistory :+ inexcessFromCultivatedParcelsByKitchen.getOrElse(k.id, 0.0)))
     ), autonomousFoodBalance)
   }
 
-  case class ParcelUsages(cultivated: Seq[Parcel], forLoan: Seq[Parcel], notLoanable: Seq[Parcel])
+  case class ParcelUsages(cultivated: Seq[Parcel], forLoan: Seq[Parcel], notLoanable: Seq[Parcel], inexcessFromCultivatedParcels: Double = 0.0)
 
   // Extra is defined as everything except what the kitchen needs
-  def getParcelUsages(kitchen: Kitchen, parcels: Seq[Parcel])(using Fertility.AgronomicMetricsByParcel): ParcelUsages = {
+  def getParcelUsages(kitchen: Kitchen, parcels: Seq[Parcel])(using Fertility.AgronomicMetricsByParcel): ParcelUsages =
+    val (fallowsNotCultivated, parcelCandidatesForCulture) =
+      val grouped = parcels.groupBy(_.crop)
+      kitchen.ownFallowUse match {
+        case NeverUseFallow => (grouped(Fallow), grouped(Mil) ++ grouped(Peanut))
+        case UseFallowIfNeeded => (Seq(), grouped(Mil) ++ grouped(Peanut) ++ grouped(Fallow))
+      }
 
-    //FIXME Use the OwnFallowUse if the kitchen is deficitaire
-    val (fallowsNotCultivated, parcelCandidatesForCulture) = kitchen.ownFallowUse match {
-      case NeverUseFallow=> parcels.partition(_.crop == Fallow)
-      case UseFallowIfNeeded=> (Seq(),parcels)
+    //FIXME: use the appropriate computation for exceedingProportion
+    val cropNeeded: Kitchen.CropNeeded = kitchen.cropingStrategy match {
+      case PeanutForInexcess(exceedingProportion: Double) => Kitchen.getCropNeeded(kitchen, parcelCandidatesForCulture, Some(Kitchen.foodNeeds(kitchen) * (1 + exceedingProportion)))
     }
 
-    //val parcelCandidatesForCulture = parcels.filterNot(_.crop == Fallow)
-
-    val (parcelsCultivated, candidatesNotUsed) = kitchen.cropingStrategy match {
-      case Parsimonious => Kitchen.getCropNeeded(kitchen, parcelCandidatesForCulture, Some(Kitchen.foodNeeds(kitchen)))
-      case Provisioning(exceedingProportion) => Kitchen.getCropNeeded(kitchen, parcelCandidatesForCulture, Some(Kitchen.foodNeeds(kitchen) * (1 + exceedingProportion)))
-      case AsMuchAsWeCan => parcelCandidatesForCulture
-    }
-
-    val notInCulture = fallowsNotCultivated ++ candidatesNotUsed
-   // val fallowFreeExtraLoanCandidates = parcelCandidatesForCulture diff parcelsNeeded
+    val notInCulture = fallowsNotCultivated ++ cropNeeded.candidatesNotUsed
+    // val fallowFreeExtraLoanCandidates = parcelCandidatesForCulture diff parcelsNeeded
 
     val (notLoanable, loanable) = kitchen.loanStrategy match {
       case Selfish => (notInCulture, Seq())
       case AllExtraParcelsLoaner => (Seq(), notInCulture)
-      case ExtraParcelsExceptFallowLoaner => (fallowsNotCultivated, candidatesNotUsed)
+      case ExtraParcelsExceptFallowLoaner => (fallowsNotCultivated, cropNeeded.candidatesNotUsed)
     }
 
-    ParcelUsages(parcelsCultivated, loanable, notLoanable)
-  }
+    ParcelUsages(cropNeeded.cultivatedParcels, loanable, notLoanable, cropNeeded.inexcessOnCultivatedParcels)
+
+
+  def sortUncultivatedParcels(uncultivatedParcelsByKitchen: Map[Kitchen, Seq[Parcel]]) =
+    uncultivatedParcelsByKitchen.map: u=>
+      u._1.cropingStrategy match
+        case PeanutForInexcess(exceedingProportion)=>
+
+
 
   def toMilIfFallow(parcel: Parcel): Crop = {
     parcel.crop match {
       case Fallow => Mil
       case c: Crop => c
     }
-  }
-
-  def toNotAssignedIfNotFallow(parcel: Parcel): Parcel = {
-    val c = parcel.crop match {
-      case Fallow => parcel.crop
-      case _ => NotAssigned
-    }
-    parcel.copy(crop = c)
   }
 
 }
