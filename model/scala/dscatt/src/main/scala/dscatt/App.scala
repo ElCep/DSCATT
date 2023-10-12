@@ -55,7 +55,7 @@ object Diohine {
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
     Simulation(
-        77,
+        777,
         giniParcels = 0.00,
         populationGrowth = 0.03,
         kitchenPartition = kitchenPartition,
