@@ -62,7 +62,7 @@ object NoFaidherbiaAttention extends FaidherbiaStrategy
 object FaidherbiaRegrowPreservation extends FaidherbiaStrategy
 
 case class KitchenProfile(
-                           size: KitchenSize,
+                           kitchenSize: KitchenSize,
                            rotationCycle: RotationCycle,
                            cropingStrategy: CropingStrategy,
                            ownFallowUse: OwnFallowUse,

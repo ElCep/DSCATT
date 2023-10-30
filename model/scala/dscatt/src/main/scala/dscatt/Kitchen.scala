@@ -17,7 +17,7 @@ object Kitchen {
     kitchenPartition.profiles.flatMap { p => Seq.fill[KitchenProfile](p._2)(p._1) }.zipWithIndex.map { case (kp, id) =>
       Kitchen(
         id + 1,
-        kp.size,
+        kp.kitchenSize,
         kp.rotationCycle,
         kp.cropingStrategy,
         kp.ownFallowUse,
@@ -206,7 +206,7 @@ object Kitchen {
 
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
   // In fallows are present in the cultivableParcelForKitchen, it means the fallow can be used as a culture. In that case it is switched to a mil
-  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Option[Double])(using Fertility.AgronomicMetricsByParcel) = {
+  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double)(using Fertility.AgronomicMetricsByParcel) = {
 
     val manPower = Kitchen.manPower(kitchen)
 
@@ -215,13 +215,10 @@ object Kitchen {
     @tailrec
     def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel], remainingManPower: Double): CropNeeded = {
 
-      val needsCondition = needs match {
-        case Some(n) => production > n
-        case _ => false
-      }
+      val needsCondition = production > needs
 
       if (sortedParcels.isEmpty || needsCondition || remainingManPower < 0)
-        CropNeeded(inCulture, sortedParcels, if (needsCondition) production - needs.getOrElse(0.0) else 0.0) //++: sortedParcels.map { p => p.copy(crop = NotAssigned) }
+        CropNeeded(inCulture, sortedParcels, if (needsCondition) production - needs else 0.0) //++: sortedParcels.map { p => p.copy(crop = NotAssigned) }
       else {
         val head = sortedParcels.head
 

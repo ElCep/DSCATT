@@ -207,7 +207,6 @@ object History {
     hookParameters.displayParcels match {
       case true =>
         years.foreach { table =>
-          println(s"\nYEAR ${table(0)}\n")
           val tableWithHeader = header +: table
           println(Tabulator.formatTable(tableWithHeader))
         }
