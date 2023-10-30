@@ -16,8 +16,8 @@ object App:
     val outputPath = arguments(0) match
       case Some(path: String)=>
 
-        val kitchens = List.tabulate(1)(n=> n+2)
-        val ginis = List.tabulate(2)(i=> i * 0.05)
+        val kitchens = List.tabulate(19)(n=> n+2)
+        val ginis = List.tabulate(9)(i=> i * 0.05)
 
         val combinatory =
           kitchens.flatMap: k=>
@@ -31,14 +31,17 @@ object App:
           val fileName = s"k${k}g${"%.2f".format(g)}"
           val outPath = s"$path".toFile
           //new java.io.File(s"$outPath/$fileName.gpkg")
-          val lands = usecase.GenerateSyntheticParcel.generate(k, g, 204, 0.01.toFloat, 77L, null).toArray.map: sp=>
-            val syntheticParcel = sp.asInstanceOf[SyntheticParcel]
-            Data.ParcelJson(syntheticParcel.id.toInt, syntheticParcel.ownerID, "%.2f".format(syntheticParcel.area), syntheticParcel.regionID)
+          val synthParcels = usecase.GenerateSyntheticParcel.generate(k, g, 204, 0.01.toFloat, 77L, null).toArray.map: sp=>
+              sp.asInstanceOf[SyntheticParcel]
+
+          val lands = synthParcels.map{syntheticParcel=> Data.ParcelJson(syntheticParcel.id.toInt, syntheticParcel.ownerID, "%.2f".format(syntheticParcel.area), syntheticParcel.regionID)}
+          SyntheticParcel.`export`(synthParcels.toList.asJava, new java.io.File(s"$outPath/gpkg/$fileName.gpkg"))
+
           println("NB parcels " + lands.size)
           val jsonText = lands.asJson.noSpaces
 
           outPath.toJava.mkdir
-          s"$outPath/$fileName.json".toFile.overwrite(jsonText)
+          s"$outPath/json/$fileName.json".toFile.overwrite(jsonText)
 
       case None=> println("Please, specify an output path")
 
