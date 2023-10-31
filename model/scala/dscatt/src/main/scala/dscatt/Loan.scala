@@ -28,7 +28,7 @@ object Loan {
           .updated(0, mostNeedy.copy(balance = mostNeedy.balance + Kitchen.parcelFoodProductionForLoan(loanedParcel)))
           .sortBy(_.balance)
           .filter(_.balance < 0)
-        assign0(newDemandingKitchens, availableParcels.tail, yearLoans :+ Loan(loanedParcel.ownerID, mostNeedy.kitchen.id, loanedParcel))
+        assign0(newDemandingKitchens, availableParcels.tail, yearLoans :+ Loan(loanedParcel.ownerID, mostNeedy.kitchenID, loanedParcel))
       }
 
     }

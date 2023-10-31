@@ -19,12 +19,10 @@ object History {
     override def toString = s"($size, ${ownedArea.toInt}, ${loaned}, ${loanedArea.toInt})"
   }
 
-  case class FoodOverYear(initialFoodNeeds: Int = 0, foodFromCulture: Int = 0, foodFromLoan: Int = 0, foodFromDonation: Int = 0)
-
   type PopulationStats = Map[KitchenID, PopulationStat]
   type ParcelStatsByKitchen = Map[KitchenID, ParcelStat]
   type Loans = Seq[Loan]
-  type FoodBalanceStats = Map[KitchenID, FoodOverYear]
+  type FoodStats = Map[KitchenID, Food]
   type History = Map[Int, YearHistory]
   type Fertilities = Map[KitchenID, Fertility.Metrics]
   type Herds = Map[KitchenID, Int]
@@ -47,16 +45,13 @@ object History {
       history.updated(year, historyOfYear.copy(population = populations.toMap))
     }
 
-    private def toSorted(fb: Seq[Food]) = {
-      fb.sortBy(_.kitchen.id).map(_.quantity)
-    }
+    //    private def toSorted(fb: Seq[Food]) = {
+    //      fb.sortBy(_.kitchenID).map(_.quantity)
+    //    }
 
-    def updateFoodBalances(year: Int, initialFoodNeeds: Seq[(KitchenID, Double)], foodFromCulture: Seq[Food], foodFromLoan: Seq[Food], foodFromDonation: Seq[Food]): History = {
+    def updateFoodBalances(year: Int, foods: Seq[Food]): History = {
       val historyOfYear = history(year)
-      val foodBalanceStats = initialFoodNeeds.sortBy(_._1).zip(toSorted(foodFromCulture).zip(toSorted(foodFromLoan)).zip(toSorted(foodFromDonation))).map { case ((id, ifn), ((q1, q2), q3)) =>
-        id -> FoodOverYear(ifn.toInt, q1.toInt, q2.toInt, q3.toInt)
-      }.toMap
-      history.updated(year, historyOfYear.copy(foodBalanceStats = foodBalanceStats))
+      history.updated(year, historyOfYear.copy(foodStats = foods.map(f => f.kitchenID -> f).toMap))
     }
 
     def updateParcelStatsAfterPopulationEvolution(year: Int, allKitchens: Seq[Kitchen], world: World) = {
@@ -98,7 +93,7 @@ object History {
                                     population: PopulationStats = Map(),
                                     parcelStats: ParcelStatsByKitchen = Map(),
                                     loans: Loans = Seq(),
-                                    foodBalanceStats: FoodBalanceStats = Map(),
+                                    foodStats: FoodStats = Map(),
                                     fertilities: Fertilities = Map(),
                                     herds: Herds = Map()
                                   )
@@ -124,31 +119,38 @@ object History {
   def toDouble(s: Double) = doubleFormat.formatLocal(locale, s)
 
   def printKitckens(state: SimulationState, verbose: Boolean = false, hookParameters: HookParameters) = {
-    val header = Seq("Year", "KID", "Owned Size/Area", "Loaned Size/Area", "Herd/Eff", "Man/Mulch/N/SQ", "Food (FN/FFC/FFL/FFD/FinX)", "Size", "Births", "Migs", "Absor", "Split")
+    val header = Seq("Year", "KID", "Owned Size/Area", "Loaned Size/Area", "Herd", "Manure", "Mulch", "N", "SQ", "FN", "FFC", "FFL", "FFD", "Balance", "FinX", "Size", "Births", "Migs", "Absor", "Split")
 
     val years = state.history.keys.toSeq.sorted.map { y =>
       val yearHistory = state.history(y)
-      println(s"\nYEAR $y\n")
       val sortedPop = yearHistory.population.map { kp =>
         (kp._1, kp._2.size, kp._2.births, kp._2.emigrants, kp._2.herdSize, kp._2.absorbedKitchens, kp._2.splittedInto
         )
       }.toSeq.sortBy(_._1)
 
       val pStats = yearHistory.parcelStats
-      val fbStats = yearHistory.foodBalanceStats
+      val fbStats = yearHistory.foodStats
       val fertilityStats = yearHistory.fertilities
 
       sortedPop.map { p =>
-        val fbStatsK = fbStats.getOrElse(p._1, FoodOverYear())
+        val fbStatsK = fbStats.getOrElse(p._1, Food(p._1))
         val fertilityStatK = fertilityStats.getOrElse(p._1, Fertility.Metrics(state.year))
         Seq(
           y,
           p._1.toString,
-          s"${pStats(p._1).size} ${pStats(p._1).ownedArea.toInt}",
-          s"${pStats(p._1).loaned} ${pStats(p._1).loanedArea.toInt}",
-          s"${p._5}/${yearHistory.herds(p._1)}",
-          s"${toDouble(fertilityStatK.manureMass)} ${toDouble(fertilityStatK.mulchingMass)} ${toDouble(fertilityStatK.agronomicMetrics.availableNitrogen)} ${toDouble(fertilityStatK.agronomicMetrics.soilQuality)} ",
-          s"${fbStatsK.initialFoodNeeds} ${fbStatsK.foodFromCulture} ${fbStatsK.foodFromLoan} ${fbStatsK.foodFromDonation}",
+          s"${pStats(p._1).size}  ${toDouble(pStats(p._1).ownedArea)}",
+          s"${pStats(p._1).loaned} ${toDouble(pStats(p._1).loanedArea)}",
+          s"${yearHistory.herds(p._1)}",
+          s"${toDouble(fertilityStatK.manureMass)}",
+          s"${toDouble(fertilityStatK.mulchingMass)}",
+          s"${toDouble(fertilityStatK.agronomicMetrics.availableNitrogen)}",
+          s"${toDouble(fertilityStatK.agronomicMetrics.soilQuality)}",
+          s"${fbStatsK.needs}",
+          s"${toDouble(fbStatsK.fromCulture)}",
+          s"${toDouble(fbStatsK.fromLoan)}",
+          s"${toDouble(fbStatsK.fromDonation)}",
+          s"${toDouble(fbStatsK.toBalance)}",
+          "inXs",
           p._2.toString,
           p._3.toString,
           p._4.toString,
@@ -158,11 +160,15 @@ object History {
       }
     }
 
+    val pops = state.history.values.map { yh => yh.year -> yh.population.values.map {
+      _.size
+    }.sum
+    }.toMap
     hookParameters.displayParcels match {
       case true =>
-        years.foreach { table =>
-          //  println(s"PARCELS ${pStats.map(_._2.size).sum} POPULATION ${totalPop(0)} / ${totalPop(1)} / ${totalPop(2)} KITCHENS ${totalPop(3)} / ${totalPop(4)}")
+        years.zipWithIndex.foreach { (table, ind) =>
           //if (verbose)
+          println("Pop " + pops(ind + 1))
           val tableWithHeader = header +: table
           println(Tabulator.formatTable(tableWithHeader))
         }
@@ -219,7 +225,7 @@ object History {
           case true =>
             val content = (header +: years.flatten).toCSV()
             val file = File(s"${hf.outputPath}/parcels.csv")
-            file.overwrite (content)
+            file.overwrite(content)
           case false =>
         }
       case None =>

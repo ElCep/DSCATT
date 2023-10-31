@@ -20,7 +20,7 @@ object Diohine {
     }
 
     val kitchenProfile1 = KitchenProfile(
-      kitchenSize = 5,
+      kitchenSize = 10,
       ThreeYears,
       PeanutForInexcess(0.0),
       NeverUseFallow,
@@ -31,11 +31,11 @@ object Diohine {
       EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
       UniformFertilizing,
-      Mulching(0.5)
+      Mulching(0.10)
     )
 
     val kitchenProfile2 = KitchenProfile(
-      kitchenSize = 5,
+      kitchenSize = 10,
       ThreeYears,
       PeanutForInexcess(0.0),
       NeverUseFallow,
@@ -46,21 +46,21 @@ object Diohine {
       EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
       UniformFertilizing,
-      Mulching(0.5)
+      Mulching(0.10)
     )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 10), (kitchenProfile2, 10))
+    val kitchenPartition = KitchenPartition((kitchenProfile1, 15), (kitchenProfile2, 5))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
     Simulation(
         77,
-        giniParcels = 0.00,
+        giniParcels = 0.1,
         populationGrowth = 0.03,
         kitchenPartition = kitchenPartition,
         supportPolicy = supportPolicy,
-        simulationLength = 10,
+        simulationLength = 20,
         hookParameters = hooks)
   }
 

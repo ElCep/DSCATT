@@ -11,8 +11,14 @@ object Kitchen {
 
   type KitchenID = Int
 
-  case class FoodBalance(kitchen: Kitchen, balance: Double)
-  case class Food(kitchen: Kitchen, quantity: Double)
+  case class FoodBalance(kitchenID: KitchenID, balance: Double)
+
+  //case class Food(kitchen: KitchenID, quantity: Double)
+
+  case class Food(kitchenID: KitchenID, needs: Double = 0.0, fromCulture: Double = 0.0, fromLoan: Double = 0.0, fromDonation: Double = 0.0)
+  
+  implicit class WrapFood(f: Food):
+    def toBalance = f.needs + f.fromCulture + f.fromLoan + f.fromDonation
 
   def buildKitchens(kitchenPartition: KitchenPartition): Seq[Kitchen] = {
     kitchenPartition.profiles.flatMap { p => Seq.fill[KitchenProfile](p._2)(p._1) }.zipWithIndex.map { case (kp, id) =>
@@ -50,7 +56,7 @@ object Kitchen {
 
   def parcelFoodProduction(crop: Crop, parcelArea: Double, agronomicMetrics: Fertility.AgronomicMetrics): Double = {
     (crop match {
-      case Mil => Fertility.milNRF(agronomicMetrics.availableNitrogen/parcelArea) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
+      case Mil => Fertility.milNRF(agronomicMetrics.availableNitrogen / parcelArea) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
       case Peanut => Fertility.peanutNRF * Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE * Constants.PEANUT_SEED_RATIO
       case _ => 0.0
     }) * parcelArea
@@ -76,11 +82,11 @@ object Kitchen {
   }
 
   def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen)(using Fertility.AgronomicMetricsByParcel): FoodBalance = {
-    FoodBalance(kitchen, parcelsFoodProduction(World.parcelsInCultureForKitchen(parcels, kitchen)) - foodNeeds(kitchen))
+    FoodBalance(kitchen.id, parcelsFoodProduction(World.parcelsInCultureForKitchen(parcels, kitchen)) - foodNeeds(kitchen))
   }
 
 
-  def evolve(simulationState: SimulationState, populationGrowth: Double, foodAssessment: Seq[FoodBalance])(using mT: MersenneTwister) = {
+  def evolve(simulationState: SimulationState, populationGrowth: Double, foodAssessment: Seq[Food])(using mT: MersenneTwister) = {
 
     val (populationUpdated, births): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolve(simulationState.kitchens, populationGrowth)
 

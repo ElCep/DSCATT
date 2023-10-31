@@ -7,7 +7,7 @@ import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 object Rotation {
-  def evolve(simulationState: SimulationState, soilQualityBasis: Double): (SimulationState, Seq[Food]) = {
+  def evolve(simulationState: SimulationState, soilQualityBasis: Double, initialFood: Seq[Food]): (SimulationState, Seq[Food]) = {
 
 
     // Compute theoritical crops for coming year before we know if it is in culture or not
@@ -35,11 +35,16 @@ object Rotation {
 
     //Collect all unused parcels of potential loaners
 
-    val eP = theoriticalCroping.map { case (k, parcels) =>
-      k -> getParcelUsages(k, parcels)
-    }
-    val inexcessFromCultivatedParcelsByKitchen = eP.map { case (k, pu) => k.id -> pu.inexcessFromCultivatedParcels }.toMap
-    val allParcelUsages = ParcelUsages(eP.flatMap(_._2.cultivated), eP.flatMap(_._2.forLoan), eP.flatMap(_._2.notLoanable))
+    val parcelUsageByKitchen = theoriticalCroping.map { case (k, parcels) =>
+      k.id -> getParcelUsages(k, parcels)
+    }.toMap
+
+    val inexcessFromCultivatedParcelsByKitchen = parcelUsageByKitchen.map { case (k, pu) => k -> pu.inexcessFromCultivatedParcels }.toMap
+    val allParcelUsages = ParcelUsages(
+      parcelUsageByKitchen.flatMap(_._2.cultivated).toSeq,
+      parcelUsageByKitchen.flatMap(_._2.forLoan).toSeq,
+      parcelUsageByKitchen.flatMap(_._2.notLoanable).toSeq
+    )
 
     //Collect all demanding kitchens except provisioning crops strategies (a kitchen provisioning food is not supposed to ask for a loan)
     val demandingKitchens = theoriticalCroping.filter(_._1.cropingStrategy match {
@@ -59,15 +64,21 @@ object Rotation {
     }
 
     val newParcels = allParcelUsages.cultivated ++ loanedParcels ++ finallyFallow
-    val producedFood = simulationState.kitchens.map { k =>
-      Food(k, parcelsFoodProduction(World.parcelsForKitchen(simulationState.world, k)))
+
+
+    val loanedFood = loanedParcels.groupBy(_.farmerID).map { case (kid, p) => kid -> parcelsFoodProduction(p) }
+    val food = initialFood.map { f =>
+      f.copy(
+        fromCulture = parcelsFoodProduction(parcelUsageByKitchen(f.kitchenID).cultivated),
+        fromLoan = loanedFood.getOrElse(f.kitchenID, 0.0)
+      )
     }
 
     (simulationState.copy(
       world = simulationState.world.copy(parcels = newParcels),
       history = simulationState.history.updateLoans(simulationState.year, yearLoans, newParcels),
       kitchens = simulationState.kitchens.map(k => k.copy(inexcessHistory = k.inexcessHistory :+ inexcessFromCultivatedParcelsByKitchen.getOrElse(k.id, 0.0)))
-    ), producedFood)
+    ), food)
   }
 
 
@@ -78,8 +89,8 @@ object Rotation {
     val (fallowsNotCultivated, parcelCandidatesForCulture) =
       val grouped = parcels.groupBy(_.crop)
       kitchen.ownFallowUse match {
-        case NeverUseFallow => (grouped(Fallow), grouped(Mil) ++ grouped(Peanut))
-        case UseFallowIfNeeded => (Seq(), grouped(Mil) ++ grouped(Peanut) ++ grouped(Fallow))
+        case NeverUseFallow => (grouped.getOrElse(Fallow, Seq()), grouped.getOrElse(Mil, Seq()) ++ grouped.getOrElse(Peanut, Seq()))
+        case UseFallowIfNeeded => (Seq(), grouped.getOrElse(Mil, Seq()) ++ grouped.getOrElse(Peanut, Seq()) ++ grouped.getOrElse(Fallow, Seq()))
       }
 
     val cropNeeded: Kitchen.CropNeeded = kitchen.cropingStrategy match {

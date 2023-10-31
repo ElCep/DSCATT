@@ -1,6 +1,6 @@
 package dscatt
 
-import dscatt.Kitchen.{FoodBalance, KitchenID, foodBalance}
+import dscatt.Kitchen.{Food, FoodBalance, KitchenID, foodBalance}
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
@@ -45,9 +45,9 @@ object Population {
   }
 
   // Compute for each kitchen the number of births and the number of emigrants based on the food balance
-  def evolveEmigrants(kitchens: Seq[Kitchen], foodAssessment: Seq[FoodBalance]): (Seq[Kitchen], Map[KitchenID, Int]) = {
+  def evolveEmigrants(kitchens: Seq[Kitchen], foods: Seq[Food]): (Seq[Kitchen], Map[KitchenID, Int]) = {
 
-    val foodAssessementMap = foodAssessment.map(fa => fa.kitchen.id -> fa.balance).toMap
+    val foodAssessementMap = foods.map(fa => fa.kitchenID -> fa.toBalance).toMap
 
     val result = kitchens.map { k =>
       val balanceK = foodAssessementMap(k.id)
