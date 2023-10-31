@@ -2,7 +2,7 @@ package dscatt
 
 import dscatt.Diohine.{HookFile, HookParameters}
 import dscatt.FoodDonation.FoodDonation
-import dscatt.Kitchen.{FoodBalance, KitchenID}
+import dscatt.Kitchen.{Food, FoodBalance, KitchenID}
 import dscatt.Loan.Loan
 import dscatt.Simulation.SimulationState
 import dscatt.Utils.CSVWrapper
@@ -19,12 +19,12 @@ object History {
     override def toString = s"($size, ${ownedArea.toInt}, ${loaned}, ${loanedArea.toInt})"
   }
 
-  case class FoodBalanceOverYear(initialFoodNeeds: Int = 0, autonomousFoodBalance: Int = 0, afterLoanFoodBalance: Int = 0, afterDonationFoodBalance: Int = 0)
+  case class FoodOverYear(initialFoodNeeds: Int = 0, foodFromCulture: Int = 0, foodFromLoan: Int = 0, foodFromDonation: Int = 0)
 
   type PopulationStats = Map[KitchenID, PopulationStat]
   type ParcelStatsByKitchen = Map[KitchenID, ParcelStat]
   type Loans = Seq[Loan]
-  type FoodBalanceStats = Map[KitchenID, FoodBalanceOverYear]
+  type FoodBalanceStats = Map[KitchenID, FoodOverYear]
   type History = Map[Int, YearHistory]
   type Fertilities = Map[KitchenID, Fertility.Metrics]
   type Herds = Map[KitchenID, Int]
@@ -47,14 +47,14 @@ object History {
       history.updated(year, historyOfYear.copy(population = populations.toMap))
     }
 
-    private def toSorted(fb: Seq[FoodBalance]) = {
-      fb.sortBy(_.kitchen.id).map(_.balance)
+    private def toSorted(fb: Seq[Food]) = {
+      fb.sortBy(_.kitchen.id).map(_.quantity)
     }
 
-    def updateFoodBalances(year: Int, initialFoodNeeds: Seq[(KitchenID, Double)], autounomousFoodBalances: Seq[FoodBalance], afterLoanFoodBalances: Seq[FoodBalance], afterGiftFoodBalance: Seq[FoodBalance]): History = {
+    def updateFoodBalances(year: Int, initialFoodNeeds: Seq[(KitchenID, Double)], foodFromCulture: Seq[Food], foodFromLoan: Seq[Food], foodFromDonation: Seq[Food]): History = {
       val historyOfYear = history(year)
-      val foodBalanceStats = initialFoodNeeds.sortBy(_._1).zip(toSorted(autounomousFoodBalances).zip(toSorted(afterLoanFoodBalances)).zip(toSorted(afterGiftFoodBalance))).map { case ((id, ifn), ((q1, q2), q3)) =>
-        id -> FoodBalanceOverYear(ifn.toInt, q1.toInt, q2.toInt, q3.toInt)
+      val foodBalanceStats = initialFoodNeeds.sortBy(_._1).zip(toSorted(foodFromCulture).zip(toSorted(foodFromLoan)).zip(toSorted(foodFromDonation))).map { case ((id, ifn), ((q1, q2), q3)) =>
+        id -> FoodOverYear(ifn.toInt, q1.toInt, q2.toInt, q3.toInt)
       }.toMap
       history.updated(year, historyOfYear.copy(foodBalanceStats = foodBalanceStats))
     }
@@ -118,13 +118,13 @@ object History {
     }
   }
 
-  val doubleFormat = "%.3f"
+  val doubleFormat = "%.2f"
   val locale = new java.util.Locale("en", "EN")
 
   def toDouble(s: Double) = doubleFormat.formatLocal(locale, s)
 
   def printKitckens(state: SimulationState, verbose: Boolean = false, hookParameters: HookParameters) = {
-    val header = Seq("Year", "KID", "Owned Size/Area", "Loaned Size/Area", "Herd/Eff", "Man/Mulch/N/SQ", "Food Balance (initFN/AFB/ALFB/ADFB)", "Size", "Births", "Migs", "Absor", "Split")
+    val header = Seq("Year", "KID", "Owned Size/Area", "Loaned Size/Area", "Herd/Eff", "Man/Mulch/N/SQ", "Food (FN/FFC/FFL/FFD/FinX)", "Size", "Births", "Migs", "Absor", "Split")
 
     val years = state.history.keys.toSeq.sorted.map { y =>
       val yearHistory = state.history(y)
@@ -139,7 +139,7 @@ object History {
       val fertilityStats = yearHistory.fertilities
 
       sortedPop.map { p =>
-        val fbStatsK = fbStats.getOrElse(p._1, FoodBalanceOverYear())
+        val fbStatsK = fbStats.getOrElse(p._1, FoodOverYear())
         val fertilityStatK = fertilityStats.getOrElse(p._1, Fertility.Metrics(state.year))
         Seq(
           y,
@@ -148,7 +148,7 @@ object History {
           s"${pStats(p._1).loaned} ${pStats(p._1).loanedArea.toInt}",
           s"${p._5}/${yearHistory.herds(p._1)}",
           s"${toDouble(fertilityStatK.manureMass)} ${toDouble(fertilityStatK.mulchingMass)} ${toDouble(fertilityStatK.agronomicMetrics.availableNitrogen)} ${toDouble(fertilityStatK.agronomicMetrics.soilQuality)} ",
-          s"${fbStatsK.initialFoodNeeds} ${fbStatsK.autonomousFoodBalance} ${fbStatsK.afterLoanFoodBalance} ${fbStatsK.afterDonationFoodBalance}",
+          s"${fbStatsK.initialFoodNeeds} ${fbStatsK.foodFromCulture} ${fbStatsK.foodFromLoan} ${fbStatsK.foodFromDonation}",
           p._2.toString,
           p._3.toString,
           p._4.toString,

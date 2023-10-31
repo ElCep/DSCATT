@@ -1,13 +1,13 @@
 package dscatt
 
 import dscatt.Croping.{Crop, Fallow, Mil, NotAssigned, Peanut, Three}
-import dscatt.Kitchen.FoodBalance
+import dscatt.Kitchen.{Food, FoodBalance, parcelsFoodProduction}
 import dscatt.Loan.Loan
 import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 object Rotation {
-  def evolve(simulationState: SimulationState, soilQualityBasis: Double): (SimulationState, Seq[FoodBalance]) = {
+  def evolve(simulationState: SimulationState, soilQualityBasis: Double): (SimulationState, Seq[Food]) = {
 
 
     // Compute theoritical crops for coming year before we know if it is in culture or not
@@ -27,7 +27,7 @@ object Rotation {
       p.id -> Fertility.agronomicMetrics(p, soilQualityBasis)
     }.toMap
 
-    val autonomousFoodBalance = theoriticalCroping.map { case (k, ps) => Kitchen.foodBalance(ps, k) }
+    //val autonomousFoodBalance = theoriticalCroping.map { case (k, ps) => Kitchen.foodBalance(ps, k) }
     // Loaners process:
     // 1- have a positive foodBalance with all crops in culture
     // 2- collect all extra parcels
@@ -59,12 +59,15 @@ object Rotation {
     }
 
     val newParcels = allParcelUsages.cultivated ++ loanedParcels ++ finallyFallow
+    val producedFood = simulationState.kitchens.map { k =>
+      Food(k, parcelsFoodProduction(World.parcelsForKitchen(simulationState.world, k)))
+    }
 
     (simulationState.copy(
       world = simulationState.world.copy(parcels = newParcels),
       history = simulationState.history.updateLoans(simulationState.year, yearLoans, newParcels),
       kitchens = simulationState.kitchens.map(k => k.copy(inexcessHistory = k.inexcessHistory :+ inexcessFromCultivatedParcelsByKitchen.getOrElse(k.id, 0.0)))
-    ), autonomousFoodBalance)
+    ), producedFood)
   }
 
 
@@ -79,9 +82,13 @@ object Rotation {
         case UseFallowIfNeeded => (Seq(), grouped(Mil) ++ grouped(Peanut) ++ grouped(Fallow))
       }
 
-    //FIXME: use the appropriate computation for exceedingProportion
     val cropNeeded: Kitchen.CropNeeded = kitchen.cropingStrategy match {
-      case PeanutForInexcess(exceedingProportion: Double) => Kitchen.getCropNeeded(kitchen, parcelCandidatesForCulture, Kitchen.foodNeeds(kitchen) * (1 + exceedingProportion))
+      case PeanutForInexcess(savingRate: Double) =>
+        val maxProducedFood = parcelsFoodProduction(parcelCandidatesForCulture)
+        val minProducedfood = Kitchen.foodNeeds(kitchen)
+        val needs = minProducedfood + savingRate * (maxProducedFood - minProducedfood)
+
+        Kitchen.getCropNeeded(kitchen, parcelCandidatesForCulture, needs)
     }
 
     val notInCulture = fallowsNotCultivated ++ cropNeeded.candidatesNotUsed

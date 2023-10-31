@@ -22,7 +22,7 @@ object Diohine {
     val kitchenProfile1 = KitchenProfile(
       kitchenSize = 5,
       ThreeYears,
-      PeanutForInexcess(1.0),
+      PeanutForInexcess(0.0),
       NeverUseFallow,
       ExtraParcelsExceptFallowLoaner,
       FoodForAllStrategy,
@@ -37,7 +37,7 @@ object Diohine {
     val kitchenProfile2 = KitchenProfile(
       kitchenSize = 5,
       ThreeYears,
-      PeanutForInexcess(1.0),
+      PeanutForInexcess(0.0),
       NeverUseFallow,
       ExtraParcelsExceptFallowLoaner,
       FoodForAllStrategy,

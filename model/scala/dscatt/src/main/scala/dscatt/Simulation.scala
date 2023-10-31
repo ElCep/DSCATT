@@ -3,6 +3,7 @@ package dscatt
 import dscatt.Croping.*
 import dscatt.Diohine.{HookFile, HookParameters}
 import dscatt.History.History
+import dscatt.Kitchen.Food
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
@@ -52,7 +53,7 @@ object Simulation {
         val initialFoodNeeds = simulationState.kitchens.map { k => k.id -> -Kitchen.foodNeeds(k) }
 
         // Evolve rotation including loans
-        val (afterRotationsSimulationState, autonomousFoodBalance) = Rotation.evolve(simulationState, soilQualityBasis)
+        val (afterRotationsSimulationState, foodFromCulture) = Rotation.evolve(simulationState, soilQualityBasis)
 
         // Compute soil quality and available nitrogen for each parcel before the rotation process until fertilities of the current year is computed
         implicit val fertilityMetricsByParcelAfterRotation: Fertility.AgronomicMetricsByParcel = afterRotationsSimulationState.world.parcels.map { p =>
@@ -60,6 +61,7 @@ object Simulation {
         }.toMap
 
         val afterLoanFoodBalance = afterRotationsSimulationState.kitchens.map { k => Kitchen.foodBalance(afterRotationsSimulationState.world, k) }
+        val foodFromLoan = afterRotationsSimulationState.kitchens.map { k => Food(k, Kitchen.parcelsFoodProduction(World.parcelsForKitchen(afterRotationsSimulationState.world, k))) }
 
         println("iNxs " )
         afterRotationsSimulationState.kitchens.foreach: k=>
@@ -67,6 +69,7 @@ object Simulation {
 
         // Process food donations
         val afterDonationFoodBalance = FoodDonation.assign(afterLoanFoodBalance)
+        val foodFromDonation = (afterLoanFoodBalance.sortBy(_.kitchen.id) zip afterDonationFoodBalance.sortBy(_.kitchen.id)).map((alfb, adfb)=> Food(alfb.kitchen, alfb.balance - adfb.balance))
 
         // Process kitchen dynamics (population, emmigrants, absorptions, splits)
         val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoodBalance)
@@ -74,7 +77,7 @@ object Simulation {
         // Process Fertiliy
         val afterFertilizationState = Fertility.assign(resizedSimulationState, soilQualityBasis)
 
-        val finalHistory = afterFertilizationState.history.updateFoodBalances(afterFertilizationState.year, initialFoodNeeds, autonomousFoodBalance, afterLoanFoodBalance, afterDonationFoodBalance)
+        val finalHistory = afterFertilizationState.history.updateFoodBalances(afterFertilizationState.year, initialFoodNeeds, foodFromCulture, foodFromLoan, foodFromDonation)
         val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
 
         evolve0(finalState)

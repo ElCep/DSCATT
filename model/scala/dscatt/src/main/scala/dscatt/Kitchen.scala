@@ -12,6 +12,7 @@ object Kitchen {
   type KitchenID = Int
 
   case class FoodBalance(kitchen: Kitchen, balance: Double)
+  case class Food(kitchen: Kitchen, quantity: Double)
 
   def buildKitchens(kitchenPartition: KitchenPartition): Seq[Kitchen] = {
     kitchenPartition.profiles.flatMap { p => Seq.fill[KitchenProfile](p._2)(p._1) }.zipWithIndex.map { case (kp, id) =>
