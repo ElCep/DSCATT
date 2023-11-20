@@ -153,7 +153,7 @@ object History {
           s"${fbStatsK.fromLoan.toInt}",
           s"${fbStatsK.fromDonation.toInt}",
           s"${fbStatsK.toBalance.toInt}",
-          "inXs",
+          s"${fbStatsK.inexess.toInt}",
           p._2.toString,
           p._3.toString,
           p._4.toString,

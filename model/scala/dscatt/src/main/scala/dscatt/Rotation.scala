@@ -70,14 +70,14 @@ object Rotation {
     val food = initialFood.map { f =>
       f.copy(
         fromCulture = parcelsFoodProduction(parcelUsageByKitchen(f.kitchenID).cultivated),
-        fromLoan = loanedFood.getOrElse(f.kitchenID, 0.0)
+        fromLoan = loanedFood.getOrElse(f.kitchenID, 0.0),
+        inexess = inexcessFromCultivatedParcelsByKitchen.getOrElse(f.kitchenID, 0.0)
       )
     }
 
     (simulationState.copy(
       world = simulationState.world.copy(parcels = newParcels),
-      history = simulationState.history.updateLoans(simulationState.year, yearLoans, newParcels),
-      kitchens = simulationState.kitchens.map(k => k.copy(inexcessHistory = k.inexcessHistory :+ inexcessFromCultivatedParcelsByKitchen.getOrElse(k.id, 0.0)))
+      history = simulationState.history.updateLoans(simulationState.year, yearLoans, newParcels)
     ), food)
   }
 

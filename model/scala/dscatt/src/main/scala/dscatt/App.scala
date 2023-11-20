@@ -37,7 +37,7 @@ object Diohine {
     val kitchenProfile2 = KitchenProfile(
       kitchenSize = 10,
       ThreeYears,
-      PeanutForInexcess(0.0),
+      PeanutForInexcess(0.5),
       NeverUseFallow,
       ExtraParcelsExceptFallowLoaner,
       FoodForAllStrategy,
