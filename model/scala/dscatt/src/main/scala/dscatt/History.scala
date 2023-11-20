@@ -114,12 +114,13 @@ object History {
   }
 
   val doubleFormat = "%.2f"
+  val toIntformat= "%.0f"
   val locale = new java.util.Locale("en", "EN")
 
   def toDouble(s: Double) = doubleFormat.formatLocal(locale, s)
 
   def printKitckens(state: SimulationState, verbose: Boolean = false, hookParameters: HookParameters) = {
-    val header = Seq("Year", "KID", "Owned Size/Area", "Loaned Size/Area", "Herd", "Manure", "Mulch", "N", "SQ", "FN", "FFC", "FFL", "FFD", "Balance", "FinX", "Size", "Births", "Migs", "Absor", "Split")
+    val header = Seq("Year", "KID", "Owd pcl","Owd area", "Lnd pcl","Lnd area", "Herd", "Manure", "Mulch", "N", "SQ", "FN", "FFC", "FFL", "FFD", "Balance", "FinX", "Size", "Births", "Migs", "Absor", "Split")
 
     val years = state.history.keys.toSeq.sorted.map { y =>
       val yearHistory = state.history(y)
@@ -138,18 +139,20 @@ object History {
         Seq(
           y,
           p._1.toString,
-          s"${pStats(p._1).size}  ${toDouble(pStats(p._1).ownedArea)}",
-          s"${pStats(p._1).loaned} ${toDouble(pStats(p._1).loanedArea)}",
+          s"${pStats(p._1).size}",
+          s"${toDouble(pStats(p._1).ownedArea)}",
+          s"${pStats(p._1).loaned}",
+          s"${toDouble(pStats(p._1).loanedArea)}",
           s"${yearHistory.herds(p._1)}",
-          s"${toDouble(fertilityStatK.manureMass)}",
-          s"${toDouble(fertilityStatK.mulchingMass)}",
+          s"${fertilityStatK.manureMass.toInt}",
+          s"${fertilityStatK.mulchingMass.toInt}",
           s"${toDouble(fertilityStatK.agronomicMetrics.availableNitrogen)}",
           s"${toDouble(fertilityStatK.agronomicMetrics.soilQuality)}",
-          s"${fbStatsK.needs}",
-          s"${toDouble(fbStatsK.fromCulture)}",
-          s"${toDouble(fbStatsK.fromLoan)}",
-          s"${toDouble(fbStatsK.fromDonation)}",
-          s"${toDouble(fbStatsK.toBalance)}",
+          s"${fbStatsK.needs.toInt}",
+          s"${fbStatsK.fromCulture.toInt}",
+          s"${fbStatsK.fromLoan.toInt}",
+          s"${fbStatsK.fromDonation.toInt}",
+          s"${fbStatsK.toBalance.toInt}",
           "inXs",
           p._2.toString,
           p._3.toString,
