@@ -48,7 +48,7 @@ object Rotation {
 
     //Collect all demanding kitchens except provisioning crops strategies (a kitchen provisioning food is not supposed to ask for a loan)
     val demandingKitchens = theoriticalCroping.filter(_._1.cropingStrategy match {
-      case PeanutForInexcess(savingRate) if savingRate > 0 => false
+      case CropingStrategy.PeanutForInexcess(savingRate) if savingRate > 0 => false
       case _ => true
     }).map { case (k, parcels) =>
       Kitchen.foodBalance(parcels, k)
@@ -89,12 +89,12 @@ object Rotation {
     val (fallowsNotCultivated, parcelCandidatesForCulture) =
       val grouped = parcels.groupBy(_.crop)
       kitchen.ownFallowUse match {
-        case NeverUseFallow => (grouped.getOrElse(Fallow, Seq()), grouped.getOrElse(Mil, Seq()) ++ grouped.getOrElse(Peanut, Seq()))
-        case UseFallowIfNeeded => (Seq(), grouped.getOrElse(Mil, Seq()) ++ grouped.getOrElse(Peanut, Seq()) ++ grouped.getOrElse(Fallow, Seq()))
+        case OwnFallowUse.NeverUseFallow => (grouped.getOrElse(Fallow, Seq()), grouped.getOrElse(Mil, Seq()) ++ grouped.getOrElse(Peanut, Seq()))
+        case OwnFallowUse.UseFallowIfNeeded => (Seq(), grouped.getOrElse(Mil, Seq()) ++ grouped.getOrElse(Peanut, Seq()) ++ grouped.getOrElse(Fallow, Seq()))
       }
 
     val cropNeeded: Kitchen.CropNeeded = kitchen.cropingStrategy match {
-      case PeanutForInexcess(savingRate: Double) =>
+      case CropingStrategy.PeanutForInexcess(savingRate: Double) =>
         val maxProducedFood = parcelsFoodProduction(parcelCandidatesForCulture)
         val minProducedfood = Kitchen.foodNeeds(kitchen)
         val needs = minProducedfood + savingRate * (maxProducedFood - minProducedfood)
@@ -106,9 +106,9 @@ object Rotation {
     // val fallowFreeExtraLoanCandidates = parcelCandidatesForCulture diff parcelsNeeded
 
     val (notLoanable, loanable) = kitchen.loanStrategy match {
-      case Selfish => (notInCulture, Seq())
-      case AllExtraParcelsLoaner => (Seq(), notInCulture)
-      case ExtraParcelsExceptFallowLoaner => (fallowsNotCultivated, cropNeeded.candidatesNotUsed)
+      case LoanStrategy.Selfish => (notInCulture, Seq())
+      case LoanStrategy.AllExtraParcelsLoaner => (Seq(), notInCulture)
+      case LoanStrategy.ExtraParcelsExceptFallowLoaner => (fallowsNotCultivated, cropNeeded.candidatesNotUsed)
     }
 
     ParcelUsages(cropNeeded.cultivatedParcels, loanable, notLoanable, cropNeeded.inexcessOnCultivatedParcels)
@@ -117,7 +117,7 @@ object Rotation {
   def sortUncultivatedParcels(uncultivatedParcelsByKitchen: Map[Kitchen, Seq[Parcel]]) =
     uncultivatedParcelsByKitchen.map: u =>
       u._1.cropingStrategy match
-        case PeanutForInexcess(exceedingProportion) =>
+        case CropingStrategy.PeanutForInexcess(exceedingProportion) =>
 
 
   def toMilIfFallow(parcel: Parcel): Crop = {

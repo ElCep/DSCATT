@@ -33,7 +33,7 @@ object Fertility {
           p.crop match {
             case Fallow => fallowNRF(fertilityByParcel(p.id)._2 / p.area) * Constants.FALLOW_FULL_POTENTIAL_YIELD * p.area
             case Mil => k.mulchingStrategy match {
-              case Mulching(leftOnTheGroundRatio: Double) => milNRF(fertilityByParcel(p.id)._2 / p.area) * Constants.MIL_FULL_POTENTIAL_YIELD * p.area * (1 - leftOnTheGroundRatio) * Constants.MIL_STRAW_RATIO
+              case MulchingStrategy.Mulching(leftOnTheGroundRatio: Double) => milNRF(fertilityByParcel(p.id)._2 / p.area) * Constants.MIL_FULL_POTENTIAL_YIELD * p.area * (1 - leftOnTheGroundRatio) * Constants.MIL_STRAW_RATIO
             }
             case _ => 0.0
           }
@@ -61,7 +61,7 @@ object Fertility {
         val mulchingMass =
           parcel.crop match {
             case Mil => kitchenOption.map{_.mulchingStrategy} match {
-              case Some(Mulching(leftOnTheGroundRatio: Double)) =>
+              case Some(MulchingStrategy.Mulching(leftOnTheGroundRatio: Double)) =>
                 milNRF(fertilityByParcel(parcel.id)._2 / parcel.area) * Constants.MIL_FULL_POTENTIAL_YIELD * parcel.area * leftOnTheGroundRatio * Constants.MIL_STRAW_RATIO
               case _=> 0.0
             }
@@ -84,9 +84,9 @@ object Fertility {
               kitchen.drySeasonManureCriteria(parcel, kitchen.rotationCycle) match {
                 case true =>
                   kitchen.drySeasonHerdStrategy match {
-                    case EverywhereByDayOwnerByNight => 0.56 * manureKforAssignedP + 0.14 * dryManureVillageForP // 0.7 * 0.8 and 0.7 * 0.2
-                    case AnywhereAnyTime => 0.7 * dryManureVillageForP
-                    case OwnerOnly => 0.7 * manureKforAssignedP
+                    case HerdStrategy.EverywhereByDayOwnerByNight => 0.56 * manureKforAssignedP + 0.14 * dryManureVillageForP // 0.7 * 0.8 and 0.7 * 0.2
+                    case HerdStrategy.AnywhereAnyTime => 0.7 * dryManureVillageForP
+                    case HerdStrategy.OwnerOnly => 0.7 * manureKforAssignedP
                   }
                 case false => 0.0
               }
@@ -101,9 +101,9 @@ object Fertility {
           val wetMass = parcel.crop match {
             case Fallow =>
               kitchen.wetSeasonHerdStrategy match {
-                case EverywhereByDayOwnerByNight => 0.24 * manureKforFallow + 0.06 * wetManureVillageForP // 0.3 * 0.8 and 0.3 * 0.2
-                case AnywhereAnyTime => 0.3 * wetManureVillageForP
-                case OwnerOnly => 0.3 * manureKforFallow
+                case HerdStrategy.EverywhereByDayOwnerByNight => 0.24 * manureKforFallow + 0.06 * wetManureVillageForP // 0.3 * 0.8 and 0.3 * 0.2
+                case HerdStrategy.AnywhereAnyTime => 0.3 * wetManureVillageForP
+                case HerdStrategy.OwnerOnly => 0.3 * manureKforFallow
               }
             case _ => 0.0
           }

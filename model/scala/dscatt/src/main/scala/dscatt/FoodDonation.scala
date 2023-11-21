@@ -53,7 +53,7 @@ object FoodDonation {
 
     val (hungryKitchenBalances, extraFoodKitchenBalances) = foodBalances.partition(_.balance < 0)
     val altruistExtraFoodBalances = extraFoodKitchenBalances.filter{fb=>
-      Kitchen.kitchen(state.kitchens, fb.kitchenID).map{_.foodDonationStrategy} == Some(FoodForAllStrategy)
+      Kitchen.kitchen(state.kitchens, fb.kitchenID).map{_.foodDonationStrategy} == Some(FoodDonationStrategy.FoodForAllStrategy)
     }
 
     assign0(hungryKitchenBalances.sortBy(_.balance).toList, altruistExtraFoodBalances.toList, foods)

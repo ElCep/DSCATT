@@ -21,32 +21,32 @@ object Diohine {
 
     val kitchenProfile1 = KitchenProfile(
       kitchenSize = 10,
-      ThreeYears,
-      PeanutForInexcess(0.0),
-      NeverUseFallow,
-      ExtraParcelsExceptFallowLoaner,
-      FoodForAllStrategy,
+      RotationCycle.ThreeYears,
+      CropingStrategy.PeanutForInexcess(0.0),
+      OwnFallowUse.NeverUseFallow,
+      LoanStrategy.ExtraParcelsExceptFallowLoaner,
+      FoodDonationStrategy.FoodForAllStrategy,
       herdSize = 10,
-      EverywhereByDayOwnerByNight,
-      EverywhereByDayOwnerByNight,
+      HerdStrategy.EverywhereByDayOwnerByNight,
+      HerdStrategy.EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
-      UniformFertilizing,
-      Mulching(0.10)
+      FertilizerStrategy.UniformFertilizing,
+      MulchingStrategy.Mulching(0.10)
     )
 
     val kitchenProfile2 = KitchenProfile(
       kitchenSize = 10,
-      ThreeYears,
-      PeanutForInexcess(0.5),
-      NeverUseFallow,
-      ExtraParcelsExceptFallowLoaner,
-      FoodForAllStrategy,
+      RotationCycle.ThreeYears,
+      CropingStrategy.PeanutForInexcess(0.5),
+      OwnFallowUse.NeverUseFallow,
+      LoanStrategy.ExtraParcelsExceptFallowLoaner,
+      FoodDonationStrategy.FoodForAllStrategy,
       herdSize = 5,
-      EverywhereByDayOwnerByNight,
-      EverywhereByDayOwnerByNight,
+      HerdStrategy.EverywhereByDayOwnerByNight,
+      HerdStrategy.EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
-      UniformFertilizing,
-      Mulching(0.10)
+      FertilizerStrategy.UniformFertilizing,
+      MulchingStrategy.Mulching(0.10)
     )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
