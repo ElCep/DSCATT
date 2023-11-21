@@ -33,11 +33,10 @@ object Simulation {
     val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels)
     val initialState = SimulationState(nakedWorld, kitchens, History.initialize(simulationLength, kitchens), 1)
 
-    println("")
     val finalState = evolve(initialState, populationGrowth, simulationLength + 1, soilQualityBasis)
 
-    History.printKitckens(finalState, true, hookParameters)
-    //History.printParcels(finalState, hookParameters)
+    History.printParcels(finalState, hookParameters)
+    History.printKitckens(finalState, hookParameters)
 
     finalState
   }

@@ -114,12 +114,11 @@ object History {
   }
 
   val doubleFormat = "%.2f"
-  val toIntformat= "%.0f"
   val locale = new java.util.Locale("en", "EN")
 
   def toDouble(s: Double) = doubleFormat.formatLocal(locale, s)
 
-  def printKitckens(state: SimulationState, verbose: Boolean = false, hookParameters: HookParameters) = {
+  def printKitckens(state: SimulationState, hookParameters: HookParameters) = {
     val header = Seq("Year", "KID", "Owd pcl","Owd area", "Lnd pcl","Lnd area", "Herd", "Manure", "Mulch", "N", "SQ", "FN", "FFC", "FFL", "FFD", "Balance", "FinX", "Size", "Births", "Migs", "Absor", "Split")
 
     val years = state.history.keys.toSeq.sorted.map { y =>
@@ -167,24 +166,25 @@ object History {
       _.size
     }.sum
     }.toMap
-    hookParameters.displayParcels match {
+
+    hookParameters.displayKitchens match {
       case true =>
         years.zipWithIndex.foreach { (table, ind) =>
-          //if (verbose)
-          println("Pop " + pops(ind + 1))
           val tableWithHeader = header +: table
           println(Tabulator.formatTable(tableWithHeader))
         }
       case _ =>
     }
 
-    //    outputParameters.csvOutputPath match {
-    //      case Some(path: String) =>
-    //        val content = (header +: years.flatten).toCSV()
-    //        val file = File(path + "/kitchens.csv")
-    //        file.overwrite(content)
-    //      case None =>
-    //    }
+    hookParameters.hookFile match {
+      case Some(hf: HookFile) =>
+        hf.kitchens match
+          case true=>
+            val content = (header +: years.flatten).toCSV()
+            val file = File(hf.outputPath + "/kitchens.csv")
+            file.overwrite(content)
+          case false =>
+    }
 
   }
 

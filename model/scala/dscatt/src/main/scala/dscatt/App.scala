@@ -6,14 +6,22 @@ import dscatt.KitchenPartition._
 object Diohine {
 
   case class HookFile(outputPath: String, parcels: Boolean, kitchens: Boolean)
-  case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile] )
+
+  case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile])
 
   def main(args: Array[String]) = {
-    val argOptions = args.lift
-    // displayParcels, displayKitchens outputPath parcels kitchens parcelMap
-    def toBoolean(s: Option[String]) = s.map{_.toBoolean}.getOrElse(false)
-    val hookFile = argOptions(2).map{op=> HookFile(op, toBoolean(argOptions(3)), toBoolean(argOptions(4)))}
-    val hooks = HookParameters(toBoolean(argOptions(0)), toBoolean(argOptions(1)), hookFile)
+
+    val hookFile = HookFile(
+      outputPath = "/tmp",
+      parcels = true,
+      kitchens = true
+    )
+
+    val hooks = HookParameters(
+      displayParcels = false,
+      displayKitchens = true,
+      hookFile = Some(hookFile)
+    )
 
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
       Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Mil
@@ -55,13 +63,13 @@ object Diohine {
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
     Simulation(
-        77,
-        giniParcels = 0.1,
-        populationGrowth = 0.03,
-        kitchenPartition = kitchenPartition,
-        supportPolicy = supportPolicy,
-        simulationLength = 20,
-        hookParameters = hooks)
+      77,
+      giniParcels = 0.1,
+      populationGrowth = 0.03,
+      kitchenPartition = kitchenPartition,
+      supportPolicy = supportPolicy,
+      simulationLength = 20,
+      hookParameters = hooks)
   }
 
 }
