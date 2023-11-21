@@ -10,6 +10,7 @@ import io.circe.parser.*
 import io.circe.generic.semiauto.*
 import shared.Data
 
+import java.text.DecimalFormat
 import scala.io.Source
 
 object World {
@@ -18,8 +19,8 @@ object World {
                          giniIndex: Double
                         )(using mT: MersenneTwister): World =
 
-    val parcelPath = s"generatedParcels/k${kitchens.size}g${"%.2f".format(giniIndex)}.json"
-    val resource = scala.io.Source.fromResource(parcelPath).getLines().mkString("\n")
+    val parcelPath = s"generatedParcels/k${kitchens.size}g${String.format(java.util.Locale.FRANCE, "%.2f", giniIndex)}.json"
+    val resource = scala.io.Source.fromResource(parcelPath, World.getClass.getClassLoader).getLines().mkString("\n")
 
     implicit val parcelJsonDecoder: Decoder[Data.ParcelJson] = deriveDecoder[Data.ParcelJson]
     decode[List[Data.ParcelJson]](resource) match
