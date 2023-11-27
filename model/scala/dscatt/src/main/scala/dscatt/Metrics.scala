@@ -26,16 +26,16 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       p.fertilityHistory.map(_.agronomicMetrics.availableNitrogen)
     ).transpose.map(nitrogenPerYear =>
       nitrogenPerYear.sum / nitrogenPerYear.size
-    )
+    ).toArray
 
   def averageSoilQualityDynamic =
     simulationState.world.parcels.map(p =>
       p.fertilityHistory.map(_.agronomicMetrics.soilQuality)
     ).transpose.map(soilQualityPerYear =>
       soilQualityPerYear.sum / soilQualityPerYear.size
-    )
+    ).toArray
 
-  def averageDynamicInexcessDynamic =
+  def averageInexcessDynamic =
     History.historyByYear(simulationState).map { hY =>
       val inexcess = hY.foodStats.map(_._2.inexess)
       inexcess.sum / inexcess.size

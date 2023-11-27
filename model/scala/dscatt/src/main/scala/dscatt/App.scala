@@ -71,11 +71,11 @@ object Diohine {
       simulationLength = 20,
       hookParameters = hooks)
 
-    println("Pop " + simulationState.populationDynamic.toSeq)
-    println("herd " + simulationState.herdDynamic.toSeq)
+    println("Pop " + simulationState.populationDynamic)
+    println("herd " + simulationState.herdDynamic)
     println("nitrogen " + simulationState.averageNitrogenDynamic)
     println("Soil Quality " + simulationState.averageSoilQualityDynamic)
-    println("Average Inexesse " + simulationState.averageDynamicInexcessDynamic)
+    println("Average Inexesse " + simulationState.averageInexcessDynamic)
     println("# unbalanced kitchen " + simulationState.numberOfUnbalancedKitchen)
   }
 
