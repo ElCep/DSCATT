@@ -39,7 +39,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     History.historyByYear(simulationState).map { hY =>
       val inexcess = hY.foodStats.map(_._2.inexess)
       inexcess.sum / inexcess.size
-    }
+    }.toArray
 
   def numberOfUnbalancedKitchen =
     val balances = History.historyByYear(simulationState).flatMap { hY =>
