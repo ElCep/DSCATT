@@ -6,6 +6,8 @@
 
 //libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.9.2"
 
+val ScalaVersion = "3.3.1"
+
 lazy val circe = Seq(
   libraryDependencies += "org.json4s" %% "json4s-jackson" % "4.0.6",
   libraryDependencies += "io.circe" %% "circe-generic" % "0.14.5",
@@ -16,7 +18,7 @@ lazy val betterFile = libraryDependencies += "com.github.pathikrit" %% "better-f
 
 lazy val dscatt = project.in(file("dscatt")) enablePlugins (SbtOsgi) settings(
   name := "DSCATT",
-  scalaVersion := "3.3.0",
+  scalaVersion := ScalaVersion,
 
   libraryDependencies += "org.apache.commons" % "commons-math3" % "3.6.1",
   libraryDependencies ++= Seq(
@@ -35,7 +37,7 @@ lazy val dscatt = project.in(file("dscatt")) enablePlugins (SbtOsgi) settings(
 
 lazy val parcelGenerator = project.in(file("parcelGenerator")) settings(
   name := "Parcellor",
-  scalaVersion := "3.3.0",
+  scalaVersion := ScalaVersion,
   libraryDependencies += "fr.ign.artiscales.pm" % "ParcelManager" % "1.4.2" from "https://gitlab.inria.fr/api/v4/projects/39367/packages/maven/fr/ign/artiscales/pm/ParcelManager/1.4.2/ParcelManager-1.4.2-shaded.jar ",
   betterFile,
   circe,
@@ -45,5 +47,5 @@ lazy val parcelGenerator = project.in(file("parcelGenerator")) settings(
 
 lazy val data = project.in(file("shared")) settings (
   name := "data",
-  scalaVersion := "3.3.0"
+  scalaVersion := ScalaVersion
 )
