@@ -1,12 +1,12 @@
 package dscatt
 
-import dscatt.Croping.Crop
-import dscatt.Croping.*
-import dscatt.Constants.*
-import dscatt.History.History
-import dscatt.Kitchen.KitchenID
-import dscatt.Parcel.{ManureDeposit, ParcelID}
-import dscatt.Simulation.SimulationState
+import Croping.Crop
+import Croping.*
+import Constants.*
+import History.History
+import Kitchen.KitchenID
+import Parcel.{ManureDeposit, ParcelID}
+import Simulation.SimulationState
 
 import scala.annotation.tailrec
 

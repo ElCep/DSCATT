@@ -1,8 +1,8 @@
 package dscatt
 
 import Parcel.*
-import dscatt.Croping.*
-import dscatt.Kitchen.KitchenID
+import Croping.*
+import Kitchen.KitchenID
 import org.apache.commons.math3.random.MersenneTwister
 import io.circe.Decoder.*
 import io.circe.*

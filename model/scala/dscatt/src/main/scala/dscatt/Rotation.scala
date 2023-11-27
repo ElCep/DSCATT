@@ -1,9 +1,8 @@
 package dscatt
 
-import dscatt.Croping.{Crop, Fallow, Mil, NotAssigned, Peanut, Three}
-import dscatt.Kitchen.{Food, FoodBalance, parcelsFoodProduction}
-import dscatt.Loan.Loan
-import dscatt.Simulation.SimulationState
+import Croping.{Crop, Fallow, Mil, NotAssigned, Peanut, Three}
+import Kitchen.{Food, FoodBalance, parcelsFoodProduction}
+import Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 object Rotation {
@@ -55,7 +54,7 @@ object Rotation {
     }.filter(_.balance < 0)
 
     // Compute loans and store them in history sequence
-    val (yearLoans, notUsedInLoanProcess) = dscatt.Loan.assign(simulationState.year, allParcelUsages.forLoan, demandingKitchens)
+    val (yearLoans, notUsedInLoanProcess) = Loan.assign(simulationState.year, allParcelUsages.forLoan, demandingKitchens)
     val loanedParcels = yearLoans.map(l => l.parcel.copy(farmerID = l.to, crop = toMilIfFallow(l.parcel)))
 
     // The world parcels are a partition of needed parcels, not loanable parcels, loaned percels, and loanable (but not use in loan process) parcels

@@ -1,7 +1,7 @@
 package dscatt
 
-import dscatt.Croping._
-import dscatt.KitchenPartition._
+import Croping._
+import KitchenPartition._
 
 object Diohine {
 
@@ -20,7 +20,7 @@ object Diohine {
     val hooks = HookParameters(
       displayParcels = false,
       displayKitchens = true,
-      hookFile = Some(hookFile)
+      hookFile = None
     )
 
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
@@ -62,7 +62,7 @@ object Diohine {
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
-    Simulation(
+    val simulationState = Simulation(
       77,
       giniParcels = 0.1,
       populationGrowth = 0.03,
@@ -70,7 +70,15 @@ object Diohine {
       supportPolicy = supportPolicy,
       simulationLength = 20,
       hookParameters = hooks)
+
+    println("Pop " + simulationState.populationDynamic.toSeq)
+    println("herd " + simulationState.herdDynamic.toSeq)
+    println("nitrogen " + simulationState.averageNitrogenDynamic)
+    println("Soil Quality " + simulationState.averageSoilQualityDynamic)
+    println("Average Inexesse " + simulationState.averageDynamicInexcessDynamic)
+    println("# unbalanced kitchen " + simulationState.numberOfUnbalancedKitchen)
   }
+
 
 }
 

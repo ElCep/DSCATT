@@ -1,9 +1,9 @@
 package dscatt
 
-import dscatt.Croping.NotAssigned
-import dscatt.Kitchen.{Food, FoodBalance, KitchenID}
-import dscatt.Parcel.ParcelID
-import dscatt.Simulation.SimulationState
+import Croping.NotAssigned
+import Kitchen.{Food, FoodBalance, KitchenID}
+import Parcel.ParcelID
+import Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec

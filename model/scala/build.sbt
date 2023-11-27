@@ -30,16 +30,16 @@ lazy val dscatt = project.in(file("dscatt")) enablePlugins (SbtOsgi) settings(
   OsgiKeys.importPackage := Seq("*;resolution:=optional"),
   OsgiKeys.privatePackage := Seq("!scala.*","*"),
   OsgiKeys.requireCapability := """osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"""",
-  mainClass in(Compile, run) := Some("dscatt.Diohine")
+  Compile / run / mainClass := Some("dscatt.Diohine")
 ) dependsOn(data)
 
 lazy val parcelGenerator = project.in(file("parcelGenerator")) settings(
   name := "Parcellor",
   scalaVersion := "3.3.0",
-  libraryDependencies += "fr.ign.artiscales.pm" % "ParcelManager" % "1.4-SNAPSHOT" from "https://gitlab.inria.fr/api/v4/projects/39367/packages/maven/fr/ign/artiscales/pm/ParcelManager/1.4.1/ParcelManager-1.4.1-jar-with-dependencies.jar",
+  libraryDependencies += "fr.ign.artiscales.pm" % "ParcelManager" % "1.4.2" from "https://gitlab.inria.fr/api/v4/projects/39367/packages/maven/fr/ign/artiscales/pm/ParcelManager/1.4.2/ParcelManager-1.4.2-shaded.jar ",
   betterFile,
   circe,
-  mainClass in(Compile, run) := Some("parcelgenerator.App")
+  Compile / run / mainClass := Some("parcelgenerator.App")
 ) dependsOn(data)
 
 

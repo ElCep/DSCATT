@@ -1,9 +1,9 @@
 package dscatt
 
-import dscatt.Croping.*
-import dscatt.Diohine.{HookFile, HookParameters}
-import dscatt.History.History
-import dscatt.Kitchen.Food
+import Croping.*
+import Diohine.{HookFile, HookParameters}
+import History.History
+import Kitchen.Food
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec

@@ -1,6 +1,6 @@
 package dscatt
 
-import dscatt.Kitchen.{Food, FoodBalance, KitchenID, foodBalance}
+import Kitchen.{Food, FoodBalance, KitchenID, foodBalance}
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec

@@ -1,8 +1,8 @@
 package dscatt
 
-import dscatt.Croping.*
-import dscatt.Fertility.AgronomicMetricsByParcel
-import dscatt.Simulation.SimulationState
+import Croping.*
+import Fertility.AgronomicMetricsByParcel
+import Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec

@@ -1,6 +1,6 @@
 package dscatt
 
-import dscatt.FoodDonationStrategy.FoodForAllStrategy
+import FoodDonationStrategy.FoodForAllStrategy
 
 
 trait Control

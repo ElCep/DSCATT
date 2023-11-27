@@ -1,17 +1,18 @@
 package dscatt
 
-import dscatt.Croping.NotAssigned
-import dscatt.Kitchen.{FoodBalance, KitchenID}
-import dscatt.Parcel.ParcelID
-import dscatt.Simulation.SimulationState
+import Croping.NotAssigned
+import Kitchen.{FoodBalance, KitchenID}
+import Parcel.ParcelID
+import Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
-import dscatt.Croping.AParcel
+import Croping.AParcel
 
 import scala.annotation.tailrec
 
 
+case class Loan(from: KitchenID, to: KitchenID, parcel: Parcel)
+
 object Loan {
-  case class Loan(from: KitchenID, to: KitchenID, parcel: Parcel)
 
   def assign(year: Int, parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance])(using Fertility.AgronomicMetricsByParcel): (Seq[Loan], Seq[Parcel]) = {
 

@@ -1,9 +1,9 @@
 package dscatt
 
-import dscatt.Croping._
-import dscatt.Kitchen._
-import dscatt.Parcel._
-import dscatt.Constants._
+import Croping._
+import Kitchen._
+import Parcel._
+import Constants._
 
 object Parcel {
   type ParcelID = String
