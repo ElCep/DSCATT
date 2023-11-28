@@ -12,6 +12,13 @@ object Simulation {
 
   case class SimulationState(world: World, kitchens: Seq[Kitchen], history: History, year: Int)
 
+  implicit class SimulationStateWrap(sS: SimulationState):
+    def population = History.historyByYear(sS).map(_.population)
+    def herds = History.historyByYear(sS).map(_.herds)
+    def foodStats = History.historyByYear(sS).map(_.foodStats)
+    def parcelStats = History.historyByYear(sS).map(_.parcelStats)
+    def fertilityHistory = sS.world.parcels.map(_.fertilityHistory)
+
   def apply(
              seed: Long,
              giniParcels: Double,

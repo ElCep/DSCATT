@@ -1,6 +1,6 @@
 package dscatt
 
-object Utils {
+package object utils {
 
   def gini(l: Seq[Double]) = {
     if (l.size == 0) println("Gini size should be > 0")
@@ -15,4 +15,8 @@ object Utils {
       l.mkString(",")
     }.mkString("\n")
   }
+
+  implicit def average(ts: Seq[Double]): Double = ts.sum / ts.size
+  
+  implicit def average(ts: Array[Double]): Double = ts.sum / ts.size
 }

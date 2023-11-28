@@ -68,15 +68,18 @@ object Diohine {
       populationGrowth = 0.03,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 20,
+      simulationLength = 2,
       hookParameters = hooks)
 
     println("Pop " + simulationState.populationDynamic)
     println("herd " + simulationState.herdDynamic)
-    println("nitrogen " + simulationState.averageNitrogenDynamic)
-    println("Soil Quality " + simulationState.averageSoilQualityDynamic)
+    println("nitrogen " + simulationState.averageNitrogenDynamic.toSeq)
+    println("Soil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
     println("Average Inexesse " + simulationState.averageInexcessDynamic)
     println("# unbalanced kitchen " + simulationState.numberOfUnbalancedKitchen)
+    println("Total Loaned Area " + simulationState.totalLoanedArea)
+    println("Manure dynamic " + simulationState.averageManureDynamic.toSeq)
+    println("Total Manure  " + simulationState.totalManure)
   }
 
 
