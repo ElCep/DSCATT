@@ -33,19 +33,19 @@ object Croping {
     case 1 => One
     case 2 => Two
     case 3 => rotationCycle match {
-      case TwoYears if(threeIsOneProbabilityIf2Years)=> One
-      case TwoYears=> Two
-      case ThreeYears=> Three
+      case RotationCycle.TwoYears if(threeIsOneProbabilityIf2Years)=> One
+      case RotationCycle.TwoYears=> Two
+      case RotationCycle.ThreeYears=> Three
     }
 
   def evolveCropZone(cropZone: CropZone, rotationCycle: RotationCycle): CropZone = {
     rotationCycle match {
       // In this case, reassign at the begiging cropZones into 2 cropZones only
-      case TwoYears => cropZone match {
+      case RotationCycle.TwoYears => cropZone match {
         case One => Two
         case _ => One
       }
-      case ThreeYears => cropZone match {
+      case RotationCycle.ThreeYears => cropZone match {
         case One => Two
         case Two => Three
         case Three => One
@@ -55,11 +55,11 @@ object Croping {
 
   def evolveCrop(crop: Crop, rotationCycle: RotationCycle, targetCropZone: CropZone) = {
     rotationCycle match {
-      case TwoYears => targetCropZone match {
+      case RotationCycle.TwoYears => targetCropZone match {
         case One=> Mil
         case _=> Peanut
       }
-      case ThreeYears =>
+      case RotationCycle.ThreeYears =>
         targetCropZone match {
           case Three => Fallow
           case _ =>

@@ -1,9 +1,9 @@
 package dscatt
 
-import dscatt.Croping.*
-import dscatt.Diohine.{HookFile, HookParameters}
-import dscatt.History.History
-import dscatt.Kitchen.Food
+import Croping.*
+import Diohine.{HookFile, HookParameters}
+import History.History
+import Kitchen.Food
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
@@ -11,6 +11,13 @@ import scala.annotation.tailrec
 object Simulation {
 
   case class SimulationState(world: World, kitchens: Seq[Kitchen], history: History, year: Int)
+
+  implicit class SimulationStateWrap(sS: SimulationState):
+    def population = History.historyByYear(sS).map(_.population)
+    def herds = History.historyByYear(sS).map(_.herds)
+    def foodStats = History.historyByYear(sS).map(_.foodStats)
+    def parcelStats = History.historyByYear(sS).map(_.parcelStats)
+    def fertilityHistory = sS.world.parcels.map(_.fertilityHistory)
 
   def apply(
              seed: Long,
@@ -33,11 +40,10 @@ object Simulation {
     val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels)
     val initialState = SimulationState(nakedWorld, kitchens, History.initialize(simulationLength, kitchens), 1)
 
-    println("")
     val finalState = evolve(initialState, populationGrowth, simulationLength + 1, soilQualityBasis)
 
-    History.printKitckens(finalState, true, hookParameters)
-    //History.printParcels(finalState, hookParameters)
+    History.printParcels(finalState, hookParameters)
+    History.printKitckens(finalState, hookParameters)
 
     finalState
   }

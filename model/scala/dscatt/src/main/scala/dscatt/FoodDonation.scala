@@ -1,9 +1,9 @@
 package dscatt
 
-import dscatt.Croping.NotAssigned
-import dscatt.Kitchen.{Food, FoodBalance, KitchenID}
-import dscatt.Parcel.ParcelID
-import dscatt.Simulation.SimulationState
+import Croping.NotAssigned
+import Kitchen.{Food, FoodBalance, KitchenID}
+import Parcel.ParcelID
+import Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
@@ -53,7 +53,7 @@ object FoodDonation {
 
     val (hungryKitchenBalances, extraFoodKitchenBalances) = foodBalances.partition(_.balance < 0)
     val altruistExtraFoodBalances = extraFoodKitchenBalances.filter{fb=>
-      Kitchen.kitchen(state.kitchens, fb.kitchenID).map{_.foodDonationStrategy} == Some(FoodForAllStrategy)
+      Kitchen.kitchen(state.kitchens, fb.kitchenID).map{_.foodDonationStrategy} == Some(FoodDonationStrategy.FoodForAllStrategy)
     }
 
     assign0(hungryKitchenBalances.sortBy(_.balance).toList, altruistExtraFoodBalances.toList, foods)

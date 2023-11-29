@@ -1,8 +1,8 @@
 package dscatt
 
-import dscatt.Croping.*
-import dscatt.Fertility.AgronomicMetricsByParcel
-import dscatt.Simulation.SimulationState
+import Croping.*
+import Fertility.AgronomicMetricsByParcel
+import Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
@@ -15,7 +15,7 @@ object Kitchen {
 
   //case class Food(kitchen: KitchenID, quantity: Double)
 
-  case class Food(kitchenID: KitchenID, needs: Double = 0.0, fromCulture: Double = 0.0, fromLoan: Double = 0.0, fromDonation: Double = 0.0)
+  case class Food(kitchenID: KitchenID, needs: Double = 0.0, fromCulture: Double = 0.0, fromLoan: Double = 0.0, fromDonation: Double = 0.0, inexess: Double = 0.0)
   
   implicit class WrapFood(f: Food):
     def toBalance = f.needs + f.fromCulture + f.fromLoan + f.fromDonation
@@ -35,8 +35,7 @@ object Kitchen {
         kp.wetSeasonHerdStrategy,
         kp.drySeasonManureCriteria,
         kp.fertilizerStrategy,
-        kp.mulchingStrategy,
-        Seq()
+        kp.mulchingStrategy
       )
     }
   }
@@ -264,6 +263,5 @@ case class Kitchen(id: Kitchen.KitchenID,
                    wetSeasonHerdStrategy: HerdStrategy,
                    drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean, //how to choose parcel to be fertilized during dry season
                    fertilizerStrategy: FertilizerStrategy,
-                   mulchingStrategy: MulchingStrategy,
-                   inexcessHistory: Seq[Double]
+                   mulchingStrategy: MulchingStrategy
                   )

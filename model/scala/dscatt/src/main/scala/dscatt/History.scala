@@ -1,14 +1,12 @@
 package dscatt
 
-import dscatt.Diohine.{HookFile, HookParameters}
-import dscatt.FoodDonation.FoodDonation
-import dscatt.Kitchen.{Food, FoodBalance, KitchenID}
-import dscatt.Loan.Loan
-import dscatt.Simulation.SimulationState
-import dscatt.Utils.CSVWrapper
+import utils.CSVWrapper
 import better.files.*
 import File.*
-
+import Kitchen.*
+import Loan.*
+import Diohine.*
+import Simulation.*
 import java.io.File as JFile
 
 object History {
@@ -118,11 +116,15 @@ object History {
 
   def toDouble(s: Double) = doubleFormat.formatLocal(locale, s)
 
-  def printKitckens(state: SimulationState, verbose: Boolean = false, hookParameters: HookParameters) = {
-    val header = Seq("Year", "KID", "Owned Size/Area", "Loaned Size/Area", "Herd", "Manure", "Mulch", "N", "SQ", "FN", "FFC", "FFL", "FFD", "Balance", "FinX", "Size", "Births", "Migs", "Absor", "Split")
+  def historyByYear(simulationState: SimulationState) = simulationState.history.keys.toSeq.sorted.map{simulationState.history(_)}
 
-    val years = state.history.keys.toSeq.sorted.map { y =>
-      val yearHistory = state.history(y)
+  // def sortedPopulation(simulationState: SimulationState) =
+
+
+  def printKitckens(state: SimulationState, hookParameters: HookParameters) = {
+    val header = Seq("Year", "KID", "Owd pcl", "Owd area", "Lnd pcl", "Lnd area", "Herd", "Manure", "Mulch", "N", "SQ", "FN", "FFC", "FFL", "FFD", "Balance", "FinX", "Size", "Births", "Migs", "Absor", "Split")
+
+    val years = historyByYear(state).map { yearHistory =>
       val sortedPop = yearHistory.population.map { kp =>
         (kp._1, kp._2.size, kp._2.births, kp._2.emigrants, kp._2.herdSize, kp._2.absorbedKitchens, kp._2.splittedInto
         )
@@ -136,21 +138,23 @@ object History {
         val fbStatsK = fbStats.getOrElse(p._1, Food(p._1))
         val fertilityStatK = fertilityStats.getOrElse(p._1, Fertility.Metrics(state.year))
         Seq(
-          y,
+          yearHistory.year,
           p._1.toString,
-          s"${pStats(p._1).size}  ${toDouble(pStats(p._1).ownedArea)}",
-          s"${pStats(p._1).loaned} ${toDouble(pStats(p._1).loanedArea)}",
+          s"${pStats(p._1).size}",
+          s"${toDouble(pStats(p._1).ownedArea)}",
+          s"${pStats(p._1).loaned}",
+          s"${toDouble(pStats(p._1).loanedArea)}",
           s"${yearHistory.herds(p._1)}",
-          s"${toDouble(fertilityStatK.manureMass)}",
-          s"${toDouble(fertilityStatK.mulchingMass)}",
+          s"${fertilityStatK.manureMass.toInt}",
+          s"${fertilityStatK.mulchingMass.toInt}",
           s"${toDouble(fertilityStatK.agronomicMetrics.availableNitrogen)}",
           s"${toDouble(fertilityStatK.agronomicMetrics.soilQuality)}",
-          s"${fbStatsK.needs}",
-          s"${toDouble(fbStatsK.fromCulture)}",
-          s"${toDouble(fbStatsK.fromLoan)}",
-          s"${toDouble(fbStatsK.fromDonation)}",
-          s"${toDouble(fbStatsK.toBalance)}",
-          "inXs",
+          s"${fbStatsK.needs.toInt}",
+          s"${fbStatsK.fromCulture.toInt}",
+          s"${fbStatsK.fromLoan.toInt}",
+          s"${fbStatsK.fromDonation.toInt}",
+          s"${fbStatsK.toBalance.toInt}",
+          s"${fbStatsK.inexess.toInt}",
           p._2.toString,
           p._3.toString,
           p._4.toString,
@@ -164,24 +168,26 @@ object History {
       _.size
     }.sum
     }.toMap
-    hookParameters.displayParcels match {
+
+    hookParameters.displayKitchens match {
       case true =>
         years.zipWithIndex.foreach { (table, ind) =>
-          //if (verbose)
-          println("Pop " + pops(ind + 1))
           val tableWithHeader = header +: table
           println(Tabulator.formatTable(tableWithHeader))
         }
       case _ =>
     }
 
-    //    outputParameters.csvOutputPath match {
-    //      case Some(path: String) =>
-    //        val content = (header +: years.flatten).toCSV()
-    //        val file = File(path + "/kitchens.csv")
-    //        file.overwrite(content)
-    //      case None =>
-    //    }
+    hookParameters.hookFile match {
+      case Some(hf: HookFile) =>
+        hf.kitchens match
+          case true =>
+            val content = (header +: years.flatten).toCSV()
+            val file = File(hf.outputPath + "/kitchens.csv")
+            file.overwrite(content)
+          case false =>
+      case None =>
+    }
 
   }
 

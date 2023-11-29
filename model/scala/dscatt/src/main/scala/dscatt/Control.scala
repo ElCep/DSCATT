@@ -1,65 +1,67 @@
 package dscatt
 
+import FoodDonationStrategy.FoodForAllStrategy
+
 
 trait Control
 type KitchenSize = Int
 
-sealed trait RotationCycle extends Control
-object ThreeYears extends RotationCycle
-object TwoYears extends RotationCycle
+enum RotationCycle extends Control:
+        case ThreeYears extends RotationCycle
+        case TwoYears extends RotationCycle
 
-sealed trait CropingStrategy extends Control
+enum CropingStrategy extends Control:
 // Peanut food provisioned from the food needs: cultivated = FoodNeeds + savvingRate(MaxCultivable-FoodNeed)
 // savingRate = 0 : parsimonious
 // savingRate = 1 : as much as we can
-case class PeanutForInexcess(savingRate: Double) extends CropingStrategy
+    case PeanutForInexcess(savingRate: Double) extends CropingStrategy
 
 //object AsMuchAsWeCan extends CropingStrategy // Up to the available manpower
 //case class Provisioning(exceedingProportion: Double) extends CropingStrategy // while crop stock and manpower exist. In culture: foodNeeds x (1 + exceedingProportion)
 //object Parsimonious extends CropingStrategy // no more than necessary (needs)
 
-sealed trait OwnFallowUse extends Control
-object NeverUseFallow extends OwnFallowUse
-object UseFallowIfNeeded extends OwnFallowUse
+enum OwnFallowUse extends Control:
+    case NeverUseFallow extends OwnFallowUse
+    case UseFallowIfNeeded extends OwnFallowUse
 
-sealed trait LoanStrategy extends Control
-object AllExtraParcelsLoaner extends LoanStrategy // loans its extra parcels
-object ExtraParcelsExceptFallowLoaner extends LoanStrategy
-object Selfish extends LoanStrategy // must be used with AsMuchAsweCan
+enum LoanStrategy extends Control:
+    case AllExtraParcelsLoaner extends LoanStrategy // loans its extra parcels
+    case ExtraParcelsExceptFallowLoaner extends LoanStrategy
+    case Selfish extends LoanStrategy // must be used with AsMuchAsweCan
 
-sealed trait FoodDonationStrategy extends Control
-object FoodForUsOnlyStrategy extends FoodDonationStrategy // extra food keeps in the kitchen (for being sold)
-object FoodForAllStrategy extends FoodDonationStrategy // extra food can be given to a demanding kitchen
+enum FoodDonationStrategy extends Control:
+    case FoodForUsOnlyStrategy extends FoodDonationStrategy // extra food keeps in the kitchen (for being sold)
+    case FoodForAllStrategy extends FoodDonationStrategy // extra food can be given to a demanding kitchen
 
-sealed trait ManPowerProvision extends Control
-object WorkInOwnKitchenOnly extends ManPowerProvision // manpower is never loaned to another kitchen
-object HelpOnDemand extends ManPowerProvision // manpower is loaned to another kitchen if required
+enum ManPowerProvision extends Control:
+    case WorkInOwnKitchenOnly extends ManPowerProvision // manpower is never loaned to another kitchen
+    case HelpOnDemand extends ManPowerProvision // manpower is loaned to another kitchen if required
 
-sealed trait MigrantStrategy extends Control
-object LeaveForEver extends MigrantStrategy // when someone leaves a kitchen, it does once and for all
-object SeasonalPresence extends MigrantStrategy // some people are present in kitchen when there is work, in town the rest of the time
+enum MigrantStrategy extends Control:
+    case LeaveForEver extends MigrantStrategy // when someone leaves a kitchen, it does once and for all
+    case SeasonalPresence extends MigrantStrategy // some people are present in kitchen when there is work, in town the rest of the time
 
-sealed trait HerdStrategy extends Control
-object AnywhereAnyTime extends HerdStrategy // all herd beasts are grazing on the full area (fallow or crop)
-object EverywhereByDayOwnerByNight extends HerdStrategy // the herd is grazing evrywhere by day and only on the manured kitchen parcels by night
-object OwnerOnly extends HerdStrategy // the herd of the kitchen are grazing on the manured kitchen parcels only
+enum HerdStrategy extends Control:
+    case AnywhereAnyTime extends HerdStrategy // all herd beasts are grazing on the full area (fallow or crop)
+    case EverywhereByDayOwnerByNight extends HerdStrategy // the herd is grazing evrywhere by day and only on the manured kitchen parcels by night
+    case OwnerOnly extends HerdStrategy // the herd of the kitchen are grazing on the manured kitchen parcels only
 
-sealed trait FertilizerStrategy extends Control
-object UniformFertilizing extends FertilizerStrategy
-object Nominal150Fertilizing extends FertilizerStrategy // nominal 150kg per hectare (ie 0.015kg / m2)
-case class PriorityFetilizedParcels(criteria: Parcel => Boolean) extends FertilizerStrategy // Fertilizer is set in priority on a given set of Parcels
+enum FertilizerStrategy extends Control:
+    case UniformFertilizing extends FertilizerStrategy
+    case Nominal150Fertilizing extends FertilizerStrategy // nominal 150kg per hectare (ie 0.015kg / m2)
+    case PriorityFetilizedParcels(criteria: Parcel => Boolean) extends FertilizerStrategy // Fertilizer is set in priority on a given set of Parcels
 
-sealed trait MulchingStrategy extends Control
-case class Mulching(leftOnTheGroundRatio: Double = 0.0) extends MulchingStrategy // Mulch ratio led on the ground to enrich it (and not used for winter herd food)
+enum MulchingStrategy extends Control:
+    case Mulching(leftOnTheGroundRatio: Double = 0.0) extends MulchingStrategy // Mulch ratio led on the ground to enrich it (and not used for winter herd food)
 
-sealed trait FertilizerAttribution
-object UniformAttribution extends FertilizerAttribution
-object UniformForTaxPayer extends FertilizerAttribution
-object BagRouletteForTaxPayer extends FertilizerAttribution
+enum FertilizerAttribution:
+    case UniformAttribution extends FertilizerAttribution
+    case UniformForTaxPayer extends FertilizerAttribution
+    case BagRouletteForTaxPayer extends FertilizerAttribution
 
-sealed trait FaidherbiaStrategy extends Control
-object NoFaidherbiaAttention extends FaidherbiaStrategy
-object FaidherbiaRegrowPreservation extends FaidherbiaStrategy
+enum FaidherbiaStrategy extends Control:
+    case NoFaidherbiaAttention extends FaidherbiaStrategy
+    case FaidherbiaRegrowPreservation extends FaidherbiaStrategy
 
 case class KitchenProfile(
                            kitchenSize: KitchenSize,
@@ -77,7 +79,19 @@ case class KitchenProfile(
                          )
 
 object KitchenProfile {
-  val default = KitchenProfile(10, ThreeYears, PeanutForInexcess(0.0), NeverUseFallow, AllExtraParcelsLoaner, FoodForAllStrategy, 15, EverywhereByDayOwnerByNight, EverywhereByDayOwnerByNight, (_, _) => true, UniformFertilizing, Mulching(0.0))
+  val default = KitchenProfile(
+      10,
+      RotationCycle.ThreeYears, 
+      CropingStrategy.PeanutForInexcess(0.0),
+      OwnFallowUse.NeverUseFallow,
+      LoanStrategy.AllExtraParcelsLoaner,
+      FoodDonationStrategy.FoodForAllStrategy, 
+      15,
+      HerdStrategy.EverywhereByDayOwnerByNight,
+      HerdStrategy.EverywhereByDayOwnerByNight,
+      (_, _) => true,
+      FertilizerStrategy.UniformFertilizing,
+      MulchingStrategy.Mulching(0.0))
 }
 
 case class KitchenPartition(profiles: (KitchenProfile, KitchenSize)*)
