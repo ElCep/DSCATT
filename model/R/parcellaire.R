@@ -19,7 +19,7 @@ summary(parcelsGeometry)
 # change region ID with label Zone
 parcelsGeometry$regionID <- paste0("Zone ",parcelsGeometry$regionID)
 
-
+c
 # nb parcels and total surface by kitchen 
 aggregStatesByK <-  parcelsGeometry %>% group_by(ownerID) %>% summarise(nb_pcls = n(), sum_surf= sum(area)/10000) %>% st_drop_geometry() %>% select(nb_pcls,sum_surf)
 
