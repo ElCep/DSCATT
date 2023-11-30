@@ -4,9 +4,6 @@ import Simulation.SimulationState
 import Kitchen.*
 import utils.*
 
-
-package object dscatt
-
 implicit class HistoryDecorator(simulationState: SimulationState):
 
   def populationDynamic =
