@@ -1,3 +1,6 @@
 *.tmp.nlogo
 target/
 target/*
+.bsp
+projet/
+project/*
