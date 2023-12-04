@@ -27,14 +27,15 @@ object World {
       case Right(ps) =>
         val kitchensMap = kitchens.groupBy(_.id)
         val parcels = ps map: p=>
+            val area = p.a.replace(",",".").toDouble * Constants.AREA_FACTOR
             Parcel(
               id = p.id.toString,
               ownerID = p.oID,
               farmerID = p.oID,
               crop = NotAssigned,
               cropZone = intToCropZone(p.r, kitchensMap(p.oID).head.rotationCycle, mT.nextDouble() > 0.5),
-              area = p.a.replace(",",".").toDouble * Constants.AREA_FACTOR,
-              faidherbiaTrees = 0,
+              area = area,
+              faidherbiaTrees = kitchensMap(p.oID).head.nbFaidherbia * area,
               Seq()
             )
         World(parcels, kitchens.size)

@@ -3,6 +3,7 @@ package dscatt
 import Croping.*
 import Fertility.AgronomicMetricsByParcel
 import Simulation.SimulationState
+import dscatt.Constants.NB_BY_HA
 import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
@@ -35,7 +36,8 @@ object Kitchen {
         kp.wetSeasonHerdStrategy,
         kp.drySeasonManureCriteria,
         kp.fertilizerStrategy,
-        kp.mulchingStrategy
+        kp.mulchingStrategy,
+        kp.nbFaidherbia
       )
     }
   }
@@ -263,5 +265,6 @@ case class Kitchen(id: Kitchen.KitchenID,
                    wetSeasonHerdStrategy: HerdStrategy,
                    drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean, //how to choose parcel to be fertilized during dry season
                    fertilizerStrategy: FertilizerStrategy,
-                   mulchingStrategy: MulchingStrategy
+                   mulchingStrategy: MulchingStrategy,
+                   nbFaidherbia: NB_BY_HA
                   )

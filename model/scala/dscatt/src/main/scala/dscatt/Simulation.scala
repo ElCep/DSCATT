@@ -26,7 +26,7 @@ object Simulation {
              kitchenPartition: KitchenPartition = KitchenPartition((KitchenProfile.default, 1)),
              supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
-             soilQualityBasis: Double = 0.8,
+             soilQualityBasis: Double = 0.5,
              hookParameters: HookParameters
            ) = {
 

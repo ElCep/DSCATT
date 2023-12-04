@@ -18,8 +18,8 @@ object Diohine {
     )
 
     val hooks = HookParameters(
-      displayParcels = false,
-      displayKitchens = true,
+      displayParcels = true,
+      displayKitchens = false,
       hookFile = None
     )
 
@@ -39,7 +39,8 @@ object Diohine {
       HerdStrategy.EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.Mulching(0.10)
+      MulchingStrategy.Mulching(0.10),
+      4
     )
 
     val kitchenProfile2 = KitchenProfile(
@@ -54,7 +55,8 @@ object Diohine {
       HerdStrategy.EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.Mulching(0.10)
+      MulchingStrategy.Mulching(0.10),
+      4
     )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
@@ -68,7 +70,7 @@ object Diohine {
       populationGrowth = 0.03,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 2,
+      simulationLength = 15,
       hookParameters = hooks)
 
     println("Pop " + simulationState.populationDynamic)

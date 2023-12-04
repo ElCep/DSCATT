@@ -5,6 +5,7 @@ object Constants {
   type KG = Double
   type HA = Double
   type KG_BY_HA = Double
+  type NB_BY_HA = Double
 
   // FOOD
   val DAILY_FOOD_NEED_PER_PERSON = 0.75

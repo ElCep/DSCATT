@@ -28,7 +28,7 @@ case class Parcel(id: ParcelID,
                   cropZone: CropZone,
                   crop: Crop,
                   area: HA,
-                  faidherbiaTrees: Int,
+                  faidherbiaTrees: Double,
                   fertilityHistory: Seq[Fertility.Metrics]
                  )
 

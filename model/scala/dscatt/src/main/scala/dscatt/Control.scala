@@ -1,6 +1,7 @@
 package dscatt
 
 import FoodDonationStrategy.FoodForAllStrategy
+import dscatt.Constants.NB_BY_HA
 
 
 trait Control
@@ -75,7 +76,8 @@ case class KitchenProfile(
                            wetSeasonHerdStrategy: HerdStrategy,
                            drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean,
                            fertilizerStrategy: FertilizerStrategy,
-                           mulchingStrategy: MulchingStrategy
+                           mulchingStrategy: MulchingStrategy,
+                           nbFaidherbia: NB_BY_HA
                          )
 
 object KitchenProfile {
@@ -91,7 +93,9 @@ object KitchenProfile {
       HerdStrategy.EverywhereByDayOwnerByNight,
       (_, _) => true,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.Mulching(0.0))
+      MulchingStrategy.Mulching(0.0),
+      4
+  )
 }
 
 case class KitchenPartition(profiles: (KitchenProfile, KitchenSize)*)
