@@ -40,7 +40,7 @@ object App:
           SyntheticParcel.`export`(synthParcels.toList.asJava, (gpkgDir/s"${fileName}.gpkg").toJava)
 
           println("NB parcels " + lands.size)
-          val jsonText = lands.asJson.noSpaces
+          val jsonText = lands.asJson.spaces2
 
           (jsonDir/s"${fileName}.json").overwrite(jsonText)
 
