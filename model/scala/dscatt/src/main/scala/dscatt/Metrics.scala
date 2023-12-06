@@ -10,7 +10,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     simulationState.population.map(
       _.values.map(_.size).sum
     ).toArray
-    
+
   def migrantsDynamic =
     simulationState.population.map(
       _.values.map(_.emigrants).sum
@@ -50,3 +50,11 @@ implicit class HistoryDecorator(simulationState: SimulationState):
   def totalManure = simulationState.fertilityHistory.flatMap(fh =>
       fh.map(_.manureMass)
     ).sum
+
+  def receivedFoodOnFoodNeedsDynamic =
+    simulationState.foodStats.map(fs=>
+      average(fs.map { f=>
+        val food = f._2
+        (food.fromDonation + food.fromLoan) / food.needs * -1
+      }.toSeq)
+    ).toArray

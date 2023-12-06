@@ -83,6 +83,7 @@ object Diohine {
     println("Manure dynamic " + simulationState.averageManureDynamic.toSeq)
     println("Total Manure  " + simulationState.totalManure)
     println("Migrant dynamic  " + simulationState.migrantsDynamic.toSeq)
+    println("Food received on Food needs dynamic  " + simulationState.receivedFoodOnFoodNeedsDynamic.toSeq)
   }
 
 
