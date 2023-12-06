@@ -19,7 +19,7 @@ object World {
                          giniIndex: Double
                         )(using mT: MersenneTwister): World =
 
-    val parcelPath = s"generatedParcels/k${kitchens.size}g${String.format(java.util.Locale.FRANCE, "%.2f", giniIndex)}.json"
+    val parcelPath = s"json/k${kitchens.size}g${String.format(java.util.Locale.FRANCE, "%.2f", giniIndex)}.json"
     val resource = scala.io.Source.fromResource(parcelPath, World.getClass.getClassLoader).getLines().mkString("\n")
 
     implicit val parcelJsonDecoder: Decoder[Data.ParcelJson] = deriveDecoder[Data.ParcelJson]
