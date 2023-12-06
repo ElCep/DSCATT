@@ -40,8 +40,6 @@ object World {
             )
         World(parcels, kitchens.size)
       case Left(f) =>
-        println("LEFT")
-        println(f)
         World(Seq(), 0)
   
 
