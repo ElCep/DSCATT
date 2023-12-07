@@ -31,7 +31,6 @@ object Kitchen {
         kp.ownFallowUse,
         kp.loanStrategy,
         kp.foodDonationStrategy,
-        kp.herdSize,
         kp.drySeasonHerdStrategy,
         kp.wetSeasonHerdStrategy,
         kp.drySeasonManureCriteria,
@@ -100,7 +99,7 @@ object Kitchen {
       val emigrantsK = nbEmigrants.getOrElse(k.id, 0)
       val absorbtionsK = absorbingKitchens.getOrElse(k.id, Seq())
       val splittedIntoK = splittedInto.get(k.id)
-      k.id -> History.PopulationStat(k.size, birthK, emigrantsK, k.herdSize, absorbtionsK, splittedIntoK)
+      k.id -> History.PopulationStat(k.size, birthK, emigrantsK, absorbtionsK, splittedIntoK)
     }
 
     simulationState.copy(
@@ -184,9 +183,8 @@ object Kitchen {
 
         val nextID = highestID + 1
         val acquiredParcelK = acquireParcels(parcelsK.toList.sortBy(_.area), 0.0, List())
-        val offspringHerdSize = ((kitchenK.herdSize * Constants.SPLIT_KITCHEN_OFFSPRING_SIZE).toDouble / kitchenK.size).floor.toInt
-        val offspring = Offspring(kitchenK.copy(id = nextID, size = Constants.SPLIT_KITCHEN_OFFSPRING_SIZE, herdSize = offspringHerdSize),
-          kitchenK.copy(size = kitchenK.size - Constants.SPLIT_KITCHEN_OFFSPRING_SIZE, herdSize = kitchenK.herdSize - offspringHerdSize),
+        val offspring = Offspring(kitchenK.copy(id = nextID, size = Constants.SPLIT_KITCHEN_OFFSPRING_SIZE),
+          kitchenK.copy(size = kitchenK.size - Constants.SPLIT_KITCHEN_OFFSPRING_SIZE),
           acquiredParcelK)
 
         split(toBeSplitted.tail, nextID, offsprings :+ offspring)
@@ -260,7 +258,6 @@ case class Kitchen(id: Kitchen.KitchenID,
                    ownFallowUse: OwnFallowUse,
                    loanStrategy: LoanStrategy,
                    foodDonationStrategy: FoodDonationStrategy,
-                   herdSize: Int,
                    drySeasonHerdStrategy: HerdStrategy,
                    wetSeasonHerdStrategy: HerdStrategy,
                    drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean, //how to choose parcel to be fertilized during dry season

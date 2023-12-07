@@ -13,13 +13,13 @@ object Diohine {
 
     val hookFile = HookFile(
       outputPath = "/tmp",
-      parcels = true,
+      parcels = false,
       kitchens = true
     )
 
     val hooks = HookParameters(
-      displayParcels = true,
-      displayKitchens = false,
+      displayParcels = false,
+      displayKitchens = true,
       hookFile = None
     )
 
@@ -34,7 +34,6 @@ object Diohine {
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.ExtraParcelsExceptFallowLoaner,
       FoodDonationStrategy.FoodForAllStrategy,
-      herdSize = 10,
       HerdStrategy.EverywhereByDayOwnerByNight,
       HerdStrategy.EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
@@ -44,13 +43,12 @@ object Diohine {
     )
 
     val kitchenProfile2 = KitchenProfile(
-      kitchenSize = 10,
+      kitchenSize = 16,
       RotationCycle.ThreeYears,
       CropingStrategy.PeanutForInexcess(0.5),
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.ExtraParcelsExceptFallowLoaner,
       FoodDonationStrategy.FoodForAllStrategy,
-      herdSize = 5,
       HerdStrategy.EverywhereByDayOwnerByNight,
       HerdStrategy.EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
@@ -60,7 +58,7 @@ object Diohine {
     )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 15), (kitchenProfile2, 5))
+    val kitchenPartition = KitchenPartition((kitchenProfile1, 45))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
@@ -70,7 +68,7 @@ object Diohine {
       populationGrowth = 0.03,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 15,
+      simulationLength = 5,
       hookParameters = hooks)
 
     println("Pop " + simulationState.populationDynamic)
@@ -83,7 +81,8 @@ object Diohine {
     println("Manure dynamic " + simulationState.averageManureDynamic.toSeq)
     println("Total Manure  " + simulationState.totalManure)
     println("Migrant dynamic  " + simulationState.migrantsDynamic.toSeq)
-    println("Food received on Food needs dynamic  " + simulationState.receivedFoodOnFoodNeedsDynamic.toSeq)
+    println("FFL on Food needs dynamic  " + simulationState.foodFromLoanOnFoodNeedsDynamic.toSeq)
+    println("FFD on Food needs dynamic  " + simulationState.foodFromDonationOnFoodNeedsDynamic.toSeq)
   }
 
 

@@ -11,7 +11,7 @@ import java.io.File as JFile
 
 object History {
 
-  case class PopulationStat(size: Int, births: Int, emigrants: Int, herdSize: Int, absorbedKitchens: Seq[KitchenID], splittedInto: Option[KitchenID])
+  case class PopulationStat(size: Int, births: Int, emigrants: Int, absorbedKitchens: Seq[KitchenID], splittedInto: Option[KitchenID])
 
   case class ParcelStat(size: Int, ownedArea: Double, loaned: Int, loanedArea: Double) {
     override def toString = s"($size, ${ownedArea.toInt}, ${loaned}, ${loanedArea.toInt})"
@@ -126,7 +126,7 @@ object History {
 
     val years = historyByYear(state).map { yearHistory =>
       val sortedPop = yearHistory.population.map { kp =>
-        (kp._1, kp._2.size, kp._2.births, kp._2.emigrants, kp._2.herdSize, kp._2.absorbedKitchens, kp._2.splittedInto
+        (kp._1, kp._2.size, kp._2.births, kp._2.emigrants, kp._2.absorbedKitchens, kp._2.splittedInto
         )
       }.toSeq.sortBy(_._1)
 
@@ -158,8 +158,8 @@ object History {
           p._2.toString,
           p._3.toString,
           p._4.toString,
-          p._6.mkString(","),
-          p._7.map(_.toString).getOrElse("")
+          p._5.mkString(","),
+          p._6.map(_.toString).getOrElse("")
         )
       }
     }

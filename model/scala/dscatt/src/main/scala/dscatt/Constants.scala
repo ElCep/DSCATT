@@ -33,6 +33,8 @@ object Constants {
     surfaceFor200 / (500000 * 2.0 / 3) / 10000 // 500000 = generated shp cultivated surface
   }
 
+  //225.0 / 50
+
   //FERTILITY
   type FertilityBoost = Double
 

@@ -38,6 +38,8 @@ object Simulation {
     println("Area factor " + Constants.AREA_FACTOR)
 
     val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels)
+
+    println("area totale " + nakedWorld.parcels.map(_.area).sum)
     val initialState = SimulationState(nakedWorld, kitchens, History.initialize(simulationLength, kitchens), 1)
 
     val finalState = evolve(initialState, populationGrowth, simulationLength + 1, soilQualityBasis)
