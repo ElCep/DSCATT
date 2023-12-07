@@ -51,10 +51,18 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       fh.map(_.manureMass)
     ).sum
 
-  def receivedFoodOnFoodNeedsDynamic =
+  def foodFromLoanOnFoodNeedsDynamic =
     simulationState.foodStats.map(fs=>
       average(fs.map { f=>
         val food = f._2
-        (food.fromDonation + food.fromLoan) / food.needs * -1
+        food.fromLoan / food.needs * -1
+      }.toSeq)
+    ).toArray
+
+  def foodFromDonationOnFoodNeedsDynamic =
+    simulationState.foodStats.map(fs=>
+      average(fs.map { f=>
+        val food = f._2
+        food.fromDonation / food.needs * -1
       }.toSeq)
     ).toArray
