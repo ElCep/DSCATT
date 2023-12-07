@@ -34,6 +34,7 @@ enum FoodDonationStrategy extends Control:
     case FoodForUsOnlyStrategy extends FoodDonationStrategy // extra food keeps in the kitchen (for being sold)
     case FoodForAllStrategy extends FoodDonationStrategy // extra food can be given to a demanding kitchen
 
+/*
 enum ManPowerProvision extends Control:
     case WorkInOwnKitchenOnly extends ManPowerProvision // manpower is never loaned to another kitchen
     case HelpOnDemand extends ManPowerProvision // manpower is loaned to another kitchen if required
@@ -41,6 +42,7 @@ enum ManPowerProvision extends Control:
 enum MigrantStrategy extends Control:
     case LeaveForEver extends MigrantStrategy // when someone leaves a kitchen, it does once and for all
     case SeasonalPresence extends MigrantStrategy // some people are present in kitchen when there is work, in town the rest of the time
+*/
 
 enum HerdStrategy extends Control:
     case AnywhereAnyTime extends HerdStrategy // all herd beasts are grazing on the full area (fallow or crop)
@@ -52,18 +54,22 @@ enum FertilizerStrategy extends Control:
     case Nominal150Fertilizing extends FertilizerStrategy // nominal 150kg per hectare (ie 0.015kg / m2)
     case PriorityFetilizedParcels(criteria: Parcel => Boolean) extends FertilizerStrategy // Fertilizer is set in priority on a given set of Parcels
 
+
 enum MulchingStrategy extends Control:
     case Mulching(leftOnTheGroundRatio: Double = 0.0) extends MulchingStrategy // Mulch ratio led on the ground to enrich it (and not used for winter herd food)
 
+/*
 enum FertilizerAttribution:
     case UniformAttribution extends FertilizerAttribution
     case UniformForTaxPayer extends FertilizerAttribution
     case BagRouletteForTaxPayer extends FertilizerAttribution
 
+
+
 enum FaidherbiaStrategy extends Control:
     case NoFaidherbiaAttention extends FaidherbiaStrategy
     case FaidherbiaRegrowPreservation extends FaidherbiaStrategy
-
+*/
 case class KitchenProfile(
                            kitchenSize: KitchenSize,
                            rotationCycle: RotationCycle,
@@ -71,7 +77,6 @@ case class KitchenProfile(
                            ownFallowUse: OwnFallowUse,
                            loanStrategy: LoanStrategy,
                            foodDonationStrategy: FoodDonationStrategy,
-                           herdSize: Int,
                            drySeasonHerdStrategy: HerdStrategy,
                            wetSeasonHerdStrategy: HerdStrategy,
                            drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean,
@@ -88,7 +93,6 @@ object KitchenProfile {
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
       FoodDonationStrategy.FoodForAllStrategy, 
-      15,
       HerdStrategy.EverywhereByDayOwnerByNight,
       HerdStrategy.EverywhereByDayOwnerByNight,
       (_, _) => true,
