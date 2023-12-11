@@ -26,7 +26,7 @@ object Simulation {
              kitchenPartition: KitchenPartition = KitchenPartition((KitchenProfile.default, 1)),
              supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
-             soilQualityBasis: Double = 0.5,
+             soilQualityBasis: Double = 0.4,
              hookParameters: HookParameters
            ) = {
 
@@ -40,9 +40,12 @@ object Simulation {
     val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels)
 
     println("area totale " + nakedWorld.parcels.map(_.area).sum)
-    val initialState = SimulationState(nakedWorld, kitchens, History.initialize(simulationLength, kitchens), 1)
+    val initialHistory = History.initialize(simulationLength, kitchens)
+    val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
-    val finalState = evolve(initialState, populationGrowth, simulationLength + 1, soilQualityBasis)
+    val warmedUpState = evolve(initialState, 0.0, 2, soilQualityBasis).copy(history = initialHistory, year = 1)
+
+    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis)
 
     History.printParcels(finalState, hookParameters)
     History.printKitckens(finalState, hookParameters)

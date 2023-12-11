@@ -13,14 +13,14 @@ object Diohine {
 
     val hookFile = HookFile(
       outputPath = "/tmp",
-      parcels = false,
+      parcels = true,
       kitchens = true
     )
 
     val hooks = HookParameters(
       displayParcels = false,
       displayKitchens = true,
-      hookFile = None
+      hookFile = Some(hookFile)
     )
 
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
@@ -28,7 +28,7 @@ object Diohine {
     }
 
     val kitchenProfile1 = KitchenProfile(
-      kitchenSize = 10,
+      kitchenSize = 16,
       RotationCycle.ThreeYears,
       CropingStrategy.PeanutForInexcess(0.0),
       OwnFallowUse.NeverUseFallow,
@@ -38,37 +38,37 @@ object Diohine {
       HerdStrategy.EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.Mulching(0.10),
+      MulchingStrategy.Mulching(0.0),
       4
     )
 
-    val kitchenProfile2 = KitchenProfile(
-      kitchenSize = 16,
-      RotationCycle.ThreeYears,
-      CropingStrategy.PeanutForInexcess(0.5),
-      OwnFallowUse.NeverUseFallow,
-      LoanStrategy.ExtraParcelsExceptFallowLoaner,
-      FoodDonationStrategy.FoodForAllStrategy,
-      HerdStrategy.EverywhereByDayOwnerByNight,
-      HerdStrategy.EverywhereByDayOwnerByNight,
-      manureDepositStategyMilNextYear,
-      FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.Mulching(0.10),
-      4
-    )
+//    val kitchenProfile2 = KitchenProfile(
+//      kitchenSize = 16,
+//      RotationCycle.ThreeYears,
+//      CropingStrategy.PeanutForInexcess(0.5),
+//      OwnFallowUse.NeverUseFallow,
+//      LoanStrategy.ExtraParcelsExceptFallowLoaner,
+//      FoodDonationStrategy.FoodForAllStrategy,
+//      HerdStrategy.EverywhereByDayOwnerByNight,
+//      HerdStrategy.EverywhereByDayOwnerByNight,
+//      manureDepositStategyMilNextYear,
+//      FertilizerStrategy.UniformFertilizing,
+//      MulchingStrategy.Mulching(0.10),
+//      4
+//    )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 45))
+    val kitchenPartition = KitchenPartition((kitchenProfile1, 20))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
     val simulationState = Simulation(
       77,
       giniParcels = 0.1,
-      populationGrowth = 0.03,
+      populationGrowth = 0.021,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 5,
+      simulationLength = 10,
       hookParameters = hooks)
 
     println("Pop " + simulationState.populationDynamic)
@@ -83,6 +83,7 @@ object Diohine {
     println("Migrant dynamic  " + simulationState.migrantsDynamic.toSeq)
     println("FFL on Food needs dynamic  " + simulationState.foodFromLoanOnFoodNeedsDynamic.toSeq)
     println("FFD on Food needs dynamic  " + simulationState.foodFromDonationOnFoodNeedsDynamic.toSeq)
+    println("Kitchen size  " + simulationState.averageKitchenSizeDynamic.toSeq)
   }
 
 

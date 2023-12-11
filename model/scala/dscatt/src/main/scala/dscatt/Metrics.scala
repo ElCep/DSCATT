@@ -16,6 +16,11 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       _.values.map(_.emigrants).sum
     ).toArray
 
+  def averageKitchenSizeDynamic =
+    simulationState.population.map(p=>
+      average(p.values.map(_.size.toDouble).toSeq)
+    ).toArray
+
   def herdDynamic = simulationState.herds.map(_.values.sum).toArray
 
   def averageNitrogenDynamic =
