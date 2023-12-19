@@ -86,11 +86,16 @@ object Kitchen {
   }
 
 
-  def evolve(simulationState: SimulationState, populationGrowth: Double, foodAssessment: Seq[Food])(using mT: MersenneTwister) = {
+  def evolve(simulationState: SimulationState, populationGrowth: Double, foodAssessment: Seq[Food], emigrationProcess: Boolean = true)(using mT: MersenneTwister) = {
 
     val (populationUpdated, births): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolve(simulationState.kitchens, populationGrowth)
 
-    val (emigrantsUpdated, nbEmigrants): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolveEmigrants(populationUpdated, foodAssessment)
+    val (emigrantsUpdated, nbEmigrants): (Seq[Kitchen], Map[KitchenID, Int]) = 
+      emigrationProcess match {
+        case true=> Population.evolveEmigrants(populationUpdated, foodAssessment)
+        case false => (populationUpdated, Map())
+      }
+      
     val (afterAbsorbtionKitchens, afterAbsorbtionWorld, absorbingKitchens) = kitchenAbsorption(emigrantsUpdated, simulationState.world)
     val (afterSplitKitchens, afterSplitWorld, splittedInto) = kitchenSplit(afterAbsorbtionKitchens, afterAbsorbtionWorld)
 

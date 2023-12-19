@@ -26,7 +26,7 @@ object Simulation {
              kitchenPartition: KitchenPartition = KitchenPartition((KitchenProfile.default, 1)),
              supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
-             soilQualityBasis: Double = 0.4,
+             soilQualityBasis: Double,
              hookParameters: HookParameters
            ) = {
 
@@ -43,9 +43,9 @@ object Simulation {
     val initialHistory = History.initialize(simulationLength, kitchens)
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
-    val warmedUpState = evolve(initialState, 0.0, 2, soilQualityBasis).copy(history = initialHistory, year = 1)
+    val warmedUpState = evolve(initialState, 0.0, 2, soilQualityBasis, false).copy(history = initialHistory, year = 1)
 
-    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis)
+    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis, true)
 
     History.printParcels(finalState, hookParameters)
     History.printKitckens(finalState, hookParameters)
@@ -54,7 +54,7 @@ object Simulation {
   }
 
 
-  def evolve(simulationState: SimulationState, populationGrowth: Double, simulationLenght: Int, soilQualityBasis: Double)(using MersenneTwister): SimulationState = {
+  def evolve(simulationState: SimulationState, populationGrowth: Double, simulationLenght: Int, soilQualityBasis: Double, emigrationProcess: Boolean)(using MersenneTwister): SimulationState = {
 
 
     @tailrec
@@ -75,7 +75,7 @@ object Simulation {
         val afterDonationFoods = FoodDonation.assign(foodAfterRotation, simulationState)
 
         // Process kitchen dynamics (population, emmigrants, absorptions, splits)
-        val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoods)
+        val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoods, emigrationProcess)
 
         // Process Fertiliy
         val afterFertilizationState = Fertility.assign(resizedSimulationState, soilQualityBasis)
