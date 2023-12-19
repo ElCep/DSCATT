@@ -16,8 +16,8 @@ object App:
     val outputPath = arguments(0) match
       case Some(path: String)=>
 
-        val kitchens = List.tabulate(19)(n=> n+2)
-        val ginis = List.tabulate(11)(i=> i * 0.05)
+        val kitchens = List.tabulate(20)(n => n + 35)
+        val ginis = List.tabulate(10)(i=> 0.05 * (i + 1))
 
         val combinatory =
           kitchens.flatMap: k=>
@@ -25,9 +25,11 @@ object App:
               k-> g
 
         val worlds = combinatory.foreach: (k,g)=>
+          println("file name " + k + " " + g)
+          println(s"${"%.2f".format(g)}")
           val fileName = s"k${k}g${"%.2f".format(g)}"
           val outPath = s"$path".toFile
-          val synthParcels = usecase.GenerateSyntheticParcel.generate(k, g, 204, 0.01.toFloat, 77L, null).toArray.map: sp=>
+          val synthParcels = usecase.GenerateSyntheticParcel.generate(k, g, 350, 0.01.toFloat, 77L, null).toArray.map: sp=>
               sp.asInstanceOf[SyntheticParcel]
 
           outPath.toJava.mkdir
