@@ -55,6 +55,15 @@ implicit class HistoryDecorator(simulationState: SimulationState):
   def totalManure = simulationState.fertilityHistory.flatMap(fh =>
       fh.map(_.manureMass)
     ).sum
+  
+  def averageMulchingDynamic =
+    simulationState.fertilityHistory.map(fh =>
+      fh.map(_.mulchingMass)
+    ).transpose.map(average(_)).toArray
+
+  def totalMulching = simulationState.fertilityHistory.flatMap(fh =>
+      fh.map(_.mulchingMass)
+    ).sum
 
   def foodFromLoanOnFoodNeedsDynamic =
     simulationState.foodStats.map(fs=>

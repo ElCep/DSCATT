@@ -38,7 +38,7 @@ object Diohine {
       HerdStrategy.EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.Mulching(0.0),
+      MulchingStrategy.Mulching(0.1),
       4
     )
 
@@ -58,21 +58,22 @@ object Diohine {
 //    )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 20))
+    val kitchenPartition = KitchenPartition((kitchenProfile1, 15))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
     val simulationState = Simulation(
       77,
-      giniParcels = 0.1,
+      giniParcels = 0.2,
       populationGrowth = 0.021,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 10,
+      simulationLength = 25,
+      soilQualityBasis = 0.8,
       hookParameters = hooks)
 
-    println("Pop " + simulationState.populationDynamic)
-    println("herd " + simulationState.herdDynamic)
+    println("Pop " + simulationState.populationDynamic.toSeq)
+    println("herd " + simulationState.herdDynamic.toSeq)
     println("nitrogen " + simulationState.averageNitrogenDynamic.toSeq)
     println("Soil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
     println("Average Inexesse " + simulationState.averageInexcessDynamic)
@@ -80,6 +81,8 @@ object Diohine {
     println("Total Loaned Area " + simulationState.totalLoanedArea)
     println("Manure dynamic " + simulationState.averageManureDynamic.toSeq)
     println("Total Manure  " + simulationState.totalManure)
+    println("Mulching dynamic " + simulationState.averageMulchingDynamic.toSeq)
+    println("Total Mulching  " + simulationState.totalMulching)
     println("Migrant dynamic  " + simulationState.migrantsDynamic.toSeq)
     println("FFL on Food needs dynamic  " + simulationState.foodFromLoanOnFoodNeedsDynamic.toSeq)
     println("FFD on Food needs dynamic  " + simulationState.foodFromDonationOnFoodNeedsDynamic.toSeq)
