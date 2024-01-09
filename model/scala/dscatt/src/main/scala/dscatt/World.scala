@@ -68,7 +68,9 @@ object World {
 
   def parcelsForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter(_.ownerID == kitchen.id)
 
-  def farmedParcelsForKitchen(parcels: Seq[Parcel], kitchen: Kitchen): Seq[Parcel] = parcels.filter(_.farmerID == kitchen.id)
+  def farmedParcelsForKitchen(parcels: Seq[Parcel], kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchenID(parcels,kitchen.id)
+  
+  def farmedParcelsForKitchenID(parcels: Seq[Parcel], kitchenID: KitchenID): Seq[Parcel] = parcels.filter(_.farmerID == kitchenID)
 
   def farmedParcelsForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchen(world.parcels, kitchen)
 
@@ -78,15 +80,19 @@ object World {
 
   def parcelsInCultureForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = parcelsInCultureForKitchen(world.parcels, kitchen)
 
-  def parcelsInCultureForKitchen(parcels: Seq[Parcel], kitchen: Kitchen): Seq[Parcel] = parcels.filter { p => p.farmerID == kitchen.id && Parcel.isCultivated(p) }
+  def parcelsInCultureForKitchen(parcels: Seq[Parcel], kitchen: Kitchen): Seq[Parcel] = parcelsInCultureForKitchenID(parcels, kitchen.id)
+
+  def parcelsInCultureForKitchenID(parcels: Seq[Parcel], kitchenID: KitchenID): Seq[Parcel] = parcels.filter { p => p.farmerID == kitchenID && Parcel.isCultivated(p) }
+
+  def cultivatedParcels(parcels: Seq[Parcel]): Seq[Parcel] = parcels.filter(Parcel.isCultivated(_))
 
   def notAssignedParcels(world: World) = world.parcels.filter(_.crop == NotAssigned)
 
   def assignedParcels(world: World) = world.parcels.filter(_.crop != NotAssigned)
 
-  def milParcels(world: World) = world.parcels.filter(_.crop == Mil)
+  def milParcels(parcels: Seq[Parcel]) = parcels.filter(_.crop == Mil)
 
-  def peanutParcels(world: World) = world.parcels.filter(_.crop == Peanut)
+  def peanutParcels(parcels: Seq[Parcel]) = parcels.filter(_.crop == Peanut)
 
   def fallowParcels(world: World) = world.parcels.filter(_.crop == Fallow)
 
