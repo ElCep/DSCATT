@@ -21,16 +21,16 @@ object Constants {
   val WORKERS_RATIO_PER_KITCHEN = 0.66 // Source: Robert and co
 
   //KITCHEN
-  val KITCHEN_MINIMUM_SIZE = 3
-  val KITCHEN_MAXIMUM_SIZE = 16
-  val SPLIT_KITCHEN_OFFSPRING_SIZE = 4
+  val KITCHEN_MINIMUM_SIZE = 4
+  val KITCHEN_MAXIMUM_SIZE = 24
+  val SPLIT_KITCHEN_OFFSPRING_SIZE = 6
   val KITCHEN_SIZE_THRESHOLD_FOR_ABSORPTION = KITCHEN_MAXIMUM_SIZE - SPLIT_KITCHEN_OFFSPRING_SIZE
 
-  //SPACE // to adjust the generated area to a 200 people village in ha
-  val AREA_FACTOR = 197.0 / 500000
+  //SPACE // to adjust the generated area to a 180 ha
+  val AREA_FACTOR = 180.0 / 500000 // (Mariana Odru, 2013 (177.1 ha))
 
 //  {
-//    val foodFor200 = 200 * DAILY_FOOD_NEED_PER_PERSON * 365
+//    val foodFor200 = 720 * DAILY_FOOD_NEED_PER_PERSON * 365
 //    val surfaceFor200 = foodFor200.toDouble / (0.5 * (MIL_YIELD_PER_M2 + PEANUT_YIELD_PER_M2 * PEANUT_FOOD_EQUIVALENCE))
 //    surfaceFor200 / (500000 * 2.0 / 3) / 10000 // 500000 = generated shp cultivated surface
 //  }
@@ -47,14 +47,17 @@ object Constants {
   val NITROGEN_PROPORTION_PER_MANURE_KG = 0.0238 // no dimension
 
   val MIL_FULL_POTENTIAL_YIELD: KG_BY_HA = 3775 // kg DM / ha
-  val PEANUT_FULL_POTENTIAL_YIELD: KG_BY_HA = 450 // kg DM / ha
+  val PEANUT_FULL_POTENTIAL_YIELD: KG_BY_HA = 1300 // kg DM / ha
   val FALLOW_FULL_POTENTIAL_YIELD: KG_BY_HA = 1498 // kg DM / ha
 
   val MIL_STRAW_RATIO = 0.7
   val PEANUT_STRAW_RATIO = 0.666
-
   val MIL_SEED_RATIO = 0.3
   val PEANUT_SEED_RATIO = 0.333
+
+  val MIL_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
+  val PEANUT_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE * Constants.PEANUT_SEED_RATIO
+
 
   //Herd
   val KG_OF_STRAW_PER_COW_PER_YEAR: KG = 3650
