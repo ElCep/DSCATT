@@ -38,6 +38,6 @@ object Loan {
   }
 
 
-  def reset(world: World) = world.copy(parcels = world.parcels.map(p => p.copy(farmerID = p.ownerID).setFallowIfCropZoneThree))
+  def reset(world: World) = world.copy(parcels = world.parcels.map(p => p.copy(farmerID = p.ownerID).updateCrops))
 
 }
