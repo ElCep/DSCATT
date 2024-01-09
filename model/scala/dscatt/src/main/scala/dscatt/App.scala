@@ -38,7 +38,7 @@ object Diohine {
       HerdStrategy.EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.Mulching(0.1),
+      MulchingStrategy.Mulching(0.10),
       4
     )
 
@@ -68,25 +68,26 @@ object Diohine {
       populationGrowth = 0.021,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 25,
-      soilQualityBasis = 0.8,
+      simulationLength = 20,
+      soilQualityBasis = 0.5,
       hookParameters = hooks)
 
     println("Pop " + simulationState.populationDynamic.toSeq)
+    println("Migrant dynamic  " + simulationState.migrantsDynamic.toSeq)
     println("herd " + simulationState.herdDynamic.toSeq)
     println("nitrogen " + simulationState.averageNitrogenDynamic.toSeq)
     println("Soil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
-    println("Average Inexesse " + simulationState.averageInexcessDynamic)
+    println("Average Inexesse " + simulationState.averageInexcessDynamic.toSeq)
     println("# unbalanced kitchen " + simulationState.numberOfUnbalancedKitchen)
     println("Total Loaned Area " + simulationState.totalLoanedArea)
     println("Manure dynamic " + simulationState.averageManureDynamic.toSeq)
     println("Total Manure  " + simulationState.totalManure)
     println("Mulching dynamic " + simulationState.averageMulchingDynamic.toSeq)
     println("Total Mulching  " + simulationState.totalMulching)
-    println("Migrant dynamic  " + simulationState.migrantsDynamic.toSeq)
     println("FFL on Food needs dynamic  " + simulationState.foodFromLoanOnFoodNeedsDynamic.toSeq)
     println("FFD on Food needs dynamic  " + simulationState.foodFromDonationOnFoodNeedsDynamic.toSeq)
     println("Kitchen size  " + simulationState.averageKitchenSizeDynamic.toSeq)
+    println("Mil yield dynamic  " + simulationState.averageMilYieldDynamic)
   }
 
 
