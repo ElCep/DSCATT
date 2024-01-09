@@ -11,13 +11,13 @@ object Croping {
   object Fallow extends Crop
 
   object NotAssigned extends Crop
-  
+
   implicit class ACrop(c: Crop) {
     def display = c match {
-      case Mil=> "Millet"
-      case Fallow=> "Fallow"
-      case Peanut=> "Peanut"
-      case NotAssigned=> "NotAssigned"
+      case Mil => "Millet"
+      case Fallow => "Fallow"
+      case Peanut => "Peanut"
+      case NotAssigned => "NotAssigned"
     }
   }
 
@@ -33,9 +33,9 @@ object Croping {
     case 1 => One
     case 2 => Two
     case 3 => rotationCycle match {
-      case RotationCycle.TwoYears if(threeIsOneProbabilityIf2Years)=> One
-      case RotationCycle.TwoYears=> Two
-      case RotationCycle.ThreeYears=> Three
+      case RotationCycle.TwoYears if (threeIsOneProbabilityIf2Years) => One
+      case RotationCycle.TwoYears => Two
+      case RotationCycle.ThreeYears => Three
     }
 
   def evolveCropZone(cropZone: CropZone, rotationCycle: RotationCycle): CropZone = {
@@ -56,24 +56,14 @@ object Croping {
   def evolveCrop(crop: Crop, rotationCycle: RotationCycle, targetCropZone: CropZone) = {
     rotationCycle match {
       case RotationCycle.TwoYears => targetCropZone match {
-        case One=> Mil
-        case _=> Peanut
+        case One => Mil
+        case _ => Peanut
       }
       case RotationCycle.ThreeYears =>
         targetCropZone match {
+          case One => Mil
+          case Two => Peanut
           case Three => Fallow
-          case _ =>
-            crop match {
-              case Peanut => Fallow
-              case Mil => Peanut
-              case Fallow => Mil
-              case _ =>
-                targetCropZone match {
-                  case One => Mil
-                  case Two => Peanut
-                  case Three => Fallow
-                }
-            }
         }
     }
   }
@@ -83,8 +73,12 @@ object Croping {
       case Three => parcel.copy(crop = Fallow)
       case _ => parcel
     }
+
+    def updateCrops = parcel.cropZone match {
+      case Two => parcel.copy(crop = Peanut)
+      case Three=> parcel.copy(crop = Fallow)
+      case _ => parcel
+    }
   }
-  
-  def foodFromPeanut(peanutWeight: Double) = Constants.PEANUT_FOOD_EQUIVALENCE * peanutWeight
 }
 
