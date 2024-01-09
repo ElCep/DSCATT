@@ -43,7 +43,8 @@ object Simulation {
     val initialHistory = History.initialize(simulationLength, kitchens)
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
-    val warmedUpState = evolve(initialState, 0.0, 2, soilQualityBasis, false).copy(history = initialHistory, year = 1)
+    // Two years warming up
+    val warmedUpState = evolve(initialState, 0.0, 3, soilQualityBasis, false).copy(history = initialHistory, year = 1)
 
     val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis, true)
 
@@ -80,8 +81,26 @@ object Simulation {
         // Process Fertiliy
         val afterFertilizationState = Fertility.assign(resizedSimulationState, soilQualityBasis)
 
-        val finalHistory = afterFertilizationState.history.updateFoodBalances(afterFertilizationState.year, afterDonationFoods)
+        val finalHistory = afterFertilizationState.history.updateFoods(afterFertilizationState.year, afterDonationFoods)
+
+        val tot = finalHistory.get(afterRotationsSimulationState.year).map {
+          _.foodStats.values.map(x => x.fromCulture + x.fromLoan).sum
+        }.getOrElse(0.0)
+
+        val loan = finalHistory.get(afterRotationsSimulationState.year).map {
+          _.foodStats.values.map(x => x.fromLoan).sum
+        }.getOrElse(0.0)
+
+        val mil = Kitchen.parcelsFoodProduction(World.milParcels(afterRotationsSimulationState.world.parcels))
+        val peanut = Kitchen.parcelsFoodProduction(World.peanutParcels(afterRotationsSimulationState.world.parcels))
+
+        println("TOTAL MIL " + afterRotationsSimulationState.year + " : " + mil + " :: " + peanut + " :: " + tot + " :: " + mil / tot + " :: " + loan / tot)
+
+
         val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
+        println("not mil, peanut, fallow " + finalState.world.parcels.filter(x => x.crop == Mil).size + ", "
+          + finalState.world.parcels.filter(x => x.crop == Peanut).size + ", "
+          + finalState.world.parcels.filter(x => x.crop == Fallow).size)
 
         evolve0(finalState)
       }
