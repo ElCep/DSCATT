@@ -14,12 +14,12 @@ object Kitchen {
 
   case class FoodBalance(kitchenID: KitchenID, balance: Double)
 
-  //case class Food(kitchen: KitchenID, quantity: Double)
-
-  case class Food(kitchenID: KitchenID, needs: Double = 0.0, fromCulture: Double = 0.0, fromLoan: Double = 0.0, fromDonation: Double = 0.0, inexess: Double = 0.0)
+  case class Food(kitchenID: KitchenID, needs: Double = 0.0, fromCulture: Double = 0.0, fromLoan: Double = 0.0, fromDonation: Double = 0.0, inexess: Double = 0.0, milInCultureArea: Double = 0.0)
   
   implicit class WrapFood(f: Food):
-    def toBalance = f.needs + f.fromCulture + f.fromLoan + f.fromDonation
+    def toBalance = f.needs + f.fullProduction
+
+    def fullProduction = f.fromCulture + f.fromLoan + f.fromDonation
 
   def buildKitchens(kitchenPartition: KitchenPartition): Seq[Kitchen] = {
     kitchenPartition.profiles.flatMap { p => Seq.fill[KitchenProfile](p._2)(p._1) }.zipWithIndex.map { case (kp, id) =>
@@ -44,20 +44,16 @@ object Kitchen {
   def kitchen(kitchens: Seq[Kitchen], id: KitchenID) = kitchens.find(_.id == id)
 
   def foodNeeds(kitchen: Kitchen) = kitchen.size * Constants.DAILY_FOOD_NEED_PER_PERSON * 365
-
-  def cultivatedSurface(world: World, kitchen: Kitchen): Double = {
-    val cultivatedParcels = World.farmedParcelsForKitchen(world, kitchen).filter(p => Parcel.isCultivated(p))
-    cultivatedParcels.map(_.area).sum
-  }
-
+  
   def parcelFoodProduction(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel): Double = {
     parcelFoodProduction(parcel.crop, parcel.area, metrics(parcel.id))
   }
 
+
   def parcelFoodProduction(crop: Crop, parcelArea: Double, agronomicMetrics: Fertility.AgronomicMetrics): Double = {
     (crop match {
-      case Mil => Fertility.milNRF(agronomicMetrics.availableNitrogen / parcelArea) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
-      case Peanut => Fertility.peanutNRF * Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE * Constants.PEANUT_SEED_RATIO
+      case Mil => Fertility.milNRF(agronomicMetrics.availableNitrogen / parcelArea) * Constants.MIL_SEED_FULL_POTENTIAL_YIELD
+      case Peanut => Fertility.peanutNRF * Constants.PEANUT_SEED_FULL_POTENTIAL_YIELD
       case _ => 0.0
     }) * parcelArea
   }
@@ -65,8 +61,8 @@ object Kitchen {
   // Fallow is considered as Mil in case of ExtraParcelsExceptFallowLoaner and will be set as Mil once the loan will be effective
   def parcelFoodProductionForLoan(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel) =
     (parcel.crop match {
-      case Mil | Fallow => Fertility.milNRF(metrics(parcel.id).availableNitrogen / parcel.area) * Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
-      case Peanut => Fertility.peanutNRF * Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE * Constants.PEANUT_SEED_RATIO
+      case Mil | Fallow => Fertility.milNRF(metrics(parcel.id).availableNitrogen / parcel.area) * Constants.MIL_SEED_FULL_POTENTIAL_YIELD
+      case Peanut => Fertility.peanutNRF * Constants.PEANUT_SEED_FULL_POTENTIAL_YIELD
       case _ => 0.0
     }) * parcel.area
 
@@ -90,12 +86,12 @@ object Kitchen {
 
     val (populationUpdated, births): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolve(simulationState.kitchens, populationGrowth)
 
-    val (emigrantsUpdated, nbEmigrants): (Seq[Kitchen], Map[KitchenID, Int]) = 
+    val (emigrantsUpdated, nbEmigrants): (Seq[Kitchen], Map[KitchenID, Int]) =
       emigrationProcess match {
         case true=> Population.evolveEmigrants(populationUpdated, foodAssessment)
         case false => (populationUpdated, Map())
       }
-      
+
     val (afterAbsorbtionKitchens, afterAbsorbtionWorld, absorbingKitchens) = kitchenAbsorption(emigrantsUpdated, simulationState.world)
     val (afterSplitKitchens, afterSplitWorld, splittedInto) = kitchenSplit(afterAbsorbtionKitchens, afterAbsorbtionWorld)
 
@@ -220,8 +216,6 @@ object Kitchen {
   def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double)(using Fertility.AgronomicMetricsByParcel) = {
 
     val manPower = Kitchen.manPower(kitchen)
-
-    // println("NEEDS " + needs + " MAN POVER " + manPower + " for " + kitchen.id + " with  " + kitchen.size + " people")
 
     @tailrec
     def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel], remainingManPower: Double): CropNeeded = {

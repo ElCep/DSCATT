@@ -17,7 +17,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     ).toArray
 
   def averageKitchenSizeDynamic =
-    simulationState.population.map(p=>
+    simulationState.population.map(p =>
       average(p.values.map(_.size.toDouble).toSeq)
     ).toArray
 
@@ -53,30 +53,40 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     ).transpose.map(average(_)).toArray
 
   def totalManure = simulationState.fertilityHistory.flatMap(fh =>
-      fh.map(_.manureMass)
-    ).sum
-  
+    fh.map(_.manureMass)
+  ).sum
+
   def averageMulchingDynamic =
     simulationState.fertilityHistory.map(fh =>
       fh.map(_.mulchingMass)
     ).transpose.map(average(_)).toArray
 
   def totalMulching = simulationState.fertilityHistory.flatMap(fh =>
-      fh.map(_.mulchingMass)
-    ).sum
+    fh.map(_.mulchingMass)
+  ).sum
 
   def foodFromLoanOnFoodNeedsDynamic =
-    simulationState.foodStats.map(fs=>
-      average(fs.map { f=>
+    simulationState.foodStats.map(fs =>
+      average(fs.map { f =>
         val food = f._2
         food.fromLoan / food.needs * -1
       }.toSeq)
     ).toArray
 
   def foodFromDonationOnFoodNeedsDynamic =
-    simulationState.foodStats.map(fs=>
-      average(fs.map { f=>
+    simulationState.foodStats.map(fs =>
+      average(fs.map { f =>
         val food = f._2
         food.fromDonation / food.needs * -1
       }.toSeq)
     ).toArray
+
+  def averageMilYieldDynamic =
+    (simulationState.parcelStats zip simulationState.foodStats).map { case (ps, fs) =>
+      average(fs.map { f =>
+        val food = f._2
+        val area = (ps(f._1).loanedArea + ps(f._1).farmedArea)
+       val milRatio = food.milInCultureArea / area
+        (food.fromCulture + food.fromLoan) * milRatio / area
+      }.toSeq)
+    }
