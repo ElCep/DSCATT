@@ -12,8 +12,6 @@ import scala.annotation.tailrec
 
 object Fertility {
 
-  type FertilityBoost = Double
-
   case class AgronomicMetrics(availableNitrogen: Double = 0.0, soilQuality: Double = 0.0)
 
   case class Metrics(year: Int, crop: Crop = NotAssigned, manureMass: Double = 0.0, mulchingMass: Double = 0.0, agronomicMetrics: AgronomicMetrics = AgronomicMetrics(0.0, 0.0))
