@@ -13,8 +13,8 @@ object History {
 
   case class PopulationStat(size: Int, births: Int, emigrants: Int, absorbedKitchens: Seq[KitchenID], splittedInto: Option[KitchenID])
 
-  case class ParcelStat(size: Int, ownedArea: Double, loaned: Int, loanedArea: Double) {
-    override def toString = s"($size, ${ownedArea.toInt}, ${loaned}, ${loanedArea.toInt})"
+  case class ParcelStat(farmedParcelsQuantity: Int, farmedArea: Double, loanedParcelsQuantity: Int, loanedArea: Double) {
+    override def toString = s"($farmedParcelsQuantity, ${farmedArea.toInt}, ${loanedParcelsQuantity}, ${loanedArea.toInt})"
   }
 
   type PopulationStats = Map[KitchenID, PopulationStat]
@@ -47,7 +47,7 @@ object History {
     //      fb.sortBy(_.kitchenID).map(_.quantity)
     //    }
 
-    def updateFoodBalances(year: Int, foods: Seq[Food]): History = {
+    def updateFoods(year: Int, foods: Seq[Food]): History = {
       val historyOfYear = history(year)
       history.updated(year, historyOfYear.copy(foodStats = foods.map(f => f.kitchenID -> f).toMap))
     }
@@ -98,16 +98,18 @@ object History {
 
   def toParcelStats(yearLoans: Seq[Loan], parcels: Seq[Parcel]): ParcelStatsByKitchen = {
 
-    val owned = parcels.groupBy(_.ownerID).map {
-      case (kid, ps) => kid -> (ps.size, ps.map(_.area).sum)
+    val cultivated = parcels.groupBy(_.farmerID).map {
+      case (kid, ps) =>
+        val pInCulture = World.parcelsInCultureForKitchenID(ps, kid)
+        kid -> (pInCulture.size, pInCulture.map(_.area).sum)
     }
     val loaned = yearLoans.groupBy(_.to).map { case (kid, l) =>
       kid -> (l.size, l.map(_.parcel.area).sum)
     }
 
-    owned.map { case (kid, (size, area)) =>
+    cultivated.map { case (kid, (cultivatedSize, cultivatedArea)) =>
       val (loanedSize, loanedArea) = loaned.getOrElse(kid, (0, 0.0))
-      kid -> ParcelStat(size, area, loanedSize, loanedArea)
+      kid -> ParcelStat(cultivatedSize, cultivatedArea, loanedSize, loanedArea)
     }
   }
 
@@ -137,12 +139,13 @@ object History {
       sortedPop.map { p =>
         val fbStatsK = fbStats.getOrElse(p._1, Food(p._1))
         val fertilityStatK = fertilityStats.getOrElse(p._1, Fertility.Metrics(state.year))
+
         Seq(
           yearHistory.year,
           p._1.toString,
-          s"${pStats(p._1).size}",
-          s"${toDouble(pStats(p._1).ownedArea)}",
-          s"${pStats(p._1).loaned}",
+          s"${pStats(p._1).farmedParcelsQuantity}",
+          s"${toDouble(pStats(p._1).farmedArea)}",
+          s"${pStats(p._1).loanedParcelsQuantity}",
           s"${toDouble(pStats(p._1).loanedArea)}",
           s"${yearHistory.herds(p._1)}",
           s"${fertilityStatK.manureMass.toInt}",
