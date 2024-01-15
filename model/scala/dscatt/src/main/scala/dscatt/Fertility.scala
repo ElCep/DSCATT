@@ -14,7 +14,7 @@ object Fertility {
 
   case class AgronomicMetrics(availableNitrogen: Double = 0.0, soilQuality: Double = 0.0)
 
-  case class Metrics(year: Int, crop: Crop = NotAssigned, manureMass: Double = 0.0, mulchingMass: Double = 0.0, agronomicMetrics: AgronomicMetrics = AgronomicMetrics(0.0, 0.0))
+  case class Metrics(year: Int, crop: Crop = Fallow, manureMass: Double = 0.0, mulchingMass: Double = 0.0, agronomicMetrics: AgronomicMetrics = AgronomicMetrics(0.0, 0.0))
 
   type AgronomicMetricsByParcel = Map[ParcelID, AgronomicMetrics]
 
@@ -67,18 +67,17 @@ object Fertility {
           }
 
         val manureMass = kitchenOption.map { kitchen =>
-          val dryToBeManuredArea = World.assignedParcelsForKitchen(state.world, kitchen).filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)).map {
+          val dryToBeManuredArea = World.farmedParcelsForKitchen(state.world, kitchen).filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)).map {
             _.area
           }.sum
 
           val manureKforAssignedP = effectiveHerdSizeByKitchen(kitchen.id) * Constants.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / dryToBeManuredArea
           val dryManureVillageForP = manureVillageForPFor(
             parcel,
-            World.assignedParcels(state.world).filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)),
+            state.world.parcels.filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)),
             state)
 
-          val dryMass = Parcel.isAssigned(parcel) match {
-            case true =>
+          val dryMass =
               kitchen.drySeasonManureCriteria(parcel, kitchen.rotationCycle) match {
                 case true =>
                   kitchen.drySeasonHerdStrategy match {
@@ -88,8 +87,6 @@ object Fertility {
                   }
                 case false => 0.0
               }
-            case false => 0.0
-          }
 
           val wetManureVillageForP = manureVillageForPFor(parcel, World.fallowParcels(state.world), state)
           val manureKforFallow = effectiveHerdSizeByKitchen(kitchen.id) * Constants.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / World.fallowParcelsForKitchen(state.world, kitchen).map {

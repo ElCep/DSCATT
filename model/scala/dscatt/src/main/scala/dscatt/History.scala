@@ -74,7 +74,7 @@ object History {
         val soilQualityMean = parcelFertilities.map(_.agronomicMetrics.soilQuality).sum / parcelFertilities.size
         val availableNitrogenMean = parcelFertilities.map(_.agronomicMetrics.availableNitrogen).sum / parcelFertilities.size
 
-        k.id -> Fertility.Metrics(year, Croping.NotAssigned, manureMassMean, mulchingMassMean, Fertility.AgronomicMetrics(availableNitrogenMean, soilQualityMean))
+        k.id -> Fertility.Metrics(year, Croping.Fallow, manureMassMean, mulchingMassMean, Fertility.AgronomicMetrics(availableNitrogenMean, soilQualityMean))
       }.toMap
 
       history.updated(year, historyOfYear.copy(fertilities = historyOfYear.fertilities ++ newFertilities))

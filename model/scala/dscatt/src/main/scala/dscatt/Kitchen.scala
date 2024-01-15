@@ -63,7 +63,6 @@ object Kitchen {
     (parcel.crop match {
       case Mil | Fallow => Fertility.milNRF(metrics(parcel.id).availableNitrogen / parcel.area) * Constants.MIL_SEED_FULL_POTENTIAL_YIELD
       case Peanut => Fertility.peanutNRF * Constants.PEANUT_SEED_FULL_POTENTIAL_YIELD
-      case _ => 0.0
     }) * parcel.area
 
 
@@ -223,7 +222,7 @@ object Kitchen {
       val needsCondition = production > needs
 
       if (sortedParcels.isEmpty || needsCondition || remainingManPower < 0)
-        CropNeeded(inCulture, sortedParcels, if (needsCondition) production - needs else 0.0) //++: sortedParcels.map { p => p.copy(crop = NotAssigned) }
+        CropNeeded(inCulture, sortedParcels, if (needsCondition) production - needs else 0.0)
       else {
         val head = sortedParcels.head
 

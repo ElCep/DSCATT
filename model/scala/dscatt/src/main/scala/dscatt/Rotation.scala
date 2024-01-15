@@ -1,6 +1,6 @@
 package dscatt
 
-import Croping.{Crop, Fallow, Mil, NotAssigned, Peanut, Three}
+import Croping.{Crop, Fallow, Mil, Peanut, Three}
 import Kitchen.{Food, FoodBalance, parcelsFoodProduction}
 import Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
