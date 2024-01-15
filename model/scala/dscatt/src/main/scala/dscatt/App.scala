@@ -68,7 +68,7 @@ object Diohine {
       populationGrowth = 0.021,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 20,
+      simulationLength = 45,
       soilQualityBasis = 0.5,
       hookParameters = hooks)
 
@@ -89,6 +89,7 @@ object Diohine {
     println("Kitchen size  " + simulationState.averageKitchenSizeDynamic.toSeq)
     println("Mil yield dynamic  " + simulationState.averageMilYieldDynamic)
     println("Peanut yield dynamic  " + simulationState.averagePeanutYieldDynamic)
+    println("Food stress " + simulationState.foodStress)
   }
 
 

@@ -86,7 +86,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       average(fs.map { f =>
         val food = f._2
         val area = (ps(f._1).loanedArea + ps(f._1).farmedArea)
-       val milRatio = food.milInCultureArea / area
+        val milRatio = food.milInCultureArea / area
         (food.fromCulture + food.fromLoan) * milRatio / area
       }.toSeq)
     }
@@ -98,5 +98,13 @@ implicit class HistoryDecorator(simulationState: SimulationState):
         val area = (ps(f._1).loanedArea + ps(f._1).farmedArea)
         val peanutRatio = food.peanutInCultureArea / area
         (food.fromCulture + food.fromLoan) * peanutRatio / area
+      }.toSeq)
+    }
+
+    // (culture + loan + donation) / needs
+  def foodStress =
+    simulationState.foodStats.map { fs =>
+      average(fs.map { f =>
+        - f._2.fullProduction / f._2.needs
       }.toSeq)
     }
