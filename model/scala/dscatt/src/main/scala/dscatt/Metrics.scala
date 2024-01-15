@@ -101,10 +101,8 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       }.toSeq)
     }
 
-    // (culture + loan + donation) / needs
+  // (culture + loan + donation) / needs
   def foodStress =
     simulationState.foodStats.map { fs =>
-      average(fs.map { f =>
-        - f._2.fullProduction / f._2.needs
-      }.toSeq)
+      -fs.map(_._2.fullProduction).sum / fs.map(_._2.needs).sum
     }
