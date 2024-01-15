@@ -65,6 +65,7 @@ object Rotation {
     val cultivatedParcelsByK = inCulture.groupBy(_.farmerID)
 
     val milParcels = World.milParcels(newParcels).groupBy(_.farmerID)
+    val peanutParcels = World.peanutParcels(newParcels).groupBy(_.farmerID)
 
     val food = initialFood.map { f =>
       val cultivatedK = cultivatedParcelsByK.getOrElse(f.kitchenID, Seq())
@@ -73,7 +74,8 @@ object Rotation {
         fromCulture = parcelsFoodProduction(cultivatedK),
         fromLoan = parcelsFoodProduction(loanedK),
         inexess = inexcessFromCultivatedParcelsByKitchen.getOrElse(f.kitchenID, 0.0),
-        milInCultureArea = milParcels.getOrElse(f.kitchenID, Seq()).map(_.area).sum
+        milInCultureArea = milParcels.getOrElse(f.kitchenID, Seq()).map(_.area).sum,
+        peanutInCultureArea = peanutParcels.getOrElse(f.kitchenID, Seq()).map(_.area).sum
       )
     }
 

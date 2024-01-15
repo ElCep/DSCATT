@@ -14,7 +14,7 @@ object Constants {
   val MIL_YIELD_PER_M2 = 600.0 / 10000
   val PEANUT_YIELD_PER_M2 = 400.0 / 10000
 
-  val PEANUT_FOOD_EQUIVALENCE = 0.5 // quantity of food / quantity of peanuts
+  val PEANUT_FOOD_EQUIVALENCE = 0.7 // quantity of food / quantity of peanuts
   // Considering that  0.66 workers per kitchen is enough and that they need 273*15=4095kg / year,
   // and a yield of 500kg / ha in mean, it comes 0.8ha / worker
   val CULTIVATED_AREA_PER_WORKER: HA = 15

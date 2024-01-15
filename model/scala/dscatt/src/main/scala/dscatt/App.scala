@@ -88,6 +88,7 @@ object Diohine {
     println("FFD on Food needs dynamic  " + simulationState.foodFromDonationOnFoodNeedsDynamic.toSeq)
     println("Kitchen size  " + simulationState.averageKitchenSizeDynamic.toSeq)
     println("Mil yield dynamic  " + simulationState.averageMilYieldDynamic)
+    println("Peanut yield dynamic  " + simulationState.averagePeanutYieldDynamic)
   }
 
 

@@ -14,7 +14,7 @@ object Kitchen {
 
   case class FoodBalance(kitchenID: KitchenID, balance: Double)
 
-  case class Food(kitchenID: KitchenID, needs: Double = 0.0, fromCulture: Double = 0.0, fromLoan: Double = 0.0, fromDonation: Double = 0.0, inexess: Double = 0.0, milInCultureArea: Double = 0.0)
+  case class Food(kitchenID: KitchenID, needs: Double = 0.0, fromCulture: Double = 0.0, fromLoan: Double = 0.0, fromDonation: Double = 0.0, inexess: Double = 0.0, milInCultureArea: Double = 0.0, peanutInCultureArea: Double = 0.0)
   
   implicit class WrapFood(f: Food):
     def toBalance = f.needs + f.fullProduction
