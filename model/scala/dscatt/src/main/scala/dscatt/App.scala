@@ -68,28 +68,32 @@ object Diohine {
       populationGrowth = 0.021,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 45,
+      simulationLength = 25,
       soilQualityBasis = 0.5,
+      kitchenMinimumSize = 4,
+      kitchenMaximumSize = 24,
+      splitKitchenOffspringSize = 6,
+      peanutSeedToFood = 0.5,
       hookParameters = hooks)
 
     println("Pop " + simulationState.populationDynamic.toSeq)
-    println("Migrant dynamic  " + simulationState.migrantsDynamic.toSeq)
-    println("herd " + simulationState.herdDynamic.toSeq)
-    println("nitrogen " + simulationState.averageNitrogenDynamic.toSeq)
-    println("Soil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
-    println("Average Inexesse " + simulationState.averageInexcessDynamic.toSeq)
-    println("# unbalanced kitchen " + simulationState.numberOfUnbalancedKitchen)
-    println("Total Loaned Area " + simulationState.totalLoanedArea)
-    println("Manure dynamic " + simulationState.averageManureDynamic.toSeq)
-    println("Total Manure  " + simulationState.totalManure)
-    println("Mulching dynamic " + simulationState.averageMulchingDynamic.toSeq)
-    println("Total Mulching  " + simulationState.totalMulching)
-    println("FFL on Food needs dynamic  " + simulationState.foodFromLoanOnFoodNeedsDynamic.toSeq)
-    println("FFD on Food needs dynamic  " + simulationState.foodFromDonationOnFoodNeedsDynamic.toSeq)
-    println("Kitchen size  " + simulationState.averageKitchenSizeDynamic.toSeq)
-    println("Mil yield dynamic  " + simulationState.averageMilYieldDynamic)
-    println("Peanut yield dynamic  " + simulationState.averagePeanutYieldDynamic)
-    println("Food stress " + simulationState.foodStress)
+    println("\nMigrant dynamic  " + simulationState.migrantsDynamic.toSeq)
+    println("\nherd " + simulationState.herdDynamic.toSeq)
+    println("\nnitrogen " + simulationState.averageNitrogenDynamic.toSeq)
+    println("\nSoil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
+    println("\nAverage Inexesse " + simulationState.averageInexcessDynamic.toSeq)
+    println("\n# unbalanced kitchen " + simulationState.numberOfUnbalancedKitchen)
+    println("\nTotal Loaned Area " + simulationState.totalLoanedArea)
+    println("\nManure dynamic " + simulationState.averageManureDynamic.toSeq)
+    println("\nTotal Manure  " + simulationState.totalManure)
+    println("\nMulching dynamic " + simulationState.averageMulchingDynamic.toSeq)
+    println("\nTotal Mulching  " + simulationState.totalMulching)
+    println("\nFFL on Food needs dynamic  " + simulationState.foodFromLoanOnFoodNeedsDynamic.toSeq)
+    println("\nFFD on Food needs dynamic  " + simulationState.foodFromDonationOnFoodNeedsDynamic.toSeq)
+    println("\nKitchen size  " + simulationState.averageKitchenSizeDynamic.toSeq)
+    println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic)
+    println("\nPeanut yield dynamic  " + simulationState.averagePeanutYieldDynamic.toSeq)
+    println("\nFood stress " + simulationState.foodStress)
   }
 
 

@@ -14,9 +14,13 @@ object Simulation {
 
   implicit class SimulationStateWrap(sS: SimulationState):
     def population = History.historyByYear(sS).map(_.population)
+
     def herds = History.historyByYear(sS).map(_.herds)
+
     def foodStats = History.historyByYear(sS).map(_.foodStats)
+
     def parcelStats = History.historyByYear(sS).map(_.parcelStats)
+
     def fertilityHistory = sS.world.parcels.map(_.fertilityHistory)
 
   def apply(
@@ -27,6 +31,10 @@ object Simulation {
              supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
              soilQualityBasis: Double,
+             kitchenMinimumSize: Int = 4, // exposed for calibration
+             kitchenMaximumSize: Int = 24, // exposed for calibration
+             splitKitchenOffspringSize: Int = 6, // exposed for calibration
+             peanutSeedToFood: Double, // exposed for calibration
              hookParameters: HookParameters
            ) = {
 
@@ -44,9 +52,9 @@ object Simulation {
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
     // Two years warming up
-    val warmedUpState = evolve(initialState, 0.0, 3, soilQualityBasis, false).copy(history = initialHistory, year = 1)
+    val warmedUpState = evolve(initialState, 0.0, 3, soilQualityBasis, false, 0, 0, 0, 0.0).copy(history = initialHistory, year = 1)
 
-    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis, true)
+    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis, true, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, peanutSeedToFood)
 
     History.printParcels(finalState, hookParameters)
     History.printKitckens(finalState, hookParameters)
@@ -55,9 +63,18 @@ object Simulation {
   }
 
 
-  def evolve(simulationState: SimulationState, populationGrowth: Double, simulationLenght: Int, soilQualityBasis: Double, emigrationProcess: Boolean)(using MersenneTwister): SimulationState = {
-
-
+  def evolve(
+              simulationState: SimulationState,
+              populationGrowth: Double,
+              simulationLenght: Int,
+              soilQualityBasis: Double,
+              emigrationProcess: Boolean,
+              kitchenMinimumSize: Int,
+              kitchenMaximumSize: Int,
+              splitKitchenOffringSize: Int,
+              peanutSeedToFood: Double
+            )(using MersenneTwister): SimulationState = {
+    
     @tailrec
     def evolve0(simulationState: SimulationState): SimulationState = {
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 1) simulationState
@@ -76,7 +93,12 @@ object Simulation {
         val afterDonationFoods = FoodDonation.assign(foodAfterRotation, simulationState)
 
         // Process kitchen dynamics (population, emmigrants, absorptions, splits)
-        val resizedSimulationState = Kitchen.evolve(afterRotationsSimulationState, populationGrowth, afterDonationFoods, emigrationProcess)
+        val resizedSimulationState = Kitchen.evolve(
+          afterRotationsSimulationState,
+          populationGrowth,
+          afterDonationFoods,
+          emigrationProcess
+        )
 
         // Process Fertiliy
         val afterFertilizationState = Fertility.assign(resizedSimulationState, soilQualityBasis)
@@ -106,6 +128,11 @@ object Simulation {
       }
     }
 
+    // FIXME: get rid off the var once calibration is done
+    Constants.PEANUT_FOOD_EQUIVALENCE = peanutSeedToFood
+    Constants.KITCHEN_MINIMUM_SIZE = kitchenMinimumSize
+    Constants.KITCHEN_MAXIMUM_SIZE = kitchenMaximumSize
+    Constants.SPLIT_KITCHEN_OFFSPRING_SIZE = splitKitchenOffringSize
     evolve0(simulationState)
   }
 }

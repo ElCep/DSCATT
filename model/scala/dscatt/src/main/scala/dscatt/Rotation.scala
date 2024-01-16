@@ -74,7 +74,9 @@ object Rotation {
         fromCulture = parcelsFoodProduction(cultivatedK),
         fromLoan = parcelsFoodProduction(loanedK),
         inexess = inexcessFromCultivatedParcelsByKitchen.getOrElse(f.kitchenID, 0.0),
+        fromMil = parcelsFoodProduction(milParcels.getOrElse(f.kitchenID, Seq())),
         milInCultureArea = milParcels.getOrElse(f.kitchenID, Seq()).map(_.area).sum,
+        fromPeanut = parcelsFoodProduction(peanutParcels.getOrElse(f.kitchenID, Seq())),
         peanutInCultureArea = peanutParcels.getOrElse(f.kitchenID, Seq()).map(_.area).sum
       )
     }

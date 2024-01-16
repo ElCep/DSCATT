@@ -14,8 +14,8 @@ object Kitchen {
 
   case class FoodBalance(kitchenID: KitchenID, balance: Double)
 
-  case class Food(kitchenID: KitchenID, needs: Double = 0.0, fromCulture: Double = 0.0, fromLoan: Double = 0.0, fromDonation: Double = 0.0, inexess: Double = 0.0, milInCultureArea: Double = 0.0, peanutInCultureArea: Double = 0.0)
-  
+  case class Food(kitchenID: KitchenID, needs: Double = 0.0, fromCulture: Double = 0.0, fromLoan: Double = 0.0, fromDonation: Double = 0.0, inexess: Double = 0.0, fromMil: Double = 0.0, milInCultureArea: Double = 0.0, fromPeanut: Double = 0.0, peanutInCultureArea: Double = 0.0)
+
   implicit class WrapFood(f: Food):
     def toBalance = f.needs + f.fullProduction
 
@@ -44,7 +44,7 @@ object Kitchen {
   def kitchen(kitchens: Seq[Kitchen], id: KitchenID) = kitchens.find(_.id == id)
 
   def foodNeeds(kitchen: Kitchen) = kitchen.size * Constants.DAILY_FOOD_NEED_PER_PERSON * 365
-  
+
   def parcelFoodProduction(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel): Double = {
     parcelFoodProduction(parcel.crop, parcel.area, metrics(parcel.id))
   }
@@ -53,7 +53,7 @@ object Kitchen {
   def parcelFoodProduction(crop: Crop, parcelArea: Double, agronomicMetrics: Fertility.AgronomicMetrics): Double = {
     (crop match {
       case Mil => Fertility.milNRF(agronomicMetrics.availableNitrogen / parcelArea) * Constants.MIL_SEED_FULL_POTENTIAL_YIELD
-      case Peanut => Fertility.peanutNRF * Constants.PEANUT_SEED_FULL_POTENTIAL_YIELD
+      case Peanut => Fertility.peanutNRF * Constants.PEANUT_SEED_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
     }) * parcelArea
   }
@@ -62,7 +62,7 @@ object Kitchen {
   def parcelFoodProductionForLoan(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel) =
     (parcel.crop match {
       case Mil | Fallow => Fertility.milNRF(metrics(parcel.id).availableNitrogen / parcel.area) * Constants.MIL_SEED_FULL_POTENTIAL_YIELD
-      case Peanut => Fertility.peanutNRF * Constants.PEANUT_SEED_FULL_POTENTIAL_YIELD
+      case Peanut => Fertility.peanutNRF * Constants.PEANUT_SEED_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE
     }) * parcel.area
 
 
@@ -81,13 +81,18 @@ object Kitchen {
   }
 
 
-  def evolve(simulationState: SimulationState, populationGrowth: Double, foodAssessment: Seq[Food], emigrationProcess: Boolean = true)(using mT: MersenneTwister) = {
+  def evolve(
+              simulationState: SimulationState,
+              populationGrowth: Double,
+              foodAssessment: Seq[Food],
+              emigrationProcess: Boolean = true,
+            )(using mT: MersenneTwister) = {
 
     val (populationUpdated, births): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolve(simulationState.kitchens, populationGrowth)
 
     val (emigrantsUpdated, nbEmigrants): (Seq[Kitchen], Map[KitchenID, Int]) =
       emigrationProcess match {
-        case true=> Population.evolveEmigrants(populationUpdated, foodAssessment)
+        case true => Population.evolveEmigrants(populationUpdated, foodAssessment)
         case false => (populationUpdated, Map())
       }
 
@@ -115,12 +120,16 @@ object Kitchen {
 
   case class AbsorbingKitchen(kitchen: Kitchen, absorbedIDs: Seq[KitchenID])
 
-  def kitchenAbsorption(kitchens: Seq[Kitchen], world: World)(using mT: MersenneTwister): (Seq[Kitchen], World, Map[KitchenID, Seq[KitchenID]]) = {
+  def kitchenAbsorption(
+                         kitchens: Seq[Kitchen],
+                         world: World
+                       )(using mT: MersenneTwister): (Seq[Kitchen], World, Map[KitchenID, Seq[KitchenID]]) = {
 
+    val kitchenSizeThresholdForAbsorption = Constants.KITCHEN_MAXIMUM_SIZE - Constants.SPLIT_KITCHEN_OFFSPRING_SIZE
     val toBeAbsorbedKitcken = kitchens.filter(k => k.size <= Constants.KITCHEN_MINIMUM_SIZE)
     val absorbingCandidateKitchens = kitchens.diff(toBeAbsorbedKitcken).map { k => AbsorbingKitchen(k, Seq()) }
     // Do not consider too large kitchens to avoid absorbtion/split loops
-    val (absorbingKitchens, tooBigKitchens) = absorbingCandidateKitchens.partition(_.kitchen.size <= Constants.KITCHEN_SIZE_THRESHOLD_FOR_ABSORPTION)
+    val (absorbingKitchens, tooBigKitchens) = absorbingCandidateKitchens.partition(_.kitchen.size <= kitchenSizeThresholdForAbsorption)
 
     @tailrec
     def absorption(toBeAbsorbed: Seq[Kitchen], absorbing: Seq[AbsorbingKitchen]): Seq[AbsorbingKitchen] = {
@@ -157,7 +166,8 @@ object Kitchen {
     }, reorganizedWorld, reorganizedKitchens.map { rK => rK.kitchen.id -> rK.absorbedIDs }.toMap)
   }
 
-  def kitchenSplit(kitchens: Seq[Kitchen], world: World): (Seq[Kitchen], World, Map[KitchenID, KitchenID]) = {
+  def kitchenSplit(kitchens: Seq[Kitchen], world: World):
+  (Seq[Kitchen], World, Map[KitchenID, KitchenID]) = {
     val toBeSplittedKitchens = kitchens.filter {
       _.size >= (Constants.KITCHEN_MAXIMUM_SIZE - Constants.KITCHEN_MINIMUM_SIZE)
     }
