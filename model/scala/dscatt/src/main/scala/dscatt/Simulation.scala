@@ -74,7 +74,7 @@ object Simulation {
               splitKitchenOffringSize: Int,
               peanutSeedToFood: Double
             )(using MersenneTwister): SimulationState = {
-    
+
     @tailrec
     def evolve0(simulationState: SimulationState): SimulationState = {
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 1) simulationState
@@ -105,24 +105,7 @@ object Simulation {
 
         val finalHistory = afterFertilizationState.history.updateFoods(afterFertilizationState.year, afterDonationFoods)
 
-        val tot = finalHistory.get(afterRotationsSimulationState.year).map {
-          _.foodStats.values.map(x => x.fromCulture + x.fromLoan).sum
-        }.getOrElse(0.0)
-
-        val loan = finalHistory.get(afterRotationsSimulationState.year).map {
-          _.foodStats.values.map(x => x.fromLoan).sum
-        }.getOrElse(0.0)
-
-        val mil = Kitchen.parcelsFoodProduction(World.milParcels(afterRotationsSimulationState.world.parcels))
-        val peanut = Kitchen.parcelsFoodProduction(World.peanutParcels(afterRotationsSimulationState.world.parcels))
-
-        println("TOTAL MIL " + afterRotationsSimulationState.year + " : " + mil + " :: " + peanut + " :: " + tot + " :: " + mil / tot + " :: " + loan / tot)
-
-
         val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
-        println("not mil, peanut, fallow " + finalState.world.parcels.filter(x => x.crop == Mil).size + ", "
-          + finalState.world.parcels.filter(x => x.crop == Peanut).size + ", "
-          + finalState.world.parcels.filter(x => x.crop == Fallow).size)
 
         evolve0(finalState)
       }

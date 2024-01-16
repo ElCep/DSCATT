@@ -16,7 +16,7 @@ object App:
     val outputPath = arguments(0) match
       case Some(path: String)=>
 
-        val kitchens = List.tabulate(20)(n => n + 35)
+        val kitchens = List.tabulate(21)(n => n + 15)
         val ginis = List.tabulate(10)(i=> 0.05 * (i + 1))
 
         val combinatory =
@@ -29,7 +29,7 @@ object App:
           println(s"${"%.2f".format(g)}")
           val fileName = s"k${k}g${"%.2f".format(g)}"
           val outPath = s"$path".toFile
-          val synthParcels = usecase.GenerateSyntheticParcel.generate(k, g, 350, 0.01.toFloat, 77L, null).toArray.map: sp=>
+          val synthParcels = usecase.GenerateSyntheticParcel.generate(k, g, 316, 0.01.toFloat, 77L, null).toArray.map: sp=>
               sp.asInstanceOf[SyntheticParcel]
 
           outPath.toJava.mkdir
