@@ -89,7 +89,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
           Some(food.fromMil / food.milInCultureArea)
         else None
       }.toSeq)
-    }
+    }.toArray
 
   // Divide by peanutSeedToFood to get seed (previously peanutFoodEquivalence)
   def averagePeanutYieldDynamic =
@@ -100,10 +100,10 @@ implicit class HistoryDecorator(simulationState: SimulationState):
           Some(food.fromPeanut / Constants.PEANUT_FOOD_EQUIVALENCE / food.peanutInCultureArea)
         else None
       }.toSeq)
-    }
+    }.toArray
 
   // (culture + loan + donation) / needs
   def foodStress =
     simulationState.foodStats.map { fs =>
       -fs.map(_._2.fullProduction).sum / fs.map(_._2.needs).sum
-    }
+    }.toArray
