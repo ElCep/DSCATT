@@ -1,9 +1,10 @@
 library(ggplot2)
 library(sf)
 library(dplyr)
-library(ggsflabel)
+#library(ggsflabel)
 library(ggpubr)
 library(ggnewscale)
+library(RColorBrewer)
 
 #simulated dynamics data 
 parcelsdata <- read.csv("~/DSCATT/model/R/data/parcels.csv")
@@ -19,7 +20,7 @@ summary(parcelsGeometry)
 # change region ID with label Zone
 parcelsGeometry$regionID <- paste0("Zone ",parcelsGeometry$regionID)
 
-c
+
 # nb parcels and total surface by kitchen 
 aggregStatesByK <-  parcelsGeometry %>% group_by(ownerID) %>% summarise(nb_pcls = n(), sum_surf= sum(area)/10000) %>% st_drop_geometry() %>% select(nb_pcls,sum_surf)
 
@@ -141,21 +142,10 @@ three_years_map
 
 
 
-ggplot(full, aes(x=Year, y=Yield.ha, group=for.crop))+
-   geom_line(aes(color=for.crop)) +
-    theme_light()
 
 
 
-a_year$Manure.ha %>% max
 
-
-
-p2 <-  ggplot(a_year, aes(fill=Manure.ha))+
-  geom_sf(color="gray")+
-  scale_fill_distiller(palette="Oranges",direction = 1)+
-  theme_void()
-p2
 
 
 
@@ -183,7 +173,6 @@ p2
 
 
 
-library(RColorBrewer)
 my.cols <- function(n) {
   black <- "#000000"
   if (n <= 9) {
@@ -202,4 +191,94 @@ g1 <- ggplot(data=d,aes(x=z,fill=factor(z)))+
 g1 + scale_colour_manual(values=my.cols(10))
 ## check that we successfully recreated ggplot2 internals
 ## g1+scale_colour_discrete()
+
+
+
+
+#real village 
+
+
+sassem <-  st_read("~/tmp/FichiersSIG_Sob_Bary_Sassem/Parcellaire Sassem/Parcellaire carte des cate╠ügories de champs.shp")
+sassem$N._FOYER <-  as.factor(sassem$N._FOYER)
+plot(sassem["N._FOYER"])
+
+
+
+st_write(sassem, "~/DSCATT/model/R/data/sassem_field_categories.gpkg")
+
+
+# nb parcels and total surface by kitchen 
+aggreg_foyer <-  sassem %>% group_by(N._FOYER) %>% summarise(nb_pcls = n(), sum_surf= sum(SUPERFICIE)/10000 , n_kad=sum(Kadd)) %>% st_drop_geometry() %>% select(nb_pcls,sum_surf, N._FOYER)
+
+
+
+nb_parcels_histogramm <- ggplot(aggreg_foyer, aes(x=nb_pcls))+
+  geom_histogram(fill="darkcyan", color="lightgray",bins = 15)+
+  labs(title = "Kitchens number of parcels")+
+  xlab(label = "number of parcels")+
+  theme_light()
+nb_parcels_histogramm
+
+nb_faidherbia_histogramm <- ggplot(aggreg_foyer, aes(x=nb_pcls))+
+  geom_histogram(fill="chartreuse4", color="lightgray",bins = 15)+
+  labs(title = "Kitchens Faidherbia trees")+
+  xlab(label = "total number of Faidherbias")+
+  theme_light()
+nb_faidherbia_histogramm
+
+
+srface_histogramm <- ggplot(aggreg_foyer, aes(x=sum_surf))+
+  geom_histogram(fill="royalblue", color="lightgray",bins = 8)+
+  labs(title = "Kitchens arable land area")+
+  xlab(label = "Arable surface (ha)")+
+  theme_light()
+srface_histogramm
+
+
+
+carto_sassem_byK <-  ggplot(sassem)+
+  geom_sf( aes(fill=N._FOYER))+
+  #geom_sf_label(data = labels_zones, aes(label=label), size=3)+
+  scale_fill_discrete(name= "Foyer")+
+  labs(title= "Sassem", subtitle = paste0(length(unique(sassem$N._FOYER))," cuisines"))+
+  theme(legend.position=c("bottom"),
+        legend.box = "vertical",
+        panel.background = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks =  element_blank(),
+        axis.title = element_blank())+
+  guides(fill = guide_legend(nrow = 3))
+carto_sassem_byK
+
+combined_graph <- ggarrange(carto_sassem_byK, ggarrange(nb_parcels_histogramm, srface_histogramm, nb_faidherbia_histogramm,nrow=3) , ncol=2, widths = c(3, 1))
+combined_graph
+
+
+library(DescTools)
+
+Gini(aggreg_foyer$nb_pcls)
+Gini(aggreg_foyer$sum_surf)
+
+
+aggreg_tri <- aggreg_foyer %>% arrange(nb_pcls) %>%   mutate(N._FOYER=factor(N._FOYER, levels=N._FOYER))
+aggreg_tri$order <- 1:nrow(aggreg_tri)
+
+ggplot(aggreg_tri, aes(x= order, y=nb_pcls))+
+  geom_point()+
+  #geom_smooth(formula = y ~ x)+
+  theme_minimal()+
+  scale_y_discrete(limits=as.character(1:18))+
+  ylab("number of parcels")+
+  xlab("Kitchen ID")
+
+
+aggreg_foyer <-  sassem %>% filter (Categorie_ == 2) %>%  group_by(N._FOYER) %>% summarise(nb_pcls = n(), sum_surf= sum(SUPERFICIE)/10000 , n_kad=sum(Kadd)) %>% st_drop_geometry() %>% select(nb_pcls,sum_surf, N._FOYER)
+
+
+
+
+sassem %>%  filter(Categorie_ == 2) %>%  st_area() %>%  sum
+
+
+
 
