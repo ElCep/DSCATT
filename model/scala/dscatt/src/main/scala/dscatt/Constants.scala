@@ -30,12 +30,6 @@ object Constants {
   //SPACE // to adjust the generated area to a 180 ha
   val AREA_FACTOR = 180.0 / 500000 // (Mariana Odru, 2013 (177.1 ha))
 
-//  {
-//    val foodFor200 = 720 * DAILY_FOOD_NEED_PER_PERSON * 365
-//    val surfaceFor200 = foodFor200.toDouble / (0.5 * (MIL_YIELD_PER_M2 + PEANUT_YIELD_PER_M2 * PEANUT_FOOD_EQUIVALENCE))
-//    surfaceFor200 / (500000 * 2.0 / 3) / 10000 // 500000 = generated shp cultivated surface
-//  }
-
   //FERTILITY
   type FertilityBoost = Double
 
@@ -62,5 +56,9 @@ object Constants {
 
   //Herd
   val KG_OF_STRAW_PER_COW_PER_YEAR: KG = 3650
+
+  // Fertility
+  var EROSION= 0.98
+  var FALLOW_BOOST = 0.01
 
 }

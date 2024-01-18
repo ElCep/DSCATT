@@ -38,7 +38,7 @@ object Diohine {
       HerdStrategy.EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.Mulching(0.10),
+      MulchingStrategy.Mulching(0.50),
       4
     )
 
@@ -70,6 +70,8 @@ object Diohine {
       supportPolicy = supportPolicy,
       simulationLength = 25,
       soilQualityBasis = 0.5,
+      erosion = 0.02,
+      fallowBoost = 0.04,
       kitchenMinimumSize = 8,
       kitchenMaximumSize = 30,
       splitKitchenOffspringSize = 10,

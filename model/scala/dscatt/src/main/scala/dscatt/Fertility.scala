@@ -124,7 +124,7 @@ object Fertility {
     )
   }
 
-  private def soilQuality(parcel: Parcel, soilQualityBasis: Double, integrativeSoilQualityBonus: Double = 0.0) = {
+  private def soilQuality(parcel: Parcel, soilQualityBasis: Double) = {
 
     val manureBoost =
       // Last 2 years of manure are used to compute the boost: 0.6 for the most recent deposit and 0.4 for the oldest
@@ -136,13 +136,13 @@ object Fertility {
     // The soil quality it computed at the begining of the year before the the rotation process, so that the parcel crop here
     // is equivalent to the crop of the previous year
     val fallowBoost = parcel.crop match {
-      case Croping.Fallow => 0.01
+      case Croping.Fallow => Constants.FALLOW_BOOST
       case _ => 0.0
     }
 
     val faidherbiaBoost = parcel.faidherbiaTrees * 0.06
-
-    soilQualityBasis + manureBoost + mulchingBoost + fallowBoost + faidherbiaBoost + parcel.fertilityHistory.lastOption.map(_.agronomicMetrics.soilQuality).getOrElse(0.0) * integrativeSoilQualityBonus
+    
+    - Constants.EROSION + soilQualityBasis + manureBoost + mulchingBoost + fallowBoost + faidherbiaBoost
   }
 
   // in kg. Computed from previous year soil quality and manure production
