@@ -58,8 +58,10 @@ object Simulation {
 
     val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis, erosion, fallowBoost, true, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, peanutSeedToFood)
     
-    History.printParcels(finalState, hookParameters)
-    History.printKitckens(finalState, hookParameters)
+    if (hookParameters.displayParcels)
+      History.printParcels(finalState, hookParameters)
+    if (hookParameters.displayKitchens)  
+      History.printKitckens(finalState, hookParameters)
 
     finalState
   }
