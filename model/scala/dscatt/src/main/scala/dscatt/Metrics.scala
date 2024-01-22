@@ -110,8 +110,8 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     }.toArray
 
 
-  def populationSlope: Double =
+  def populationRSquare: Double =
     val regression = new SimpleRegression(true)
     populationDynamic.zipWithIndex foreach: (p,id)=>
       regression.addData(id,p)
-    regression.getSlope
+    regression.getRSquare

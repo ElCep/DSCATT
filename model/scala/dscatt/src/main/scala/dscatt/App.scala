@@ -2,6 +2,7 @@ package dscatt
 
 import Croping._
 import KitchenPartition._
+import utils.*
 
 object Diohine {
 
@@ -58,28 +59,28 @@ object Diohine {
 //    )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 21))
+    val kitchenPartition = KitchenPartition((kitchenProfile1, 23))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
     val simulationState = Simulation(
       77,
-      giniParcels = 0.2,
+      giniParcels = 0.1,
       populationGrowth = 0.021,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
       simulationLength = 26,
-      soilQualityBasis = 0,
-      erosion = 0.39,
-      fallowBoost = 1.16,
-      kitchenMinimumSize = 6,
+      soilQualityBasis = 0.0,
+      erosion = 0.001,
+      fallowBoost = 2.0,
+      kitchenMinimumSize = 4,
       kitchenMaximumSize = 22,
-      splitKitchenOffspringSize = 11,
-      peanutSeedToFood = 0.38,
+      splitKitchenOffspringSize = 8,
+      peanutSeedToFood = 0.88,
       hookParameters = hooks)
 
     println("Pop " + simulationState.populationDynamic.toSeq)
-    println("\nPop slope " + simulationState.populationSlope)
+    println("\nPop R2 " + simulationState.populationRSquare)
     println("\nMigrant dynamic  " + simulationState.migrantsDynamic.toSeq)
     println("\nherd " + simulationState.herdDynamic.toSeq)
     println("\nnitrogen " + simulationState.averageNitrogenDynamic.toSeq)
@@ -94,7 +95,8 @@ object Diohine {
     println("\nFFL on Food needs dynamic  " + simulationState.foodFromLoanOnFoodNeedsDynamic.toSeq)
     println("\nFFD on Food needs dynamic  " + simulationState.foodFromDonationOnFoodNeedsDynamic.toSeq)
     println("\nKitchen size  " + simulationState.averageKitchenSizeDynamic.toSeq)
-    println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic)
+    println("\nKSA " + average(simulationState.averageKitchenSizeDynamic.toSeq))
+    println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)
     println("\nPeanut yield dynamic  " + simulationState.averagePeanutYieldDynamic.toSeq)
     println("\nFood stress " + simulationState.foodStress)
   }
