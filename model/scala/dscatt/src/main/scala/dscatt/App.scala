@@ -58,7 +58,7 @@ object Diohine {
 //    )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 20))
+    val kitchenPartition = KitchenPartition((kitchenProfile1, 21))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
@@ -68,17 +68,18 @@ object Diohine {
       populationGrowth = 0.021,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 25,
-      soilQualityBasis = 0.5,
-      erosion = 0.02,
-      fallowBoost = 0.04,
-      kitchenMinimumSize = 8,
-      kitchenMaximumSize = 30,
-      splitKitchenOffspringSize = 10,
-      peanutSeedToFood = 0.5,
+      simulationLength = 26,
+      soilQualityBasis = 0,
+      erosion = 0.39,
+      fallowBoost = 1.16,
+      kitchenMinimumSize = 6,
+      kitchenMaximumSize = 22,
+      splitKitchenOffspringSize = 11,
+      peanutSeedToFood = 0.38,
       hookParameters = hooks)
 
     println("Pop " + simulationState.populationDynamic.toSeq)
+    println("\nPop slope " + simulationState.populationSlope)
     println("\nMigrant dynamic  " + simulationState.migrantsDynamic.toSeq)
     println("\nherd " + simulationState.herdDynamic.toSeq)
     println("\nnitrogen " + simulationState.averageNitrogenDynamic.toSeq)

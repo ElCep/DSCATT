@@ -3,6 +3,7 @@ package dscatt
 import Simulation.SimulationState
 import Kitchen.*
 import utils.*
+import org.apache.commons.math3.stat.regression.SimpleRegression
 
 implicit class HistoryDecorator(simulationState: SimulationState):
 
@@ -107,3 +108,10 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     simulationState.foodStats.map { fs =>
       -fs.map(_._2.fullProduction).sum / fs.map(_._2.needs).sum
     }.toArray
+
+
+  def populationSlope: Double =
+    val regression = new SimpleRegression(true)
+    populationDynamic.zipWithIndex foreach: (p,id)=>
+      regression.addData(id,p)
+    regression.getSlope
