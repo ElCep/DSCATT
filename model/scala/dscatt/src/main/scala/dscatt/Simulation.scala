@@ -54,7 +54,7 @@ object Simulation {
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
     // Two years warming up
-    val warmedUpState = evolve(initialState, 0.0, 3, soilQualityBasis, 0.0, 0.0, false, 0, 0, 0, 0.0).copy(history = initialHistory, year = 1)
+    val warmedUpState = evolve(initialState, 0.0, 3, soilQualityBasis, 0.0, 0.0, false, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, 0.0).copy(history = initialHistory, year = 1)
 
     val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis, erosion, fallowBoost, true, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, peanutSeedToFood)
     
