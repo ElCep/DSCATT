@@ -7,7 +7,7 @@ import org.apache.commons.math3.random.MersenneTwister
 import Croping._
 
 object Rotation {
-  def evolve(simulationState: SimulationState, soilQualityBasis: Double, initialFood: Seq[Food]): (SimulationState, Seq[Food]) = {
+  def evolve(simulationState: SimulationState, soilQualityBasis: Double, initialFood: Seq[Food]): (SimulationState, Seq[Food], Int) = {
 
 
     // Compute theoritical crops for coming year before we know if it is in culture or not
@@ -19,6 +19,9 @@ object Rotation {
         )
       }
     }
+    
+    val theoriticalFallowParcels = World.fallowParcels(theoriticalCroping.flatMap(_._2)).length
+    
     //theariticalAgronomicMetrics
     // Compute soil quality and available nitrogen for each parcel on the trearitical crop rotation
     implicit val theoreticalFertilityMetricsByParcel: Fertility.AgronomicMetricsByParcel = theoriticalCroping.flatMap {
@@ -84,7 +87,7 @@ object Rotation {
     (simulationState.copy(
       world = simulationState.world.copy(parcels = newParcels),
       history = simulationState.history.updateLoans(simulationState.year, yearLoans, newParcels)
-    ), food)
+    ), food, theoriticalFallowParcels)
   }
 
 

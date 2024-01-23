@@ -117,3 +117,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     populationDynamic.zipWithIndex foreach: (p,id)=>
       regression.addData(id,p)
     (regression.getRSquare, regression.getSlope)
+    
+  def effectiveFallowRatioDynamic =
+    History.historyByYear(simulationState) map: h=>
+      h.effectiveFallowRatio

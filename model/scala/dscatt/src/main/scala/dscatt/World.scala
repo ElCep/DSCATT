@@ -88,7 +88,9 @@ object World {
 
   def peanutParcels(parcels: Seq[Parcel]) = parcels.filter(_.crop == Peanut)
 
-  def fallowParcels(world: World) = world.parcels.filter(_.crop == Fallow)
+  def fallowParcels(parcels: Seq[Parcel]): Seq[Parcel] = parcels.filter(_.crop == Fallow)
+  
+  def fallowParcels(world: World): Seq[Parcel] = fallowParcels(world.parcels)
 
   def fallowParcelsForKitchen(world: World, kitchen: Kitchen) = parcelsForKitchen(world, kitchen).filter(_.crop == Fallow)
   

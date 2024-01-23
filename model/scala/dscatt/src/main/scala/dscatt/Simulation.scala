@@ -88,7 +88,7 @@ object Simulation {
         val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k)) }
 
         // Evolve rotation including loans
-        val (afterRotationsSimulationState, foodAfterRotation) = Rotation.evolve(simulationState, soilQualityBasis, initialFood)
+        val (afterRotationsSimulationState, foodAfterRotation, theoriticalFallowParcels) = Rotation.evolve(simulationState, soilQualityBasis, initialFood)
 
         // Compute soil quality and available nitrogen for each parcel before the rotation process until fertilities of the current year is computed
         implicit val fertilityMetricsByParcelAfterRotation: Fertility.AgronomicMetricsByParcel = afterRotationsSimulationState.world.parcels.map { p =>
@@ -105,11 +105,15 @@ object Simulation {
           afterDonationFoods,
           emigrationProcess
         )
-
+       
         // Process Fertiliy
         val afterFertilizationState = Fertility.assign(resizedSimulationState, soilQualityBasis)
 
-        val finalHistory = afterFertilizationState.history.updateFoods(afterFertilizationState.year, afterDonationFoods)
+        val effectiveFallowParcels = World.fallowParcels(afterFertilizationState.world).length
+
+        val finalHistory = afterFertilizationState.history
+          .updateFoods(afterFertilizationState.year, afterDonationFoods)
+          .updateEffectiveFallowRatio(afterFertilizationState.year, effectiveFallowParcels.toDouble / theoriticalFallowParcels)
 
         val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
 

@@ -51,6 +51,11 @@ object History {
       val historyOfYear = history(year)
       history.updated(year, historyOfYear.copy(foodStats = foods.map(f => f.kitchenID -> f).toMap))
     }
+    
+    def updateEffectiveFallowRatio(year: Int, effectiveFallowProportion: Double) =
+      val historyOfYear = history(year)
+      history.updated(year, historyOfYear.copy(effectiveFallowRatio = effectiveFallowProportion))
+      
 
     def updateParcelStatsAfterPopulationEvolution(year: Int, allKitchens: Seq[Kitchen], world: World) = {
       val historyOfYear = history(year)
@@ -93,7 +98,8 @@ object History {
                                     loans: Loans = Seq(),
                                     foodStats: FoodStats = Map(),
                                     fertilities: Fertilities = Map(),
-                                    herds: Herds = Map()
+                                    herds: Herds = Map(),
+                                    effectiveFallowRatio: Double = 0.0
                                   )
 
   def toParcelStats(yearLoans: Seq[Loan], parcels: Seq[Parcel]): ParcelStatsByKitchen = {
