@@ -22,6 +22,8 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       average(p.values.map(_.size.toDouble).toSeq)
     ).toArray
 
+  def numberOfKitchens = simulationState.population.map(_.keys.size).toArray
+
   def herdDynamic = simulationState.herds.map(_.values.sum).toArray
 
   def averageNitrogenDynamic =
@@ -110,8 +112,8 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     }.toArray
 
 
-  def populationRSquare: Double =
+  def populationRSquareAndSlope: (Double, Double) =
     val regression = new SimpleRegression(true)
     populationDynamic.zipWithIndex foreach: (p,id)=>
       regression.addData(id,p)
-    regression.getRSquare
+    (regression.getRSquare, regression.getSlope)
