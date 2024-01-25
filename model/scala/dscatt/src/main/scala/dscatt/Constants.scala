@@ -8,7 +8,11 @@ object Constants {
   type NB_BY_HA = Double
 
   // FOOD
-  val DAILY_FOOD_NEED_PER_PERSON = 0.75
+  // 0.825: ratio of people eating a 100% meal
+  // Age distribution: 0-4y: 8%, 5-19: 19%, 19+: 73%
+  // we consider that 0-4y do not eat millet, 5-19y a 50% quantity and 19+ a full quantity
+  // 0 * 0.06 + 0,5 * 0,4 + 0,54 = 0,74
+  val DAILY_FOOD_NEED_PER_PERSON = 0.75 * 0.74 // 0.555
 
   // Actor word yields. Used the first year (when field boosts are unknown)
   val MIL_YIELD_PER_M2 = 600.0 / 10000
