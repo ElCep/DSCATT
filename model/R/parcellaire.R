@@ -277,6 +277,8 @@ aggreg_foyer <-  sassem %>% filter (Categorie_ == 2) %>%  group_by(N._FOYER) %>%
 
 
 
+
+
 sassem %>%  filter(Categorie_ == 2) %>%  st_area() %>%  sum
 
 
