@@ -5,9 +5,10 @@ import Kitchen.{Food, FoodBalance, parcelsFoodProduction}
 import Simulation.SimulationState
 import org.apache.commons.math3.random.MersenneTwister
 import Croping._
+import Constants.*
 
 object Rotation {
-  def evolve(simulationState: SimulationState, soilQualityBasis: Double, initialFood: Seq[Food]): (SimulationState, Seq[Food], Int) = {
+  def evolve(simulationState: SimulationState, soilQualityBasis: Double, initialFood: Seq[Food])(using MM): (SimulationState, Seq[Food], Int) = {
 
 
     // Compute theoritical crops for coming year before we know if it is in culture or not
@@ -94,7 +95,7 @@ object Rotation {
   case class ParcelUsages(cultivated: Seq[Parcel], forLoan: Seq[Parcel], notLoanable: Seq[Parcel], inexcessFromCultivatedParcels: Double = 0.0)
 
   // Extra is defined as everything except what the kitchen needs
-  def getParcelUsages(kitchen: Kitchen, parcels: Seq[Parcel])(using Fertility.AgronomicMetricsByParcel): ParcelUsages =
+  def getParcelUsages(kitchen: Kitchen, parcels: Seq[Parcel])(using Fertility.AgronomicMetricsByParcel, MM): ParcelUsages =
     val (fallowsNotCultivated, parcelCandidatesForCulture) =
       val grouped = parcels.groupBy(_.crop)
       kitchen.ownFallowUse match {

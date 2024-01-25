@@ -6,6 +6,7 @@ object Constants {
   type HA = Double
   type KG_BY_HA = Double
   type NB_BY_HA = Double
+  type MM = Int
 
   // FOOD
   // 0.825: ratio of people eating a 100% meal
@@ -45,17 +46,17 @@ object Constants {
   val NITROGEN_MINERALIZATION: KG_BY_HA = 12 // kg/ha
   val NITROGEN_PROPORTION_PER_MANURE_KG = 0.0238 // no dimension
 
-  val MIL_FULL_POTENTIAL_YIELD: KG_BY_HA = 3775 // kg DM / ha
-  val PEANUT_FULL_POTENTIAL_YIELD: KG_BY_HA = 1300 // kg DM / ha
-  val FALLOW_FULL_POTENTIAL_YIELD: KG_BY_HA = 1498 // kg DM / ha
+//  val MIL_FULL_POTENTIAL_YIELD: KG_BY_HA = 3775 // kg DM / ha
+//  val PEANUT_FULL_POTENTIAL_YIELD: KG_BY_HA = 1300 // kg DM / ha
+//  val FALLOW_FULL_POTENTIAL_YIELD: KG_BY_HA = 1498 // kg DM / ha
 
   val MIL_STRAW_RATIO = 0.7
   val PEANUT_STRAW_RATIO = 0.666
   val MIL_SEED_RATIO = 0.3
   val PEANUT_SEED_RATIO = 0.333
 
-  val MIL_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
-  val PEANUT_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_SEED_RATIO
+  //val MIL_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
+  //val PEANUT_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_SEED_RATIO
 
 
   //Herd

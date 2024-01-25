@@ -5,6 +5,7 @@ import Diohine.{HookFile, HookParameters}
 import History.History
 import Kitchen.Food
 import org.apache.commons.math3.random.MersenneTwister
+import Constants.*
 
 import scala.annotation.tailrec
 
@@ -38,7 +39,7 @@ object Simulation {
              splitKitchenOffspringSize: Int = 6, // exposed for calibration
              peanutSeedToFood: Double, // exposed for calibration
              hookParameters: HookParameters
-           ) = {
+           )(using rainFall: MM)= {
 
     given MersenneTwister(seed)
 
@@ -79,7 +80,7 @@ object Simulation {
               kitchenMaximumSize: Int,
               splitKitchenOffringSize: Int,
               peanutSeedToFood: Double
-            )(using MersenneTwister): SimulationState = {
+            )(using MersenneTwister, MM): SimulationState = {
 
     @tailrec
     def evolve0(simulationState: SimulationState): SimulationState = {

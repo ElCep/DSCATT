@@ -3,6 +3,7 @@ package dscatt
 import Croping._
 import KitchenPartition._
 import utils.*
+import Constants.*
 
 object Diohine {
 
@@ -32,14 +33,14 @@ object Diohine {
       kitchenSize = 16,
       RotationCycle.ThreeYears,
       CropingStrategy.PeanutForInexcess(0.0),
-      OwnFallowUse.NeverUseFallow,
-      LoanStrategy.ExtraParcelsExceptFallowLoaner,
+      OwnFallowUse.UseFallowIfNeeded,
+      LoanStrategy.AllExtraParcelsLoaner,
       FoodDonationStrategy.FoodForAllStrategy,
       HerdStrategy.EverywhereByDayOwnerByNight,
       HerdStrategy.EverywhereByDayOwnerByNight,
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.Mulching(0.50),
+      MulchingStrategy.Mulching(0.0),
       4
     )
 
@@ -63,24 +64,28 @@ object Diohine {
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
+    given rainFall: MM = 500
     val simulationState = Simulation(
       77,
-      giniParcels = 0.1,
-      populationGrowth = 0.021,
+      giniParcels = 0.2,
+      populationGrowth = 0.021582528504677432,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
       simulationLength = 26,
-      soilQualityBasis = 0.0,
-      erosion = 0.001,
-      fallowBoost = 2.0,
-      kitchenMinimumSize = 4,
-      kitchenMaximumSize = 22,
-      splitKitchenOffspringSize = 8,
-      peanutSeedToFood = 0.88,
-      hookParameters = hooks)
+      soilQualityBasis = 1.5569960930147841,
+      erosion = 0.21513538570352136,
+      fallowBoost = 0.4134031905895975,
+      kitchenMinimumSize = 13,
+      kitchenMaximumSize = 31,
+      splitKitchenOffspringSize = 13,
+      peanutSeedToFood = 0.4523417917522577,
+      hookParameters = hooks
+    )
 
+    val (rsquare, slope) = simulationState.populationRSquareAndSlope
     println("Pop " + simulationState.populationDynamic.toSeq)
-    println("\nPop R2 " + simulationState.populationRSquare)
+    println("\nPop R2 " + rsquare)
+    println("\nPop slope " + slope)
     println("\nMigrant dynamic  " + simulationState.migrantsDynamic.toSeq)
     println("\nherd " + simulationState.herdDynamic.toSeq)
     println("\nnitrogen " + simulationState.averageNitrogenDynamic.toSeq)
@@ -98,7 +103,9 @@ object Diohine {
     println("\nKSA " + average(simulationState.averageKitchenSizeDynamic.toSeq))
     println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)
     println("\nPeanut yield dynamic  " + simulationState.averagePeanutYieldDynamic.toSeq)
-    println("\nFood stress " + simulationState.foodStress)
+    println("\nFood stress " + simulationState.foodStress.toSeq)
+    println("\nNb of kitchens " + simulationState.numberOfKitchens.toSeq)
+    println("\nEffective fallow " + simulationState.effectiveFallowRatioDynamic.toSeq)
   }
 
 

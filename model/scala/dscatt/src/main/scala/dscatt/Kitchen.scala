@@ -1,10 +1,11 @@
 package dscatt
 
 import Croping.*
-import Fertility.AgronomicMetricsByParcel
+import Fertility.{AgronomicMetricsByParcel, milSeedFullPontential, peanutSeedFullPotential}
 import Simulation.SimulationState
 import dscatt.Constants.NB_BY_HA
 import org.apache.commons.math3.random.MersenneTwister
+import Constants.*
 
 import scala.annotation.tailrec
 
@@ -45,38 +46,38 @@ object Kitchen {
 
   def foodNeeds(kitchen: Kitchen) = kitchen.size * Constants.DAILY_FOOD_NEED_PER_PERSON * 365
 
-  def parcelFoodProduction(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel): Double = {
-    parcelFoodProduction(parcel.crop, parcel.area, metrics(parcel.id))
+  def parcelFoodProduction(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel, rainFall: MM): Double = {
+    parcelFoodProduction(parcel.crop, parcel.area, metrics(parcel.id), rainFall)
   }
 
 
-  def parcelFoodProduction(crop: Crop, parcelArea: Double, agronomicMetrics: Fertility.AgronomicMetrics): Double = {
+  def parcelFoodProduction(crop: Crop, parcelArea: Double, agronomicMetrics: Fertility.AgronomicMetrics, rainFall: MM): Double = {
     (crop match {
-      case Mil => Fertility.milNRF(agronomicMetrics.availableNitrogen / parcelArea) * Constants.MIL_SEED_FULL_POTENTIAL_YIELD
-      case Peanut => Fertility.peanutNRF * Constants.PEANUT_SEED_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE
+      case Mil => Fertility.milNRF(agronomicMetrics.availableNitrogen / parcelArea) * milSeedFullPontential(rainFall)
+      case Peanut => Fertility.peanutNRF * peanutSeedFullPotential * Constants.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
     }) * parcelArea
   }
 
   // Fallow is considered as Mil in case of ExtraParcelsExceptFallowLoaner and will be set as Mil once the loan will be effective
-  def parcelFoodProductionForLoan(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel) =
+  def parcelFoodProductionForLoan(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel, rainFall: MM) =
     (parcel.crop match {
-      case Mil | Fallow => Fertility.milNRF(metrics(parcel.id).availableNitrogen / parcel.area) * Constants.MIL_SEED_FULL_POTENTIAL_YIELD
-      case Peanut => Fertility.peanutNRF * Constants.PEANUT_SEED_FULL_POTENTIAL_YIELD * Constants.PEANUT_FOOD_EQUIVALENCE
+      case Mil | Fallow => Fertility.milNRF(metrics(parcel.id).availableNitrogen / parcel.area) * milSeedFullPontential(rainFall)
+      case Peanut => Fertility.peanutNRF * peanutSeedFullPotential * Constants.PEANUT_FOOD_EQUIVALENCE
     }) * parcel.area
 
 
-  def parcelsFoodProduction(parcels: Seq[Parcel])(using Fertility.AgronomicMetricsByParcel) = {
+  def parcelsFoodProduction(parcels: Seq[Parcel])(using metrics: Fertility.AgronomicMetricsByParcel, rainFall: MM) = {
     parcels.map {
       parcelFoodProduction
     }.sum
   }
 
-  def foodBalance(world: World, kitchen: Kitchen)(using Fertility.AgronomicMetricsByParcel): FoodBalance = {
+  def foodBalance(world: World, kitchen: Kitchen)(using metrics: Fertility.AgronomicMetricsByParcel, rainFall: MM): FoodBalance = {
     foodBalance(world.parcels, kitchen)
   }
 
-  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen)(using Fertility.AgronomicMetricsByParcel): FoodBalance = {
+  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen)(using Fertility.AgronomicMetricsByParcel, MM): FoodBalance = {
     FoodBalance(kitchen.id, parcelsFoodProduction(World.parcelsInCultureForKitchen(parcels, kitchen)) - foodNeeds(kitchen))
   }
 
@@ -222,7 +223,7 @@ object Kitchen {
 
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
   // In fallows are present in the cultivableParcelForKitchen, it means the fallow can be used as a culture. In that case it is switched to a mil
-  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double)(using Fertility.AgronomicMetricsByParcel) = {
+  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double)(using Fertility.AgronomicMetricsByParcel, MM) = {
 
     val manPower = Kitchen.manPower(kitchen)
 
