@@ -97,10 +97,10 @@ object Kitchen {
         case false => (populationUpdated, Map())
       }
 
-    val (afterAbsorbtionKitchens, afterAbsorbtionWorld, absorbingKitchens) = kitchenAbsorption(emigrantsUpdated, simulationState.world)
-    val (afterSplitKitchens, afterSplitWorld, splittedInto) = kitchenSplit(afterAbsorbtionKitchens, afterAbsorbtionWorld)
+    val (afterSplitKitchens, afterSplitWorld, splittedInto) = kitchenSplit(emigrantsUpdated, simulationState.world)
+    val (afterAbsorbtionKitchens, afterAbsorbtionWorld, absorbingKitchens) = kitchenAbsorption(afterSplitKitchens, afterSplitWorld)
 
-    val populations = afterSplitKitchens.map { k =>
+    val populations = afterAbsorbtionKitchens.map { k =>
       val birthK = births.getOrElse(k.id, 0)
       val emigrantsK = nbEmigrants.getOrElse(k.id, 0)
       val absorbtionsK = absorbingKitchens.getOrElse(k.id, Seq())
@@ -109,12 +109,12 @@ object Kitchen {
     }
 
     simulationState.copy(
-      kitchens = afterSplitKitchens,
-      world = afterSplitWorld,
+      kitchens = afterAbsorbtionKitchens,
+      world = afterAbsorbtionWorld,
       history =
         simulationState.history
           .updatePopulations(simulationState.year, populations)
-          .updateParcelStatsAfterPopulationEvolution(simulationState.year, afterSplitKitchens, afterSplitWorld)
+          .updateParcelStatsAfterPopulationEvolution(simulationState.year, afterAbsorbtionKitchens, afterAbsorbtionWorld)
     )
 
   }
@@ -126,7 +126,7 @@ object Kitchen {
                          world: World
                        )(using mT: MersenneTwister): (Seq[Kitchen], World, Map[KitchenID, Seq[KitchenID]]) = {
 
-    val kitchenSizeThresholdForAbsorption = Constants.KITCHEN_MAXIMUM_SIZE - Constants.SPLIT_KITCHEN_OFFSPRING_SIZE
+    val kitchenSizeThresholdForAbsorption = Constants.KITCHEN_MAXIMUM_SIZE
     val toBeAbsorbedKitcken = kitchens.filter(k => k.size <= Constants.KITCHEN_MINIMUM_SIZE)
     val absorbingCandidateKitchens = kitchens.diff(toBeAbsorbedKitcken).map { k => AbsorbingKitchen(k, Seq()) }
     // Do not consider too large kitchens to avoid absorbtion/split loops
