@@ -59,7 +59,10 @@ object Rotation {
     }.filter(_.balance < 0).toSeq
 
     // Compute loans and store them in history sequence
-    val (yearLoans, notUsedInLoanProcess) = Loan.assign(allParcelUsages.forLoan, demandingKitchens)
+    //Sort parcel for loan in crop priority order (Mil>Peanut>Fallow)
+    val groupedForLoan = allParcelUsages.forLoan.groupBy(_.crop)
+    val sortedForLoan = groupedForLoan.getOrElse(Mil, Seq()) ++ groupedForLoan.getOrElse(Peanut, Seq()) ++ groupedForLoan.getOrElse(Fallow, Seq())
+    val (yearLoans, notUsedInLoanProcess) = Loan.assign(sortedForLoan, demandingKitchens)
     val loanedParcels = yearLoans.map(l => l.parcel.copy(farmerID = l.to, crop = Mil))
 
     val inCulture = allParcelUsages.cultivated ++ allParcelUsages.notLoanable ++ notUsedInLoanProcess
