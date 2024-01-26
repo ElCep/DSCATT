@@ -13,8 +13,9 @@ case class Loan(from: KitchenID, to: KitchenID, parcel: Parcel)
 
 object Loan {
 
+  // Every loaned parcel will be used with Mil
   def assign(parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance])(using Fertility.AgronomicMetricsByParcel, MM): (Seq[Loan], Seq[Parcel]) = {
-
+    
     @tailrec
     def assign0(demandingKitchens: List[FoodBalance], availableParcels: Seq[Parcel], yearLoans: Seq[Loan]): (Seq[Loan], Seq[Parcel]) = {
       if (demandingKitchens.isEmpty || availableParcels.isEmpty) {

@@ -33,7 +33,7 @@ object Diohine {
       kitchenSize = 16,
       RotationCycle.ThreeYears,
       CropingStrategy.PeanutForInexcess(0.0),
-      OwnFallowUse.UseFallowIfNeeded,
+      OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
       FoodDonationStrategy.FoodForAllStrategy,
       HerdStrategy.EverywhereByDayOwnerByNight,

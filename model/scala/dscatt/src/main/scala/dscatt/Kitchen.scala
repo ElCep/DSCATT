@@ -59,11 +59,10 @@ object Kitchen {
     }) * parcelArea
   }
 
-  // Fallow is considered as Mil in case of ExtraParcelsExceptFallowLoaner and will be set as Mil once the loan will be effective
+  // Fallow and Peanut are considered as Mil in case of loan (since loan is for food) and will be set as Mil once the loan will be effective
   def parcelFoodProductionForLoan(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel, rainFall: MM) =
     (parcel.crop match {
-      case Mil | Fallow => Fertility.milNRF(metrics(parcel.id).availableNitrogen / parcel.area) * milSeedFullPontential(rainFall)
-      case Peanut => Fertility.peanutNRF * peanutSeedFullPotential * Constants.PEANUT_FOOD_EQUIVALENCE
+      case Mil | Fallow | Peanut => Fertility.milNRF(metrics(parcel.id).availableNitrogen / parcel.area) * milSeedFullPontential(rainFall)
     }) * parcel.area
 
 
@@ -222,7 +221,7 @@ object Kitchen {
   case class CropNeeded(cultivatedParcels: Seq[Parcel], candidatesNotUsed: Seq[Parcel], inexcessOnCultivatedParcels: Double)
 
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
-  // In fallows are present in the cultivableParcelForKitchen, it means the fallow can be used as a culture. In that case it is switched to a mil
+  // If fallows are present in the cultivableParcelForKitchen, it means the fallow can be used as a culture. In that case it is switched to a mil
   def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double)(using Fertility.AgronomicMetricsByParcel, MM) = {
 
     val manPower = Kitchen.manPower(kitchen)

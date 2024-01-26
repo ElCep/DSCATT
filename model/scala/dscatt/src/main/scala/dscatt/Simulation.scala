@@ -115,8 +115,6 @@ object Simulation {
 
         val effectiveFallowParcels = World.fallowParcels(afterFertilizationState.world).length
 
-        println("M " + World.milParcels(afterFertilizationState.world.parcels).length + " P " + World.peanutParcels(afterFertilizationState.world.parcels).length + " F " + World.fallowParcels(afterFertilizationState.world).length)
-        println("Effective " + effectiveFallowParcels + " Vs Th " + theoriticalFallowParcels )
         val finalHistory = afterFertilizationState.history
           .updateFoods(afterFertilizationState.year, afterDonationFoods)
           .updateEffectiveFallowRatio(afterFertilizationState.year, effectiveFallowParcels.toDouble / theoriticalFallowParcels)
