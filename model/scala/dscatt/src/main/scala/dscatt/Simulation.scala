@@ -38,10 +38,12 @@ object Simulation {
              kitchenMaximumSize: Int = 24, // exposed for calibration
              splitKitchenOffspringSize: Int = 6, // exposed for calibration
              peanutSeedToFood: Double, // exposed for calibration
-             hookParameters: HookParameters
-           )(using rainFall: MM)= {
+             hookParameters: HookParameters,
+             rainFall: MM
+           )= {
 
     given MersenneTwister(seed)
+    given rain:MM = rainFall
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
@@ -57,6 +59,7 @@ object Simulation {
     // Two years warming up
     val warmedUpState = evolve(initialState, 0.0, 3, soilQualityBasis, 0.0, 0.0, false, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, 0.0).copy(history = initialHistory, year = 1)
 
+    println("------------------------------------------------")
     val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis, erosion, fallowBoost, true, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, peanutSeedToFood)
     
     if (hookParameters.displayParcels)
@@ -112,6 +115,8 @@ object Simulation {
 
         val effectiveFallowParcels = World.fallowParcels(afterFertilizationState.world).length
 
+        println("M " + World.milParcels(afterFertilizationState.world.parcels).length + " P " + World.peanutParcels(afterFertilizationState.world.parcels).length + " F " + World.fallowParcels(afterFertilizationState.world).length)
+        println("Effective " + effectiveFallowParcels + " Vs Th " + theoriticalFallowParcels )
         val finalHistory = afterFertilizationState.history
           .updateFoods(afterFertilizationState.year, afterDonationFoods)
           .updateEffectiveFallowRatio(afterFertilizationState.year, effectiveFallowParcels.toDouble / theoriticalFallowParcels)

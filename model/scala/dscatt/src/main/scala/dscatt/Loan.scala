@@ -13,7 +13,7 @@ case class Loan(from: KitchenID, to: KitchenID, parcel: Parcel)
 
 object Loan {
 
-  def assign(year: Int, parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance])(using Fertility.AgronomicMetricsByParcel, MM): (Seq[Loan], Seq[Parcel]) = {
+  def assign(parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance])(using Fertility.AgronomicMetricsByParcel, MM): (Seq[Loan], Seq[Parcel]) = {
 
     @tailrec
     def assign0(demandingKitchens: List[FoodBalance], availableParcels: Seq[Parcel], yearLoans: Seq[Loan]): (Seq[Loan], Seq[Parcel]) = {

@@ -21,7 +21,7 @@ object Diohine {
 
     val hooks = HookParameters(
       displayParcels = false,
-      displayKitchens = false,
+      displayKitchens = true,
       hookFile = Some(hookFile)
     )
 
@@ -64,22 +64,22 @@ object Diohine {
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
-    given rainFall: MM = 500
     val simulationState = Simulation(
       77,
       giniParcels = 0.2,
-      populationGrowth = 0.021582528504677432,
+      populationGrowth = 0.02,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
       simulationLength = 26,
-      soilQualityBasis = 1.5569960930147841,
-      erosion = 0.21513538570352136,
-      fallowBoost = 0.4134031905895975,
-      kitchenMinimumSize = 13,
-      kitchenMaximumSize = 31,
-      splitKitchenOffspringSize = 13,
-      peanutSeedToFood = 0.4523417917522577,
-      hookParameters = hooks
+      soilQualityBasis = 0.76,
+      erosion = 0.13,
+      fallowBoost = 1.0,
+      kitchenMinimumSize = 8, // DONT TOUCH
+      kitchenMaximumSize = 31, // DONT TOUCH
+      splitKitchenOffspringSize = 13, // DONT TOUCH
+      peanutSeedToFood = 0.52,
+      hookParameters = hooks,
+      rainFall = 700
     )
 
     val (rsquare, slope) = simulationState.populationRSquareAndSlope
