@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg11860"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="during_a_step.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview11862"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.76435185"
+     inkscape:cx="435.00909"
+     inkscape:cy="569.76378"
+     inkscape:window-width="1920"
+     inkscape:window-height="1005"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs11857" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#2c5aa0;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="162.39781"
+       y="11.66785"
+       id="text15899"><tspan
+         sodipodi:role="line"
+         id="tspan15897"
+         style="fill:#2c5aa0;stroke:none;stroke-width:0.264583px"
+         x="167.29846"
+         y="11.66785">step beginning </tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="1.4539763"
+       y="53.604977"
+       id="text18819"><tspan
+         sodipodi:role="line"
+         id="tspan18817"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="1.4539763"
+         y="53.604977">Initial</tspan><tspan
+         sodipodi:role="line"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="1.4539763"
+         y="71.243874"
+         id="tspan18821">Food Needs</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="195.75612"
+       y="111.10429"
+       id="text24579"><tspan
+         sodipodi:role="line"
+         id="tspan24577"
+         style="fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="195.7561"
+         y="111.10429">Autonomous Food Balance</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="107.75551"
+       y="52.784996"
+       id="text30123"><tspan
+         sodipodi:role="line"
+         id="tspan30121"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="107.75551"
+         y="52.784996">Theoretical</tspan><tspan
+         sodipodi:role="line"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="107.75551"
+         y="70.423904"
+         id="tspan30125">Rotation</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="208.11937"
+       y="50.338833"
+       id="text30123-3"><tspan
+         sodipodi:role="line"
+         id="tspan30121-6"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="208.11937"
+         y="50.338833">Theoretical</tspan><tspan
+         sodipodi:role="line"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="208.11937"
+         y="67.977737"
+         id="tspan30125-7">Cropping</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-21.40675"
+       y="188.44533"
+       id="text30123-3-2"><tspan
+         sodipodi:role="line"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="-21.40675"
+         y="188.44533"
+         id="tspan30125-7-1">Change parcel</tspan><tspan
+         sodipodi:role="line"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="-21.40675"
+         y="206.08423"
+         id="tspan51698">assignment</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-13.793592"
+       y="227.17119"
+       id="text30123-3-8"><tspan
+         sodipodi:role="line"
+         id="tspan30121-6-7"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="-13.793592"
+         y="227.17119">up to kitchens </tspan><tspan
+         sodipodi:role="line"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="-13.793592"
+         y="244.81009"
+         id="tspan30125-7-9">needs</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="305.36249"
+       y="51.044186"
+       id="text30123-5"><tspan
+         sodipodi:role="line"
+         id="tspan30121-3"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="305.36249"
+         y="51.044186">Theoretical</tspan><tspan
+         sodipodi:role="line"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="305.36249"
+         y="68.68309"
+         id="tspan30125-5">Fertility</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="403.20142"
+       y="53.539318"
+       id="text30123-6"><tspan
+         sodipodi:role="line"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="403.20142"
+         y="53.539318"
+         id="tspan30125-9">Soil Quality</tspan><tspan
+         sodipodi:role="line"
+         style="text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="403.20142"
+         y="71.178223"
+         id="tspan43579">Nitrogen available</tspan></text>
+    <path
+       style="fill:#2c5aa0;fill-rule:evenodd;stroke:#2c5aa0;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 1.5991551,19.680168 H 208.99146"
+       id="path46384" />
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#2c5aa0;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="184.34166"
+       y="147.63928"
+       id="text15899-1"><tspan
+         sodipodi:role="line"
+         id="tspan15897-2"
+         style="fill:#2c5aa0;stroke:none;stroke-width:0.264583px"
+         x="184.34166"
+         y="147.63928">After Rotation State</tspan></text>
+    <path
+       style="fill:#2c5aa0;fill-rule:evenodd;stroke:#2c5aa0;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 3.2987464,155.6516 H 210.69105"
+       id="path46384-7" />
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#2c5aa0;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="157.59531"
+       y="266.52322"
+       id="text15899-0"><tspan
+         sodipodi:role="line"
+         id="tspan15897-9"
+         style="fill:#2c5aa0;stroke:none;stroke-width:0.264583px"
+         x="162.49596"
+         y="266.52322">Resized State </tspan></text>
+    <path
+       style="fill:#2c5aa0;fill-rule:evenodd;stroke:#2c5aa0;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M -0.31376954,274.53555 H 207.07854"
+       id="path46384-3" />
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#2c5aa0;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="197.17911"
+       y="342.15991"
+       id="text15899-6"><tspan
+         sodipodi:role="line"
+         id="tspan15897-0"
+         style="fill:#2c5aa0;stroke:none;stroke-width:0.264583px"
+         x="202.07976"
+         y="342.15991">After Fertilization State </tspan></text>
+    <path
+       style="fill:#2c5aa0;fill-rule:evenodd;stroke:#2c5aa0;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 6.0346168,349.64623 H 213.42692"
+       id="path46384-6" />
+  </g>
+</svg>
