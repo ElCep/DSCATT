@@ -33,7 +33,7 @@ object Diohine {
       kitchenSize = 16,
       RotationCycle.ThreeYears,
       CropingStrategy.PeanutForInexcess(0.0),
-      OwnFallowUse.NeverUseFallow,
+      OwnFallowUse.UseFallowIfNeeded,
       LoanStrategy.AllExtraParcelsLoaner,
       FoodDonationStrategy.FoodForAllStrategy,
       HerdStrategy.EverywhereByDayOwnerByNight,
@@ -71,8 +71,7 @@ object Diohine {
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
       simulationLength = 26,
-      soilQualityBasis = 0.76,
-      erosion = 0.13,
+      soilQualityBasis = 0.63,
       fallowBoost = 1.0,
       kitchenMinimumSize = 8, // DONT TOUCH
       kitchenMaximumSize = 31, // DONT TOUCH

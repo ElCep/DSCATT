@@ -141,8 +141,8 @@ object Fertility {
     }
 
     val faidherbiaBoost = parcel.faidherbiaTrees * 0.06
-    
-    - Constants.EROSION + soilQualityBasis + manureBoost + mulchingBoost + fallowBoost + faidherbiaBoost
+
+    soilQualityBasis + manureBoost + mulchingBoost + fallowBoost + faidherbiaBoost
   }
 
   // in kg. Computed from previous year soil quality and manure production

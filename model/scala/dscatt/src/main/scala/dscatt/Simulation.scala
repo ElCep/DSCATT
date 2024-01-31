@@ -32,7 +32,6 @@ object Simulation {
              supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
              soilQualityBasis: Double,
-             erosion: Double,
              fallowBoost: Double,
              kitchenMinimumSize: Int = 4, // exposed for calibration
              kitchenMaximumSize: Int = 24, // exposed for calibration
@@ -57,10 +56,10 @@ object Simulation {
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
     // Two years warming up
-    val warmedUpState = evolve(initialState, 0.0, 3, soilQualityBasis, 0.0, 0.0, false, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, 0.0).copy(history = initialHistory, year = 1)
+    val warmedUpState = evolve(initialState, 0.0, 3, soilQualityBasis, 0.0, false, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, 0.0).copy(history = initialHistory, year = 1)
 
     println("------------------------------------------------")
-    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis, erosion, fallowBoost, true, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, peanutSeedToFood)
+    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis, fallowBoost, true, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, peanutSeedToFood)
     
     if (hookParameters.displayParcels)
       History.printParcels(finalState, hookParameters)
@@ -76,7 +75,6 @@ object Simulation {
               populationGrowth: Double,
               simulationLenght: Int,
               soilQualityBasis: Double,
-              erosion: Double,
               fallowBoost: Double,
               emigrationProcess: Boolean,
               kitchenMinimumSize: Int,
@@ -130,7 +128,6 @@ object Simulation {
     Constants.KITCHEN_MINIMUM_SIZE = kitchenMinimumSize
     Constants.KITCHEN_MAXIMUM_SIZE = kitchenMaximumSize
     Constants.SPLIT_KITCHEN_OFFSPRING_SIZE = splitKitchenOffringSize
-    Constants.EROSION = erosion
     Constants.FALLOW_BOOST = fallowBoost
     evolve0(simulationState)
   }
