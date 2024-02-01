@@ -36,7 +36,7 @@ object Fertility {
             case _ => 0.0
           }
         }.sum
-        k.id -> (herdFood / Constants.KG_OF_STRAW_PER_COW_PER_YEAR).floor.toInt
+        k.id -> (Constants.EXPANDING_HERD_SIZE * herdFood / Constants.KG_OF_STRAW_PER_COW_PER_YEAR).floor.toInt
       }.toMap
 
     def manureVillageForPFor(parcel: Parcel, parcels: Seq[Parcel], state: SimulationState) =
