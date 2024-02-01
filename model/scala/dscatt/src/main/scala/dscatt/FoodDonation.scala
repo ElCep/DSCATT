@@ -1,6 +1,5 @@
 package dscatt
 
-import Croping.NotAssigned
 import Kitchen.{Food, FoodBalance, KitchenID}
 import Parcel.ParcelID
 import Simulation.SimulationState

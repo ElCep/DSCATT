@@ -314,8 +314,14 @@ to setup-world-patches
   ]
 
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
   ask patches with [pxcor > 50 and pycor < 50]
 =======
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 
   ask patches with [ zone != "case" and proprietaire != "bordures" and proprietaire != "zone cuisine"]
   [
@@ -568,8 +574,18 @@ false
 "" ""
 PENS
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
 "default" 1.0 0 -16777216 true "" "plot fertilitesize"
 "pen-1" 1.0 0 -7500403 true "" "let fertilite-totale 0\nask cuisines [\n    let myParcelles patches with [member? parcelle-id [sentence idmyParcellesCultiveA idmyParcellesCultiveM] of myself]\n    set fertilite-totale fertilite-totale + sum [fertilite] of myParcelles\n    ]\nplot fertilite-totale"
+=======
+"default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches with [proprietaire != \"zone cuisine\" and proprietaire != \"bordures\" and zone != \"case\" ]"
+"pen-1" 1.0 0 -7500403 true "" "let fertilite-totale 100\nask cuisines [\n    let myParcelles patches with [member? parcelle-id [idmyParcellesCultive] of myself]\n    set fertilite-totale fertilite-totale + sum [fertilite] of myParcelles / count myParcelles\n    ]\nplot fertilite-totale"
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+"default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches with [proprietaire != \"zone cuisine\" and proprietaire != \"bordures\" and zone != \"case\" ]"
+"pen-1" 1.0 0 -7500403 true "" "let fertilite-totale 100\nask cuisines [\n    let myParcelles patches with [member? parcelle-id [idmyParcellesCultive] of myself]\n    set fertilite-totale fertilite-totale + sum [fertilite] of myParcelles / count myParcelles\n    ]\nplot fertilite-totale"
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 =======
 "default" 1.0 0 -16777216 true "" "plot sum [fertilite] of  patches with [proprietaire != \"zone cuisine\" and proprietaire != \"bordures\" and zone != \"case\" ]"
 "pen-1" 1.0 0 -7500403 true "" "let fertilite-totale 100\nask cuisines [\n    let myParcelles patches with [member? parcelle-id [idmyParcellesCultive] of myself]\n    set fertilite-totale fertilite-totale + sum [fertilite] of myParcelles / count myParcelles\n    ]\nplot fertilite-totale"
@@ -787,7 +803,15 @@ troupeau
 25
 200
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
 75.0
+=======
+195.0
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+195.0
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 =======
 195.0
 >>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
@@ -853,7 +877,15 @@ nb-cuisines
 5
 25
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
 7.0
+=======
+10.0
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+10.0
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 =======
 10.0
 >>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
@@ -887,7 +919,15 @@ patch-area
 10
 500
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
 60.0
+=======
+90.0
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+90.0
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 =======
 90.0
 >>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
@@ -1010,6 +1050,8 @@ update-fertilite-teinte
 -1000
 
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
 SLIDER
 193
 234
@@ -1027,6 +1069,10 @@ VERTICAL
 
 =======
 >>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 CHOOSER
 7
 580
@@ -1036,6 +1082,8 @@ strategie-paturage
 strategie-paturage
 "mixte" "collectif" "par cuisine"
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
 0
 
 PLOT
@@ -1044,6 +1092,10 @@ PLOT
 1630
 545
 =======
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 1
 
 PLOT
@@ -1051,6 +1103,12 @@ PLOT
 595
 1685
 745
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
 >>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 Fertilite cuisine
 NIL
@@ -1065,6 +1123,8 @@ false
 PENS
 "default" 1.0 2 -16777216 true "" ""
 
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
 TEXTBOX
 250
@@ -1137,6 +1197,10 @@ ratio-arachide-subsistence
 NIL
 HORIZONTAL
 
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 =======
 >>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 @#$#@#$#@
@@ -1487,6 +1551,8 @@ NetLogo 6.2.2
 @#$#@#$#@
 <experiments>
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
   <experiment name="plan-complet-diohine022020" repetitions="20" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
@@ -1518,6 +1584,10 @@ NetLogo 6.2.2
       <value value="0.1"/>
       <value value="0.4"/>
 =======
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
   <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
@@ -1533,12 +1603,30 @@ NetLogo 6.2.2
     </enumeratedValueSet>
     <enumeratedValueSet variable="gini-troupeau">
       <value value="0.55"/>
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
 >>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
     </enumeratedValueSet>
     <enumeratedValueSet variable="moyenne-ppc">
       <value value="10"/>
     </enumeratedValueSet>
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+=======
+    <enumeratedValueSet variable="malus-fertilite">
+      <value value="0.81"/>
+    </enumeratedValueSet>
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+    <enumeratedValueSet variable="malus-fertilite">
+      <value value="0.81"/>
+    </enumeratedValueSet>
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 =======
     <enumeratedValueSet variable="malus-fertilite">
       <value value="0.81"/>
@@ -1561,7 +1649,15 @@ NetLogo 6.2.2
     </enumeratedValueSet>
     <enumeratedValueSet variable="nb-cuisines">
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
       <value value="16"/>
+=======
+      <value value="20"/>
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+      <value value="20"/>
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
 =======
       <value value="20"/>
 >>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
@@ -1569,6 +1665,8 @@ NetLogo 6.2.2
     <enumeratedValueSet variable="sd-ppc">
       <value value="0"/>
     </enumeratedValueSet>
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
 <<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
     <enumeratedValueSet variable="patch-area">
       <value value="140"/>
@@ -1581,6 +1679,10 @@ NetLogo 6.2.2
     <enumeratedValueSet variable="troupeau">
       <value value="195"/>
 =======
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
     <enumeratedValueSet variable="strategie-paturage">
       <value value="&quot;collectif&quot;"/>
     </enumeratedValueSet>
@@ -1589,6 +1691,12 @@ NetLogo 6.2.2
     </enumeratedValueSet>
     <enumeratedValueSet variable="troupeau">
       <value value="80"/>
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+<<<<<<< Updated upstream:model/netlogo/DiohineModel1.nlogo
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
+>>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
+=======
 >>>>>>> Stashed changes:toymodel/DiohineModel1.nlogo
     </enumeratedValueSet>
   </experiment>

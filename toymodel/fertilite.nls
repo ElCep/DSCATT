@@ -1,0 +1,97 @@
+
+to init-fertilite-au-patch
+  ;; champs de case
+  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone = "case"]
+  [
+    ;; unité : kg de matiere organique,
+    set fertilite surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
+  ]
+  ;; champs de brousse
+  ask patches with [proprietaire != "zone cuisine" and proprietaire != "bordures"  and zone != "case"]
+  [
+    ;; unité : kg de matiere organique, 
+    set fertilite surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
+  ]
+end
+
+
+
+to init-fertilite-a-la-parcelle
+ask cuisines [
+  let myParcelles remove-duplicates [parcelle-id] of patches with [proprietaire = myself] ; liste des ID de toutes mes parcelles
+     
+  foreach myParcelles [
+     x -> 
+      let fertilite-parcelle-case  surface-de-patch  * random-normal COS-champ-case-moy COS-champ-case-sd
+      let fertilite-parcelle-brousse surface-de-patch  * random-normal COS-champ-brousse-moy COS-champ-brousse-sd
+      
+      ask patches with[parcelle-id = x][
+        set fertilite ifelse-value zone = "case"  [fertilite-parcelle-case] [fertilite-parcelle-brousse]
+       
+      ]    
+  ]
+]
+ 
+end
+
+to MAJ-fertilite
+
+  let nb-patches-Jach count patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and not cultived?  ]
+  
+    
+  ;; collectif: les troupeaux paturent sur toutes les jachères de manière indifénciée
+  ;; par cuisine: les troupeaux paturent toujours sur les parcelles de la cuisine
+  ;; mixte: la nuit les troupeaux des cuisines paturent sur les parcelles de leur cuisine et la journée sur toutes les jachères
+  
+  
+  let coefficients-strategie [] ;; [ratio colletif, ratio cuisine] 
+  (ifelse 
+    (strategie-paturage = "mixte") [set coefficients-strategie [0.5 0.5]]
+    (strategie-paturage = "collectif") [set coefficients-strategie [1.0 0.0]]
+    (strategie-paturage = "par cuisine") [set coefficients-strategie [0.0 1.0]]
+  )     
+  
+  show word "COEF STRATEGIE first " (first coefficients-strategie) 
+  show word "last" (last coefficients-strategie)
+
+  ;; fumure uniforme de tout le troupeau dans les champs de brousse en jachère pendant la journée 
+  ask patches with [cycle = 3 and proprietaire != "zone cuisine" and proprietaire != "bordures" and zone != "case" and not cultived?  ][
+    set fertilite fertilite + (((sum [taille-troupeau] of cuisines ) * COS-par-tete) / nb-patches-Jach) * first coefficients-strategie  ;; le 0.5 indique que c'est le jour, i.e. la moitié du temps 
+  ]
+  
+  ask cuisines [
+    ;; les patches de la cuisine 
+    let myjachereplots patches with   [cycle = 3  and not cultived? and proprietaire = [who] of myself ]
+    ask myjachereplots[
+      set fertilite fertilite + ((([taille-troupeau] of myself) * COS-par-tete) / nb-patches-Jach) * last coefficients-strategie  ;; le 0.5 indique que c'est la nuit, le reste du temps
+      
+     
+    ; et que le troupeau va specifiquement chier sur les parcelles des propriétaires
+    ; il pourra y avoir du pret de troupeau de nuit ... un jour  
+    ]
+  ]
+  
+  ;; test
+;    ask one-of cuisines [
+;    ask patches with [cycle = 3 and zone != "case" and proprietaire = self] [
+;      sprout 1 [ 
+;        set size 1
+;        set color black
+;      ]
+;    ]
+;  ]
+  
+  
+
+  ask cuisines [
+    foreach idmyParcellesCultive [
+      ;; la fertilite des champs de case est fixe (pour le moment)
+      x -> ask patches with [parcelle-id = x and zone != "case" ][
+            set fertilite  fertilite -  (surface-de-patch * conso-carbone-culture)
+        if fertilite < 0 [set fertilite 0] 
+          ]
+    ];; foreach
+  ]
+
+end
+

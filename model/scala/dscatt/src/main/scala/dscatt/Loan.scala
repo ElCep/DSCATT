@@ -1,11 +1,10 @@
 package dscatt
 
-import Croping.NotAssigned
 import Kitchen.{FoodBalance, KitchenID}
 import Parcel.ParcelID
 import Simulation.SimulationState
-import org.apache.commons.math3.random.MersenneTwister
 import Croping.AParcel
+import Constants.*
 
 import scala.annotation.tailrec
 
@@ -14,8 +13,9 @@ case class Loan(from: KitchenID, to: KitchenID, parcel: Parcel)
 
 object Loan {
 
-  def assign(year: Int, parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance])(using Fertility.AgronomicMetricsByParcel): (Seq[Loan], Seq[Parcel]) = {
-
+  // Every loaned parcel will be used with Mil
+  def assign(parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance])(using Fertility.AgronomicMetricsByParcel, MM): (Seq[Loan], Seq[Parcel]) = {
+    
     @tailrec
     def assign0(demandingKitchens: List[FoodBalance], availableParcels: Seq[Parcel], yearLoans: Seq[Loan]): (Seq[Loan], Seq[Parcel]) = {
       if (demandingKitchens.isEmpty || availableParcels.isEmpty) {

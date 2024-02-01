@@ -8,6 +8,7 @@ import Loan.*
 import Diohine.*
 import Simulation.*
 import java.io.File as JFile
+import Constants.*
 
 object History {
 
@@ -51,6 +52,11 @@ object History {
       val historyOfYear = history(year)
       history.updated(year, historyOfYear.copy(foodStats = foods.map(f => f.kitchenID -> f).toMap))
     }
+    
+    def updateEffectiveFallowRatio(year: Int, effectiveFallowProportion: Double) =
+      val historyOfYear = history(year)
+      history.updated(year, historyOfYear.copy(effectiveFallowRatio = effectiveFallowProportion))
+      
 
     def updateParcelStatsAfterPopulationEvolution(year: Int, allKitchens: Seq[Kitchen], world: World) = {
       val historyOfYear = history(year)
@@ -74,7 +80,7 @@ object History {
         val soilQualityMean = parcelFertilities.map(_.agronomicMetrics.soilQuality).sum / parcelFertilities.size
         val availableNitrogenMean = parcelFertilities.map(_.agronomicMetrics.availableNitrogen).sum / parcelFertilities.size
 
-        k.id -> Fertility.Metrics(year, Croping.NotAssigned, manureMassMean, mulchingMassMean, Fertility.AgronomicMetrics(availableNitrogenMean, soilQualityMean))
+        k.id -> Fertility.Metrics(year, Croping.Fallow, manureMassMean, mulchingMassMean, Fertility.AgronomicMetrics(availableNitrogenMean, soilQualityMean))
       }.toMap
 
       history.updated(year, historyOfYear.copy(fertilities = historyOfYear.fertilities ++ newFertilities))
@@ -93,7 +99,8 @@ object History {
                                     loans: Loans = Seq(),
                                     foodStats: FoodStats = Map(),
                                     fertilities: Fertilities = Map(),
-                                    herds: Herds = Map()
+                                    herds: Herds = Map(),
+                                    effectiveFallowRatio: Double = 0.0
                                   )
 
   def toParcelStats(yearLoans: Seq[Loan], parcels: Seq[Parcel]): ParcelStatsByKitchen = {
@@ -194,7 +201,7 @@ object History {
 
   }
 
-  def printParcels(state: SimulationState, hookParameters: HookParameters) = {
+  def printParcels(state: SimulationState, hookParameters: HookParameters)(using rainFall: MM) = {
     val first20 = state.world.parcels.take(20)
 
 
@@ -214,7 +221,7 @@ object History {
           toDouble(fertility.manureMass / area),
           toDouble(fertility.mulchingMass / area),
           toDouble(p.faidherbiaTrees),
-          toDouble(Kitchen.parcelFoodProduction(fertility.crop, area, fertility.agronomicMetrics) / area),
+          toDouble(Kitchen.parcelFoodProduction(fertility.crop, area, fertility.agronomicMetrics, rainFall) / area),
           fertility.crop.display
         )
       }

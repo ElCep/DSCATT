@@ -32,7 +32,7 @@ object World {
               id = p.id.toString,
               ownerID = p.oID,
               farmerID = p.oID,
-              crop = NotAssigned,
+              crop = Fallow,
               cropZone = intToCropZone(p.r, kitchensMap(p.oID).head.rotationCycle, mT.nextDouble() > 0.5),
               area = area,
               faidherbiaTrees = kitchensMap(p.oID).head.nbFaidherbia * area,
@@ -74,8 +74,6 @@ object World {
 
   def farmedParcelsForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchen(world.parcels, kitchen)
 
-  def assignedParcelsForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchen(world, kitchen).filter { p => Parcel.isAssigned(p) }
-
   def ownedParcelsForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter(_.ownerID == kitchen.id)
 
   def parcelsInCultureForKitchen(world: World, kitchen: Kitchen): Seq[Parcel] = parcelsInCultureForKitchen(world.parcels, kitchen)
@@ -86,15 +84,13 @@ object World {
 
   def cultivatedParcels(parcels: Seq[Parcel]): Seq[Parcel] = parcels.filter(Parcel.isCultivated(_))
 
-  def notAssignedParcels(world: World) = world.parcels.filter(_.crop == NotAssigned)
-
-  def assignedParcels(world: World) = world.parcels.filter(_.crop != NotAssigned)
-
   def milParcels(parcels: Seq[Parcel]) = parcels.filter(_.crop == Mil)
 
   def peanutParcels(parcels: Seq[Parcel]) = parcels.filter(_.crop == Peanut)
 
-  def fallowParcels(world: World) = world.parcels.filter(_.crop == Fallow)
+  def fallowParcels(parcels: Seq[Parcel]): Seq[Parcel] = parcels.filter(_.crop == Fallow)
+  
+  def fallowParcels(world: World): Seq[Parcel] = fallowParcels(world.parcels)
 
   def fallowParcelsForKitchen(world: World, kitchen: Kitchen) = parcelsForKitchen(world, kitchen).filter(_.crop == Fallow)
   

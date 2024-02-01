@@ -102,4 +102,4 @@ object KitchenProfile {
   )
 }
 
-case class KitchenPartition(profiles: (KitchenProfile, KitchenSize)*)
+case class KitchenPartition(profiles: (KitchenProfile, Int)*)

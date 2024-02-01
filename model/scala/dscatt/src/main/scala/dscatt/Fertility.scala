@@ -14,11 +14,11 @@ object Fertility {
 
   case class AgronomicMetrics(availableNitrogen: Double = 0.0, soilQuality: Double = 0.0)
 
-  case class Metrics(year: Int, crop: Crop = NotAssigned, manureMass: Double = 0.0, mulchingMass: Double = 0.0, agronomicMetrics: AgronomicMetrics = AgronomicMetrics(0.0, 0.0))
+  case class Metrics(year: Int, crop: Crop = Fallow, manureMass: Double = 0.0, mulchingMass: Double = 0.0, agronomicMetrics: AgronomicMetrics = AgronomicMetrics(0.0, 0.0))
 
   type AgronomicMetricsByParcel = Map[ParcelID, AgronomicMetrics]
 
-  def assign(state: SimulationState, soilQualityBasis: Double): SimulationState = {
+  def assign(state: SimulationState, soilQualityBasis: Double)(using rainFall: MM): SimulationState = {
 
     val fertilityByParcel = state.world.parcels.map { parcel =>
       val currentYearSoilQuality = Fertility.soilQuality(parcel, soilQualityBasis)
@@ -29,9 +29,9 @@ object Fertility {
       state.kitchens.map { k =>
         val herdFood = World.parcelsForKitchen(state.world, k).map { p =>
           p.crop match {
-            case Fallow => fallowNRF(fertilityByParcel(p.id)._2 / p.area) * Constants.FALLOW_FULL_POTENTIAL_YIELD * p.area
+            case Fallow => fallowNRF(fertilityByParcel(p.id)._2 / p.area) * fallowFullPotential(rainFall) * p.area
             case Mil => k.mulchingStrategy match {
-              case MulchingStrategy.Mulching(leftOnTheGroundRatio: Double) => milNRF(fertilityByParcel(p.id)._2 / p.area) * Constants.MIL_FULL_POTENTIAL_YIELD * p.area * (1 - leftOnTheGroundRatio) * Constants.MIL_STRAW_RATIO
+              case MulchingStrategy.Mulching(leftOnTheGroundRatio: Double) => milNRF(fertilityByParcel(p.id)._2 / p.area) * milFullPotential(rainFall) * p.area * (1 - leftOnTheGroundRatio) * Constants.MIL_STRAW_RATIO
             }
             case _ => 0.0
           }
@@ -60,25 +60,24 @@ object Fertility {
           parcel.crop match {
             case Mil => kitchenOption.map{_.mulchingStrategy} match {
               case Some(MulchingStrategy.Mulching(leftOnTheGroundRatio: Double)) =>
-                milNRF(fertilityByParcel(parcel.id)._2 / parcel.area) * Constants.MIL_FULL_POTENTIAL_YIELD * parcel.area * leftOnTheGroundRatio * Constants.MIL_STRAW_RATIO
+                milNRF(fertilityByParcel(parcel.id)._2 / parcel.area) * milFullPotential(rainFall) * parcel.area * leftOnTheGroundRatio * Constants.MIL_STRAW_RATIO
               case _=> 0.0
             }
             case _ => 0.0
           }
 
         val manureMass = kitchenOption.map { kitchen =>
-          val dryToBeManuredArea = World.assignedParcelsForKitchen(state.world, kitchen).filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)).map {
+          val dryToBeManuredArea = World.farmedParcelsForKitchen(state.world, kitchen).filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)).map {
             _.area
           }.sum
 
           val manureKforAssignedP = effectiveHerdSizeByKitchen(kitchen.id) * Constants.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / dryToBeManuredArea
           val dryManureVillageForP = manureVillageForPFor(
             parcel,
-            World.assignedParcels(state.world).filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)),
+            state.world.parcels.filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)),
             state)
 
-          val dryMass = Parcel.isAssigned(parcel) match {
-            case true =>
+          val dryMass =
               kitchen.drySeasonManureCriteria(parcel, kitchen.rotationCycle) match {
                 case true =>
                   kitchen.drySeasonHerdStrategy match {
@@ -88,8 +87,6 @@ object Fertility {
                   }
                 case false => 0.0
               }
-            case false => 0.0
-          }
 
           val wetManureVillageForP = manureVillageForPFor(parcel, World.fallowParcels(state.world), state)
           val manureKforFallow = effectiveHerdSizeByKitchen(kitchen.id) * Constants.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / World.fallowParcelsForKitchen(state.world, kitchen).map {
@@ -139,7 +136,7 @@ object Fertility {
     // The soil quality it computed at the begining of the year before the the rotation process, so that the parcel crop here
     // is equivalent to the crop of the previous year
     val fallowBoost = parcel.crop match {
-      case Croping.Fallow => 0.01
+      case Croping.Fallow => Constants.FALLOW_BOOST
       case _ => 0.0
     }
 
@@ -174,17 +171,30 @@ object Fertility {
     Fertility.AgronomicMetrics(availableNitrogen(parcel, qs), qs)
   }
 
-  def milNRF(nAvailable: KG_BY_HA) = nAvailable match {
+  def milNRF(nAvailable: KG_BY_HA) = nAvailable match
     case n if n < 18 => 0.25
     case n if n >= 18 && n <= 83 => 0.501 * Math.log(nAvailable) - 1.2179
     case _ => 1.0
-  }
 
-  def fallowNRF(nAvailable: KG_BY_HA) = nAvailable match {
+  def fallowNRF(nAvailable: KG_BY_HA) = nAvailable match
     case n if n < 10 => 0.25
     case n if n >= 10 && n <= 50 => 0.501 * Math.log(nAvailable) - 1.2179
     case _ => 1.0
-  }
 
   def peanutNRF = 1.0
+    
+  def milFullPotential(rainFall: MM): KG_BY_HA = rainFall match
+    case n if n < 317 => 0.0
+    case n if n >= 317 && n < 805 => 1000 * (1.8608 * math.log(rainFall) - 8.6756)
+    case _ => 3775
+
+  def milSeedFullPontential(rainFall: MM): KG_BY_HA = milFullPotential(rainFall) * Constants.MIL_SEED_RATIO
+
+  val peanutFullPotential: KG_BY_HA = 1300
+  val peanutSeedFullPotential: KG_BY_HA = peanutFullPotential * Constants.PEANUT_SEED_RATIO
+  
+  def fallowFullPotential(rainFall: MM): KG_BY_HA = rainFall match
+    case n if n < 317 => 0.0
+    case n if n >= 317 && n < 805 => 1000 * (0.4322 * math.log(rainFall) - 1.195) 
+    case _ => 3775
 }

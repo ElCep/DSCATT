@@ -52,6 +52,8 @@ to updatePlots
 
   
 <<<<<<< Updated upstream:model/netlogo/plots.nls
+<<<<<<< Updated upstream:model/netlogo/plots.nls
+<<<<<<< Updated upstream:model/netlogo/plots.nls
   set-current-plot "Fertilite cuisine"
   ask cuisines [
     let myParcelles patches with [member? parcelle-id [idmyParcellesSorted] of myself]
@@ -59,12 +61,22 @@ to updatePlots
     plotxy ticks sum [fertilite] of myParcelles / count myParcelles
   ]
 =======
+=======
+>>>>>>> Stashed changes:toymodel/plots.nls
+=======
+>>>>>>> Stashed changes:toymodel/plots.nls
 set-current-plot "Fertilite cuisine"
 ask cuisines [
     let myParcelles patches with [member? parcelle-id [idmyParcellesSorted] of myself]
     set-plot-pen-color color ;pour renvoyer la couleur du fermier
     plotxy ticks sum [fertilite] of myParcelles / count myParcelles
     ]
+<<<<<<< Updated upstream:model/netlogo/plots.nls
+<<<<<<< Updated upstream:model/netlogo/plots.nls
+>>>>>>> Stashed changes:toymodel/plots.nls
+=======
+>>>>>>> Stashed changes:toymodel/plots.nls
+=======
 >>>>>>> Stashed changes:toymodel/plots.nls
   
 end
