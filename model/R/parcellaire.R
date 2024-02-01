@@ -6,11 +6,11 @@ library(ggpubr)
 library(ggnewscale)
 
 #simulated dynamics data 
-parcelsdata <- read.csv("~/DSCATT/model/R/data/parcels.csv")
+parcelsdata <- read.csv("~/dev/DSCATT/model/R/data/parcels.csv")
 parcelsdata %>%  head
 
 
-parcelsGeometry <-  st_read("~/DSCATT/model/R/data/parcelMap.gpkg")
+parcelsGeometry <-  st_read("~/dev/DSCATT/model/R/data/parcelMap.gpkg")
 # useless column removal
 parcelsGeometry <- parcelsGeometry %>% select(-c("idParcelNeighborhood"))
 parcelsGeometry$ownerID <-  as.factor(parcelsGeometry$ownerID) 
