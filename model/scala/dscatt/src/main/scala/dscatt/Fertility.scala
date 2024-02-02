@@ -144,8 +144,6 @@ object Fertility {
 
     val faidherbiaBoost = parcel.faidherbiaTrees * 0.06
 
-    println("SQ ::  " + soilQualityBasis + " | " + manureBoost + " | " + " | " + mulchingBoost + " | " + fallowBoost + " | " + faidherbiaBoost)
-
     soilQualityBasis + manureBoost + mulchingBoost + fallowBoost + faidherbiaBoost
   }
 
