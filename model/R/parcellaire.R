@@ -199,12 +199,14 @@ g1 + scale_colour_manual(values=my.cols(10))
 
 
 sassem <-  st_read("~/tmp/FichiersSIG_Sob_Bary_Sassem/Parcellaire Sassem/Parcellaire carte des cate╠ügories de champs.shp")
+sassem <-  st_read("~/dev/DSCATT/model/R/data/Parcellaire carte des cate╠ügories de champs.shp")
+
 sassem$N._FOYER <-  as.factor(sassem$N._FOYER)
 plot(sassem["N._FOYER"])
 
 
+st_write(sassem, dsn="~/DSCATT/model/R/data/sassem_field_categories.gpkg", delete_dsn = T, delete_layer = T)
 
-st_write(sassem, "~/DSCATT/model/R/data/sassem_field_categories.gpkg")
 
 
 # nb parcels and total surface by kitchen 
@@ -268,8 +270,8 @@ ggplot(aggreg_tri, aes(x= order, y=nb_pcls))+
   #geom_smooth(formula = y ~ x)+
   theme_minimal()+
   scale_y_discrete(limits=as.character(1:18))+
-  ylab("number of parcels")+
-  xlab("Kitchen ID")
+  ylab("nombre d'items")+
+  xlab("rang du client")
 
 
 aggreg_foyer <-  sassem %>% filter (Categorie_ == 2) %>%  group_by(N._FOYER) %>% summarise(nb_pcls = n(), sum_surf= sum(SUPERFICIE)/10000 , n_kad=sum(Kadd)) %>% st_drop_geometry() %>% select(nb_pcls,sum_surf, N._FOYER)
