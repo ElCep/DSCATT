@@ -179,7 +179,6 @@ object Fertility {
       case _ => 1.0
       )
     // Ensure that soilQuality boost does not make NRF exceed 1
-    println("NRF " + nrf)
     if (nrf > 1) 1.0 else nrf
 
   def fallowNRF(metrics: AgronomicMetrics, parcelArea: Double) =
