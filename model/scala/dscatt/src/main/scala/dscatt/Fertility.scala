@@ -22,16 +22,16 @@ object Fertility {
 
     val fertilityByParcel = state.world.parcels.map { parcel =>
       val currentYearSoilQuality = Fertility.soilQuality(parcel, soilQualityBasis)
-      parcel.id -> (currentYearSoilQuality, availableNitrogen(parcel, currentYearSoilQuality))
+      parcel.id -> AgronomicMetrics(availableNitrogen(parcel), currentYearSoilQuality)
     }.toMap
 
     val effectiveHerdSizeByKitchen =
       state.kitchens.map { k =>
         val herdFood = World.parcelsForKitchen(state.world, k).map { p =>
           p.crop match {
-            case Fallow => fallowNRF(fertilityByParcel(p.id)._2 / p.area) * fallowFullPotential(rainFall) * p.area
+            case Fallow => fallowNRF(fertilityByParcel(p.id), p.area) * fallowFullPotential(rainFall) * p.area
             case Mil => k.mulchingStrategy match {
-              case MulchingStrategy.Mulching(leftOnTheGroundRatio: Double) => milNRF(fertilityByParcel(p.id)._2 / p.area) * milFullPotential(rainFall) * p.area * (1 - leftOnTheGroundRatio) * Constants.MIL_STRAW_RATIO
+              case MulchingStrategy.Mulching(leftOnTheGroundRatio: Double) => milNRF(fertilityByParcel(p.id), p.area) * milFullPotential(rainFall) * p.area * (1 - leftOnTheGroundRatio) * Constants.MIL_STRAW_RATIO
             }
             case _ => 0.0
           }
@@ -58,10 +58,12 @@ object Fertility {
 
         val mulchingMass =
           parcel.crop match {
-            case Mil => kitchenOption.map{_.mulchingStrategy} match {
+            case Mil => kitchenOption.map {
+              _.mulchingStrategy
+            } match {
               case Some(MulchingStrategy.Mulching(leftOnTheGroundRatio: Double)) =>
-                milNRF(fertilityByParcel(parcel.id)._2 / parcel.area) * milFullPotential(rainFall) * parcel.area * leftOnTheGroundRatio * Constants.MIL_STRAW_RATIO
-              case _=> 0.0
+                milNRF(fertilityByParcel(parcel.id), parcel.area) * milFullPotential(rainFall) * parcel.area * leftOnTheGroundRatio * Constants.MIL_STRAW_RATIO
+              case _ => 0.0
             }
             case _ => 0.0
           }
@@ -78,15 +80,15 @@ object Fertility {
             state)
 
           val dryMass =
-              kitchen.drySeasonManureCriteria(parcel, kitchen.rotationCycle) match {
-                case true =>
-                  kitchen.drySeasonHerdStrategy match {
-                    case HerdStrategy.EverywhereByDayOwnerByNight => 0.56 * manureKforAssignedP + 0.14 * dryManureVillageForP // 0.7 * 0.8 and 0.7 * 0.2
-                    case HerdStrategy.AnywhereAnyTime => 0.7 * dryManureVillageForP
-                    case HerdStrategy.OwnerOnly => 0.7 * manureKforAssignedP
-                  }
-                case false => 0.0
-              }
+            kitchen.drySeasonManureCriteria(parcel, kitchen.rotationCycle) match {
+              case true =>
+                kitchen.drySeasonHerdStrategy match {
+                  case HerdStrategy.EverywhereByDayOwnerByNight => 0.56 * manureKforAssignedP + 0.14 * dryManureVillageForP // 0.7 * 0.8 and 0.7 * 0.2
+                  case HerdStrategy.AnywhereAnyTime => 0.7 * dryManureVillageForP
+                  case HerdStrategy.OwnerOnly => 0.7 * manureKforAssignedP
+                }
+              case false => 0.0
+            }
 
           val wetManureVillageForP = manureVillageForPFor(parcel, World.fallowParcels(state.world), state)
           val manureKforFallow = effectiveHerdSizeByKitchen(kitchen.id) * Constants.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / World.fallowParcelsForKitchen(state.world, kitchen).map {
@@ -146,11 +148,11 @@ object Fertility {
   }
 
   // in kg. Computed from previous year soil quality and manure production
-  private def availableNitrogen(parcel: Parcel, qs: Double) = {
+  private def availableNitrogen(parcel: Parcel) = {
 
     val airNitrogen = Constants.ATMOSPHERIC_NITROGEN * parcel.area
 
-    val soilNitrogen = Constants.NITROGEN_MINERALIZATION * parcel.area * qs
+    val soilNitrogen = Constants.NITROGEN_MINERALIZATION * parcel.area
 
     val manureNitrogen =
       val last2Years = parcel.fertilityHistory.takeRight(2)
@@ -167,22 +169,29 @@ object Fertility {
   }
 
   def agronomicMetrics(parcel: Parcel, soilQualityBasis: Double) = {
-    val qs = soilQuality(parcel, soilQualityBasis)
-    Fertility.AgronomicMetrics(availableNitrogen(parcel, qs), qs)
+    Fertility.AgronomicMetrics(availableNitrogen(parcel), soilQuality(parcel, soilQualityBasis))
   }
 
-  def milNRF(nAvailable: KG_BY_HA) = nAvailable match
-    case n if n < 18 => 0.25
-    case n if n >= 18 && n <= 83 => 0.501 * Math.log(nAvailable) - 1.2179
-    case _ => 1.0
+  def milNRF(metrics: AgronomicMetrics, parcelArea: Double) =
+    val nrf = metrics.soilQuality * ((metrics.availableNitrogen / parcelArea) match
+      case n if n < 18 => 0.25
+      case n if n >= 18 && n <= 83 => 0.501 * Math.log(n) - 1.2179
+      case _ => 1.0
+      )
+    // Ensure that soilQuality boost does not make NRF exceed 1
+    if (nrf > 1) 1 else nrf
 
-  def fallowNRF(nAvailable: KG_BY_HA) = nAvailable match
-    case n if n < 10 => 0.25
-    case n if n >= 10 && n <= 50 => 0.501 * Math.log(nAvailable) - 1.2179
-    case _ => 1.0
+  def fallowNRF(metrics: AgronomicMetrics, parcelArea: Double) =
+    val nrf = metrics.soilQuality * ((metrics.availableNitrogen / parcelArea) match
+      case n if n < 10 => 0.25
+      case n if n >= 10 && n <= 50 => 0.501 * Math.log(n) - 1.2179
+      case _ => 1.0
+      )
+    // Ensure that soilQuality boost does not make NRF exceed 1
+    if (nrf > 1) 1 else nrf
 
   def peanutNRF = 1.0
-    
+
   def milFullPotential(rainFall: MM): KG_BY_HA = rainFall match
     case n if n < 317 => 0.0
     case n if n >= 317 && n < 805 => 1000 * (1.8608 * math.log(rainFall) - 8.6756)
@@ -192,9 +201,9 @@ object Fertility {
 
   val peanutFullPotential: KG_BY_HA = 1300
   val peanutSeedFullPotential: KG_BY_HA = peanutFullPotential * Constants.PEANUT_SEED_RATIO
-  
+
   def fallowFullPotential(rainFall: MM): KG_BY_HA = rainFall match
     case n if n < 317 => 0.0
-    case n if n >= 317 && n < 805 => 1000 * (0.4322 * math.log(rainFall) - 1.195) 
+    case n if n >= 317 && n < 805 => 1000 * (0.4322 * math.log(rainFall) - 1.195)
     case _ => 3775
 }

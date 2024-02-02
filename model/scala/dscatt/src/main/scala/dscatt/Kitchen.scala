@@ -53,7 +53,7 @@ object Kitchen {
 
   def parcelFoodProduction(crop: Crop, parcelArea: Double, agronomicMetrics: Fertility.AgronomicMetrics, rainFall: MM): Double = {
     (crop match {
-      case Mil => Fertility.milNRF(agronomicMetrics.availableNitrogen / parcelArea) * milSeedFullPontential(rainFall)
+      case Mil => Fertility.milNRF(agronomicMetrics, parcelArea) * milSeedFullPontential(rainFall)
       case Peanut => Fertility.peanutNRF * peanutSeedFullPotential * Constants.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
     }) * parcelArea
@@ -62,7 +62,7 @@ object Kitchen {
   // Fallow and Peanut are considered as Mil in case of loan (since loan is for food) and will be set as Mil once the loan will be effective
   def parcelFoodProductionForLoan(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel, rainFall: MM) =
     (parcel.crop match {
-      case Mil | Fallow | Peanut => Fertility.milNRF(metrics(parcel.id).availableNitrogen / parcel.area) * milSeedFullPontential(rainFall)
+      case Mil | Fallow | Peanut => Fertility.milNRF(metrics(parcel.id), parcel.area) * milSeedFullPontential(rainFall)
     }) * parcel.area
 
 
