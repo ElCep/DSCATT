@@ -108,7 +108,7 @@ object Fertility {
         }.getOrElse(0.0)
 
         val fertility = fertilityByParcel(parcel.id)
-        val metrics = Fertility.Metrics(state.year, parcel.crop, manureMass, mulchingMass, AgronomicMetrics(fertility._2, fertility._1))
+        val metrics = Fertility.Metrics(state.year, parcel.crop, manureMass, mulchingMass, fertility)
         fertilize(
           allParcels.tail,
           fertilityUpdated :+ parcel.copy(fertilityHistory = parcel.fertilityHistory :+ metrics)
@@ -143,6 +143,8 @@ object Fertility {
     }
 
     val faidherbiaBoost = parcel.faidherbiaTrees * 0.06
+
+    println("SQ ::  " + soilQualityBasis + " | " + manureBoost + " | " + " | " + mulchingBoost + " | " + fallowBoost + " | " + faidherbiaBoost)
 
     soilQualityBasis + manureBoost + mulchingBoost + fallowBoost + faidherbiaBoost
   }
@@ -179,7 +181,8 @@ object Fertility {
       case _ => 1.0
       )
     // Ensure that soilQuality boost does not make NRF exceed 1
-    if (nrf > 1) 1 else nrf
+    println("NRF " + nrf)
+    if (nrf > 1) 1.0 else nrf
 
   def fallowNRF(metrics: AgronomicMetrics, parcelArea: Double) =
     val nrf = metrics.soilQuality * ((metrics.availableNitrogen / parcelArea) match
@@ -188,7 +191,7 @@ object Fertility {
       case _ => 1.0
       )
     // Ensure that soilQuality boost does not make NRF exceed 1
-    if (nrf > 1) 1 else nrf
+    if (nrf > 1) 1.0 else nrf
 
   def peanutNRF = 1.0
 
