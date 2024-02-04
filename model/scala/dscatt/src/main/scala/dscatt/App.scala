@@ -74,6 +74,7 @@ object Diohine {
       soilQualityBasis = 0.632,
       fallowBoost = 0.9549,
       peanutSeedToFood = 1.2443,
+      expandingHerdSize = 1.1,
       hookParameters = hooks,
       rainFall = 700
     )

@@ -40,7 +40,6 @@ object Constants {
 
   val FERTILITY_BOOST_PER_MANURE_KG_PER_HA = 0.000075 // Converted from the data: "A boost of +15% with 2T per ha"
   val KG_OF_MANURE_PER_COW_PER_YEAR: KG = 2000
-  val EXPANDING_HERD_SIZE = 1.0 // Expanding herd size due to outside village grazing
 
   // Nitrogen
   val ATMOSPHERIC_NITROGEN: KG_BY_HA = 27.5 // kg/ha
@@ -62,6 +61,7 @@ object Constants {
 
   //Herd
   val KG_OF_STRAW_PER_COW_PER_YEAR: KG = 3650
+  var EXPANDING_HERD_SIZE = 1.0 // Expanding herd size due to outside village grazing
 
   // Fertility
   var FALLOW_BOOST = 0.3549

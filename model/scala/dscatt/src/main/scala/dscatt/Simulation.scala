@@ -31,9 +31,10 @@ object Simulation {
              kitchenPartition: KitchenPartition = KitchenPartition((KitchenProfile.default, 1)),
              supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
-             soilQualityBasis: Double,
-             fallowBoost: Double,
+             soilQualityBasis: Double, // exposed for calibration
+             fallowBoost: Double, // exposed for calibration
              peanutSeedToFood: Double, // exposed for calibration
+             expandingHerdSize: Double, // exposed for calibration
              hookParameters: HookParameters,
              rainFall: MM
            )= {
@@ -44,6 +45,7 @@ object Simulation {
     Constants.PEANUT_FOOD_EQUIVALENCE = peanutSeedToFood
     Constants.FALLOW_BOOST = fallowBoost
     Constants.SOIL_QUALITY_BASIS = soilQualityBasis
+    Constants.EXPANDING_HERD_SIZE = expandingHerdSize
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
