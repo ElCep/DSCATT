@@ -81,4 +81,3 @@ quatre_en_1
 # transformée de fourrier 
 ffta <- fft(a)
 plot(Mod(ffta))
-library()
