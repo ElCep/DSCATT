@@ -1,7 +1,7 @@
 package dscatt
 
 import FoodDonationStrategy.FoodForAllStrategy
-import dscatt.Constants.NB_BY_HA
+import Data._
 
 
 trait Control

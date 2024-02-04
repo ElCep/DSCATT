@@ -45,7 +45,7 @@ object Population {
   }
 
   // Compute for each kitchen the number of births and the number of emigrants based on the food balance
-  def evolveEmigrants(kitchens: Seq[Kitchen], foods: Seq[Food]): (Seq[Kitchen], Map[KitchenID, Int]) = {
+  def evolveEmigrants(kitchens: Seq[Kitchen], foods: Seq[Food], data: Data): (Seq[Kitchen], Map[KitchenID, Int]) = {
 
     val foodAssessementMap = foods.map(fa => fa.kitchenID -> fa.toBalance).toMap
 
@@ -56,12 +56,12 @@ object Population {
         // k.copy(emigrantsPerYear = k.emigrantsPerYear :+ 0)
       }
       else {
-        val theoriticalNbEmigrants = (Math.abs(balanceK) / (Constants.DAILY_FOOD_NEED_PER_PERSON * 365)).ceil.toInt
+        val theoriticalNbEmigrants = (Math.abs(balanceK) / (data.DAILY_FOOD_NEED_PER_PERSON * 365)).ceil.toInt
 
         // The emigration process can't remove entirely the kitchen. It should be split into migration
         // (up to KITCHEN_MINIMUM_SIZE remaining in kitchen) and kitchen absorbtion
         val nbEmigrants = {
-          val emigrantThreshold = k.size - Constants.KITCHEN_MINIMUM_SIZE
+          val emigrantThreshold = k.size - data.KITCHEN_MINIMUM_SIZE
           if (theoriticalNbEmigrants <= emigrantThreshold) theoriticalNbEmigrants
           else emigrantThreshold
         }

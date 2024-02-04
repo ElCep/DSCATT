@@ -8,7 +8,7 @@ import Loan.*
 import Diohine.*
 import Simulation.*
 import java.io.File as JFile
-import Constants.*
+import Data.*
 
 object History {
 
@@ -201,7 +201,7 @@ object History {
 
   }
 
-  def printParcels(state: SimulationState, hookParameters: HookParameters, rainFall: MM) = {
+  def printParcels(state: SimulationState, hookParameters: HookParameters, data: Data) = {
     val first20 = state.world.parcels.take(20)
 
 
@@ -221,7 +221,7 @@ object History {
           toDouble(fertility.manureMass / area),
           toDouble(fertility.mulchingMass / area),
           toDouble(p.faidherbiaTrees),
-          toDouble(Kitchen.parcelFoodProduction(p, rainFall) / area),
+          toDouble(Kitchen.parcelFoodProduction(p, data) / area),
           fertility.crop.display
         )
       }

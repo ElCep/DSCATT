@@ -5,6 +5,7 @@ import Kitchen.*
 import utils.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
+
 implicit class HistoryDecorator(simulationState: SimulationState):
 
   def populationDynamic =
@@ -95,12 +96,12 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     }.toArray
 
   // Divide by peanutSeedToFood to get seed (previously peanutFoodEquivalence)
-  def averagePeanutYieldDynamic =
+  def averagePeanutYieldDynamic(using data: Data) =
     simulationState.foodStats.map { fs =>
       average(fs.flatMap { f =>
         val food = f._2
         if (food.fromPeanut != 0.0)
-          Some(food.fromPeanut / Constants.PEANUT_FOOD_EQUIVALENCE / food.peanutInCultureArea)
+          Some(food.fromPeanut / data.PEANUT_FOOD_EQUIVALENCE / food.peanutInCultureArea)
         else None
       }.toSeq)
     }.toArray

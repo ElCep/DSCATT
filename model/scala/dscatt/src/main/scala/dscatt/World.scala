@@ -15,7 +15,8 @@ import scala.io.Source
 object World {
 
   def buildWorldGeometry(kitchens: Seq[Kitchen],
-                         giniIndex: Double
+                         giniIndex: Double,
+                         data: Data
                         ): World =
 
     val parcelPath = s"json/k${kitchens.size}g${String.format(java.util.Locale.FRANCE, "%.2f", giniIndex)}.json"
@@ -26,7 +27,7 @@ object World {
       case Right(ps) =>
         val kitchensMap = kitchens.groupBy(_.id)
         val parcels = ps map: p=>
-            val area = p.a.replace(",",".").toDouble * Constants.AREA_FACTOR
+            val area = p.a.replace(",",".").toDouble * data.AREA_FACTOR
             Parcel(
               id = p.id.toString,
               ownerID = p.oID,

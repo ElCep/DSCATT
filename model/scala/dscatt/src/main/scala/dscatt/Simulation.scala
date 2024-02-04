@@ -4,8 +4,8 @@ import Croping.*
 import Diohine.{HookFile, HookParameters}
 import History.History
 import Kitchen.Food
-import Constants.*
 import org.apache.commons.math3.random.MersenneTwister
+import Data._
 
 import scala.annotation.tailrec
 
@@ -37,39 +37,41 @@ object Simulation {
              expandingHerdSize: Double, // exposed for calibration
              hookParameters: HookParameters,
              rainFall: MM
-           )= {
-
+           ) = {
+    println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + seed + " " + soilQualityBasis + " " + fallowBoost + " " + peanutSeedToFood + " " + expandingHerdSize)
     given MersenneTwister(seed)
 
-    // FIXME: get rid off the var once calibration is done
-    Constants.PEANUT_FOOD_EQUIVALENCE = peanutSeedToFood
-    Constants.FALLOW_BOOST = fallowBoost
-    Constants.SOIL_QUALITY_BASIS = soilQualityBasis
-    Constants.EXPANDING_HERD_SIZE = expandingHerdSize
+    val data = new Data(
+      soilQualityBasis = soilQualityBasis,
+      fallowBoost = fallowBoost,
+      peanutSeedToFood = peanutSeedToFood,
+      expandingHerdSize = expandingHerdSize,
+      rainFall = rainFall
+    )
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
     println("NB KITCH " + kitchens.length)
-    println("Area factor " + Constants.AREA_FACTOR)
+    println("Area factor " + data.AREA_FACTOR)
 
-    val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels)
+    val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels, data)
 
     println("area totale " + nakedWorld.parcels.map(_.area).sum)
     val initialHistory = History.initialize(simulationLength, kitchens)
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
     // Two years warming up
-    val warmedUpState = evolve(initialState, 0.0, 3, false, rainFall).copy(history = initialHistory, year = 1)
+    val warmedUpState = evolve(initialState, 0.0, 3, false, data).copy(history = initialHistory, year = 1)
 
-    println("------------------------------------------------ " )
-    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, true, rainFall)
-    
+    println("------------------------------------------------ ")
+    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, true, data)
+
     if (hookParameters.displayParcels)
-      History.printParcels(finalState, hookParameters, rainFall)
-    if (hookParameters.displayKitchens)  
+      History.printParcels(finalState, hookParameters, data)
+    if (hookParameters.displayKitchens)
       History.printKitckens(finalState, hookParameters)
 
-    finalState
+    (finalState, data)
   }
 
 
@@ -78,18 +80,18 @@ object Simulation {
               populationGrowth: Double,
               simulationLenght: Int,
               emigrationProcess: Boolean,
-              rainFall: MM
+              data: Data
             )(using MersenneTwister): SimulationState = {
 
     @tailrec
     def evolve0(simulationState: SimulationState): SimulationState = {
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 1) simulationState
       else {
-        val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k)) }
-        
+        val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k, data)) }
+
         // Evolve rotation including loans
-        val (afterRotationsSimulationState, foodAfterRotation, theoriticalFallowParcels) = Rotation.evolve(simulationState, initialFood, rainFall)
-        
+        val (afterRotationsSimulationState, foodAfterRotation, theoriticalFallowParcels) = Rotation.evolve(simulationState, initialFood, data)
+
         // Process food donations
         val afterDonationFoods = FoodDonation.assign(foodAfterRotation, simulationState)
 
@@ -98,11 +100,12 @@ object Simulation {
           afterRotationsSimulationState,
           populationGrowth,
           afterDonationFoods,
-          emigrationProcess
+          emigrationProcess,
+          data
         )
-       
+
         // Process Fertiliy
-        val afterFertilizationState = Fertility.assign(resizedSimulationState, rainFall)
+        val afterFertilizationState = Fertility.assign(resizedSimulationState, data)
 
         val effectiveFallowParcels = World.fallowParcels(afterFertilizationState.world).length
 

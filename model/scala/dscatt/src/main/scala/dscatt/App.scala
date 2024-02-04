@@ -3,7 +3,7 @@ package dscatt
 import Croping._
 import KitchenPartition._
 import utils.*
-import Constants.*
+import Data.*
 
 object Diohine {
 
@@ -44,40 +44,46 @@ object Diohine {
       4
     )
 
-//    val kitchenProfile2 = KitchenProfile(
-//      kitchenSize = 16,
-//      RotationCycle.ThreeYears,
-//      CropingStrategy.PeanutForInexcess(0.5),
-//      OwnFallowUse.NeverUseFallow,
-//      LoanStrategy.ExtraParcelsExceptFallowLoaner,
-//      FoodDonationStrategy.FoodForAllStrategy,
-//      HerdStrategy.EverywhereByDayOwnerByNight,
-//      HerdStrategy.EverywhereByDayOwnerByNight,
-//      manureDepositStategyMilNextYear,
-//      FertilizerStrategy.UniformFertilizing,
-//      MulchingStrategy.Mulching(0.10),
-//      4
-//    )
+    //    val kitchenProfile2 = KitchenProfile(
+    //      kitchenSize = 16,
+    //      RotationCycle.ThreeYears,
+    //      CropingStrategy.PeanutForInexcess(0.5),
+    //      OwnFallowUse.NeverUseFallow,
+    //      LoanStrategy.ExtraParcelsExceptFallowLoaner,
+    //      FoodDonationStrategy.FoodForAllStrategy,
+    //      HerdStrategy.EverywhereByDayOwnerByNight,
+    //      HerdStrategy.EverywhereByDayOwnerByNight,
+    //      manureDepositStategyMilNextYear,
+    //      FertilizerStrategy.UniformFertilizing,
+    //      MulchingStrategy.Mulching(0.10),
+    //      4
+    //    )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
     val kitchenPartition = KitchenPartition((kitchenProfile1, 22))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
-    val simulationState = Simulation(
+    val (simulationState, simulationData) = Simulation(
       7L,
       giniParcels = 0.2,
       populationGrowth = 0.02,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 22,
-      soilQualityBasis = 0.632,
-      fallowBoost = 0.9549,
-      peanutSeedToFood = 1.2443,
-      expandingHerdSize = 1.1,
+      simulationLength = 26,
+      soilQualityBasis = 0.6844968062969519,
+      fallowBoost = 0.3430640553320723,
+      peanutSeedToFood = 1.983588668175475,
+      expandingHerdSize = 1.9450220734172585,
+      //      soilQualityBasis = 0.037566386501967745,
+      //      fallowBoost = 1.1600945798567732,
+      //      peanutSeedToFood = 1.379729887022548,
+      //      expandingHerdSize = 1.6991464444068525,
       hookParameters = hooks,
       rainFall = 700
     )
+
+    given data: Data = simulationData
 
     val (rsquare, slope) = simulationState.populationRSquareAndSlope
     println("Pop " + simulationState.populationDynamic.toSeq)
