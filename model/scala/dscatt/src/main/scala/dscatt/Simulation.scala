@@ -4,8 +4,8 @@ import Croping.*
 import Diohine.{HookFile, HookParameters}
 import History.History
 import Kitchen.Food
-import org.apache.commons.math3.random.MersenneTwister
 import Constants.*
+import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
 
@@ -33,16 +33,17 @@ object Simulation {
              simulationLength: Int = 20,
              soilQualityBasis: Double,
              fallowBoost: Double,
-             kitchenMinimumSize: Int = 4, // exposed for calibration
-             kitchenMaximumSize: Int = 24, // exposed for calibration
-             splitKitchenOffspringSize: Int = 6, // exposed for calibration
              peanutSeedToFood: Double, // exposed for calibration
              hookParameters: HookParameters,
              rainFall: MM
            )= {
 
     given MersenneTwister(seed)
-    given rain:MM = rainFall
+
+    // FIXME: get rid off the var once calibration is done
+    Constants.PEANUT_FOOD_EQUIVALENCE = peanutSeedToFood
+    Constants.FALLOW_BOOST = fallowBoost
+    Constants.SOIL_QUALITY_BASIS = soilQualityBasis
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
@@ -56,13 +57,13 @@ object Simulation {
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
     // Two years warming up
-    val warmedUpState = evolve(initialState, 0.0, 3, soilQualityBasis, 0.0, false, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, 0.0).copy(history = initialHistory, year = 1)
+    val warmedUpState = evolve(initialState, 0.0, 3, false, rainFall).copy(history = initialHistory, year = 1)
 
-    println("------------------------------------------------")
-    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, soilQualityBasis, fallowBoost, true, kitchenMinimumSize, kitchenMaximumSize, splitKitchenOffspringSize, peanutSeedToFood)
+    println("------------------------------------------------ " )
+    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, true, rainFall)
     
     if (hookParameters.displayParcels)
-      History.printParcels(finalState, hookParameters)
+      History.printParcels(finalState, hookParameters, rainFall)
     if (hookParameters.displayKitchens)  
       History.printKitckens(finalState, hookParameters)
 
@@ -74,29 +75,19 @@ object Simulation {
               simulationState: SimulationState,
               populationGrowth: Double,
               simulationLenght: Int,
-              soilQualityBasis: Double,
-              fallowBoost: Double,
               emigrationProcess: Boolean,
-              kitchenMinimumSize: Int,
-              kitchenMaximumSize: Int,
-              splitKitchenOffringSize: Int,
-              peanutSeedToFood: Double
-            )(using MersenneTwister, MM): SimulationState = {
+              rainFall: MM
+            )(using MersenneTwister): SimulationState = {
 
     @tailrec
     def evolve0(simulationState: SimulationState): SimulationState = {
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 1) simulationState
       else {
         val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k)) }
-
+        
         // Evolve rotation including loans
-        val (afterRotationsSimulationState, foodAfterRotation, theoriticalFallowParcels) = Rotation.evolve(simulationState, soilQualityBasis, initialFood)
-
-        // Compute soil quality and available nitrogen for each parcel before the rotation process until fertilities of the current year is computed
-        implicit val fertilityMetricsByParcelAfterRotation: Fertility.AgronomicMetricsByParcel = afterRotationsSimulationState.world.parcels.map { p =>
-          p.id -> Fertility.agronomicMetrics(p, soilQualityBasis)
-        }.toMap
-
+        val (afterRotationsSimulationState, foodAfterRotation, theoriticalFallowParcels) = Rotation.evolve(simulationState, initialFood, rainFall)
+        
         // Process food donations
         val afterDonationFoods = FoodDonation.assign(foodAfterRotation, simulationState)
 
@@ -109,7 +100,7 @@ object Simulation {
         )
        
         // Process Fertiliy
-        val afterFertilizationState = Fertility.assign(resizedSimulationState, soilQualityBasis)
+        val afterFertilizationState = Fertility.assign(resizedSimulationState, rainFall)
 
         val effectiveFallowParcels = World.fallowParcels(afterFertilizationState.world).length
 
@@ -123,12 +114,6 @@ object Simulation {
       }
     }
 
-    // FIXME: get rid off the var once calibration is done
-    Constants.PEANUT_FOOD_EQUIVALENCE = peanutSeedToFood
-    Constants.KITCHEN_MINIMUM_SIZE = kitchenMinimumSize
-    Constants.KITCHEN_MAXIMUM_SIZE = kitchenMaximumSize
-    Constants.SPLIT_KITCHEN_OFFSPRING_SIZE = splitKitchenOffringSize
-    Constants.FALLOW_BOOST = fallowBoost
     evolve0(simulationState)
   }
 }

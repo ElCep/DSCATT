@@ -26,11 +26,11 @@ object Croping {
 
   object Three extends CropZone
 
-  def intToCropZone(cz: Int, rotationCycle: RotationCycle, threeIsOneProbabilityIf2Years: Boolean): CropZone = cz match
+  def intToCropZone(cz: Int, rotationCycle: RotationCycle, parcelID: Int): CropZone = cz match
     case 1 => One
     case 2 => Two
     case 3 => rotationCycle match {
-      case RotationCycle.TwoYears if (threeIsOneProbabilityIf2Years) => One
+      case RotationCycle.TwoYears if (parcelID % 2 == 0) => One
       case RotationCycle.TwoYears => Two
       case RotationCycle.ThreeYears => Three
     }

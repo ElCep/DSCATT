@@ -20,17 +20,17 @@ object Constants {
   val PEANUT_YIELD_PER_M2 = 400.0 / 10000
 
   // FIXME "var" for calibration only
-  var PEANUT_FOOD_EQUIVALENCE = 0.7 // quantity of food / quantity of peanuts
+  var PEANUT_FOOD_EQUIVALENCE = 1.2443 // quantity of food / quantity of peanuts
   // Considering that  0.66 workers per kitchen is enough and that they need 273*15=4095kg / year,
   // and a yield of 500kg / ha in mean, it comes 0.8ha / worker
   val CULTIVATED_AREA_PER_WORKER: HA = 15
   val WORKERS_RATIO_PER_KITCHEN = 0.66 // Source: Robert and co
 
   //FIXME "var" for calibration only
-  var KITCHEN_MINIMUM_SIZE = 4
-  var KITCHEN_MAXIMUM_SIZE = 24
-  var SPLIT_KITCHEN_OFFSPRING_SIZE = 6
-  val KITCHEN_SIZE_THRESHOLD_FOR_ABSORPTION = KITCHEN_MAXIMUM_SIZE - SPLIT_KITCHEN_OFFSPRING_SIZE
+  val KITCHEN_MINIMUM_SIZE = 8
+  val KITCHEN_MAXIMUM_SIZE = 31
+  val SPLIT_KITCHEN_OFFSPRING_SIZE = 13
+  //val KITCHEN_SIZE_THRESHOLD_FOR_ABSORPTION = KITCHEN_MAXIMUM_SIZE - SPLIT_KITCHEN_OFFSPRING_SIZE
 
   //SPACE // to adjust the generated area to a 180 ha
   val AREA_FACTOR = 180.0 / 500000 // (Mariana Odru, 2013 (177.1 ha))
@@ -40,7 +40,7 @@ object Constants {
 
   val FERTILITY_BOOST_PER_MANURE_KG_PER_HA = 0.000075 // Converted from the data: "A boost of +15% with 2T per ha"
   val KG_OF_MANURE_PER_COW_PER_YEAR: KG = 2000
-  val EXPANDING_HERD_SIZE = 1.5 // Expanding herd size due to outside village grazing
+  val EXPANDING_HERD_SIZE = 1.0 // Expanding herd size due to outside village grazing
 
   // Nitrogen
   val ATMOSPHERIC_NITROGEN: KG_BY_HA = 27.5 // kg/ha
@@ -64,7 +64,7 @@ object Constants {
   val KG_OF_STRAW_PER_COW_PER_YEAR: KG = 3650
 
   // Fertility
-  var EROSION= 0.98
-  var FALLOW_BOOST = 0.01
+  var FALLOW_BOOST = 0.3549
+  var SOIL_QUALITY_BASIS = 0.1
 
 }

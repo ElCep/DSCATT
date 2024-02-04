@@ -33,7 +33,7 @@ object Diohine {
       kitchenSize = 16,
       RotationCycle.ThreeYears,
       CropingStrategy.PeanutForInexcess(0.0),
-      OwnFallowUse.UseFallowIfNeeded,
+      OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
       FoodDonationStrategy.FoodForAllStrategy,
       HerdStrategy.EverywhereByDayOwnerByNight,
@@ -60,23 +60,20 @@ object Diohine {
 //    )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 23))
+    val kitchenPartition = KitchenPartition((kitchenProfile1, 22))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
     val simulationState = Simulation(
-      77,
+      7L,
       giniParcels = 0.2,
       populationGrowth = 0.02,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 26,
-      soilQualityBasis = 0.63,
-      fallowBoost = 1.0,
-      kitchenMinimumSize = 8, // DONT TOUCH
-      kitchenMaximumSize = 31, // DONT TOUCH
-      splitKitchenOffspringSize = 13, // DONT TOUCH
-      peanutSeedToFood = 0.52,
+      simulationLength = 22,
+      soilQualityBasis = 0.632,
+      fallowBoost = 0.9549,
+      peanutSeedToFood = 1.2443,
       hookParameters = hooks,
       rainFall = 700
     )

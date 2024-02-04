@@ -1,11 +1,11 @@
 package dscatt
 
 import Croping.*
-import Fertility.{AgronomicMetricsByParcel, milSeedFullPontential, peanutSeedFullPotential}
+import Fertility.{milSeedFullPontential, peanutSeedFullPotential}
 import Simulation.SimulationState
 import dscatt.Constants.NB_BY_HA
-import org.apache.commons.math3.random.MersenneTwister
 import Constants.*
+import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
 
@@ -46,40 +46,34 @@ object Kitchen {
 
   def foodNeeds(kitchen: Kitchen) = kitchen.size * Constants.DAILY_FOOD_NEED_PER_PERSON * 365
 
-  def parcelFoodProduction(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel, rainFall: MM): Double = {
-    parcelFoodProduction(parcel.crop, parcel.area, metrics(parcel.id), rainFall)
-  }
-
-
-  def parcelFoodProduction(crop: Crop, parcelArea: Double, agronomicMetrics: Fertility.AgronomicMetrics, rainFall: MM): Double = {
-    (crop match {
-      case Mil => Fertility.milNRF(agronomicMetrics, parcelArea) * milSeedFullPontential(rainFall)
+  def parcelFoodProduction(parcel: Parcel, rainFall: MM): Double = {
+    (parcel.crop match {
+      case Mil => Fertility.milNRF(parcel) * milSeedFullPontential(rainFall)
       case Peanut => Fertility.peanutNRF * peanutSeedFullPotential * Constants.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
-    }) * parcelArea
+    }) * parcel.area
   }
 
   // Fallow and Peanut are considered as Mil in case of loan (since loan is for food) and will be set as Mil once the loan will be effective
-  def parcelFoodProductionForLoan(parcel: Parcel)(using metrics: Fertility.AgronomicMetricsByParcel, rainFall: MM) =
+  def parcelFoodProductionForLoan(parcel: Parcel, rainFall: MM) =
     (parcel.crop match {
-      case Mil | Fallow | Peanut => Fertility.milNRF(metrics(parcel.id), parcel.area) * milSeedFullPontential(rainFall)
+      case Mil | Fallow | Peanut => Fertility.milNRF(parcel) * milSeedFullPontential(rainFall)
     }) * parcel.area
 
 
-  def parcelsFoodProduction(parcels: Seq[Parcel])(using metrics: Fertility.AgronomicMetricsByParcel, rainFall: MM) = {
-    parcels.map {
-      parcelFoodProduction
+  def parcelsFoodProduction(parcels: Seq[Parcel], rainFall: MM) = {
+    parcels.map {p=>
+      parcelFoodProduction(p, rainFall)
     }.sum
   }
 
-  def foodBalance(world: World, kitchen: Kitchen)(using metrics: Fertility.AgronomicMetricsByParcel, rainFall: MM): FoodBalance = {
-    foodBalance(world.parcels, kitchen)
+  def foodBalance(world: World, kitchen: Kitchen, rainFall: MM): FoodBalance = {
+    foodBalance(world.parcels, kitchen, rainFall)
   }
 
-  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen)(using Fertility.AgronomicMetricsByParcel, MM): FoodBalance = {
-    FoodBalance(kitchen.id, parcelsFoodProduction(World.parcelsInCultureForKitchen(parcels, kitchen)) - foodNeeds(kitchen))
+  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen, rainFall: MM): FoodBalance = {
+    FoodBalance(kitchen.id, parcelsFoodProduction(World.parcelsInCultureForKitchen(parcels, kitchen), rainFall) - foodNeeds(kitchen))
   }
-
 
   def evolve(
               simulationState: SimulationState,
@@ -123,7 +117,7 @@ object Kitchen {
   def kitchenAbsorption(
                          kitchens: Seq[Kitchen],
                          world: World
-                       )(using mT: MersenneTwister): (Seq[Kitchen], World, Map[KitchenID, Seq[KitchenID]]) = {
+                       ): (Seq[Kitchen], World, Map[KitchenID, Seq[KitchenID]]) = {
 
     val kitchenSizeThresholdForAbsorption = Constants.KITCHEN_MAXIMUM_SIZE
     val toBeAbsorbedKitcken = kitchens.filter(k => k.size <= Constants.KITCHEN_MINIMUM_SIZE)
@@ -132,25 +126,21 @@ object Kitchen {
     val (absorbingKitchens, tooBigKitchens) = absorbingCandidateKitchens.partition(_.kitchen.size <= kitchenSizeThresholdForAbsorption)
 
     @tailrec
-    def absorption(toBeAbsorbed: Seq[Kitchen], absorbing: Seq[AbsorbingKitchen]): Seq[AbsorbingKitchen] = {
-      val nbAbsorbing = absorbing.length
-      if (toBeAbsorbed.length == 0 || nbAbsorbing < 1) {
-        absorbing
-      }
+    def absorption(toBeAbsorbed: Seq[Kitchen], absorbing: Seq[AbsorbingKitchen], alreadyAbsorbing: Seq[AbsorbingKitchen]): (Seq[AbsorbingKitchen], Seq[Kitchen]) = {
+      if (toBeAbsorbed.length == 0 || absorbing.length < 1)
+        (alreadyAbsorbing, toBeAbsorbed ++ absorbing.map(_.kitchen))
       else {
-        val index = mT.nextInt(nbAbsorbing)
-        val oneAbsorbing = absorbing(index)
-        val newAbsorbing = absorbing.updated(index,
-          oneAbsorbing.copy(
+        val oneAbsorbing = absorbing.head
+        val newAbsorbing = oneAbsorbing.copy(
             kitchen = oneAbsorbing.kitchen.copy(size = oneAbsorbing.kitchen.size + toBeAbsorbed.head.size),
             absorbedIDs = oneAbsorbing.absorbedIDs :+ toBeAbsorbed.head.id
           )
-        )
-        absorption(toBeAbsorbed.tail, newAbsorbing)
+
+        absorption(toBeAbsorbed.tail, absorbing.tail, alreadyAbsorbing :+ newAbsorbing)
       }
     }
 
-    val reorganizedKitchens = absorption(toBeAbsorbedKitcken, absorbingKitchens)
+    val (reorganizedKitchens, untouchedKitchens) = absorption(toBeAbsorbedKitcken, absorbingKitchens, Seq())
 
     val reorganizedWorld = {
       // get the match between each absorbed id and its absorbing id
@@ -161,7 +151,7 @@ object Kitchen {
       })
     }
 
-    (reorganizedKitchens.map(_.kitchen) ++ tooBigKitchens.map {
+    (untouchedKitchens ++ reorganizedKitchens.map(_.kitchen) ++ tooBigKitchens.map {
       _.kitchen
     }, reorganizedWorld, reorganizedKitchens.map { rK => rK.kitchen.id -> rK.absorbedIDs }.toMap)
   }
@@ -222,16 +212,14 @@ object Kitchen {
 
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
   // If fallows are present in the cultivableParcelForKitchen, it means the fallow can be used as a culture. In that case it is switched to a mil
-  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double)(using Fertility.AgronomicMetricsByParcel, MM) = {
-
-    val manPower = Kitchen.manPower(kitchen)
+  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double, rainFall: MM) = {
 
     @tailrec
-    def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel], remainingManPower: Double): CropNeeded = {
+    def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel]): CropNeeded = {
 
       val needsCondition = production > needs
 
-      if (sortedParcels.isEmpty || needsCondition || remainingManPower < 0)
+      if (sortedParcels.isEmpty || needsCondition )
         CropNeeded(inCulture, sortedParcels, if (needsCondition) production - needs else 0.0)
       else {
         val head = sortedParcels.head
@@ -241,22 +229,14 @@ object Kitchen {
           case _ => head
         }
 
-        val pproduction = Kitchen.parcelFoodProduction(parcel)
-        cropsToBeCultivated(kitchen, production + pproduction, sortedParcels.tail, inCulture :+ parcel, remainingManPower - manPowerFor(parcel.area))
+        val pproduction = Kitchen.parcelFoodProduction(parcel, rainFall)
+        cropsToBeCultivated(kitchen, production + pproduction, sortedParcels.tail, inCulture :+ parcel)
       }
     }
 
-    cropsToBeCultivated(kitchen, 0.0, cultivableParcelsForKitchen.toList, List(), manPower)
+    cropsToBeCultivated(kitchen, 0.0, cultivableParcelsForKitchen.toList, List())
   }
 
-  // The maximum area of crops in culture regarding to the available manpower
-  def areaOfPossibleCropsInCulture(kitchen: Kitchen) = {
-    manPower(kitchen).ceil * Constants.CULTIVATED_AREA_PER_WORKER // ceil because kids and teenagers can help occasionally
-  }
-
-  def manPower(kitchen: Kitchen) = (kitchen.size * Constants.WORKERS_RATIO_PER_KITCHEN).ceil
-
-  def manPowerFor(cultureArea: Double) = cultureArea / Constants.CULTIVATED_AREA_PER_WORKER
 }
 
 case class Kitchen(id: Kitchen.KitchenID,

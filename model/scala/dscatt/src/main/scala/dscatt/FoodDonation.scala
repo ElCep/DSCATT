@@ -3,7 +3,6 @@ package dscatt
 import Kitchen.{Food, FoodBalance, KitchenID}
 import Parcel.ParcelID
 import Simulation.SimulationState
-import org.apache.commons.math3.random.MersenneTwister
 
 import scala.annotation.tailrec
 

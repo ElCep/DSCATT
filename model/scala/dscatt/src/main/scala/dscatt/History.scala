@@ -201,7 +201,7 @@ object History {
 
   }
 
-  def printParcels(state: SimulationState, hookParameters: HookParameters)(using rainFall: MM) = {
+  def printParcels(state: SimulationState, hookParameters: HookParameters, rainFall: MM) = {
     val first20 = state.world.parcels.take(20)
 
 
@@ -221,7 +221,7 @@ object History {
           toDouble(fertility.manureMass / area),
           toDouble(fertility.mulchingMass / area),
           toDouble(p.faidherbiaTrees),
-          toDouble(Kitchen.parcelFoodProduction(fertility.crop, area, fertility.agronomicMetrics, rainFall) / area),
+          toDouble(Kitchen.parcelFoodProduction(p, rainFall) / area),
           fertility.crop.display
         )
       }

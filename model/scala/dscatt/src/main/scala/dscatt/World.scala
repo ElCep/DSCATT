@@ -3,7 +3,6 @@ package dscatt
 import Parcel.*
 import Croping.*
 import Kitchen.KitchenID
-import org.apache.commons.math3.random.MersenneTwister
 import io.circe.Decoder.*
 import io.circe.*
 import io.circe.parser.*
@@ -17,7 +16,7 @@ object World {
 
   def buildWorldGeometry(kitchens: Seq[Kitchen],
                          giniIndex: Double
-                        )(using mT: MersenneTwister): World =
+                        ): World =
 
     val parcelPath = s"json/k${kitchens.size}g${String.format(java.util.Locale.FRANCE, "%.2f", giniIndex)}.json"
     val resource = scala.io.Source.fromResource(parcelPath, World.getClass.getClassLoader).getLines().mkString("\n")
@@ -33,7 +32,7 @@ object World {
               ownerID = p.oID,
               farmerID = p.oID,
               crop = Fallow,
-              cropZone = intToCropZone(p.r, kitchensMap(p.oID).head.rotationCycle, mT.nextDouble() > 0.5),
+              cropZone = intToCropZone(p.r, kitchensMap(p.oID).head.rotationCycle, p.oID),
               area = area,
               faidherbiaTrees = kitchensMap(p.oID).head.nbFaidherbia * area,
               Seq()
