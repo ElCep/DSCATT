@@ -238,6 +238,7 @@ srface_histogramm
 
 
 
+
 carto_sassem_byK <-  ggplot(sassem)+
   geom_sf( aes(fill=N._FOYER))+
   #geom_sf_label(data = labels_zones, aes(label=label), size=3)+
@@ -261,6 +262,10 @@ library(DescTools)
 Gini(aggreg_foyer$nb_pcls)
 Gini(aggreg_foyer$sum_surf)
 
+Gini(c(10, rep(5,5), rep(1,4)))
+
+
+
 
 aggreg_tri <- aggreg_foyer %>% arrange(nb_pcls) %>%   mutate(N._FOYER=factor(N._FOYER, levels=N._FOYER))
 aggreg_tri$order <- 1:nrow(aggreg_tri)
@@ -275,6 +280,9 @@ ggplot(aggreg_tri, aes(x= order, y=nb_pcls))+
 
 
 aggreg_foyer <-  sassem %>% filter (Categorie_ == 2) %>%  group_by(N._FOYER) %>% summarise(nb_pcls = n(), sum_surf= sum(SUPERFICIE)/10000 , n_kad=sum(Kadd)) %>% st_drop_geometry() %>% select(nb_pcls,sum_surf, N._FOYER)
+
+
+
 
 
 
