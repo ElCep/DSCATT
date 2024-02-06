@@ -115,7 +115,12 @@ ui <- fluidPage(
                            choices = c("migrantDynamic",
                                        "populationDynamic",
                                        "herdDynamic", "milYieldDynamic",
-                                       "kitchenSizeDynamic"),
+                                       "kitchenSizeDynamic", 
+                                       "loanStrategy",
+                                       "ownFallowUse",
+                                       "foodDonation",
+                                       "drySeasonHerdStrategy",
+                                       "wetSeasonHerdStrategy"),
                            selected="milYieldDynamic")
         )
     )
@@ -152,7 +157,7 @@ server <- function(input, output) {
              axis.text.y = element_text(color = "grey20", size = 13),
              
              axis.title.y = element_text(color = "grey20", size = 20))+ ylim(c(minX, maxX)) + xlim(minY, maxY)+
-      scale_color_gradient(name= element_blank())+
+      #scale_color(name= element_blank())+
       scale_y_continuous(labels=percent)+
       xlab("Qualité du Sol")+
       ylab("Jachère préservée")
