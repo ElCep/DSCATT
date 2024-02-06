@@ -14,7 +14,30 @@ minY <- min(pse_diohine$objective.om_lastSoilQuality)
 
 pse_diohine <- pse_diohine %>% dplyr::select(-c(evolution.generation))
 
+library(stringr)
 
+get_terminal_value<- function(ligne){
+return(ligne %>% str_remove("\\[") %>% str_remove("\\]") %>%
+  str_split(",") %>% unlist() %>% as.numeric() %>% tail(1))
+}
+  
+get_mean_value<- function(ligne){
+  return(ligne %>% str_remove("\\[") %>% str_remove("\\]") %>%
+           str_split(",") %>% unlist() %>% as.numeric() %>% mean(, na.rm=T))
+}
+
+
+
+pse_diohine$milYieldDynamic  <- lapply(X = pse_diohine$milYieldDynamic, get_terminal_value) %>% unlist()
+pse_diohine$migrantDynamic  <- lapply(X = pse_diohine$migrantDynamic, get_mean_value) %>% unlist()
+pse_diohine$populationDynamic  <- lapply(X = pse_diohine$populationDynamic, get_terminal_value) %>% unlist()
+pse_diohine$herdDynamic  <- lapply(X = pse_diohine$herdDynamic, get_mean_value) %>% unlist()
+pse_diohine$kitchenSizeDynamic  <- lapply(X = pse_diohine$kitchenSizeDynamic, get_mean_value) %>% unlist()
+
+
+
+  
+  
 ui <- fluidPage(
   titlePanel("PSE"),
   
@@ -86,10 +109,18 @@ ui <- fluidPage(
                       choices = c("OwnerOnly","AnywhereAnyTime","EverywhereByDayOwnerByNight"), 
                       selected= c("OwnerOnly","AnywhereAnyTime","EverywhereByDayOwnerByNight"),
                       multiple = T) 
-        )
+        ),
+        column(3,
+               selectInput("colorBy", "Choisir la Colonne pour la Couleur:",
+                           choices = c("migrantDynamic",
+                                       "populationDynamic",
+                                       "herdDynamic", "milYieldDynamic",
+                                       "kitchenSizeDynamic"),
+                           selected="milYieldDynamic")
         )
     )
   )
+)
 )
 server <- function(input, output) {
   
@@ -116,8 +147,9 @@ server <- function(input, output) {
   
   output$plotPSE <- renderPlot(
     ggplot(pse_diohine_filtered())+
-      geom_point(aes(x=objective.om_lastSoilQuality, y=objective.om_lastEffectiveFallowRatio), size=3, color="darkcyan" )+
-      scale_size()+ theme_light()+ ylim(c(minX, maxX)) + xlim(minY, maxY)+
+      geom_point(aes(x=objective.om_lastSoilQuality, y=objective.om_lastEffectiveFallowRatio, color= pull(pse_diohine_filtered(),input$colorBy)), size=5 )+
+       theme_light()+ ylim(c(minX, maxX)) + xlim(minY, maxY)+
+      scale_color_gradient(name= element_blank())+
       xlab("Qualité du Sol")+
       ylab("Pourcentage de Jachère préservée")
     
