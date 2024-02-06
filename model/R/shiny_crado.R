@@ -1,7 +1,7 @@
 library(shiny)
 library(dplyr)
 library(ggplot2)
-
+library(scales)
 
 
 pse_diohine <- read.csv("./data/PSE_diohine.csv")
@@ -148,10 +148,14 @@ server <- function(input, output) {
   output$plotPSE <- renderPlot(
     ggplot(pse_diohine_filtered())+
       geom_point(aes(x=objective.om_lastSoilQuality, y=objective.om_lastEffectiveFallowRatio, color= pull(pse_diohine_filtered(),input$colorBy)), size=5 )+
-       theme_light()+ ylim(c(minX, maxX)) + xlim(minY, maxY)+
+       theme(axis.title.x = element_text(color = "grey20", size = 20),
+             axis.text.y = element_text(color = "grey20", size = 13),
+             
+             axis.title.y = element_text(color = "grey20", size = 20))+ ylim(c(minX, maxX)) + xlim(minY, maxY)+
       scale_color_gradient(name= element_blank())+
+      scale_y_continuous(labels=percent)+
       xlab("Qualité du Sol")+
-      ylab("Pourcentage de Jachère préservée")
+      ylab("Jachère préservée")
     
                                    
   )
