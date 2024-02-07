@@ -49,7 +49,6 @@ class Data(
   //FERTILITY
 
   val FERTILITY_BOOST_PER_MANURE_KG_PER_HA = 0.000075 // Converted from the data: "A boost of +15% with 2T per ha"
-  val KG_OF_MANURE_PER_COW_PER_YEAR: KG = 1370 // Assouma between 40% and 55% of the ingested DM: 2737 * 0,5
 
   // Nitrogen
   val ATMOSPHERIC_NITROGEN: KG_BY_HA = 27.5 // kg/ha
@@ -66,11 +65,17 @@ class Data(
   val PEANUT_SEED_RATIO = 0.333
   val RAIN_FALL = rainFall
 
+  val MULCHING_BOOST = 0.001
+  val FAIDHERBIA_BOOST_PER_TREE = 0.06
+
   //val MIL_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
   //val PEANUT_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_SEED_RATIO
 
   //Herd
-  val KG_OF_STRAW_PER_COW_PER_YEAR: KG = 2737 //Assouma: 3% of the cattle weight daily: 250*0,03*365
+  //Assouma: the quantity ingered daily is equivalent to 2,5% of the cattle weight daily.
+  // The quantity of grass is 65% of this quantitt. For 1 year 250*0,025*365*0,65
+  val KG_OF_STRAW_PER_COW_PER_YEAR: KG = 1480
+  val KG_OF_MANURE_PER_COW_PER_YEAR: KG = 1140//1250//1370 // Assouma between 40% and 55% of the ingested DM: 250 * 0.025 * 365 * 0,5
   val EXPANDING_HERD_SIZE = expandingHerdSize // Expanding herd size due to outside village grazing
 
   // Fertility

@@ -126,7 +126,7 @@ object Fertility {
       val last2Years = parcel.fertilityHistory.takeRight(2)
       last2Years.lastOption.map(_.manureMass * 0.00012).getOrElse(0.0) + last2Years.headOption.map(_.manureMass * 0.00008).getOrElse(0.0)
 
-    val mulchingBoost = parcel.fertilityHistory.lastOption.map(_.mulchingMass).getOrElse(0.0) * 0.001
+    val mulchingBoost = parcel.fertilityHistory.lastOption.map(_.mulchingMass).getOrElse(0.0) * data.MULCHING_BOOST
 
     // The soil quality it computed at the begining of the year before the the rotation process, so that the parcel crop here
     // is equivalent to the crop of the previous year
@@ -135,7 +135,7 @@ object Fertility {
       case _ => 0.0
     }
 
-    val faidherbiaBoost = parcel.faidherbiaTrees * 0.06
+    val faidherbiaBoost = parcel.faidherbiaTrees * data.FAIDHERBIA_BOOST_PER_TREE
 
     data.SOIL_QUALITY_BASIS + manureBoost + mulchingBoost + fallowBoost + faidherbiaBoost
   }

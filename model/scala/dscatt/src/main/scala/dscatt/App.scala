@@ -60,7 +60,7 @@ object Diohine {
     //    )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 30))
+    val kitchenPartition = KitchenPartition((kitchenProfile1, 22))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
@@ -71,18 +71,18 @@ object Diohine {
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
       simulationLength = 26,
-      soilQualityBasis = 0.5387520193217596,
-      fallowBoost = 0.2115968977241607,
+      soilQualityBasis = 0.6458956609347241,
+      fallowBoost = 0.3750900103263757,
      // peanutSeedToFood = 1.1494994895655015,
-      peanutSeedToFood = 1.1494994895655015,
-      expandingHerdSize = 1.3389289867685363,
+      peanutSeedToFood = 1.127730275537223,
+      expandingHerdSize = 1.4,
       dailyFoodNeedPerPerson = 0.555,
       //      soilQualityBasis = 0.037566386501967745,
       //      fallowBoost = 1.1600945798567732,
       //      peanutSeedToFood = 1.379729887022548,
       //      expandingHerdSize = 1.6991464444068525,
       hookParameters = hooks,
-      rainFall = 700
+      rainFall = 650
     )
 
     given data: Data = simulationData
