@@ -14,6 +14,7 @@ class Data(
                  fallowBoost: Double, // exposed for calibration
                  peanutSeedToFood: Double, // exposed for calibration
                  expandingHerdSize: Double,
+                 dailyFoodNeedPerPerson: Double,
                  rainFall: MM
                ) {
 
@@ -24,7 +25,8 @@ class Data(
   // Age distribution: 0-4y: 8%, 5-19: 19%, 19+: 73%
   // we consider that 0-4y do not eat millet, 5-19y a 50% quantity and 19+ a full quantity
   // 0 * 0.06 + 0,5 * 0,4 + 0,54 = 0,74
-  val DAILY_FOOD_NEED_PER_PERSON = 0.75 * 0.74 // 0.555
+ // val DAILY_FOOD_NEED_PER_PERSON = 0.75 * 0.74 // 0.555
+  val DAILY_FOOD_NEED_PER_PERSON = dailyFoodNeedPerPerson
 
   // Actor word yields. Used the first year (when field boosts are unknown)
   val MIL_YIELD_PER_M2 = 600.0 / 10000
@@ -47,7 +49,7 @@ class Data(
   //FERTILITY
 
   val FERTILITY_BOOST_PER_MANURE_KG_PER_HA = 0.000075 // Converted from the data: "A boost of +15% with 2T per ha"
-  val KG_OF_MANURE_PER_COW_PER_YEAR: KG = 2000
+  val KG_OF_MANURE_PER_COW_PER_YEAR: KG = 1370 // Assouma between 40% and 55% of the ingested DM: 2737 * 0,5
 
   // Nitrogen
   val ATMOSPHERIC_NITROGEN: KG_BY_HA = 27.5 // kg/ha
@@ -68,7 +70,7 @@ class Data(
   //val PEANUT_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_SEED_RATIO
 
   //Herd
-  val KG_OF_STRAW_PER_COW_PER_YEAR: KG = 3650
+  val KG_OF_STRAW_PER_COW_PER_YEAR: KG = 2737 //Assouma: 3% of the cattle weight daily: 250*0,03*365
   val EXPANDING_HERD_SIZE = expandingHerdSize // Expanding herd size due to outside village grazing
 
   // Fertility
