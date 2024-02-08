@@ -1,0 +1,161 @@
+import dscatt.*
+
+val rotationCycle = Val[RotationCycle]
+val soilQualityBasis = Val[Double]
+val fallowBoost = Val[Double]
+val expandingHerdSize = Val[Double]
+val populationGrowth = Val[Double]
+val peanutSeedToFood = Val[Double]
+
+val last5yearsAveragePopulation = Val[Double]
+val populationDynamic = Val[Array[Int]]
+val kitchenSizeDynamic = Val[Array[Double]]
+val populationRSquare = Val[Double]
+val populationSlope = Val[Double]
+val kitchenSizeAverage = Val[Double]
+val milYieldLast5YearsAverage = Val[Double]
+
+val last5yearsAverageHerdSize = Val[Double]
+val last5yearsAverageSoilQuality = Val[Double]
+val numberOfUnbalancedKitchen = Val[Int]
+val foodStress = Val[Array[Double]]
+val milYieldDynamic = Val[Array[Double]]
+
+val numberOfKitchens = Val[Array[Int]]
+val effectiveFallowRatioDynamic = Val[Array[Double]]
+val herdDynamic = Val[Array[Int]]
+
+val rainFall = Val[Int]
+val lastPopulation = Val[Int]
+val lastSoilQuality = Val[Double]
+val lastEffectiveFallowRatio = Val[Double]
+val migrantDynamic=Val[Array[Int]]
+
+val peanutForInexcess = Val[Double]
+val ownFallowUse = Val[OwnFallowUse]
+val loanStrategy = Val[LoanStrategy]
+val foodDonation = Val[FoodDonationStrategy]
+val drySeasonHerdStrategy=Val[HerdStrategy]
+val wetSeasonHerdStrategy=Val[HerdStrategy]
+val giniParcels = Val[Double]
+val mulching=Val[Double]
+val nbFaidherbia=Val[Int]
+val lastHerdSize=Val[Int]
+
+val model = ScalaTask(
+"""
+import dscatt.*
+
+val hookFile = Diohine.HookFile(
+outputPath = "/tmp",
+parcels = false,
+kitchens = false
+)
+
+val hooks = Diohine.HookParameters(
+displayParcels = false,
+displayKitchens = false,
+hookFile = Some(hookFile)
+)
+
+val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
+Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Croping.Mil
+}
+
+val kitchenProfile1 = KitchenProfile(
+kitchenSize = 16,
+rotationCycle = rotationCycle,
+CropingStrategy.PeanutForInexcess(peanutForInexcess),
+ownFallowUse = ownFallowUse,
+loanStrategy = loanStrategy,
+foodDonationStrategy = foodDonation,
+drySeasonHerdStrategy = drySeasonHerdStrategy,
+wetSeasonHerdStrategy = wetSeasonHerdStrategy,
+manureDepositStategyMilNextYear,
+FertilizerStrategy.UniformFertilizing,
+MulchingStrategy.Mulching(mulching),
+nbFaidherbia = nbFaidherbia
+)
+
+val kitchenPartition = KitchenPartition((kitchenProfile1, 22))
+val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
+
+val (simulationState, simulationData) = Simulation(
+7L,
+giniParcels = giniParcels,
+populationGrowth = populationGrowth,
+kitchenPartition = kitchenPartition,
+supportPolicy = supportPolicy,
+simulationLength = 26,
+soilQualityBasis = soilQualityBasis,
+fallowBoost = fallowBoost,
+peanutSeedToFood = peanutSeedToFood,
+expandingHerdSize = expandingHerdSize,
+dailyFoodNeedPerPerson = 0.555,
+hookParameters = hooks,
+rainFall = rainFall
+)
+
+
+given data: Data = simulationData
+
+//val milYieldDynamic = simulationState.averageMilYieldDynamic
+//val last5yearsAverageHerdSize = simulationState.herdDynamic.takeRight(5).average
+//val last5yearsAverageSoilQuality = simulationState.averageSoilQualityDynamic.takeRight(5).average
+
+//val foodStress = simulationState.foodStress
+//val milYieldDynamic = simulationState.averageMilYieldDynamic
+//val numberOfUnbalancedKitchen = simulationState.numberOfUnbalancedKitchen
+
+val populationDynamic = simulationState.populationDynamic
+val kitchenSizeDynamic = simulationState.averageKitchenSizeDynamic
+
+val (populationRSquare, populationSlope) = simulationState.populationRSquareAndSlope
+
+val milYieldLast5YearsAverage = simulationState.averageMilYieldDynamic.takeRight(5).average
+val milYieldDynamic = simulationState.averageMilYieldDynamic
+
+val kitchenSizeAverage = simulationState.averageKitchenSizeDynamic.average
+
+val numberOfKitchens = simulationState.numberOfKitchens
+
+val effectiveFallowRatioDynamic = simulationState.effectiveFallowRatioDynamic
+
+val herdDynamic = simulationState.herdDynamic
+val lastHerdSize = simulationState.herdDynamic.last
+
+val lastPopulation = simulationState.populationDynamic.last
+val lastSoilQuality = simulationState.averageSoilQualityDynamic.last
+val lastEffectiveFallowRatio = simulationState.effectiveFallowRatioDynamic.last
+val migrantDynamic = simulationState.migrantsDynamic
+
+"""
+) set (
+inputs += (soilQualityBasis, fallowBoost, expandingHerdSize, peanutSeedToFood ),
+outputs += (populationSlope, populationRSquare, populationDynamic, milYieldDynamic, kitchenSizeAverage,
+effectiveFallowRatioDynamic, kitchenSizeDynamic, herdDynamic, migrantDynamic, milYieldLast5YearsAverage, lastHerdSize),
+// Under calibration
+// soilQualityBasis := 0.4799942954983587,
+// fallowBoost := 0.9386211730107059,
+// peanutSeedToFood := 1.673257241816671,
+// expandingHerdSize := 1.2611395174708617
+// soilQualityBasis := 0.037566386501967745,
+// fallowBoost := 1.1600945798567732,
+// peanutSeedToFood := 1.379729887022548,
+// expandingHerdSize := 1.6991464444068525,
+rotationCycle := RotationCycle.ThreeYears,
+ownFallowUse := OwnFallowUse.NeverUseFallow,
+loanStrategy := LoanStrategy.AllExtraParcelsLoaner,
+foodDonation := FoodDonationStrategy.FoodForAllStrategy,
+drySeasonHerdStrategy := HerdStrategy.EverywhereByDayOwnerByNight,
+wetSeasonHerdStrategy := HerdStrategy.EverywhereByDayOwnerByNight,
+peanutForInexcess := 0.0,
+mulching := 0.0,
+nbFaidherbia := 4,
+giniParcels := 0.2,
+populationGrowth := 0.02,
+rainFall := 600
+)
+
+model hook display //hook (workDirectory / "results.csv")
+//diohinemodel1Task hook display
