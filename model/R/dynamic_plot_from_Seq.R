@@ -107,3 +107,126 @@ ggplotly(pp)
 
 
 
+
+
+library(dplyr)
+library(stringr)
+library(scales)
+
+calib <- read.csv("~/Téléchargements/calibration.csv")
+
+calib <- calib %>%  filter(soilQualityBasis== 0.5312696251467559)
+
+
+pop <- calib$populationDynamic
+herd <- calib$herdDynamic
+fallow <- calib$effectiveFallowRatioDynamic
+foodStress <- c( 1.2003235642370162, 1.2106124665885027, 1.2033317631039386, 1.1520890134581578, 1.161365334765517, 1.1560631795716938, 1.101167930591851, 1.1092748180876761, 1.107756046481401, 1.06206777864579, 1.0658028161179558, 1.0610299643806296, 1.0395381675367958, 1.0447565970402204, 1.052041703104042, 1.0442141714830524, 1.026295760461376, 1.0285033256192166, 1.0223544426394755, 1.0171129646965842, 1.0246647143934124, 1.020711740685353, 1.0298020311500584, 1.0108954260880683, 1.021556772953544, 1.0193039699672912)
+
+
+
+pop <- pop %>%  str_remove("\\[") %>% str_remove("\\]") %>%
+  str_split(",") %>% unlist() %>% as.numeric() 
+herd <- herd %>%  str_remove("\\[") %>% str_remove("\\]") %>%
+  str_split(",") %>% unlist() %>% as.numeric() 
+fallow <- fallow%>%  str_remove("\\[") %>% str_remove("\\]") %>%
+  str_split(",") %>% unlist() %>% as.numeric() 
+
+pop <- rescale(pop)
+herd <- rescale(herd)
+fallow <- rescale(herd)
+
+
+
+years<- 1:length(pop)
+type<-rep("100% du troupeau", length(pop))
+
+
+
+
+library(reshape2)
+df_calib <- data.frame(years, population=pop, troupeau=herd, jachère=fallow, type, foodStress)
+#df_calib <- data.frame(years,  fallow, type, foodStress)
+melt_dyna <- melt(df_calib,id.vars = c("years", "type"))
+
+ggplot(melt_dyna, aes(x=years, y=value, color=variable))+
+  geom_line(lwd=1)+
+  theme_light()
+
+
+pop2 <-c( 359, 366, 373, 380, 387, 394, 401, 409, 417, 425, 433, 441, 447, 450, 455, 458, 462, 466, 465, 464, 465, 464, 466, 463, 464, 465)
+herd2 <- c(145, 153, 156, 149, 156, 160, 152, 160, 166, 154, 156, 158, 145, 145, 146, 135, 135, 137, 128, 129, 130, 124, 129, 127, 126, 132)
+fallow2 <- c(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.9223300970873787, 0.897196261682243, 0.8611111111111112, 0.7475728155339806, 0.719626168224299, 0.7314814814814815, 0.6310679611650486, 0.5887850467289719, 0.6111111111111112, 0.5436893203883495, 0.5514018691588785, 0.5833333333333334, 0.5533980582524272, 0.5420560747663551, 0.5370370370370371, 0.5436893203883495, 0.5700934579439252)
+foodStress2<- c(1.1700358193653548, 1.184506660439365, 1.1733599376465103, 1.1213543330703046, 1.125287836301775, 1.1245954582974922, 1.0777197947086024, 1.081980754347577, 1.0793500311610151, 1.05394593756082, 1.0524096068381161, 1.053415542976104, 1.0372004866904831, 1.030419296166409, 1.0282926520446707, 1.0276036331737943, 1.0238874026949565, 1.0238393355652113, 1.0173886455617704, 1.0066345887804002, 1.0224390654194153, 1.0113517832166585, 1.0250568210920037, 1.01904515315976, 1.0190984431646666, 1.0155638790336938)
+
+pop2<- rescale(pop2)
+herd2 <- rescale(herd2)
+fallow2 <- rescale(fallow2)
+type2<-rep("80% du troupeau", length(pop))
+
+df_calib2 <- data.frame(years, population=pop2, troupeau=herd2, jachère=fallow2, type=type2, foodStress=foodStress2)
+#df_calib2 <- data.frame(years, fallow=fallow2, type=type2, foodStress=foodStress2)
+melt_dyna2 <- melt(df_calib2,id.vars = c("years", "type"))
+
+head(melt_dyna)
+head(melt_dyna2)
+final <- rbind(melt_dyna, melt_dyna2)
+
+ggplot(final, aes(x=years, y=value, color=variable, linetype=type))+
+  geom_line(lwd=1)+
+  theme_light()+
+  xlab("années")+
+  ylab("valeur")
+
+foodUBT <- read.table("~/Téléchargements/grassStandard.txt.txt", header = F, sep="\n")
+
+
+split_by_year <- function(foodUBT){
+lili<-foodUBT %>%  t %>%  str_flatten()
+lili <- lili %>%  str_split("YEAR") %>% unlist() 
+lili %>%  length()
+lili[1]
+#premier élément vide
+lili <- tail(lili, 26)
+return(lili)
+}
+
+lili <- split_by_year(foodUBT)
+
+
+year_list <- lili[1]
+
+kitchensMF<- year_list %>% str_split("TOTAL") %>% unlist() 
+nbKplusone <- kitchensMF %>% length
+idK <- 1:(nbKplusone - 1)
+
+get_total_by_kitchen <- function(id){
+kitchenTotal_id <- kitchensMF[id +1]%>%  str_split_i( pattern =  "M:", i=1) %>% str_remove(":") %>%  as.numeric()
+return(kitchenTotal_id)
+}
+
+totaux_by_K <- lapply(idK,get_total_by_kitchen) %>% unlist()
+totaux_by_K
+
+
+idK <- 2
+alim <- kitchensMF[idK]
+alim
+mil_total <- NA
+grass_total <- NA
+repas_mil <- c()
+repas_grass <-c()
+if( str_detect(alim,  pattern="F:")){
+cat(" de la  fallow")
+  
+  repas <- alim %>%  str_split("F:") %>% unlist() 
+  repas_grass <- tail(repas, length(repas)-1)
+  
+  }else{
+  cat("que du mil") 
+  nb_repas <- length(alim)
+  repas_mil <- alim %>% str_split(pattern = "M: ") %>%  unlist() %>% as.numeric()
+  nb_repas <- length(repas_mil)
+  mil_total <- sum(tail(repas_mil, nb_repas -1))
+}
+mil_total
