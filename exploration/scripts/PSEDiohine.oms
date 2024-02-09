@@ -1,0 +1,46 @@
+import _file_.model._
+import dscatt.*
+
+val evolution = PSEEvolution(
+  evaluation = model,
+  parallelism = 1000,
+  termination = 1500000,
+  genome = Seq(
+      peanutSeedToFood in (1.0, 2.5),
+      rotationCycle in Seq(RotationCycle.TwoYears, RotationCycle.ThreeYears),
+      ownFallowUse in Seq(OwnFallowUse.NeverUseFallow, OwnFallowUse.UseFallowIfNeeded),
+      loanStrategy in Seq(LoanStrategy.Selfish, LoanStrategy.AllExtraParcelsLoaner, LoanStrategy.ExtraParcelsExceptFallowLoaner),
+      foodDonation in Seq(FoodDonationStrategy.FoodForAllStrategy,FoodDonationStrategy.FoodForUsOnlyStrategy),
+      drySeasonHerdStrategy in Seq(HerdStrategy.EverywhereByDayOwnerByNight, HerdStrategy.AnywhereAnyTime, HerdStrategy.OwnerOnly),
+      wetSeasonHerdStrategy in Seq(HerdStrategy.EverywhereByDayOwnerByNight, HerdStrategy.AnywhereAnyTime, HerdStrategy.OwnerOnly),
+      peanutForInexcess in (0.0,1.0),
+      populationGrowth in (0.0, 0.03),
+      rainFall in (200, 800),
+      giniParcels in Seq(0.1, 0.2, 0.3, 0.4, 0.5),
+      mulching in (0.0, 1.0),
+      nbFaidherbia in (0, 25)
+  ),
+  objective = Seq(
+    lastPopulation in (300 to 700 by 20),
+    lastEffectiveFallowRatio in (0.0 to 1.0 by 0.05),
+    lastMilYield in (400.0 to 1300.0 by 100.0)
+    ),
+  distribution = Island(5 minutes),
+) hook (workDirectory / "results/pse", frequency = 60, format=CSV())
+
+
+//val env = EGIEnvironment("vo.complex-systems.eu")
+
+/*val muse = SLURMEnvironment(
+    "delaye",
+    "muse-login.meso.umontpellier.fr",
+    // optional parameters
+    queue = "agap_normal", // can be agap_short agap_normal agap_long
+    workDirectory = "/lustre/delaye/openmole",
+    //workDirectory = "/home/delaye/scratch/openmole",
+    sharedDirectory = "/storage/replicated/cirad_users/delaye/openmole",
+    wallTime = 1 hours
+  )*/
+
+val local = LocalEnvironment(100)
+evolution on local
