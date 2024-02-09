@@ -60,7 +60,7 @@ object Diohine {
     //    )
     // val kitchenProfile2 = KitchenProfile(10, TwoYears, Parsimonious, AllExtraParcelsLoaner, FoodForAllStrategy)
     //    val kitchenProfile3 = KitchenProfile(10, ThreeYears, Parsimonious, AllExtraParcelsLoaner, FoodForUsOnlyStrategy)
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 22))
+    val kitchenPartition = KitchenPartition((kitchenProfile1, 30))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
@@ -71,18 +71,17 @@ object Diohine {
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
       simulationLength = 26,
-      soilQualityBasis = 0.6458956609347241,
-      fallowBoost = 0.3750900103263757,
-     // peanutSeedToFood = 1.1494994895655015,
-      peanutSeedToFood = 1.127730275537223,
-      expandingHerdSize = 1.4,
+      soilQualityBasis = 0.5312696251467559,
+      fallowBoost = 0.2436522594214085,
+      peanutSeedToFood = 1.2230584989744784,
+      expandingHerdSize = 1.314401864796489,
       dailyFoodNeedPerPerson = 0.555,
       //      soilQualityBasis = 0.037566386501967745,
       //      fallowBoost = 1.1600945798567732,
       //      peanutSeedToFood = 1.379729887022548,
       //      expandingHerdSize = 1.6991464444068525,
       hookParameters = hooks,
-      rainFall = 650
+      rainFall = 600
     )
 
     given data: Data = simulationData
@@ -106,11 +105,11 @@ object Diohine {
     println("\nFFD on Food needs dynamic  " + simulationState.foodFromDonationOnFoodNeedsDynamic.toSeq)
     println("\nKitchen size  " + simulationState.averageKitchenSizeDynamic.toSeq)
     println("\nKSA " + average(simulationState.averageKitchenSizeDynamic.toSeq))
+    println("\nEffective fallow " + simulationState.effectiveFallowRatioDynamic.toSeq)
+    println("\nFood stress " + simulationState.foodStress.toSeq)
     println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)
     println("\nPeanut yield dynamic  " + simulationState.averagePeanutYieldDynamic.toSeq)
-    println("\nFood stress " + simulationState.foodStress.toSeq)
     println("\nNb of kitchens " + simulationState.numberOfKitchens.toSeq)
-    println("\nEffective fallow " + simulationState.effectiveFallowRatioDynamic.toSeq)
   }
 
 
