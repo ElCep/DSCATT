@@ -2,7 +2,7 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 library(scales)
-
+library(plotly)
 
 pse_diohine <- read.csv("./data/PSE_diohine.csv")
 
@@ -155,15 +155,12 @@ server <- function(input, output) {
       geom_point(aes(x=objective.om_lastSoilQuality, y=objective.om_lastEffectiveFallowRatio, color= pull(pse_diohine_filtered(),input$colorBy)), size=5 )+
        theme(axis.title.x = element_text(color = "grey20", size = 20),
              axis.text.y = element_text(color = "grey20", size = 13),
-             
              axis.title.y = element_text(color = "grey20", size = 20))+ ylim(c(minX, maxX)) + xlim(minY, maxY)+
       #scale_color(name= element_blank())+
       scale_y_continuous(labels=percent)+
       xlab("Qualité du Sol")+
       ylab("Jachère préservée")
-    
-                                   
-  )
+    )
   
 }
 shinyApp(ui, server)

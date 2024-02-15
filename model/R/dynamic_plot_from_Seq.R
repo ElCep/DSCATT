@@ -134,7 +134,7 @@ fallow <- fallow%>%  str_remove("\\[") %>% str_remove("\\]") %>%
 
 pop <- rescale(pop)
 herd <- rescale(herd)
-fallow <- rescale(herd)
+fallow <- rescale(fallow)
 
 
 
@@ -147,10 +147,12 @@ type<-rep("100% du troupeau", length(pop))
 library(reshape2)
 df_calib <- data.frame(years, population=pop, troupeau=herd, jachère=fallow, type, foodStress)
 #df_calib <- data.frame(years,  fallow, type, foodStress)
-melt_dyna <- melt(df_calib,id.vars = c("years", "type"))
+melt_dyna <- reshape2::melt(df_calib,id.vars = c("years", "type"))
 
-ggplot(melt_dyna, aes(x=years, y=value, color=variable))+
-  geom_line(lwd=1)+
+names(df_calib) %>% length()
+
+ggplot(melt_dyna)+
+  geom_line(aes(x=years, y=value, color=variable),lwd=1)+
   theme_light()
 
 
@@ -162,7 +164,7 @@ foodStress2<- c(1.1700358193653548, 1.184506660439365, 1.1733599376465103, 1.121
 pop2<- rescale(pop2)
 herd2 <- rescale(herd2)
 fallow2 <- rescale(fallow2)
-type2<-rep("80% du troupeau", length(pop))
+type2<-rep("80% du troupeau", length(pop2))
 
 df_calib2 <- data.frame(years, population=pop2, troupeau=herd2, jachère=fallow2, type=type2, foodStress=foodStress2)
 #df_calib2 <- data.frame(years, fallow=fallow2, type=type2, foodStress=foodStress2)
@@ -178,7 +180,8 @@ ggplot(final, aes(x=years, y=value, color=variable, linetype=type))+
   xlab("années")+
   ylab("valeur")
 
-foodUBT <- read.table("~/Téléchargements/grassStandard.txt.txt", header = F, sep="\n")
+
+foodUBT <- read.table("~/Téléchargements/grassStandard.txt", header = F, sep="\n")
 
 
 split_by_year <- function(foodUBT){
@@ -193,40 +196,113 @@ return(lili)
 
 lili <- split_by_year(foodUBT)
 
+sumMilGrass_by_year<-function(id_year){
+one_year <- lili[id_year]
 
-year_list <- lili[1]
-
-kitchensMF<- year_list %>% str_split("TOTAL") %>% unlist() 
+kitchensMF<- one_year %>% str_split("TOTAL") %>% unlist() 
 nbKplusone <- kitchensMF %>% length
-idK <- 1:(nbKplusone - 1)
+id_K_one_year <- 1:(nbKplusone - 1)
 
 get_total_by_kitchen <- function(id){
 kitchenTotal_id <- kitchensMF[id +1]%>%  str_split_i( pattern =  "M:", i=1) %>% str_remove(":") %>%  as.numeric()
 return(kitchenTotal_id)
 }
 
-totaux_by_K <- lapply(idK,get_total_by_kitchen) %>% unlist()
-totaux_by_K
+totaux_by_K_one_year <- lapply(id_K_one_year,get_total_by_kitchen) %>% unlist()
+totaux_by_K_one_year
 
 
-idK <- 2
+
+totaux_Mil_grass_by_K <-function(idK){
 alim <- kitchensMF[idK]
-alim
-mil_total <- NA
-grass_total <- NA
+mil_total <- 0
+grass_total <- 0
 repas_mil <- c()
 repas_grass <-c()
 if( str_detect(alim,  pattern="F:")){
-cat(" de la  fallow")
+#cat(" de la  fallow")
   
   repas <- alim %>%  str_split("F:") %>% unlist() 
-  repas_grass <- tail(repas, length(repas)-1)
-  
+  repas_grass <- tail(repas, length(repas)-1) %>% as.numeric()
+  grass_total <- sum(repas_grass)
+  alim_mil <- repas[1]
+  repas_mil <- alim_mil %>% str_split(pattern = "M: ") %>%  unlist() 
+  nb_repas <- length(repas_mil)
+  repas_mil  <- repas_mil%>% tail(nb_repas -1) %>%   as.numeric()
+  mil_total <- sum(repas_mil)
   }else{
-  cat("que du mil") 
+ # cat("que du mil") 
   nb_repas <- length(alim)
   repas_mil <- alim %>% str_split(pattern = "M: ") %>%  unlist() %>% as.numeric()
   nb_repas <- length(repas_mil)
   mil_total <- sum(tail(repas_mil, nb_repas -1))
 }
-mil_total
+return(list(Mtot= mil_total, Ftot=grass_total))
+}
+
+
+oneyear_MF_byK<-sapply(id_K_one_year, totaux_Mil_grass_by_K) %>% t %>%  as.data.frame() 
+
+oneyear_MF_byK$Mtot <- unlist(oneyear_MF_byK$Mtot)
+oneyear_MF_byK$Ftot <- unlist(oneyear_MF_byK$Ftot)
+oneyear_MF_byK$somme <- oneyear_MF_byK$Mtot + oneyear_MF_byK$Ftot
+oneyear_MF_byK$totaux == totaux_by_K
+
+
+sumMil <- sum(oneyear_MF_byK$Mtot)
+sumGrass <- sum(oneyear_MF_byK$Ftot)
+return(list(Mil= sumMil, Grass=sumGrass))
+}
+ 
+
+final_MilGrass_by_year <- sapply(1:26, sumMilGrass_by_year)  %>% t %>% as.data.frame()
+final_MilGrass_by_year$Mil<- final_MilGrass_by_year$Mil %>%  unlist()
+final_MilGrass_by_year$Grass<- final_MilGrass_by_year$Grass %>%  unlist()
+final_MilGrass_by_year$year <- 1:26
+
+pct_df <- data.frame(year=final_MilGrass_by_year$year)
+pct_df$pctMil <- final_MilGrass_by_year$Mil / (final_MilGrass_by_year$Mil + final_MilGrass_by_year$Grass)
+pct_df$pctGrass <- final_MilGrass_by_year$Grass / (final_MilGrass_by_year$Mil + final_MilGrass_by_year$Grass)
+
+
+
+
+
+melt_pct <- melt(pct_df, id.vars="year")
+ggplot(melt_pct, aes(x=year, y=value, fill= variable))+
+  geom_area()+
+  theme_light()
+
+
+
+MilGrass_by_year <- reshape2::melt(final_MilGrass_by_year,id.vars="year")
+MilGrass_by_year
+ggplot(MilGrass_by_year, aes(x=year, y=value, color=variable ))+
+  geom_area()+
+  theme_light()
+
+
+
+
+#
+library(ggtern)
+
+df <- rbind(df_calib, df_calib2)
+names(df)
+ggtern(df, aes(population, troupeau, jachère, color=type))+
+  geom_path()+
+  theme_showarrows() 
+
+
+tutu <- read.table("~/tmp/mulching_80pct.csv", header = F, row.names = NULL, sep=",")                 
+df<-t(tutu) %>% as.data.frame()
+df %>%  class
+names(df) <-df[1,]
+df<- df[-1,]
+df %>%  head()
+summary(df)
+write.csv(df,"~/tmp/mulching80pct.csv",row.names = F)
+
+
+titi <- read.csv("~/tmp/mulching80pct.csv",header = T)
+summary(titi)
