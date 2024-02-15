@@ -6,11 +6,15 @@ library(plotly)
 
 pse_diohine <- read.csv("./data/PSE_diohine.csv")
 
-maxX <- max(pse_diohine$objective.om_lastEffectiveFallowRatio)
-minX <- min(pse_diohine$objective.om_lastEffectiveFallowRatio)
+pse_diohine <- read.csv("~/Téléchargements/population14160.csv")
 
-maxY <- max(pse_diohine$objective.om_lastSoilQuality)
-minY <- min(pse_diohine$objective.om_lastSoilQuality)
+maxX <- max(pse_diohine$objective.lastEffectiveFallowRatio)
+minX <- min(pse_diohine$objective.lastEffectiveFallowRatio)
+
+maxY <- max(pse_diohine$objective.lastMilYield)
+minY <- min(pse_diohine$objective.lastMilYield)
+
+
 
 pse_diohine <- pse_diohine %>% dplyr::select(-c(evolution.generation))
 
@@ -36,8 +40,7 @@ pse_diohine$kitchenSizeDynamic  <- lapply(X = pse_diohine$kitchenSizeDynamic, ge
 
 
 
-  
-  
+
 ui <- fluidPage(
   titlePanel("PSE"),
   
@@ -130,36 +133,36 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   pse_diohine_filtered <- reactive({
-    pse_diohine_filtered <- pse_diohine[pse_diohine$nbFaidherbia   >= input$rangeFaidherbia[1] 
-                                        & pse_diohine$nbFaidherbia <= input$rangeFaidherbia[2],]
-    pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$loanStrategy%in%input$loan,]
-     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$rotationCycle  %in% input$rotationCycle,]
-     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$ownFallowUse  %in% input$ownFallowUse,]
-     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$foodDonation  %in% input$foodDonation,]
-     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$drySeasonHerdStrategy %in% input$drySeasonHerdStrategy,]
-     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$wetSeasonHerdStrategy %in% input$wetSeasonHerdStrategy,]
-  
-    pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$peanutSeedToFood>= input$peanutSeedToFood[1] & pse_diohine_filtered$peanutSeedToFood<= input$peanutSeedToFood[2], ]
-    pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$peanutForInexcess>= input$peanutForInexcess[1] & pse_diohine_filtered$peanutForInexcess<= input$peanutForInexcess[2], ]
-    pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$populationGrowth>= input$populationGrowth[1] & pse_diohine_filtered$populationGrowth<= input$populationGrowth[2], ]
-    pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$rainFall>= input$rainFall[1] & pse_diohine_filtered$rainFall<= input$rainFall[2], ]
-    pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$giniParcels>= input$giniParcels[1] & pse_diohine_filtered$giniParcels<= input$giniParcels[2], ]
-    pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$mulching>= input$mulching[1] & pse_diohine_filtered$mulching<= input$mulching[2], ]
-    
+     pse_diohine_filtered <- pse_diohine[pse_diohine$nbFaidherbia   >= input$rangeFaidherbia[1] 
+                                         & pse_diohine$nbFaidherbia <= input$rangeFaidherbia[2],]
+     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$loanStrategy%in%input$loan,]
+      pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$rotationCycle  %in% input$rotationCycle,]
+      pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$ownFallowUse  %in% input$ownFallowUse,]
+      pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$foodDonation  %in% input$foodDonation,]
+      pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$drySeasonHerdStrategy %in% input$drySeasonHerdStrategy,]
+      pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$wetSeasonHerdStrategy %in% input$wetSeasonHerdStrategy,]
+
+     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$peanutSeedToFood>= input$peanutSeedToFood[1] & pse_diohine_filtered$peanutSeedToFood<= input$peanutSeedToFood[2], ]
+     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$peanutForInexcess>= input$peanutForInexcess[1] & pse_diohine_filtered$peanutForInexcess<= input$peanutForInexcess[2], ]
+     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$populationGrowth>= input$populationGrowth[1] & pse_diohine_filtered$populationGrowth<= input$populationGrowth[2], ]
+     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$rainFall>= input$rainFall[1] & pse_diohine_filtered$rainFall<= input$rainFall[2], ]
+     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$giniParcels>= input$giniParcels[1] & pse_diohine_filtered$giniParcels<= input$giniParcels[2], ]
+     pse_diohine_filtered <- pse_diohine_filtered[pse_diohine_filtered$mulching>= input$mulching[1] & pse_diohine_filtered$mulching<= input$mulching[2], ]
+    pse_diohine_filtered
     
       })
   
   
   output$plotPSE <- renderPlot(
     ggplot(pse_diohine_filtered())+
-      geom_point(aes(x=objective.om_lastSoilQuality, y=objective.om_lastEffectiveFallowRatio, color= pull(pse_diohine_filtered(),input$colorBy)), size=5 )+
+      geom_point(aes(x=objective.lastEffectiveFallowRatio, y=objective.lastMilYield, color= pull(pse_diohine_filtered(),input$colorBy)), size=5 )+
        theme(axis.title.x = element_text(color = "grey20", size = 20),
              axis.text.y = element_text(color = "grey20", size = 13),
-             axis.title.y = element_text(color = "grey20", size = 20))+ ylim(c(minX, maxX)) + xlim(minY, maxY)+
+             axis.title.y = element_text(color = "grey20", size = 20))+ xlim(c(minX, maxX)) + ylim(minY, maxY)+
       #scale_color(name= element_blank())+
       scale_y_continuous(labels=percent)+
-      xlab("Qualité du Sol")+
-      ylab("Jachère préservée")
+      xlab("titi")+
+      ylab("tutu")
     )
   
 }
