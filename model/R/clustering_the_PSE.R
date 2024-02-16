@@ -27,6 +27,8 @@ pse_diohine$loanStrategy <- as.factor(pse_diohine$loanStrategy)
 pse_diohine$wetSeasonHerdStrategy <- as.factor(pse_diohine$wetSeasonHerdStrategy)
 pse_diohine$drySeasonHerdStrategy <- as.factor(pse_diohine$drySeasonHerdStrategy)
 pse_diohine$foodDonation <- as.factor(pse_diohine$foodDonation)
+pse_diohine$ownFallowUse <- as.factor(pse_diohine$ownFallowUse)
+
 
 
 
@@ -248,9 +250,78 @@ aov(pse_diohine$objective.lastPopulation~ pse_diohine$loanStrategy + pse_diohine
 
 aov(pse_diohine$objective.lastEffectiveFallowRatio~ pse_diohine$loanStrategy + pse_diohine$ownFallowUse + pse_diohine$foodDonation + pse_diohine$drySeasonHerdStrategy +pse_diohine$wetSeasonHerdStrategy ) %>% anova()
 
-pse_diohine %>% select(all_of(pratiques)) %>% pull %>%  unique()
+
+
+pratiques
+
+
+score_loan_strat<- function(loanStrategy){
+  switch (loanStrategy %>% as.character(),
+        AllExtraParcelsLoaner = 3,
+        ExtraParcelsExceptFallowLoaner = 2,
+        Selfish = 0
+)
+}
+
+score_ownF_strat<- function(ownFallowUse){
+  switch (ownFallowUse %>% as.character(),
+          UseFallowIfNeeded = 1, #pas zero car si culture , possibilité de don de nourriture 
+          NeverUseFallow = 3
+  )
+}
+
+score_Donation_strat<- function(foodDonation){
+  switch (foodDonation %>% as.character(),
+          FoodForUsOnlyStrategy = 0,
+          FoodForAllStrategy = 2
+  )
+}
+
+
+score_dryHerd_strat<- function(drySeasonHerdStrategy){
+  switch (drySeasonHerdStrategy %>% as.character(),
+          OwnerOnly = 0,
+          EverywhereByDayOwnerByNight = 2,
+          AnywhereAnyTime = 3
+  )
+}
+
+score_wetHerd_strat<- function(wetSeasonHerdStrategy){
+  switch (wetSeasonHerdStrategy %>% as.character(),
+          OwnerOnly = 0,
+          EverywhereByDayOwnerByNight = 2,
+          AnywhereAnyTime = 3
+  )
+}
 
 
 
 
+
+scores_loans <-lapply(pse_diohine$loanStrategy, score_loan_strat) %>% unlist()
+scores_ownF <-lapply(pse_diohine$ownFallowUse, score_ownF_strat) %>% unlist()
+scores_Donation <-lapply(pse_diohine$foodDonation, score_Donation_strat) %>% unlist()
+scores_dryHerd <-lapply(pse_diohine$drySeasonHerdStrategy, score_dryHerd_strat) %>% unlist()
+scores_wetHerd <-lapply(pse_diohine$wetSeasonHerdStrategy, score_wetHerd_strat) %>% unlist()
+
+pse_diohine$solidarity <- scores_Donation+ scores_dryHerd+ scores_loans+ scores_ownF+ scores_wetHerd
+
+library(plotly)
+plyply<- plot_ly(pse_no_dyn, x=~objective.lastPopulation, 
+                 y=~objective.lastMilYield,
+                 z=~objective.lastEffectiveFallowRatio, 
+                 color=~solidarity, size=0.1)
+plyply <- plyply %>%  add_markers()
+plyply
+
+
+
+ggplot(pse_diohine)+
+  geom_point(aes(x=objective.lastPopulation, y=objective.lastEffectiveFallowRatio, color= solidarity, size=nbFaidherbia))
+  
+ggplot(pse_diohine)+
+  geom_point(aes(x=objective.lastMilYield, y=objective.lastEffectiveFallowRatio, color= solidarity, size=nbFaidherbia))
+
+ggplot(pse_diohine)+
+  geom_point(aes(x=objective.lastMilYield, y=objective.lastPopulation, color= solidarity, size=nbFaidherbia))+theme_light()
 
