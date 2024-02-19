@@ -6,6 +6,7 @@ import History.History
 import Kitchen.Food
 import org.apache.commons.math3.random.MersenneTwister
 import Data._
+import Parcel._
 
 import scala.annotation.tailrec
 
@@ -65,7 +66,11 @@ object Simulation {
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
     // Two years warming up
-    val warmedUpState = evolve(initialState, 0.0, 3, false, data).copy(history = initialHistory, year = 1)
+    val warmedUpState = evolve(initialState, 0.0, 3, false, data)
+      .copy(history = initialHistory,
+        year = 1,
+        world = initialState.world.copy(parcels = initialState.world.parcels.map(_.resetFertilityHistory))
+      )
 
     println("------------------------------------------------ ")
     val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, true, data)

@@ -30,3 +30,5 @@ case class Parcel(id: ParcelID,
                   fertilityHistory: Seq[Fertility.Metrics]
                  )
 
+implicit class ParcelDecorator(p: Parcel):
+  def resetFertilityHistory: Parcel = p.copy(fertilityHistory = Seq())
