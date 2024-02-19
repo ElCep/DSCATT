@@ -138,7 +138,7 @@ object Fertility {
 
     val faidherbiaBoost = parcel.faidherbiaTrees * data.FAIDHERBIA_BOOST_PER_TREE
 
-    data.SOIL_QUALITY_BASIS + manureBoost + mulchingBoost + faidherbiaBoost + useLandBoost
+    math.max(data.SOIL_QUALITY_BASIS + manureBoost + mulchingBoost + faidherbiaBoost + useLandBoost, 0.0)
   }
 
   // in kg. Computed from previous year soil quality and manure production
