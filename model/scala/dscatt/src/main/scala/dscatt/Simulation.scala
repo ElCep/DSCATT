@@ -33,6 +33,7 @@ object Simulation {
              simulationLength: Int = 20,
              soilQualityBasis: Double, // exposed for calibration
              fallowBoost: Double, // exposed for calibration
+             erosion: Double, // exposed for calibration
              peanutSeedToFood: Double, // exposed for calibration
              expandingHerdSize: Double, // exposed for calibration
              dailyFoodNeedPerPerson: Double,
@@ -45,6 +46,7 @@ object Simulation {
     val data = new Data(
       soilQualityBasis = soilQualityBasis,
       fallowBoost = fallowBoost,
+      erosion = erosion,
       peanutSeedToFood = peanutSeedToFood,
       expandingHerdSize = expandingHerdSize,
       dailyFoodNeedPerPerson = dailyFoodNeedPerPerson,

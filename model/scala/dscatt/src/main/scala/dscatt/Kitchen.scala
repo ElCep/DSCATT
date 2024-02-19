@@ -45,33 +45,33 @@ object Kitchen {
 
   def foodNeeds(kitchen: Kitchen, data: Data) = kitchen.size * data.DAILY_FOOD_NEED_PER_PERSON * 365
 
-  def parcelFoodProduction(parcel: Parcel, data: Data): Double = {
+  def parcelFoodProduction(parcel: Parcel, data: Data, year: Int): Double = {
     (parcel.crop match {
-      case Mil => Fertility.milNRF(parcel, data) * milSeedFullPontential(data)
+      case Mil => Fertility.milNRF(parcel, data, year) * milSeedFullPontential(data)
       case Peanut => Fertility.peanutNRF * peanutSeedFullPotential(data) * data.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
     }) * parcel.area
   }
 
   // Fallow and Peanut are considered as Mil in case of loan (since loan is for food) and will be set as Mil once the loan will be effective
-  def parcelFoodProductionForLoan(parcel: Parcel, data: Data) =
+  def parcelFoodProductionForLoan(parcel: Parcel, data: Data, year: Int) =
     (parcel.crop match {
-      case Mil | Fallow | Peanut => Fertility.milNRF(parcel, data) * milSeedFullPontential(data)
+      case Mil | Fallow | Peanut => Fertility.milNRF(parcel, data, year) * milSeedFullPontential(data)
     }) * parcel.area
 
 
-  def parcelsFoodProduction(parcels: Seq[Parcel], data: Data) = {
+  def parcelsFoodProduction(parcels: Seq[Parcel], data: Data, year: Int) = {
     parcels.map {p=>
-      parcelFoodProduction(p, data)
+      parcelFoodProduction(p, data, year)
     }.sum
   }
 
-  def foodBalance(world: World, kitchen: Kitchen, data: Data): FoodBalance = {
-    foodBalance(world.parcels, kitchen, data)
+  def foodBalance(world: World, kitchen: Kitchen, data: Data, year: Int): FoodBalance = {
+    foodBalance(world.parcels, kitchen, data, year)
   }
 
-  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen, data: Data): FoodBalance = {
-    FoodBalance(kitchen.id, parcelsFoodProduction(World.parcelsInCultureForKitchen(parcels, kitchen), data) - foodNeeds(kitchen, data))
+  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen, data: Data, year: Int): FoodBalance = {
+    FoodBalance(kitchen.id, parcelsFoodProduction(World.parcelsInCultureForKitchen(parcels, kitchen), data, year) - foodNeeds(kitchen, data))
   }
 
   def evolve(
@@ -213,7 +213,7 @@ object Kitchen {
 
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
   // If fallows are present in the cultivableParcelForKitchen, it means the fallow can be used as a culture. In that case it is switched to a mil
-  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double, data: Data) = {
+  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double, data: Data, year: Int) = {
 
     @tailrec
     def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel]): CropNeeded = {
@@ -230,7 +230,7 @@ object Kitchen {
           case _ => head
         }
 
-        val pproduction = Kitchen.parcelFoodProduction(parcel, data)
+        val pproduction = Kitchen.parcelFoodProduction(parcel, data, year)
         cropsToBeCultivated(kitchen, production + pproduction, sortedParcels.tail, inCulture :+ parcel)
       }
     }

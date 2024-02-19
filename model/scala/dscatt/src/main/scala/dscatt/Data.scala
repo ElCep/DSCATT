@@ -11,9 +11,10 @@ object Data {
 import Data._
 class Data(
                  soilQualityBasis: Double, // exposed for calibration
-                 fallowBoost: Double, // exposed for calibration
+                 fallowBoost: Double, // exposed for calibration 
+                 erosion: Double, //exposed for calibratino
                  peanutSeedToFood: Double, // exposed for calibration
-                 expandingHerdSize: Double,
+                 expandingHerdSize: Double,// exposed for calibration
                  dailyFoodNeedPerPerson: Double,
                  rainFall: MM
                ) {
@@ -81,5 +82,6 @@ class Data(
   // Fertility
   val FALLOW_BOOST = fallowBoost
   val SOIL_QUALITY_BASIS = soilQualityBasis
+  val EROSION = erosion
 
 }

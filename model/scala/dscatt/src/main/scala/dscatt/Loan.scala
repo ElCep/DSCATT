@@ -13,7 +13,7 @@ case class Loan(from: KitchenID, to: KitchenID, parcel: Parcel)
 object Loan {
 
   // Every loaned parcel will be used with Mil
-  def assign(parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance], data: Data): (Seq[Loan], Seq[Parcel]) = {
+  def assign(parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance], data: Data, year: Int): (Seq[Loan], Seq[Parcel]) = {
     
     @tailrec
     def assign0(demandingKitchens: List[FoodBalance], availableParcels: Seq[Parcel], yearLoans: Seq[Loan]): (Seq[Loan], Seq[Parcel]) = {
@@ -25,7 +25,7 @@ object Loan {
         val mostNeedy = demandingKitchens.head
         val loanedParcel = availableParcels.head
         val newDemandingKitchens = demandingKitchens
-          .updated(0, mostNeedy.copy(balance = mostNeedy.balance + Kitchen.parcelFoodProductionForLoan(loanedParcel, data)))
+          .updated(0, mostNeedy.copy(balance = mostNeedy.balance + Kitchen.parcelFoodProductionForLoan(loanedParcel, data, year)))
           .sortBy(_.balance)
           .filter(_.balance < 0)
         assign0(newDemandingKitchens, availableParcels.tail, yearLoans :+ Loan(loanedParcel.ownerID, mostNeedy.kitchenID, loanedParcel))

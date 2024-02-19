@@ -221,7 +221,7 @@ object History {
           toDouble(fertility.manureMass / area),
           toDouble(fertility.mulchingMass / area),
           toDouble(p.faidherbiaTrees),
-          toDouble(Kitchen.parcelFoodProduction(p, data) / area),
+          toDouble(Kitchen.parcelFoodProduction(p, data, state.year) / area),
           fertility.crop.display
         )
       }
