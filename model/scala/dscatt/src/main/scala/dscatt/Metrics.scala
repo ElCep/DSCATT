@@ -89,7 +89,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     simulationState.foodStats.map { fs =>
       average(fs.flatMap { f =>
         val food = f._2
-        if(food.fromMil != 0.0)
+        if (food.fromMil != 0.0)
           Some(food.fromMil / food.milInCultureArea)
         else None
       }.toSeq)
@@ -115,11 +115,16 @@ implicit class HistoryDecorator(simulationState: SimulationState):
 
   def populationRSquareAndSlope: (Double, Double) =
     val regression = new SimpleRegression(true)
-    populationDynamic.zipWithIndex foreach: (p,id)=>
-      regression.addData(id,p)
+    populationDynamic.zipWithIndex foreach : (p, id) =>
+      regression.addData(id, p)
     (regression.getRSquare, regression.getSlope)
 
   def effectiveFallowRatioDynamic =
-    (History.historyByYear(simulationState) map: h=>
+    (History.historyByYear(simulationState) map : h =>
       h.effectiveFallowRatio
       ).toArray
+
+  def numberOfAbsorbedKitchens =
+    simulationState.population.flatMap {
+      _.map(_._2.absorbedKitchens.length)
+    }.sum
