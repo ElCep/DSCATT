@@ -41,7 +41,6 @@ object Simulation {
              hookParameters: HookParameters,
              rainFall: MM
            ) = {
-    println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + seed + " " + soilQualityBasis + " " + fallowBoost + " " + peanutSeedToFood + " " + expandingHerdSize)
     given MersenneTwister(seed)
 
     val data = new Data(
@@ -56,12 +55,9 @@ object Simulation {
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
-    println("NB KITCH " + kitchens.length)
-    println("Area factor " + data.AREA_FACTOR)
-
     val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels, data)
 
-    println("area totale " + nakedWorld.parcels.map(_.area).sum)
+    println("Area " + nakedWorld.parcels.map(_.area).sum)
     val initialHistory = History.initialize(simulationLength, kitchens)
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
