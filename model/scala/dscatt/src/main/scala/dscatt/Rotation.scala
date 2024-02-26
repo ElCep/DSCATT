@@ -53,7 +53,7 @@ object Rotation {
       groupedForLoan.getOrElse(Peanut, Seq()).sortBy(_.farmerID) ++
       groupedForLoan.getOrElse(Fallow, Seq()).sortBy(_.farmerID)
     val (yearLoans, notUsedInLoanProcess) = Loan.assign(sortedForLoan, demandingKitchens.sortBy(_.kitchenID), data, simulationState.year)
-    val loanedParcels = yearLoans.map(l => l.parcel.copy(farmerID = l.to, crop = Mil))
+    val loanedParcels = yearLoans.map(_.parcel)
 
     val inCulture = allParcelUsages.cultivated ++ allParcelUsages.notLoanable ++ notUsedInLoanProcess
     val newParcels = inCulture ++ loanedParcels

@@ -98,7 +98,7 @@ object Simulation {
         val (afterRotationsSimulationState, foodAfterRotation, theoriticalFallowParcels) = Rotation.evolve(simulationState, initialFood, data)
 
         // Process food donations
-        val afterDonationFoods = FoodDonation.assign(foodAfterRotation, simulationState)
+        val afterDonationFoods = FoodDonation.assign(foodAfterRotation, afterRotationsSimulationState)
 
         // Process kitchen dynamics (population, emmigrants, absorptions, splits)
         val resizedSimulationState = Kitchen.evolve(

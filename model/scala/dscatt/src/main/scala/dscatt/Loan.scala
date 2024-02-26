@@ -14,7 +14,7 @@ object Loan {
 
   // Every loaned parcel will be used with Mil
   def assign(parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance], data: Data, year: Int): (Seq[Loan], Seq[Parcel]) = {
-    
+
     @tailrec
     def assign0(demandingKitchens: List[FoodBalance], availableParcels: Seq[Parcel], yearLoans: Seq[Loan]): (Seq[Loan], Seq[Parcel]) = {
       if (demandingKitchens.isEmpty || availableParcels.isEmpty) {
@@ -23,7 +23,7 @@ object Loan {
 
       else {
         val mostNeedy = demandingKitchens.head
-        val loanedParcel = availableParcels.head
+        val loanedParcel = availableParcels.head.copy(farmerID = mostNeedy.kitchenID, crop = Croping.Mil)
         val newDemandingKitchens = demandingKitchens
           .updated(0, mostNeedy.copy(balance = mostNeedy.balance + Kitchen.parcelFoodProductionForLoan(loanedParcel, data, year)))
           .sortBy(_.balance)

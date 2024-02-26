@@ -61,7 +61,7 @@ object Kitchen {
 
 
   def parcelsFoodProduction(parcels: Seq[Parcel], data: Data, year: Int) = {
-    parcels.map {p=>
+    parcels.map { p =>
       parcelFoodProduction(p, data, year)
     }.sum
   }
@@ -133,9 +133,9 @@ object Kitchen {
       else {
         val oneAbsorbing = absorbing.head
         val newAbsorbing = oneAbsorbing.copy(
-            kitchen = oneAbsorbing.kitchen.copy(size = oneAbsorbing.kitchen.size + toBeAbsorbed.head.size),
-            absorbedIDs = oneAbsorbing.absorbedIDs :+ toBeAbsorbed.head.id
-          )
+          kitchen = oneAbsorbing.kitchen.copy(size = oneAbsorbing.kitchen.size + toBeAbsorbed.head.size),
+          absorbedIDs = oneAbsorbing.absorbedIDs :+ toBeAbsorbed.head.id
+        )
 
         absorption(toBeAbsorbed.tail, absorbing.tail, alreadyAbsorbing :+ newAbsorbing)
       }
@@ -220,7 +220,7 @@ object Kitchen {
 
       val needsCondition = production > needs
 
-      if (sortedParcels.isEmpty || needsCondition )
+      if (sortedParcels.isEmpty || needsCondition)
         CropNeeded(inCulture, sortedParcels, if (needsCondition) production - needs else 0.0)
       else {
         val head = sortedParcels.head
