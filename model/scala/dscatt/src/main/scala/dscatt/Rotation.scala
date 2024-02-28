@@ -1,6 +1,6 @@
 package dscatt
 
-import Croping.{Crop, Fallow, Mil, Peanut}
+import Croping.{Crop, Fallow, Millet, Peanut}
 import Kitchen.{Food, parcelsFoodProduction}
 import Simulation.SimulationState
 import Croping.*
@@ -49,7 +49,7 @@ object Rotation {
     //Sort parcel for loan in crop priority order (Mil>Peanut>Fallow)
     val groupedForLoan = allParcelUsages.forLoan.groupBy(_.crop)
     val sortedForLoan =
-      groupedForLoan.getOrElse(Mil, Seq()).sortBy(_.farmerID) ++
+      groupedForLoan.getOrElse(Millet, Seq()).sortBy(_.farmerID) ++
       groupedForLoan.getOrElse(Peanut, Seq()).sortBy(_.farmerID) ++
       groupedForLoan.getOrElse(Fallow, Seq()).sortBy(_.farmerID)
     val (yearLoans, notUsedInLoanProcess) = Loan.assign(sortedForLoan, demandingKitchens.sortBy(_.kitchenID), data, simulationState.year)
@@ -96,8 +96,8 @@ object Rotation {
 //        case OwnFallowUse.UseFallowIfNeeded => (Seq(), grouped.getOrElse(Mil, Seq()).sortBy(_.farmerID)  ++ grouped.getOrElse(Peanut, Seq()).sortBy(_.farmerID)  ++ grouped.getOrElse(Fallow, Seq()).sortBy(_.farmerID))
 //      }
       kitchen.ownFallowUse match {
-        case OwnFallowUse.NeverUseFallow => (grouped.getOrElse(Fallow, Seq()), grouped.getOrElse(Mil, Seq()) ++ grouped.getOrElse(Peanut, Seq()))
-        case OwnFallowUse.UseFallowIfNeeded => (Seq(), grouped.getOrElse(Mil, Seq()) ++ grouped.getOrElse(Peanut, Seq()) ++ grouped.getOrElse(Fallow, Seq()))
+        case OwnFallowUse.NeverUseFallow => (grouped.getOrElse(Fallow, Seq()), grouped.getOrElse(Millet, Seq()) ++ grouped.getOrElse(Peanut, Seq()))
+        case OwnFallowUse.UseFallowIfNeeded => (Seq(), grouped.getOrElse(Millet, Seq()) ++ grouped.getOrElse(Peanut, Seq()) ++ grouped.getOrElse(Fallow, Seq()))
       }
 
     val cropNeeded: Kitchen.CropNeeded = kitchen.cropingStrategy match {

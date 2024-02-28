@@ -84,7 +84,7 @@ object World {
 
   def cultivatedParcels(parcels: Seq[Parcel]): Seq[Parcel] = parcels.filter(Parcel.isCultivated(_))
 
-  def milParcels(parcels: Seq[Parcel]) = parcels.filter(_.crop == Mil)
+  def milParcels(parcels: Seq[Parcel]) = parcels.filter(_.crop == Millet)
 
   def peanutParcels(parcels: Seq[Parcel]) = parcels.filter(_.crop == Peanut)
 

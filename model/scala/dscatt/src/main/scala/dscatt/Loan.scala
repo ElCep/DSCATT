@@ -1,6 +1,6 @@
 package dscatt
 
-import Kitchen.{FoodBalance, KitchenID}
+import Kitchen.{FoodBalance, KitchenID, parcelFoodProduction}
 import Parcel.ParcelID
 import Simulation.SimulationState
 import Croping.AParcel
@@ -23,9 +23,10 @@ object Loan {
 
       else {
         val mostNeedy = demandingKitchens.head
-        val loanedParcel = availableParcels.head.copy(farmerID = mostNeedy.kitchenID, crop = Croping.Mil)
+        val loanedParcel = availableParcels.head.copy(farmerID = mostNeedy.kitchenID, crop = Croping.Millet)
+
         val newDemandingKitchens = demandingKitchens
-          .updated(0, mostNeedy.copy(balance = mostNeedy.balance + Kitchen.parcelFoodProductionForLoan(loanedParcel, data, year)))
+          .updated(0, mostNeedy.copy(balance = mostNeedy.balance + Kitchen.parcelFoodProduction(loanedParcel, data, year)))
           .sortBy(_.balance)
           .filter(_.balance < 0)
         assign0(newDemandingKitchens, availableParcels.tail, yearLoans :+ Loan(loanedParcel.ownerID, mostNeedy.kitchenID, loanedParcel))

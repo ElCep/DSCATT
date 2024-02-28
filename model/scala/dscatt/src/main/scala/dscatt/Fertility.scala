@@ -23,7 +23,7 @@ object Fertility {
         val herdFood = World.parcelsForKitchen(state.world, k).map { p =>
           p.crop match {
             case Fallow => fallowNRF(p,data, state.year) * fallowFullPotential(data.RAIN_FALL) * p.area
-            case Mil => k.mulchingStrategy match {
+            case Millet => k.mulchingStrategy match {
               case MulchingStrategy.Mulching(leftOnTheGroundRatio: Double) => milNRF(p, data, state.year) * milFullPotential(data.RAIN_FALL) * p.area * (1 - leftOnTheGroundRatio) * data.MIL_STRAW_RATIO
             }
             case _ => 0.0
@@ -51,7 +51,7 @@ object Fertility {
 
         val mulchingMass =
           parcel.crop match {
-            case Mil => kitchenOption.map {
+            case Millet => kitchenOption.map {
               _.mulchingStrategy
             } match {
               case Some(MulchingStrategy.Mulching(leftOnTheGroundRatio: Double)) =>
@@ -132,13 +132,14 @@ object Fertility {
     // The soil quality it computed at the begining of the year before the the rotation process, so that the parcel crop here
     // is equivalent to the crop of the previous year
     val useLandBoost = parcel.crop match {
-      case Croping.Fallow => data.FALLOW_BOOST
-      case _ => - data.EROSION * year
+      case Croping.Fallow =>  data.FALLOW_BOOST
+      case _ => - data.EROSION
     }
 
     val faidherbiaBoost = parcel.faidherbiaTrees * data.FAIDHERBIA_BOOST_PER_TREE
 
-    math.max(data.SOIL_QUALITY_BASIS + manureBoost + mulchingBoost + faidherbiaBoost + useLandBoost, 0.0)
+    val soilQualityPreviousYear = parcel.fertilityHistory.lift(year-2).map(_.agronomicMetrics.soilQuality).getOrElse(data.SOIL_QUALITY_BASIS)
+    math.max(soilQualityPreviousYear + manureBoost + mulchingBoost + faidherbiaBoost + useLandBoost, 0.0)
   }
 
   // in kg. Computed from previous year soil quality and manure production

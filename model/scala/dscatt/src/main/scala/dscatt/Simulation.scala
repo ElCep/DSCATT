@@ -3,10 +3,10 @@ package dscatt
 import Croping.*
 import Diohine.{HookFile, HookParameters}
 import History.History
-import Kitchen.Food
+import Kitchen.{Food, parcelFoodProduction}
 import org.apache.commons.math3.random.MersenneTwister
-import Data._
-import Parcel._
+import Data.*
+import Parcel.*
 
 import scala.annotation.tailrec
 

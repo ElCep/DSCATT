@@ -47,7 +47,7 @@ object Kitchen {
 
   def parcelFoodProduction(parcel: Parcel, data: Data, year: Int): Double = {
     (parcel.crop match {
-      case Mil => Fertility.milNRF(parcel, data, year) * milSeedFullPontential(data)
+      case Millet => Fertility.milNRF(parcel, data, year) * milSeedFullPontential(data)
       case Peanut => Fertility.peanutNRF * peanutSeedFullPotential(data) * data.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
     }) * parcel.area
@@ -56,7 +56,7 @@ object Kitchen {
   // Fallow and Peanut are considered as Mil in case of loan (since loan is for food) and will be set as Mil once the loan will be effective
   def parcelFoodProductionForLoan(parcel: Parcel, data: Data, year: Int) =
     (parcel.crop match {
-      case Mil | Fallow | Peanut => Fertility.milNRF(parcel, data, year) * milSeedFullPontential(data)
+      case Millet | Fallow | Peanut => Fertility.milNRF(parcel, data, year) * milSeedFullPontential(data)
     }) * parcel.area
 
 
@@ -226,7 +226,7 @@ object Kitchen {
         val head = sortedParcels.head
 
         val parcel = head.crop match {
-          case Fallow => head.copy(crop = Mil)
+          case Fallow => head.copy(crop = Millet)
           case _ => head
         }
 

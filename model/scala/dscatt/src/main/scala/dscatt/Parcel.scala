@@ -1,18 +1,19 @@
 package dscatt
 
-import Croping._
-import Kitchen._
-import Parcel._
-import Data._
+import Croping.*
+import Kitchen.*
+import Parcel.*
+import Data.*
+import dscatt.Fertility.Metrics
 
 object Parcel {
   type ParcelID = String
 
   case class ManureDeposit(year: Int, quantity: Double)
-  
+
   def isCultivated(parcel: Parcel) = parcel.crop match {
-    case Peanut | Mil=> true
-    case _=> false
+    case Peanut | Millet => true
+    case _ => false
   }
 }
 

@@ -4,7 +4,7 @@ object Croping {
 
   sealed trait Crop
 
-  object Mil extends Crop
+  object Millet extends Crop
 
   object Peanut extends Crop
 
@@ -12,7 +12,7 @@ object Croping {
 
   implicit class ACrop(c: Crop) {
     def display = c match {
-      case Mil => "Millet"
+      case Millet => "Millet"
       case Fallow => "Fallow"
       case Peanut => "Peanut"
     }
@@ -53,12 +53,12 @@ object Croping {
   def evolveCrop(crop: Crop, rotationCycle: RotationCycle, targetCropZone: CropZone) = {
     rotationCycle match {
       case RotationCycle.TwoYears => targetCropZone match {
-        case One => Mil
+        case One => Millet
         case _ => Peanut
       }
       case RotationCycle.ThreeYears =>
         targetCropZone match {
-          case One => Mil
+          case One => Millet
           case Two => Peanut
           case Three => Fallow
         }
