@@ -39,7 +39,8 @@ object Simulation {
              expandingHerdSize: Double, // exposed for calibration
              dailyFoodNeedPerPerson: Double,
              hookParameters: HookParameters,
-             rainFall: MM
+             rainFall: MM,
+             switcher: Option[Switcher]
            ) = {
     given MersenneTwister(seed)
 
@@ -69,7 +70,7 @@ object Simulation {
       )
 
     println("------------------------------------------------ ")
-    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, true, data)
+    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, true, data, switcher)
 
     if (hookParameters.displayParcels)
       History.printParcels(finalState, hookParameters, data)
@@ -85,17 +86,21 @@ object Simulation {
               populationGrowth: Double,
               simulationLenght: Int,
               emigrationProcess: Boolean,
-              data: Data
+              data: Data,
+              switcher: Option[Switcher] = None
             )(using MersenneTwister): SimulationState = {
 
     @tailrec
-    def evolve0(simulationState: SimulationState): SimulationState = {
+    def evolve0(simulationState: SimulationState, data: Data): SimulationState = {
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 1) simulationState
       else {
-        val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k, data)) }
+        val (switchedSimulationState, switchedData) = switcher.map(sw => simulationState.enventuallySwitch(sw, data)).getOrElse((simulationState, data))
+
+        val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k, switchedData)) }
+
 
         // Evolve rotation including loans
-        val (afterRotationsSimulationState, foodAfterRotation, theoriticalFallowParcels) = Rotation.evolve(simulationState, initialFood, data)
+        val (afterRotationsSimulationState, foodAfterRotation, theoriticalFallowParcels) = Rotation.evolve(switchedSimulationState, initialFood, switchedData)
 
         // Process food donations
         val afterDonationFoods = FoodDonation.assign(foodAfterRotation, afterRotationsSimulationState)
@@ -106,11 +111,11 @@ object Simulation {
           populationGrowth,
           afterDonationFoods,
           emigrationProcess,
-          data
+          switchedData
         )
 
         // Process Fertiliy
-        val afterFertilizationState = Fertility.assign(resizedSimulationState, data)
+        val afterFertilizationState = Fertility.assign(resizedSimulationState, switchedData)
 
         val effectiveFallowParcels = World.fallowParcels(afterFertilizationState.world).length
 
@@ -120,10 +125,10 @@ object Simulation {
 
         val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
 
-        evolve0(finalState)
+        evolve0(finalState, switchedData)
       }
     }
 
-    evolve0(simulationState)
+    evolve0(simulationState, data)
   }
 }

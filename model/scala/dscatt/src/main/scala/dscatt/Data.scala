@@ -9,16 +9,26 @@ object Data {
 }
 
 import Data._
-class Data(
-                 soilQualityBasis: Double, // exposed for calibration
-                 fallowBoost: Double, // exposed for calibration 
-                 erosion: Double, //exposed for calibratino
-                 peanutSeedToFood: Double, // exposed for calibration
-                 expandingHerdSize: Double,// exposed for calibration
-                 dailyFoodNeedPerPerson: Double,
-                 rainFall: MM
-               ) {
 
+class Data(
+            soilQualityBasis: Double, // exposed for calibration
+            fallowBoost: Double, // exposed for calibration 
+            erosion: Double, //exposed for calibratino
+            peanutSeedToFood: Double, // exposed for calibration
+            expandingHerdSize: Double, // exposed for calibration
+            dailyFoodNeedPerPerson: Double,
+            rainFall: MM
+          ) {
+
+  def copy(rFall: MM) = new Data(
+    soilQualityBasis: Double, 
+    fallowBoost: Double, 
+    erosion: Double, 
+    peanutSeedToFood: Double, 
+    expandingHerdSize: Double, 
+    dailyFoodNeedPerPerson: Double,
+    rFall
+  )
 
 
   // FOOD
@@ -26,7 +36,7 @@ class Data(
   // Age distribution: 0-4y: 8%, 5-19: 19%, 19+: 73%
   // we consider that 0-4y do not eat millet, 5-19y a 50% quantity and 19+ a full quantity
   // 0 * 0.06 + 0,5 * 0,4 + 0,54 = 0,74
- // val DAILY_FOOD_NEED_PER_PERSON = 0.75 * 0.74 // 0.555
+  // val DAILY_FOOD_NEED_PER_PERSON = 0.75 * 0.74 // 0.555
   val DAILY_FOOD_NEED_PER_PERSON = dailyFoodNeedPerPerson
 
   // Actor word yields. Used the first year (when field boosts are unknown)
@@ -56,9 +66,9 @@ class Data(
   val NITROGEN_MINERALIZATION: KG_BY_HA = 12 // kg/ha
   val NITROGEN_PROPORTION_PER_MANURE_KG = 0.0238 // no dimension
 
-//  val MIL_FULL_POTENTIAL_YIELD: KG_BY_HA = 3775 // kg DM / ha
-//  val PEANUT_FULL_POTENTIAL_YIELD: KG_BY_HA = 1300 // kg DM / ha
-//  val FALLOW_FULL_POTENTIAL_YIELD: KG_BY_HA = 1498 // kg DM / ha
+  //  val MIL_FULL_POTENTIAL_YIELD: KG_BY_HA = 3775 // kg DM / ha
+  //  val PEANUT_FULL_POTENTIAL_YIELD: KG_BY_HA = 1300 // kg DM / ha
+  //  val FALLOW_FULL_POTENTIAL_YIELD: KG_BY_HA = 1498 // kg DM / ha
 
   val MIL_STRAW_RATIO = 0.7
   val PEANUT_STRAW_RATIO = 0.666
@@ -76,7 +86,7 @@ class Data(
   //Assouma: the quantity ingered daily is equivalent to 2,5% of the cattle weight daily.
   // The quantity of grass is 65% of this quantitt. For 1 year 250*0,025*365*0,65
   val KG_OF_STRAW_PER_COW_PER_YEAR: KG = 1480
-  val KG_OF_MANURE_PER_COW_PER_YEAR: KG = 1140//1250//1370 // Assouma between 40% and 55% of the ingested DM: 250 * 0.025 * 365 * 0,5
+  val KG_OF_MANURE_PER_COW_PER_YEAR: KG = 1140 //1250//1370 // Assouma between 40% and 55% of the ingested DM: 250 * 0.025 * 365 * 0,5
   val EXPANDING_HERD_SIZE = expandingHerdSize // Expanding herd size due to outside village grazing
 
   // Fertility
