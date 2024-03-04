@@ -131,15 +131,16 @@ object Fertility {
 
     // The soil quality it computed at the begining of the year before the the rotation process, so that the parcel crop here
     // is equivalent to the crop of the previous year
-    val useLandBoost = parcel.crop match {
+    val fallowBoost = parcel.crop match {
       case Croping.Fallow =>  data.FALLOW_BOOST
-      case _ => - data.EROSION
+      case _ => 1.0
     }
 
     val faidherbiaBoost = parcel.faidherbiaTrees * data.FAIDHERBIA_BOOST_PER_TREE
 
-    val soilQualityPreviousYear = parcel.fertilityHistory.lift(year-2).map(_.agronomicMetrics.soilQuality).getOrElse(data.SOIL_QUALITY_BASIS)
-    math.max(soilQualityPreviousYear + manureBoost + mulchingBoost + faidherbiaBoost + useLandBoost, 0.0)
+    val soilQualityPreviousYear = parcel.fertilityHistory.lift(year-2).map(_.agronomicMetrics.soilQuality).getOrElse(data.SOIL_QUALITY_BASIS * parcel.area)
+    
+    (soilQualityPreviousYear + manureBoost + mulchingBoost + faidherbiaBoost) * fallowBoost * data.EROSION
   }
 
   // in kg. Computed from previous year soil quality and manure production
@@ -174,6 +175,7 @@ object Fertility {
       case n if n >= 18 && n <= 83 => 0.501 * Math.log(n) - 1.2179
       case _ => 1.0
       )
+   // println("NRF " + nrf)
     // Ensure that soilQuality boost does not make NRF exceed 1
     if (nrf > 1) 1.0 else nrf
 
@@ -185,6 +187,7 @@ object Fertility {
       case _ => 1.0
       )
     // Ensure that soilQuality boost does not make NRF exceed 1
+    //println("NRF " + nrf)
     if (nrf > 1) 1.0 else nrf
 
   def peanutNRF = 1.0

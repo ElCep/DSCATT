@@ -81,7 +81,7 @@ class Data(
 
   // Fertility
   val FALLOW_BOOST = fallowBoost
-  val SOIL_QUALITY_BASIS = soilQualityBasis
+  val SOIL_QUALITY_BASIS = soilQualityBasis // soil quality by hectare
   val EROSION = erosion
 
 }
