@@ -51,12 +51,14 @@ df7$years <- 1:nrow(df7)
 df7 <- melt(df7, id.vars ="years")
 df7$type <- "Grazing Anywhere, anytime"
 
-dfTot = rbind(df3, df2,df4, df5, df6, df7)
+dfTot = rbind(df2,df4, df5, df6, df7, df3)
 
 ggplot(dfTot, aes(x=years))+
   geom_line( aes(y=value, color=variable))+
   theme_minimal()+
   xlab("Years")+
   ylab("Herd size")+
-  scale_color_discrete(name = "Switch, t = 25", labels=c("Base", "Rainfall = 700", "Nb Faidherbia / ha = 6","No Loan, no food donation", "2 years rotation", "Grazing anywhere anytime"))
-
+  geom_vline(xintercept=25, linetype='dotted', col = 'black')+
+  scale_color_manual(name = "Switch, Years = 25", 
+                     values=c( "blue", "darkgreen","#D95F02", "purple", "#1B9E77", "red" ),
+                     labels=c("Rainfall = 700mm", "6 Faidherbia/ha","No Loan, no food donation", "2 years rotation", "Grazing anywhere anytime", "Base"))
