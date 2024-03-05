@@ -108,7 +108,7 @@ object Diohine {
       hookParameters = hooks,
       rainFall = 600,
      // None
-      Some(Switcher(26, SwitchType.Mulching(0.2)))
+      Some(Switcher(26, SwitchType.RainFall(700)))
     )
 
     given data: Data = simulationData
