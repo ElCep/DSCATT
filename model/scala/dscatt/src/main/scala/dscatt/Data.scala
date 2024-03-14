@@ -6,6 +6,9 @@ object Data {
   type KG_BY_HA = Double
   type NB_BY_HA = Double
   type MM = Int
+  type SOIL_QUALITY = Double
+  type SOIL_QUALITY_BY_HA = Double
+  type SOIL_QUALITY_BY_KG = Double
 }
 
 import Data._
@@ -15,17 +18,15 @@ class Data(
             fallowBoost: Double, // exposed for calibration 
             erosion: Double, //exposed for calibratino
             peanutSeedToFood: Double, // exposed for calibration
-            expandingHerdSize: Double, // exposed for calibration
             dailyFoodNeedPerPerson: Double,
             rainFall: MM
           ) {
 
   def copy(rFall: MM) = new Data(
-    soilQualityBasis: Double, 
-    fallowBoost: Double, 
-    erosion: Double, 
-    peanutSeedToFood: Double, 
-    expandingHerdSize: Double, 
+    soilQualityBasis: Double,
+    fallowBoost: Double,
+    erosion: Double,
+    peanutSeedToFood: Double,
     dailyFoodNeedPerPerson: Double,
     rFall
   )
@@ -76,22 +77,26 @@ class Data(
   val PEANUT_SEED_RATIO = 0.333
   val RAIN_FALL = rainFall
 
-  val MULCHING_BOOST = 0.001
-  val FAIDHERBIA_BOOST_PER_TREE = 0.06
 
   //val MIL_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
   //val PEANUT_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_SEED_RATIO
 
   //Herd
   //Assouma: the quantity ingered daily is equivalent to 2,5% of the cattle weight daily.
-  // The quantity of grass is 65% of this quantitt. For 1 year 250*0,025*365*0,65
+  // The quantity of grass is 65% of this quantity. For 1 year 250*0,025*365*0,65
   val KG_OF_STRAW_PER_COW_PER_YEAR: KG = 1480
   val KG_OF_MANURE_PER_COW_PER_YEAR: KG = 1140 //1250//1370 // Assouma between 40% and 55% of the ingested DM: 250 * 0.025 * 365 * 0,5
-  val EXPANDING_HERD_SIZE = expandingHerdSize // Expanding herd size due to outside village grazing
 
   // Fertility
-  val FALLOW_BOOST = fallowBoost
-  val SOIL_QUALITY_BASIS = soilQualityBasis // soil quality by hectare
-  val EROSION = erosion
-
+  val SOIL_QUALITY_BASIS: SOIL_QUALITY_BY_HA = soilQualityBasis // soil quality by hectare
+  val FALLOW_BOOST: SOIL_QUALITY_BY_HA = fallowBoost
+  val EROSION: Double = erosion
+  val MULCHING_BOOST: SOIL_QUALITY_BY_KG = 0.001 // FIXME: QS/KG ?
+  val MANURE_BOOST_1_YEAR_AGO: SOIL_QUALITY_BY_KG = 0.00012 //FIXME: QS/KG ?
+  val MANURE_BOOST_2_YEARS_AGO: SOIL_QUALITY_BY_KG = 0.00008 //FIXME: QS/KG ?
+  val FAIDHERBIA_BOOST_PER_TREE = 0.06 // QS / TREE
+  val MARIGOT_SURFACE_FOR_EXTRA_GRAZING = 67 * 0.7 // 67ha is the marigot surface described by Odru et al.This surface is available only during dry season: 47ha
+  val MARIGOT_ANNUAL_FOOD: KG_BY_HA = 475 * MARIGOT_SURFACE_FOR_EXTRA_GRAZING // Grillot 2018 p.94 and Scriban p.15
+  val HERD_SIZE_FEEDED_BY_MARIGOT_DURING_DRY_SEASON = (MARIGOT_ANNUAL_FOOD / KG_OF_STRAW_PER_COW_PER_YEAR).ceil.toInt // around 15
+  println("AAANN " + HERD_SIZE_FEEDED_BY_MARIGOT_DURING_DRY_SEASON)
 }
