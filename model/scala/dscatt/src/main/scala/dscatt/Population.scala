@@ -51,9 +51,8 @@ object Population {
 
     val result = kitchens.map { k =>
       val balanceK = foodAssessementMap(k.id)
-      if (balanceK > 0) {
+      if (balanceK >= 0) {
         (k, (k.id, 0))
-        // k.copy(emigrantsPerYear = k.emigrantsPerYear :+ 0)
       }
       else {
         val theoriticalNbEmigrants = (Math.abs(balanceK) / (data.DAILY_FOOD_NEED_PER_PERSON * 365)).ceil.toInt
