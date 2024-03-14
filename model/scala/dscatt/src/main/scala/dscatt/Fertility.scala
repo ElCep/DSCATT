@@ -54,77 +54,84 @@ object Fertility {
 
     def manureVillageForPForDrySeasonFor(parcel: Parcel, parcels: Seq[Parcel]) = totalProducedManureDuringDrySeason * parcel.area / parcels.map(_.area).sum
 
-    // A parcel is divided into 4 periods of time. First dry (0.7 of the year) and wet (0.3 of the year) season and then
-    // night (0.8 of the dung production) and day (0.2 of the dung production).
+
     @tailrec
-    def fertilize(allParcels: Seq[Parcel], fertilityUpdated: Seq[Parcel], data: Data, year: Int): Seq[Parcel] = {
-      if (allParcels.isEmpty) fertilityUpdated
+    def fertilizeByKitchen(kitchens: Seq[Kitchen], fertilityUpdated: Seq[Parcel]): Seq[Parcel] = {
+      if (kitchens.isEmpty) fertilityUpdated
       else {
-        val parcel = allParcels.head
-        val kitchenOption = Kitchen.kitchen(state.kitchens, parcel.farmerID)
+        val kitchen = kitchens.head
+        val parcelsForK = World.parcelsForKitchen(state.world, kitchen)
 
-        val mulchingMass =
-          parcel.crop match {
-            case Millet => kitchenOption.map {
-              _.mulchingStrategy
-            } match {
-              case Some(MulchingStrategy.Mulching(leftOnTheGroundRatio: Double)) =>
-                milNRF(parcel, data, year) * milFullPotential(data.RAIN_FALL) * parcel.area * leftOnTheGroundRatio * data.MIL_STRAW_RATIO
-              case _ => 0.0
-            }
-            case _ => 0.0
-          }
+        // A parcel is divided into 4 periods of time. First dry (0.7 of the year) and wet (0.3 of the year) season and then
+        // night (0.8 of the dung production) and day (0.2 of the dung production).
+        @tailrec
+        def fertilize(allParcels: Seq[Parcel], fertilityUpdated: Seq[Parcel]): Seq[Parcel] = {
+          if (allParcels.isEmpty) fertilityUpdated
+          else {
+            val parcel = allParcels.head
 
-        val manureMass = kitchenOption.map { kitchen =>
-          val dryToBeManuredArea = World.farmedParcelsForKitchen(state.world, kitchen).filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)).map {
-            _.area
-          }.sum
-
-          val dryManureKforAssignedP = drySeasonEffectiveHerdSizeByKitchen(kitchen.id) * data.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / dryToBeManuredArea
-          val dryManureVillageForP = manureVillageForPForDrySeasonFor(
-            parcel,
-            state.world.parcels.filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle))
-            )
-
-          val dryMass =
-            kitchen.drySeasonManureCriteria(parcel, kitchen.rotationCycle) match {
-              case true =>
-                kitchen.drySeasonHerdStrategy match {
-                  case HerdStrategy.EverywhereByDayOwnerByNight => 0.14 * dryManureVillageForP + 0.56 * dryManureKforAssignedP // 0.7 * 0.2 and 0.7 * 0.8
-                  case HerdStrategy.AnywhereAnyTime => 0.7 * dryManureVillageForP
-                  case HerdStrategy.OwnerOnly => 0.7 * dryManureKforAssignedP
+            val mulchingMass =
+              parcel.crop match {
+                case Millet => kitchen.mulchingStrategy match {
+                  case MulchingStrategy.Mulching(leftOnTheGroundRatio: Double) =>
+                    milNRF(parcel, data, state.year) * milFullPotential(data.RAIN_FALL) * parcel.area * leftOnTheGroundRatio * data.MIL_STRAW_RATIO
+                  case _ => 0.0
                 }
-              case false => 0.0
-            }
-
-          val wetManureVillageForP = manureVillageForPFor(parcel, World.fallowParcels(state.world))
-          val manureKforFallow = effectiveHerdSizeByKitchen(kitchen.id) * data.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / World.fallowParcelsForKitchen(state.world, kitchen).map {
-            _.area
-          }.sum
-
-          val wetMass = parcel.crop match {
-            case Fallow =>
-              kitchen.wetSeasonHerdStrategy match {
-                case HerdStrategy.EverywhereByDayOwnerByNight => 0.24 * manureKforFallow + 0.06 * wetManureVillageForP // 0.3 * 0.8 and 0.3 * 0.2
-                case HerdStrategy.AnywhereAnyTime => 0.3 * wetManureVillageForP
-                case HerdStrategy.OwnerOnly => 0.3 * manureKforFallow
+                case _ => 0.0
               }
-            case _ => 0.0
-          }
-          dryMass + wetMass
-        }.getOrElse(0.0)
 
-        val metrics = Fertility.Metrics(state.year, parcel.crop, manureMass, mulchingMass, Fertility.agronomicMetrics(parcel, data, state.year))
-        fertilize(
-          allParcels.tail,
-          fertilityUpdated :+ parcel.copy(fertilityHistory = parcel.fertilityHistory :+ metrics),
-          data,
-          state.year
-        )
+            val manureMass =
+              val dryToBeManuredArea = parcelsForK.filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)).map {
+                _.area
+              }.sum
+
+              val dryManureKforAssignedP = drySeasonEffectiveHerdSizeByKitchen(kitchen.id) * data.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / dryToBeManuredArea
+              val dryManureVillageForP = manureVillageForPForDrySeasonFor(
+                parcel,
+                state.world.parcels.filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle))
+              )
+
+              val dryMass =
+                kitchen.drySeasonManureCriteria(parcel, kitchen.rotationCycle) match {
+                  case true =>
+                    kitchen.drySeasonHerdStrategy match {
+                      case HerdStrategy.EverywhereByDayOwnerByNight => 0.14 * dryManureVillageForP + 0.56 * dryManureKforAssignedP // 0.7 * 0.2 and 0.7 * 0.8
+                      case HerdStrategy.AnywhereAnyTime => 0.7 * dryManureVillageForP
+                      case HerdStrategy.OwnerOnly => 0.7 * dryManureKforAssignedP
+                    }
+                  case false => 0.0
+                }
+
+              val wetManureVillageForP = manureVillageForPFor(parcel, World.fallowParcels(state.world))
+              val manureKforFallow = effectiveHerdSizeByKitchen(kitchen.id) * data.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / World.fallowParcels(parcelsForK).map {
+                _.area
+              }.sum
+
+              val wetMass = parcel.crop match {
+                case Fallow =>
+                  kitchen.wetSeasonHerdStrategy match {
+                    case HerdStrategy.EverywhereByDayOwnerByNight => 0.24 * manureKforFallow + 0.06 * wetManureVillageForP // 0.3 * 0.8 and 0.3 * 0.2
+                    case HerdStrategy.AnywhereAnyTime => 0.3 * wetManureVillageForP
+                    case HerdStrategy.OwnerOnly => 0.3 * manureKforFallow
+                  }
+                case _ => 0.0
+              }
+              dryMass + wetMass
+
+
+            val metrics = Fertility.Metrics(state.year, parcel.crop, manureMass, mulchingMass, Fertility.agronomicMetrics(parcel, data, state.year))
+            fertilize(
+              allParcels.tail,
+              fertilityUpdated :+ parcel.copy(fertilityHistory = parcel.fertilityHistory :+ metrics)
+            )
+          }
+        }
+
+        fertilizeByKitchen(kitchens.tail, fertilityUpdated = fertilize(parcelsForK, fertilityUpdated))
       }
     }
 
-    val newParcels = fertilize(state.world.parcels, Seq(), data, state.year)
+    val newParcels = fertilizeByKitchen(state.kitchens, Seq())
 
     val newWorld = state.world.copy(parcels = newParcels)
     state.copy(world = newWorld,
@@ -135,7 +142,7 @@ object Fertility {
   }
 
   private def soilQuality(parcel: Parcel, data: Data, year: Int) = {
-    
+
     // manureMASS: KG, manureBoost: SQ <-> KG * ??? => Est-ce que les coef multiplicateur (0.00012 et 0.0008) sont en QS / KG ?
     val manureBoost =
       // Last 2 years of manure are used to compute the boost: 0.6 for the most recent deposit and 0.4 for the oldest
@@ -191,17 +198,18 @@ object Fertility {
   }
 
   def milNRF(parcel: Parcel, data: Data, year: Int) =
+
     val metrics = agronomicMetrics(parcel: Parcel, data, year)
     val nrf = metrics.soilQuality * ((metrics.availableNitrogen / parcel.area) match
       case n if n < 18 => 0.25
       case n if n >= 18 && n <= 83 => 0.501 * Math.log(n) - 1.2179
       case _ => 1.0
       )
-    // println("NRF " + nrf)
     // Ensure that soilQuality boost does not make NRF exceed 1
     if (nrf > 1) 1.0 else nrf
 
   def fallowNRF(parcel: Parcel, data: Data, year: Int) =
+
     val metrics = agronomicMetrics(parcel: Parcel, data, year)
     val nrf = metrics.soilQuality * ((metrics.availableNitrogen / parcel.area) match
       case n if n < 10 => 0.25

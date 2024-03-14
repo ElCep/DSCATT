@@ -98,5 +98,4 @@ class Data(
   val MARIGOT_SURFACE_FOR_EXTRA_GRAZING = 67 * 0.7 // 67ha is the marigot surface described by Odru et al.This surface is available only during dry season: 47ha
   val MARIGOT_ANNUAL_FOOD: KG_BY_HA = 475 * MARIGOT_SURFACE_FOR_EXTRA_GRAZING // Grillot 2018 p.94 and Scriban p.15
   val HERD_SIZE_FEEDED_BY_MARIGOT_DURING_DRY_SEASON = (MARIGOT_ANNUAL_FOOD / KG_OF_STRAW_PER_COW_PER_YEAR).ceil.toInt // around 15
-  println("AAANN " + HERD_SIZE_FEEDED_BY_MARIGOT_DURING_DRY_SEASON)
 }
