@@ -4,6 +4,7 @@ import Croping.*
 import KitchenPartition.*
 import utils.*
 import Data.*
+import dscatt.Fertility.{fallowFullPotential, fallowNRF}
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
 object Diohine {
@@ -93,13 +94,12 @@ object Diohine {
       populationGrowth = 0.013850944165127303,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 50,
+      simulationLength = 25,
       soilQualityBasis = 2.150742049489815,
      // soilQualityBasis = 0.7468161238013162,
       fallowBoost = 1.0162047788142692,
       erosion = 0.7572877603285619,
       peanutSeedToFood = 1.171642708235363,
-      expandingHerdSize = 1.33,
       dailyFoodNeedPerPerson = 0.555,
       //      soilQualityBasis = 0.037566386501967745,
       //      fallowBoost = 1.1600945798567732,
@@ -107,8 +107,8 @@ object Diohine {
       //      expandingHerdSize = 1.6991464444068525,
       hookParameters = hooks,
       rainFall = 600,
-     // None
-      Some(Switcher(26, SwitchType.RainFall(700)))
+      None
+     // Some(Switcher(26, SwitchType.RainFall(700)))
     )
 
     given data: Data = simulationData

@@ -36,7 +36,6 @@ object Simulation {
              fallowBoost: Double, // exposed for calibration
              erosion: Double, // exposed for calibration
              peanutSeedToFood: Double, // exposed for calibration
-             expandingHerdSize: Double, // exposed for calibration
              dailyFoodNeedPerPerson: Double,
              hookParameters: HookParameters,
              rainFall: MM,
@@ -49,7 +48,6 @@ object Simulation {
       fallowBoost = fallowBoost,
       erosion = erosion,
       peanutSeedToFood = peanutSeedToFood,
-      expandingHerdSize = expandingHerdSize,
       dailyFoodNeedPerPerson = dailyFoodNeedPerPerson,
       rainFall = rainFall
     )
