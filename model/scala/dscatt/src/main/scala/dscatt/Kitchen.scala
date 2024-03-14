@@ -87,7 +87,7 @@ object Kitchen {
     val (emigrantsUpdated, nbEmigrants): (Seq[Kitchen], Map[KitchenID, Int]) =
       emigrationProcess match {
         case true => Population.evolveEmigrants(populationUpdated, foodAssessment, data)
-        case false => (populationUpdated, Map())
+        case false => (populationUpdated, Map[KitchenID, Int]())
       }
 
     val (afterSplitKitchens, afterSplitWorld, splittedInto) = kitchenSplit(emigrantsUpdated, simulationState.world, data)
