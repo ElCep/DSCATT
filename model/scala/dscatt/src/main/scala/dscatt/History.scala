@@ -86,7 +86,7 @@ object History {
       history.updated(year, historyOfYear.copy(fertilities = historyOfYear.fertilities ++ newFertilities))
     }
 
-    def updateHerdStats(year: Int, world: World, herdMap: Map[KitchenID, Int]) = {
+    def updateHerdStats(year: Int, herdMap: Map[KitchenID, Int]) = {
       val historyOfTheYear = history(year)
       history.updated(year, historyOfTheYear.copy(herds = historyOfTheYear.herds ++ herdMap))
     }

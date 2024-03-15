@@ -137,7 +137,7 @@ object Fertility {
     state.copy(world = newWorld,
       history = state.history
         .updateFertilitySats(state.year, newWorld, state.kitchens)
-        .updateHerdStats(state.year, newWorld, drySeasonEffectiveHerdSizeByKitchen)
+        .updateHerdStats(state.year, drySeasonEffectiveHerdSizeByKitchen)
     )
   }
 
