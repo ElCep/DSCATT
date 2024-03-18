@@ -38,8 +38,9 @@ object Diohine {
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
       FoodDonationStrategy.FoodForAllStrategy,
-      HerdStrategy.EverywhereByDayOwnerByNight,
-      HerdStrategy.EverywhereByDayOwnerByNight,
+      HerdGrazingStrategy.EverywhereByDayOwnerByNight,
+      HerdGrazingStrategy.EverywhereByDayOwnerByNight,
+      HerdSizeStrategy.LSUByArea(0.42), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
       MulchingStrategy.Mulching(0.0),
@@ -91,15 +92,15 @@ object Diohine {
     val (simulationState, simulationData) = Simulation(
       7L,
       giniParcels = 0.2,
-      populationGrowth = 0.013850944165127303,
+      populationGrowth = 0.014211282128296523,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 25,
-      soilQualityBasis = 2.150742049489815,
+      simulationLength = 26,
+      soilQualityBasis = 2.704501405458476,
      // soilQualityBasis = 0.7468161238013162,
-      fallowBoost = 1.0162047788142692,
-      erosion = 0.7572877603285619,
-      peanutSeedToFood = 1.171642708235363,
+      fallowBoost = 0.0214785678023256,
+      erosion = 0.7115824058150104,
+      peanutSeedToFood = 1.026093649069239,
       dailyFoodNeedPerPerson = 0.555,
       //      soilQualityBasis = 0.037566386501967745,
       //      fallowBoost = 1.1600945798567732,
@@ -121,7 +122,7 @@ object Diohine {
       println("Sum of migrants " + simulationState.migrantsDynamic.sum)
       println("Pop " + simulationState.populationDynamic.last)
       println("\nherd " + simulationState.herdDynamic.toSeq)
-//    println("\nnitrogen " + simulationState.averageNitrogenDynamic.toSeq)
+      println("\nnitrogen " + simulationState.averageNitrogenDynamic.toSeq)
 //    println("\nSoil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
 //    println("\nAverage Inexesse " + simulationState.averageInexcessDynamic.toSeq)
 //    println("\n# unbalanced kitchen " + simulationState.numberOfUnbalancedKitchen)

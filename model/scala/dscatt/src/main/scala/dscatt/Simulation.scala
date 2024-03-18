@@ -32,8 +32,8 @@ object Simulation {
              kitchenPartition: KitchenPartition = KitchenPartition((KitchenProfile.default, 1)),
              supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
-             soilQualityBasis: Double, // exposed for calibration
-             fallowBoost: Double, // exposed for calibration
+             soilQualityBasis: SOIL_QUALITY_BY_HA, // exposed for calibration
+             fallowBoost: SOIL_QUALITY_BY_HA, // exposed for calibration
              erosion: Double, // exposed for calibration
              peanutSeedToFood: Double, // exposed for calibration
              dailyFoodNeedPerPerson: Double,

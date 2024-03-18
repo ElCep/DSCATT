@@ -44,10 +44,13 @@ enum MigrantStrategy extends Control:
     case SeasonalPresence extends MigrantStrategy // some people are present in kitchen when there is work, in town the rest of the time
 */
 
-enum HerdStrategy extends Control:
-    case AnywhereAnyTime extends HerdStrategy // all herd beasts are grazing on the full area (fallow or crop)
-    case EverywhereByDayOwnerByNight extends HerdStrategy // the herd is grazing evrywhere by day and only on the manured kitchen parcels by night
-    case OwnerOnly extends HerdStrategy // the herd of the kitchen are grazing on the manured kitchen parcels only
+enum HerdGrazingStrategy extends Control:
+    case AnywhereAnyTime extends HerdGrazingStrategy // all herd beasts are grazing on the full area (fallow or crop)
+    case EverywhereByDayOwnerByNight extends HerdGrazingStrategy // the herd is grazing evrywhere by day and only on the manured kitchen parcels by night
+    case OwnerOnly extends HerdGrazingStrategy // the herd of the kitchen are grazing on the manured kitchen parcels only
+
+enum HerdSizeStrategy extends Control:
+    case LSUByArea(lsuByHa: Double) extends HerdSizeStrategy
 
 enum FertilizerStrategy extends Control:
     case UniformFertilizing extends FertilizerStrategy
@@ -77,8 +80,9 @@ case class KitchenProfile(
                            ownFallowUse: OwnFallowUse,
                            loanStrategy: LoanStrategy,
                            foodDonationStrategy: FoodDonationStrategy,
-                           drySeasonHerdStrategy: HerdStrategy,
-                           wetSeasonHerdStrategy: HerdStrategy,
+                           drySeasonHerdStrategy: HerdGrazingStrategy,
+                           wetSeasonHerdStrategy: HerdGrazingStrategy,
+                           herdSizeStrategy: HerdSizeStrategy,
                            drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean,
                            fertilizerStrategy: FertilizerStrategy,
                            mulchingStrategy: MulchingStrategy,
@@ -93,8 +97,9 @@ object KitchenProfile {
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
       FoodDonationStrategy.FoodForAllStrategy, 
-      HerdStrategy.EverywhereByDayOwnerByNight,
-      HerdStrategy.EverywhereByDayOwnerByNight,
+      HerdGrazingStrategy.EverywhereByDayOwnerByNight,
+      HerdGrazingStrategy.EverywhereByDayOwnerByNight,
+      HerdSizeStrategy.LSUByArea(0.42),
       (_, _) => true,
       FertilizerStrategy.UniformFertilizing,
       MulchingStrategy.Mulching(0.0),

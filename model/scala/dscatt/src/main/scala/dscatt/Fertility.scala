@@ -18,43 +18,15 @@ object Fertility {
 
   def assign(state: SimulationState, data: Data): SimulationState = {
 
-    val effectiveHerdSizeByKitchen =
+    val LSUByKitchen = Herd.liveStockUnitByKitchen(state, data).toMap
+    
+    def manureVillageForPFor(parcel: Parcel, parcels: Seq[Parcel], state: SimulationState) =
       state.kitchens.map { k =>
-        val herdFood = World.parcelsForKitchen(state.world, k).map { p =>
-          p.crop match {
-            case Fallow => fallowNRF(p, data, state.year) * fallowFullPotential(data.RAIN_FALL) * p.area
-            case Millet => k.mulchingStrategy match {
-              case MulchingStrategy.Mulching(leftOnTheGroundRatio: Double) => milNRF(p, data, state.year) * milFullPotential(data.RAIN_FALL) * p.area * (1 - leftOnTheGroundRatio) * data.MIL_STRAW_RATIO
-            }
-            case _ => 0.0
-          }
-        }.sum
-        k.id -> (herdFood / data.KG_OF_STRAW_PER_COW_PER_YEAR).floor.toInt
-      }.toMap
-
-    val sortedHerdByKitchen = effectiveHerdSizeByKitchen.toSeq.sortBy(_._2)
-
-    //data.HERD_SIZE_FEEDED_BY_MARIGOT_DURING_DRY_SEASON biggest kitchens get 1 more cow during dry season
-    val nbKitchens = effectiveHerdSizeByKitchen.keys.size
-    val drySeasonEffectiveHerdSizeByKitchen =
-      (
-        sortedHerdByKitchen.takeRight(data.HERD_SIZE_FEEDED_BY_MARIGOT_DURING_DRY_SEASON).map { case (k, v) => k -> (v + 1) } ++
-          sortedHerdByKitchen.take(nbKitchens - data.HERD_SIZE_FEEDED_BY_MARIGOT_DURING_DRY_SEASON)
-        ).toMap
-
-    val totalProducedManure = state.kitchens.map { k =>
-      effectiveHerdSizeByKitchen(k.id)
-    }.sum * data.KG_OF_MANURE_PER_COW_PER_YEAR
-
-    val totalProducedManureDuringDrySeason = state.kitchens.map { k =>
-      drySeasonEffectiveHerdSizeByKitchen(k.id)
-    }.sum * data.KG_OF_MANURE_PER_COW_PER_YEAR
-
-    def manureVillageForPFor(parcel: Parcel, parcels: Seq[Parcel]) = totalProducedManure * parcel.area / parcels.map(_.area).sum
-
-    def manureVillageForPForDrySeasonFor(parcel: Parcel, parcels: Seq[Parcel]) = totalProducedManureDuringDrySeason * parcel.area / parcels.map(_.area).sum
-
-
+        LSUByKitchen(k.id)
+      }.sum * data.KG_OF_MANURE_PER_COW_PER_YEAR / parcels.map {
+        _.area
+      }.sum * parcel.area
+    
     @tailrec
     def fertilizeByKitchen(kitchens: Seq[Kitchen], fertilityUpdated: Seq[Parcel]): Seq[Parcel] = {
       if (kitchens.isEmpty) fertilityUpdated
@@ -85,34 +57,34 @@ object Fertility {
                 _.area
               }.sum
 
-              val dryManureKforAssignedP = drySeasonEffectiveHerdSizeByKitchen(kitchen.id) * data.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / dryToBeManuredArea
-              val dryManureVillageForP = manureVillageForPForDrySeasonFor(
+              val manureKforAssignedP = LSUByKitchen(kitchen.id) * data.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / dryToBeManuredArea
+              val dryManureVillageForP = manureVillageForPFor(
                 parcel,
-                state.world.parcels.filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle))
-              )
+                state.world.parcels.filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)),
+                state)
 
               val dryMass =
                 kitchen.drySeasonManureCriteria(parcel, kitchen.rotationCycle) match {
                   case true =>
                     kitchen.drySeasonHerdStrategy match {
-                      case HerdStrategy.EverywhereByDayOwnerByNight => 0.14 * dryManureVillageForP + 0.56 * dryManureKforAssignedP // 0.7 * 0.2 and 0.7 * 0.8
-                      case HerdStrategy.AnywhereAnyTime => 0.7 * dryManureVillageForP
-                      case HerdStrategy.OwnerOnly => 0.7 * dryManureKforAssignedP
+                      case HerdGrazingStrategy.EverywhereByDayOwnerByNight => 0.14 * dryManureVillageForP + 0.56 * manureKforAssignedP // 0.7 * 0.2 and 0.7 * 0.8
+                      case HerdGrazingStrategy.AnywhereAnyTime => 0.7 * dryManureVillageForP
+                      case HerdGrazingStrategy.OwnerOnly => 0.7 * manureKforAssignedP
                     }
                   case false => 0.0
                 }
 
-              val wetManureVillageForP = manureVillageForPFor(parcel, World.fallowParcels(state.world))
-              val manureKforFallow = effectiveHerdSizeByKitchen(kitchen.id) * data.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / World.fallowParcels(parcelsForK).map {
+              val wetManureVillageForP = manureVillageForPFor(parcel, World.fallowParcels(state.world), state)
+              val manureKforFallow = LSUByKitchen(kitchen.id) * data.KG_OF_MANURE_PER_COW_PER_YEAR * parcel.area / World.fallowParcels(parcelsForK).map {
                 _.area
               }.sum
 
               val wetMass = parcel.crop match {
                 case Fallow =>
                   kitchen.wetSeasonHerdStrategy match {
-                    case HerdStrategy.EverywhereByDayOwnerByNight => 0.24 * manureKforFallow + 0.06 * wetManureVillageForP // 0.3 * 0.8 and 0.3 * 0.2
-                    case HerdStrategy.AnywhereAnyTime => 0.3 * wetManureVillageForP
-                    case HerdStrategy.OwnerOnly => 0.3 * manureKforFallow
+                    case HerdGrazingStrategy.EverywhereByDayOwnerByNight => 0.24 * manureKforFallow + 0.06 * wetManureVillageForP // 0.3 * 0.8 and 0.3 * 0.2
+                    case HerdGrazingStrategy.AnywhereAnyTime => 0.3 * wetManureVillageForP
+                    case HerdGrazingStrategy.OwnerOnly => 0.3 * manureKforFallow
                   }
                 case _ => 0.0
               }
@@ -137,7 +109,7 @@ object Fertility {
     state.copy(world = newWorld,
       history = state.history
         .updateFertilitySats(state.year, newWorld, state.kitchens)
-        .updateHerdStats(state.year, drySeasonEffectiveHerdSizeByKitchen)
+        .updateHerdStats(state.year, LSUByKitchen)
     )
   }
 

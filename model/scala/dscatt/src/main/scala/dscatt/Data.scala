@@ -9,13 +9,15 @@ object Data {
   type SOIL_QUALITY = Double
   type SOIL_QUALITY_BY_HA = Double
   type SOIL_QUALITY_BY_KG = Double
+  type LIVESTOCK_UNIT = Int
+  type LIVESTOCK_UNIT_BY_HA = Double
 }
 
 import Data._
 
 class Data(
-            soilQualityBasis: Double, // exposed for calibration
-            fallowBoost: Double, // exposed for calibration 
+            soilQualityBasis: SOIL_QUALITY_BY_HA, // exposed for calibration
+            fallowBoost: SOIL_QUALITY_BY_HA, // exposed for calibration
             erosion: Double, //exposed for calibratino
             peanutSeedToFood: Double, // exposed for calibration
             dailyFoodNeedPerPerson: Double,
@@ -23,8 +25,8 @@ class Data(
           ) {
 
   def copy(rFall: MM) = new Data(
-    soilQualityBasis: Double,
-    fallowBoost: Double,
+    soilQualityBasis: SOIL_QUALITY_BY_HA,
+    fallowBoost: SOIL_QUALITY_BY_HA,
     erosion: Double,
     peanutSeedToFood: Double,
     dailyFoodNeedPerPerson: Double,
@@ -95,7 +97,8 @@ class Data(
   val MANURE_BOOST_1_YEAR_AGO: SOIL_QUALITY_BY_KG = 0.00012 //FIXME: QS/KG ?
   val MANURE_BOOST_2_YEARS_AGO: SOIL_QUALITY_BY_KG = 0.00008 //FIXME: QS/KG ?
   val FAIDHERBIA_BOOST_PER_TREE = 0.06 // QS / TREE
+  //val HERD_SIZE: LIVESTOCK_UNIT = (LIVE_STOCK_UNIT_BY_HA * (180 + 67)).ceil.toInt // Herd size on Terroir area: Parcel area: 180ha and Marigot area: 67ha
   val MARIGOT_SURFACE_FOR_EXTRA_GRAZING = 67 * 0.7 // 67ha is the marigot surface described by Odru et al.This surface is available only during dry season: 47ha
   val MARIGOT_ANNUAL_FOOD: KG_BY_HA = 475 * MARIGOT_SURFACE_FOR_EXTRA_GRAZING // Grillot 2018 p.94 and Scriban p.15
-  val HERD_SIZE_FEEDED_BY_MARIGOT_DURING_DRY_SEASON = (MARIGOT_ANNUAL_FOOD / KG_OF_STRAW_PER_COW_PER_YEAR).ceil.toInt // around 15
+  val HERD_SIZE_FED_BY_MARIGOT = (MARIGOT_ANNUAL_FOOD / KG_OF_STRAW_PER_COW_PER_YEAR) // around 15
 }

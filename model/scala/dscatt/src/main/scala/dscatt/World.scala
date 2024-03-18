@@ -67,6 +67,8 @@ object World {
   def zoneThreeParcels(world: World) = zoneParcels(world, Three)
 
   def parcelsForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter(_.ownerID == kitchen.id)
+  
+  def ownedAreaForKitchen(world: World, kitchen: Kitchen) = parcelsForKitchen(world, kitchen).map(_.area).sum
 
   def farmedParcelsForKitchen(parcels: Seq[Parcel], kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchenID(parcels,kitchen.id)
   
