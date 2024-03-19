@@ -11,6 +11,7 @@ enum SwitchType:
   case Rotation(rC: RotationCycle) extends SwitchType
   case PeanutInexess(savingRate: Double) extends SwitchType
   case Grazing(dryHerdStrategy: HerdGrazingStrategy, wetHerdStrategy: HerdGrazingStrategy) extends SwitchType
+  case HerdSize(herdSizeStrategy: HerdSizeStrategy) extends SwitchType
   case Mulching(leftOnTheGroundRatio: Double) extends SwitchType
 
 import SwitchType._
@@ -52,6 +53,11 @@ implicit class SimulationStateWrapper(simulationState: SimulationState) {
           val newKitchens = simulationState.kitchens.map(_.copy(mulchingStrategy = MulchingStrategy.Mulching(leftOnTheGroundRatio)))
           val switchedState = simulationState.copy(kitchens = newKitchens)
           (switchedState, data)
+        case HerdSize(hsStrategy)=>
+          val newKitchens = simulationState.kitchens.map(_.copy(herdSizeStrategy = hsStrategy))
+          val switchedState = simulationState.copy(kitchens = newKitchens)
+          (switchedState, data)
+
     }
     else (simulationState, data)
 
