@@ -30,6 +30,7 @@ object Herd {
       val requiredHerdSize = kitchen.herdSizeStrategy match
         case HerdSizeStrategy.LSUByArea(lsuByHa: Double)=> lsuByHa * World.ownedAreaForKitchen(state.world,kitchen)
         case HerdSizeStrategy.FullCapacity=> hsMaximum
+        case HerdSizeStrategy.NoHerd=> 0.0
       kitchen-> math.min(requiredHerdSize, hsMaximum)
     }.toSeq
 

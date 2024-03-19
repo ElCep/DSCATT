@@ -52,6 +52,7 @@ enum HerdGrazingStrategy extends Control:
 enum HerdSizeStrategy extends Control:
     case LSUByArea(lsuByHa: Double) extends HerdSizeStrategy
     case FullCapacity extends HerdSizeStrategy
+    case NoHerd extends HerdSizeStrategy
 
 enum FertilizerStrategy extends Control:
     case UniformFertilizing extends FertilizerStrategy
