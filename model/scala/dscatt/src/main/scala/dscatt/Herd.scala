@@ -26,10 +26,11 @@ object Herd {
   def liveStockUnitByKitchen(state: SimulationState, data: Data) =
     val maximumLSU = maximumLiveStockUnitByKitchen(state, data)
 
-    val requiredHSByKitchen = maximumLSU.map { case (kitchen, hsMaxium) =>
+    val requiredHSByKitchen = maximumLSU.map { case (kitchen, hsMaximum) =>
       val requiredHerdSize = kitchen.herdSizeStrategy match
         case HerdSizeStrategy.LSUByArea(lsuByHa: Double)=> lsuByHa * World.ownedAreaForKitchen(state.world,kitchen)
-      kitchen-> math.min(requiredHerdSize, hsMaxium)
+        case HerdSizeStrategy.FullCapacity=> hsMaximum
+      kitchen-> math.min(requiredHerdSize, hsMaximum)
     }.toSeq
 
     // We use the marigot area to fit a herd size as an integer (ex: 1.2 LSU -> 2 LSU while the available quantity in HERD_SIZE_FED_BY_MARIGOT is not null)te
