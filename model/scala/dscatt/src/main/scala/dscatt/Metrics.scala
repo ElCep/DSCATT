@@ -87,22 +87,22 @@ implicit class HistoryDecorator(simulationState: SimulationState):
 
   def averageMilYieldDynamic =
     simulationState.foodStats.map { fs =>
-      average(fs.flatMap { f =>
+      average(fs.map { f =>
         val food = f._2
-        if (food.fromMil != 0.0)
-          Some(food.fromMil / food.milInCultureArea)
-        else None
+        if (food.milInCultureArea != 0.0)
+          food.fromMil / food.milInCultureArea
+        else 0.0
       }.toSeq)
     }.toArray
 
   // Divide by peanutSeedToFood to get seed (previously peanutFoodEquivalence)
   def averagePeanutYieldDynamic(using data: Data) =
     simulationState.foodStats.map { fs =>
-      average(fs.flatMap { f =>
+      average(fs.map { f =>
         val food = f._2
-        if (food.fromPeanut != 0.0)
-          Some(food.fromPeanut / data.PEANUT_FOOD_EQUIVALENCE / food.peanutInCultureArea)
-        else None
+        if (food.peanutInCultureArea != 0.0)
+          food.fromPeanut / data.PEANUT_FOOD_EQUIVALENCE / food.peanutInCultureArea
+        else 0.0
       }.toSeq)
     }.toArray
 
