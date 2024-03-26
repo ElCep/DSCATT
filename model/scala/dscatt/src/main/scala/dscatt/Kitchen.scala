@@ -48,18 +48,12 @@ object Kitchen {
 
   def parcelFoodProduction(parcel: Parcel, data: Data, year: Int): Double = {
     (parcel.crop match {
+      // QS * KG / HA
       case Millet => Fertility.milNRF(parcel, data, year) * milSeedFullPontential(data)
       case Peanut => Fertility.peanutNRF * peanutSeedFullPotential(data) * data.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
     }) * parcel.area
   }
-
-  // Fallow and Peanut are considered as Mil in case of loan (since loan is for food) and will be set as Mil once the loan will be effective
-  def parcelFoodProductionForLoan(parcel: Parcel, data: Data, year: Int) =
-    (parcel.crop match {
-      case Millet | Fallow | Peanut => Fertility.milNRF(parcel, data, year) * milSeedFullPontential(data)
-    }) * parcel.area
-
 
   def parcelsFoodProduction(parcels: Seq[Parcel], data: Data, year: Int) = {
     parcels.map { p =>
@@ -254,5 +248,5 @@ case class Kitchen(id: Kitchen.KitchenID,
                    drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean, //how to choose parcel to be fertilized during dry season
                    fertilizerStrategy: FertilizerStrategy,
                    mulchingStrategy: MulchingStrategy,
-                   nbFaidherbia: NB_BY_HA
+                   nbFaidherbiaByHa: TREE_BY_HA
                   )

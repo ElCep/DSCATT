@@ -11,6 +11,11 @@ object Data {
   type SOIL_QUALITY_BY_KG = Double
   type LIVESTOCK_UNIT = Int
   type LIVESTOCK_UNIT_BY_HA = Double
+  type TREE = Int
+  type TREE_BY_HA = Double
+  type KG_NITROGEN = Double
+  type KG_NITROGEN_BY_HA = Double
+  type KG_NITROGEN_BY_KG_FECES = Double
 }
 
 import Data._
@@ -18,7 +23,7 @@ import Data._
 class Data(
             soilQualityBasis: SOIL_QUALITY_BY_HA, // exposed for calibration
             fallowBoost: SOIL_QUALITY_BY_HA, // exposed for calibration
-            erosion: Double, //exposed for calibratino
+            erosion: Double, //exposed for calibration
             peanutSeedToFood: Double, // exposed for calibration
             dailyFoodNeedPerPerson: Double,
             rainFall: MM
@@ -65,9 +70,9 @@ class Data(
   val FERTILITY_BOOST_PER_MANURE_KG_PER_HA = 0.000075 // Converted from the data: "A boost of +15% with 2T per ha"
 
   // Nitrogen
-  val ATMOSPHERIC_NITROGEN: KG_BY_HA = 27.5 // kg/ha
-  val NITROGEN_MINERALIZATION: KG_BY_HA = 12 // kg/ha
-  val NITROGEN_PROPORTION_PER_MANURE_KG = 0.0238 // no dimension
+  val ATMOSPHERIC_NITROGEN: KG_NITROGEN_BY_HA = 27.5 // kg/ha
+  val NITROGEN_MINERALIZATION: KG_NITROGEN_BY_HA = 12 // kg/ha
+  val NITROGEN_PROPORTION_PER_MANURE_KG: KG_NITROGEN_BY_KG_FECES = 0.0238
 
   //  val MIL_FULL_POTENTIAL_YIELD: KG_BY_HA = 3775 // kg DM / ha
   //  val PEANUT_FULL_POTENTIAL_YIELD: KG_BY_HA = 1300 // kg DM / ha
@@ -93,10 +98,11 @@ class Data(
   val SOIL_QUALITY_BASIS: SOIL_QUALITY_BY_HA = soilQualityBasis // soil quality by hectare
   val FALLOW_BOOST: SOIL_QUALITY_BY_HA = fallowBoost
   val EROSION: Double = erosion
-  val MULCHING_BOOST: SOIL_QUALITY_BY_KG = 0.001 // FIXME: QS/KG ?
-  val MANURE_BOOST_1_YEAR_AGO: SOIL_QUALITY_BY_KG = 0.00012 //FIXME: QS/KG ?
-  val MANURE_BOOST_2_YEARS_AGO: SOIL_QUALITY_BY_KG = 0.00008 //FIXME: QS/KG ?
-  val FAIDHERBIA_BOOST_PER_TREE = 0.06 // QS / TREE
+  val MULCHING_EFFECT_SLOPE: SOIL_QUALITY_BY_KG = 0.00022 
+  val MULCHING_EFFECT_INTERSECT: SOIL_QUALITY = 0.04
+  val MANURE_BOOST_1_YEAR_AGO: SOIL_QUALITY_BY_KG = 0.00012
+  val MANURE_BOOST_2_YEARS_AGO: SOIL_QUALITY_BY_KG = 0.00008
+  val FAIDHERBIA_BOOST_PER_TREE: SOIL_QUALITY_BY_HA = 0.06 // QS / TREE
   //val HERD_SIZE: LIVESTOCK_UNIT = (LIVE_STOCK_UNIT_BY_HA * (180 + 67)).ceil.toInt // Herd size on Terroir area: Parcel area: 180ha and Marigot area: 67ha
   val MARIGOT_SURFACE_FOR_EXTRA_GRAZING = 67 * 0.7 // 67ha is the marigot surface described by Odru et al.This surface is available only during dry season: 47ha
   val MARIGOT_ANNUAL_FOOD: KG_BY_HA = 475 * MARIGOT_SURFACE_FOR_EXTRA_GRAZING // Grillot 2018 p.94 and Scriban p.15

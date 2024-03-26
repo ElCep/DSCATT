@@ -39,7 +39,8 @@ object Simulation {
              dailyFoodNeedPerPerson: Double,
              hookParameters: HookParameters,
              rainFall: MM,
-             switcher: Option[Switcher]
+             switcher: Option[Switcher] = None,
+             world: Option[World] = None
            ) = {
     given MersenneTwister(seed)
 
@@ -54,7 +55,7 @@ object Simulation {
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
-    val nakedWorld = World.buildWorldGeometry(kitchens, giniParcels, data)
+    val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, giniParcels, data))
 
     println("Area " + nakedWorld.parcels.map(_.area).sum)
     val initialHistory = History.initialize(simulationLength, kitchens)
@@ -90,12 +91,11 @@ object Simulation {
 
     @tailrec
     def evolve0(simulationState: SimulationState, data: Data): SimulationState = {
-      if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size <= 1) simulationState
+      if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size < 1) simulationState
       else {
         val (switchedSimulationState, switchedData) = switcher.map(sw => simulationState.enventuallySwitch(sw, data)).getOrElse((simulationState, data))
 
         val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k, switchedData)) }
-
 
         // Evolve rotation including loans
         val (afterRotationsSimulationState, foodAfterRotation, theoriticalFallowParcels) = Rotation.evolve(switchedSimulationState, initialFood, switchedData)

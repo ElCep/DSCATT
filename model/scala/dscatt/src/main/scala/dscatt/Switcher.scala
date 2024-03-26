@@ -12,7 +12,7 @@ enum SwitchType:
   case PeanutInexess(savingRate: Double) extends SwitchType
   case Grazing(dryHerdStrategy: HerdGrazingStrategy, wetHerdStrategy: HerdGrazingStrategy) extends SwitchType
   case HerdSize(herdSizeStrategy: HerdSizeStrategy) extends SwitchType
-  case Mulching(leftOnTheGroundRatio: Double) extends SwitchType
+  case Mulching(mulchingStrategy: MulchingStrategy) extends SwitchType
 
 import SwitchType._
 
@@ -20,16 +20,15 @@ case class Switcher(time: Int, swithType: SwitchType)
 
 implicit class SimulationStateWrapper(simulationState: SimulationState) {
   def enventuallySwitch(switcher: Switcher, data: Data): (SimulationState, Data) =
-    println("TIME " + switcher.time + " Yean " + simulationState.year)
     if (switcher.time == simulationState.year) {
 
       switcher.swithType match
         case RainFall(r) =>
           (simulationState, data.copy(r))
         case Faidherbia(nb) =>
-          val newKitchens = simulationState.kitchens.map(_.copy(nbFaidherbia = nb))
+          val newKitchens = simulationState.kitchens.map(_.copy(nbFaidherbiaByHa = nb))
           val newParcels = simulationState.world.parcels.map(p =>
-            p.copy(faidherbiaTrees = nb * p.area)
+            p.copy(faidherbiaTreesByHa = nb * p.area)
           )
           val switchedState = simulationState.copy(kitchens = newKitchens, world = simulationState.world.copy(parcels = newParcels))
           (switchedState, data)
@@ -49,8 +48,8 @@ implicit class SimulationStateWrapper(simulationState: SimulationState) {
           val newKitchens = simulationState.kitchens.map(_.copy(drySeasonHerdStrategy = d, wetSeasonHerdStrategy = w))
           val switchedState = simulationState.copy(kitchens = newKitchens)
           (switchedState, data)
-        case Mulching(leftOnTheGroundRatio)=>
-          val newKitchens = simulationState.kitchens.map(_.copy(mulchingStrategy = MulchingStrategy.Mulching(leftOnTheGroundRatio)))
+        case Mulching(mulchingStrategy: MulchingStrategy)=>
+          val newKitchens = simulationState.kitchens.map(_.copy(mulchingStrategy = mulchingStrategy))
           val switchedState = simulationState.copy(kitchens = newKitchens)
           (switchedState, data)
         case HerdSize(hsStrategy)=>

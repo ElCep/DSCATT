@@ -35,7 +35,7 @@ object World {
               crop = Fallow,
               cropZone = intToCropZone(p.r, kitchensMap(p.oID).head.rotationCycle, p.oID),
               area = area,
-              faidherbiaTrees = kitchensMap(p.oID).head.nbFaidherbia * area,
+              faidherbiaTreesByHa = kitchensMap(p.oID).head.nbFaidherbiaByHa,
               Seq()
             )
         World(parcels, kitchens.size)

@@ -15,7 +15,8 @@ object Herd {
           p.crop match {
             case Fallow => Fertility.fallowNRF(p, data, state.year) * Fertility.fallowFullPotential(data.RAIN_FALL) * p.area
             case Millet => k.mulchingStrategy match {
-              case MulchingStrategy.Mulching(leftOnTheGroundRatio: Double) => Fertility.milNRF(p, data, state.year) * Fertility.milFullPotential(data.RAIN_FALL) * p.area * (1 - leftOnTheGroundRatio) * data.MIL_STRAW_RATIO
+              case MulchingStrategy.CropResidue(leftOnTheGroundRatio: Double) => Fertility.milNRF(p, data, state.year) * Fertility.milFullPotential(data.RAIN_FALL) * p.area * (1 - leftOnTheGroundRatio) * data.MIL_STRAW_RATIO
+              case MulchingStrategy.CropResidueAmendment(_)=> 0.0
             }
             case _ => 0.0
           }

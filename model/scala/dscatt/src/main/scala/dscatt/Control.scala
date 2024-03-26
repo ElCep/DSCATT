@@ -61,8 +61,8 @@ enum FertilizerStrategy extends Control:
 
 
 enum MulchingStrategy extends Control:
-    case Mulching(leftOnTheGroundRatio: Double = 0.0) extends MulchingStrategy // Mulch ratio led on the ground to enrich it (and not used for winter herd food)
-
+    case CropResidue(leftOnTheGroundRatio: Double = 0.0) extends MulchingStrategy // Mulch ratio led on the ground to enrich it (and not used for winter herd food)
+    case CropResidueAmendment(mass: KG_BY_HA = 0.0) extends MulchingStrategy
 /*
 enum FertilizerAttribution:
     case UniformAttribution extends FertilizerAttribution
@@ -88,23 +88,23 @@ case class KitchenProfile(
                            drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean,
                            fertilizerStrategy: FertilizerStrategy,
                            mulchingStrategy: MulchingStrategy,
-                           nbFaidherbia: NB_BY_HA
+                           nbFaidherbia: TREE_BY_HA
                          )
 
 object KitchenProfile {
   val default = KitchenProfile(
       10,
-      RotationCycle.ThreeYears, 
+      RotationCycle.ThreeYears,
       CropingStrategy.PeanutForInexcess(0.0),
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
-      FoodDonationStrategy.FoodForAllStrategy, 
+      FoodDonationStrategy.FoodForAllStrategy,
       HerdGrazingStrategy.EverywhereByDayOwnerByNight,
       HerdGrazingStrategy.EverywhereByDayOwnerByNight,
       HerdSizeStrategy.LSUByArea(0.42),
       (_, _) => true,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.Mulching(0.0),
+      MulchingStrategy.CropResidue(0.0),
       4
   )
 }
