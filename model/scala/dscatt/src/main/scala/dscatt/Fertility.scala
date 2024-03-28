@@ -170,7 +170,7 @@ object Fertility {
       }.getOrElse(0.0))
 
     // KG_NITROGEN / TREE * TREE / HA
-    val faidherbiaNitrogen = 4 * parcel.faidherbiaTreesByHa
+    val faidherbiaNitrogen = data.NITROGEN_FROM_FAIDHERBIA * parcel.faidherbiaTreesByHa
 
     airNitrogen + soilNitrogen + manureNitrogen + faidherbiaNitrogen
 
