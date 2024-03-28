@@ -28,7 +28,7 @@ implicit class SimulationStateWrapper(simulationState: SimulationState) {
         case Faidherbia(nb) =>
           val newKitchens = simulationState.kitchens.map(_.copy(nbFaidherbiaByHa = nb))
           val newParcels = simulationState.world.parcels.map(p =>
-            p.copy(faidherbiaTreesByHa = nb * p.area)
+            p.copy(faidherbiaTreesByHa = nb)
           )
           val switchedState = simulationState.copy(kitchens = newKitchens, world = simulationState.world.copy(parcels = newParcels))
           (switchedState, data)
