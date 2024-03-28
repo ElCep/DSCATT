@@ -48,7 +48,7 @@ object Fertility {
                 case Millet => kitchen.mulchingStrategy match {
                   case MulchingStrategy.CropResidue(leftOnTheGroundRatio: Double) =>
                     milNRF(parcel, data, state.year) * milFullPotential(data.RAIN_FALL) * leftOnTheGroundRatio * data.MIL_STRAW_RATIO
-                  case CropResidueAmendment(mass: KG_BY_HA)=> mass
+                  case CropResidueAmendment(mass: KG_BY_HA) => mass
                 }
                 case _ => 0.0
               }
@@ -124,8 +124,8 @@ object Fertility {
 
     // mulchingMASS: KG, mulchingBoost: SQ / HA <-> KG / HA * QS / KG
     val mulchingBoost = parcel.fertilityHistory.lastOption.map(_.mulchingMassByHa) match
-      case Some(m:Double) if m > 0.0 => m * data.MULCHING_EFFECT_SLOPE +  data.MULCHING_EFFECT_INTERSECT
-      case _=> 0.0
+      case Some(m: Double) if m > 0.0 => m * data.MULCHING_EFFECT_SLOPE + data.MULCHING_EFFECT_INTERSECT
+      case _ => 0.0
 
     // The soil quality it computed at the begining of the year before the the rotation process, so that the parcel crop here
     // is equivalent to the crop of the previous year
@@ -148,7 +148,15 @@ object Fertility {
   // in kg. Computed from previous year soil quality and manure production
   private def availableNitrogen(parcel: Parcel, data: Data): KG_NITROGEN_BY_HA = {
 
-    val airNitrogen = data.ATMOSPHERIC_NITROGEN // KG_NITROGEN_BY_HA
+    val airNitrogen =
+      val base = data.ATMOSPHERIC_NITROGEN // KG_NITROGEN_BY_HA
+      val nFromPeanutPreviousYear =
+        parcel.fertilityHistory.lastOption match
+          case Some(m: Metrics) => m.crop match
+            case Peanut => data.ATMOSPHERIC_NITROGEN_AFTER_PEANUT
+            case _ => 0.0
+          case _ => 0.0
+      base + nFromPeanutPreviousYear
 
     val soilNitrogen = data.NITROGEN_MINERALIZATION // KG_NITROGEN_BY_HA
 
@@ -183,6 +191,7 @@ object Fertility {
       case _ => 1.0
       )
     // Ensure that soilQuality boost does not make NRF exceed 1
+    println("NRF " + nrf)
     if (nrf > 1) 1.0 else nrf
 
   def fallowNRF(parcel: Parcel, data: Data, year: Int) =
@@ -195,7 +204,6 @@ object Fertility {
       case _ => 1.0
       )
     // Ensure that soilQuality boost does not make NRF exceed 1
-    //println("NRF " + nrf)
     if (nrf > 1) 1.0 else nrf
 
   def peanutNRF = 1.0
