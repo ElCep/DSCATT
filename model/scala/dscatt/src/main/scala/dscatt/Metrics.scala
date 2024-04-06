@@ -53,20 +53,20 @@ implicit class HistoryDecorator(simulationState: SimulationState):
 
   def averageManureDynamic =
     simulationState.fertilityHistory.map(fh =>
-      fh.map(_.manureMass)
+      fh.map(_.manureMassByHa)
     ).transpose.map(average(_)).toArray
 
   def totalManure = simulationState.fertilityHistory.flatMap(fh =>
-    fh.map(_.manureMass)
+    fh.map(_.manureMassByHa)
   ).sum
 
   def averageMulchingDynamic =
     simulationState.fertilityHistory.map(fh =>
-      fh.map(_.mulchingMass)
+      fh.map(_.mulchingMassByHa)
     ).transpose.map(average(_)).toArray
 
   def totalMulching = simulationState.fertilityHistory.flatMap(fh =>
-    fh.map(_.mulchingMass)
+    fh.map(_.mulchingMassByHa)
   ).sum
 
   def foodFromLoanOnFoodNeedsDynamic =
@@ -87,22 +87,22 @@ implicit class HistoryDecorator(simulationState: SimulationState):
 
   def averageMilYieldDynamic =
     simulationState.foodStats.map { fs =>
-      average(fs.flatMap { f =>
+      average(fs.map { f =>
         val food = f._2
-        if(food.fromMil != 0.0)
-          Some(food.fromMil / food.milInCultureArea)
-        else None
+        if (food.milInCultureArea != 0.0)
+          food.fromMil / food.milInCultureArea
+        else 0.0
       }.toSeq)
     }.toArray
 
   // Divide by peanutSeedToFood to get seed (previously peanutFoodEquivalence)
   def averagePeanutYieldDynamic(using data: Data) =
     simulationState.foodStats.map { fs =>
-      average(fs.flatMap { f =>
+      average(fs.map { f =>
         val food = f._2
-        if (food.fromPeanut != 0.0)
-          Some(food.fromPeanut / data.PEANUT_FOOD_EQUIVALENCE / food.peanutInCultureArea)
-        else None
+        if (food.peanutInCultureArea != 0.0)
+          food.fromPeanut / data.PEANUT_FOOD_EQUIVALENCE / food.peanutInCultureArea
+        else 0.0
       }.toSeq)
     }.toArray
 
@@ -115,11 +115,16 @@ implicit class HistoryDecorator(simulationState: SimulationState):
 
   def populationRSquareAndSlope: (Double, Double) =
     val regression = new SimpleRegression(true)
-    populationDynamic.zipWithIndex foreach: (p,id)=>
-      regression.addData(id,p)
+    populationDynamic.zipWithIndex foreach : (p, id) =>
+      regression.addData(id, p)
     (regression.getRSquare, regression.getSlope)
 
   def effectiveFallowRatioDynamic =
-    (History.historyByYear(simulationState) map: h=>
+    (History.historyByYear(simulationState) map : h =>
       h.effectiveFallowRatio
       ).toArray
+
+  def numberOfAbsorbedKitchens =
+    simulationState.population.flatMap {
+      _.map(_._2.absorbedKitchens.length)
+    }.sum

@@ -4,6 +4,7 @@ library(ggplot2)
 library(scales)
 library(plotly)
 library(stringr)
+library(GGally)
 
 
 pse_diohine <- read.csv("~/Téléchargements/population14160.csv")
@@ -11,7 +12,6 @@ pse_diohine <- pse_diohine %>% dplyr::select(-c(evolution.generation))
 pse_diohine <- pse_diohine %>% dplyr::select(-c(evolution.evaluated))
 pse_diohine <- pse_diohine %>% dplyr::select(-c(lastEffectiveFallowRatio))
 pse_diohine <- pse_diohine %>% dplyr::select(-c(lastPopulation))
-pse_diohine <- pse_diohine %>% dplyr::select(-c(evolution.generation))
 pse_diohine <- pse_diohine %>% dplyr::select(-c(lastMilYield))
 
 
@@ -27,6 +27,8 @@ pse_diohine$loanStrategy <- as.factor(pse_diohine$loanStrategy)
 pse_diohine$wetSeasonHerdStrategy <- as.factor(pse_diohine$wetSeasonHerdStrategy)
 pse_diohine$drySeasonHerdStrategy <- as.factor(pse_diohine$drySeasonHerdStrategy)
 pse_diohine$foodDonation <- as.factor(pse_diohine$foodDonation)
+pse_diohine$ownFallowUse <- as.factor(pse_diohine$ownFallowUse)
+
 
 
 
@@ -41,12 +43,12 @@ techniques <-c("peanutSeedToFood", "peanutForInexcess", "populationGrowth", "rai
 
 pse_no_dyn <- pse_diohine %>% select(-c(dynamics))
 names(pse_no_dyn)
-# ggpairs(pse_no_dyn)
+#ggpairs(pse_no_dyn)
 
 
 pse_num <- pse_diohine %>%  select(where(is.numeric))
 names(pse_num)
-# ggpairs(pse_num)
+#ggpairs(pse_num)
 
 
 mat_cor<- cor(pse_num) 
@@ -64,7 +66,7 @@ for (i in 1:nrow(coords)){
 couples_top15 <- unique((couples_top15))
 couples_top15
 
-top_15_correl_variables <- pse_diohine %>%  select(c(couples_top15))
+top_15_correl_variables <- pse_diohine %>%  select(all_of(couples_top15))
 ggpairs(top_15_correl_variables)
 names_top15<-names(top_15_correl_variables)
 
@@ -78,13 +80,17 @@ ggpairs(top15_et_pratique, columns = names_top15, aes(color=loanStrategy), size=
 # toutes les tratégies sont significatives sauf la wetrSeasonHerdStrategy
 aov(pse_diohine$objective.lastMilYield~ pse_diohine$loanStrategy + pse_diohine$ownFallowUse + pse_diohine$foodDonation + pse_diohine$drySeasonHerdStrategy +pse_diohine$wetSeasonHerdStrategy ) %>% summary.aov() 
 
+aov(pse_diohine$objective.lastPopulation~ pse_diohine$loanStrategy + pse_diohine$ownFallowUse + pse_diohine$foodDonation + pse_diohine$drySeasonHerdStrategy +pse_diohine$wetSeasonHerdStrategy ) %>% summary.aov() 
+
+aov(pse_diohine$objective.lastEffectiveFallowRatio~ pse_diohine$loanStrategy + pse_diohine$ownFallowUse + pse_diohine$foodDonation + pse_diohine$drySeasonHerdStrategy +pse_diohine$wetSeasonHerdStrategy ) %>% summary.aov() 
+
 
 df_obj <- select(pse_diohine,all_of(objectives))
 df_prat <- select(pse_diohine,all_of(pratiques))
 
 objectives_plus_pratiques <- cbind(df_obj,df_prat )
 
-ggpairs(objectives_plus_pratiques, aes(color=loanStrategy), columns = objectives, title = "Effet du prêt")
+ggpairs(objectives_plus_pratiques, aes(color=loanStrategy), columns = objectives, title = "Effet du prêt", )
 ggpairs(objectives_plus_pratiques, aes(color=ownFallowUse), columns = objectives, title= "Effet ownFallow")
 ggpairs(objectives_plus_pratiques, aes(color=foodDonation), columns = objectives, title= "Effet don")
 #bof
@@ -121,6 +127,8 @@ rf1 <- randomForest(lastMilYield~.,
 importance(rf1)
 varImpPlot(rf1,           sort = T,
            main = "Variable Importance regarding Mil yield")
+
+summary(rf1)
 
 
 
@@ -167,21 +175,14 @@ varImpPlot(rf3,           sort = T,
            main = "Variable Importance regarding  lastPopulation")
 
 
-library(plotly)
- plyply<- plot_ly(pse_no_dyn, x=~objective.lastPopulation, 
-                  y=~objective.lastMilYield,
-                  z=~-objective.lastEffectiveFallowRatio, 
-                  color=~loanStrategy, size=~rainFall)
- plyply <- plyply %>%  add_markers()
-plyply
 
 library(tidymodels)
-data_split <- initial_split(pse_no_dyn, strata = "loanStrategy")
+data_split <- initial_split(pse_no_dyn, strata = "foodDonation")
 data_train <- training(data_split)
 data_test <- testing(data_split)
 
 rf_recipe <- 
-  recipe(formula = loanStrategy ~ ., data = data_train) %>%
+  recipe(formula = foodDonation ~ ., data = data_train) %>%
   step_zv(all_predictors())
 
 ## feature importance sore to TRUE, and the proximity matrix to TRUE
@@ -213,4 +214,114 @@ as.dendrogram(hc) %>%
 
 length(clusters)
 pse_diohine %>%  group_by(loanStrategy) %>% summarise(n())
+
+#nuage 3D
+library(plotly)
+plyply<- plot_ly(pse_no_dyn, x=~objective.lastPopulation, 
+                 y=~objective.lastMilYield,
+                 z=~objective.lastEffectiveFallowRatio, 
+                 color=~loanStrategy, size=~rainFall^2)
+plyply <- plyply %>%  add_markers()
+plyply
+
+
+
+
+#nomenclature solidarités
+
+pratiques
+
+aov(pse_diohine$objective.lastMilYield+pse_diohine$objective.lastPopulation~ pse_diohine$loanStrategy + pse_diohine$ownFallowUse + pse_diohine$foodDonation + pse_diohine$drySeasonHerdStrategy +pse_diohine$wetSeasonHerdStrategy ) %>% anova()
+
+
+pse_diohine$conjonction_objectifs <- rescale(pse_diohine$objective.lastMilYield)* rescale(pse_diohine$objective.lastPopulation) * pse_diohine$objective.lastEffectiveFallowRatio
+pse_diohine$disjonction_objectifs <- rescale(pse_diohine$objective.lastMilYield)+ rescale(pse_diohine$objective.lastPopulation) + pse_diohine$objective.lastEffectiveFallowRatio
+hist(pse_diohine$conjonction_objectifs)
+hist(pse_diohine$disjonction_objectifs)
+
+filter(pse_diohine, conjonction_objectifs > 0.7)
+
+
+aov(pse_diohine$disjonction_objectifs~ pse_diohine$loanStrategy + pse_diohine$ownFallowUse + pse_diohine$foodDonation + pse_diohine$drySeasonHerdStrategy +pse_diohine$wetSeasonHerdStrategy ) %>% anova()
+aov(pse_diohine$conjonction_objectifs~ pse_diohine$loanStrategy + pse_diohine$ownFallowUse + pse_diohine$foodDonation + pse_diohine$drySeasonHerdStrategy +pse_diohine$wetSeasonHerdStrategy ) %>% anova()
+
+
+aov(pse_diohine$objective.lastPopulation~ pse_diohine$loanStrategy + pse_diohine$ownFallowUse + pse_diohine$foodDonation + pse_diohine$drySeasonHerdStrategy +pse_diohine$wetSeasonHerdStrategy ) %>% anova()
+
+aov(pse_diohine$objective.lastEffectiveFallowRatio~ pse_diohine$loanStrategy + pse_diohine$ownFallowUse + pse_diohine$foodDonation + pse_diohine$drySeasonHerdStrategy +pse_diohine$wetSeasonHerdStrategy ) %>% anova()
+
+
+
+pratiques
+
+
+score_loan_strat<- function(loanStrategy){
+  switch (loanStrategy %>% as.character(),
+        AllExtraParcelsLoaner = 3,
+        ExtraParcelsExceptFallowLoaner = 2,
+        Selfish = 0
+)
+}
+
+score_ownF_strat<- function(ownFallowUse){
+  switch (ownFallowUse %>% as.character(),
+          UseFallowIfNeeded = 1, #pas zero car si culture , possibilité de don de nourriture 
+          NeverUseFallow = 3
+  )
+}
+
+score_Donation_strat<- function(foodDonation){
+  switch (foodDonation %>% as.character(),
+          FoodForUsOnlyStrategy = 0,
+          FoodForAllStrategy = 2
+  )
+}
+
+
+score_dryHerd_strat<- function(drySeasonHerdStrategy){
+  switch (drySeasonHerdStrategy %>% as.character(),
+          OwnerOnly = 0,
+          EverywhereByDayOwnerByNight = 2,
+          AnywhereAnyTime = 3
+  )
+}
+
+score_wetHerd_strat<- function(wetSeasonHerdStrategy){
+  switch (wetSeasonHerdStrategy %>% as.character(),
+          OwnerOnly = 0,
+          EverywhereByDayOwnerByNight = 2,
+          AnywhereAnyTime = 3
+  )
+}
+
+
+
+
+
+scores_loans <-lapply(pse_diohine$loanStrategy, score_loan_strat) %>% unlist()
+scores_ownF <-lapply(pse_diohine$ownFallowUse, score_ownF_strat) %>% unlist()
+scores_Donation <-lapply(pse_diohine$foodDonation, score_Donation_strat) %>% unlist()
+scores_dryHerd <-lapply(pse_diohine$drySeasonHerdStrategy, score_dryHerd_strat) %>% unlist()
+scores_wetHerd <-lapply(pse_diohine$wetSeasonHerdStrategy, score_wetHerd_strat) %>% unlist()
+
+pse_diohine$solidarity <- scores_Donation+ scores_dryHerd+ scores_loans+ scores_ownF+ scores_wetHerd
+
+library(plotly)
+plyply<- plot_ly(pse_no_dyn, x=~objective.lastPopulation, 
+                 y=~objective.lastMilYield,
+                 z=~objective.lastEffectiveFallowRatio, 
+                 color=~solidarity, size=0.1)
+plyply <- plyply %>%  add_markers()
+plyply
+
+
+
+ggplot(pse_diohine)+
+  geom_point(aes(x=objective.lastPopulation, y=objective.lastEffectiveFallowRatio, color= solidarity, size=nbFaidherbia))
+  
+ggplot(pse_diohine)+
+  geom_point(aes(x=objective.lastMilYield, y=objective.lastEffectiveFallowRatio, color= solidarity, size=nbFaidherbia))
+
+ggplot(pse_diohine)+
+  geom_point(aes(x=objective.lastMilYield, y=objective.lastPopulation, color= solidarity, size=nbFaidherbia))+theme_light()
 

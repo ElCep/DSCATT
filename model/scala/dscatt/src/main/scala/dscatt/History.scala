@@ -75,8 +75,8 @@ object History {
         val parcelFertilities = World.farmedParcelsForKitchen(world, k).flatMap {
           _.fertilityHistory.filter(md => md.year == year)
         }
-        val manureMassMean = parcelFertilities.map(_.manureMass).sum / parcelFertilities.size
-        val mulchingMassMean = parcelFertilities.map(_.mulchingMass).sum / parcelFertilities.size
+        val manureMassMean = parcelFertilities.map(_.manureMassByHa).sum / parcelFertilities.size
+        val mulchingMassMean = parcelFertilities.map(_.mulchingMassByHa).sum / parcelFertilities.size
         val soilQualityMean = parcelFertilities.map(_.agronomicMetrics.soilQuality).sum / parcelFertilities.size
         val availableNitrogenMean = parcelFertilities.map(_.agronomicMetrics.availableNitrogen).sum / parcelFertilities.size
 
@@ -86,7 +86,7 @@ object History {
       history.updated(year, historyOfYear.copy(fertilities = historyOfYear.fertilities ++ newFertilities))
     }
 
-    def updateHerdStats(year: Int, world: World, herdMap: Map[KitchenID, Int]) = {
+    def updateHerdStats(year: Int, herdMap: Map[KitchenID, Int]) = {
       val historyOfTheYear = history(year)
       history.updated(year, historyOfTheYear.copy(herds = historyOfTheYear.herds ++ herdMap))
     }
@@ -155,8 +155,8 @@ object History {
           s"${pStats(p._1).loanedParcelsQuantity}",
           s"${toDouble(pStats(p._1).loanedArea)}",
           s"${yearHistory.herds(p._1)}",
-          s"${fertilityStatK.manureMass.toInt}",
-          s"${fertilityStatK.mulchingMass.toInt}",
+          s"${fertilityStatK.manureMassByHa.toInt}",
+          s"${fertilityStatK.mulchingMassByHa.toInt}",
           s"${toDouble(fertilityStatK.agronomicMetrics.availableNitrogen)}",
           s"${toDouble(fertilityStatK.agronomicMetrics.soilQuality)}",
           s"${fbStatsK.needs.toInt}",
@@ -218,10 +218,10 @@ object History {
           toDouble(area),
           toDouble(fertility.agronomicMetrics.soilQuality),
           toDouble(fertility.agronomicMetrics.availableNitrogen / area),
-          toDouble(fertility.manureMass / area),
-          toDouble(fertility.mulchingMass / area),
-          toDouble(p.faidherbiaTrees),
-          toDouble(Kitchen.parcelFoodProduction(p, data) / area),
+          toDouble(fertility.manureMassByHa / area),
+          toDouble(fertility.mulchingMassByHa / area),
+          toDouble(p.faidherbiaTreesByHa),
+          toDouble(Kitchen.parcelFoodProduction(p, data, state.year) / area),
           fertility.crop.display
         )
       }

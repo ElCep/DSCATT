@@ -1,0 +1,30 @@
+import _file_.model._
+import _file_.calibrationDiohine._
+
+val popFallowFitness = Val[Double]
+val local = LocalEnvironment(30)
+
+
+def profile(param: Val[Double]) = {
+  
+  ProfileEvolution(
+    evaluation = model -- fitnessTask,
+    objective = popFallowFitness,
+    profile = param,
+    genome = Seq(
+       soilQualityBasis in (0.2,0.7),
+       fallowBoost in (0.0,0.6),
+       peanutSeedToFood in (0.8, 2.0),
+       expandingHerdSize in (1.0, 2.0)
+    ),
+    termination = 1000000,       
+    distribution = Island(5 minutes),
+  ) hook (workDirectory / s"results/profile/iteration1/${param.name}/") on local
+}
+
+
+
+profile(soilQualityBasis)
+//profile(peanutSeedToFood)
+//profile(fallowBoost) 
+//profile(expandingHerdSize)

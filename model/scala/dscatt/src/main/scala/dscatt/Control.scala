@@ -44,10 +44,15 @@ enum MigrantStrategy extends Control:
     case SeasonalPresence extends MigrantStrategy // some people are present in kitchen when there is work, in town the rest of the time
 */
 
-enum HerdStrategy extends Control:
-    case AnywhereAnyTime extends HerdStrategy // all herd beasts are grazing on the full area (fallow or crop)
-    case EverywhereByDayOwnerByNight extends HerdStrategy // the herd is grazing evrywhere by day and only on the manured kitchen parcels by night
-    case OwnerOnly extends HerdStrategy // the herd of the kitchen are grazing on the manured kitchen parcels only
+enum HerdGrazingStrategy extends Control:
+    case AnywhereAnyTime extends HerdGrazingStrategy // all herd beasts are grazing on the full area (fallow or crop)
+    case EverywhereByDayOwnerByNight extends HerdGrazingStrategy // the herd is grazing evrywhere by day and only on the manured kitchen parcels by night
+    case OwnerOnly extends HerdGrazingStrategy // the herd of the kitchen are grazing on the manured kitchen parcels only
+
+enum HerdSizeStrategy extends Control:
+    case LSUByArea(lsuByHa: Double) extends HerdSizeStrategy
+    case FullCapacity extends HerdSizeStrategy
+    case NoHerd extends HerdSizeStrategy
 
 enum FertilizerStrategy extends Control:
     case UniformFertilizing extends FertilizerStrategy
@@ -56,8 +61,8 @@ enum FertilizerStrategy extends Control:
 
 
 enum MulchingStrategy extends Control:
-    case Mulching(leftOnTheGroundRatio: Double = 0.0) extends MulchingStrategy // Mulch ratio led on the ground to enrich it (and not used for winter herd food)
-
+    case CropResidue(leftOnTheGroundRatio: Double = 0.0) extends MulchingStrategy // Mulch ratio led on the ground to enrich it (and not used for winter herd food)
+    case CropResidueAmendment(mass: KG_BY_HA = 0.0) extends MulchingStrategy
 /*
 enum FertilizerAttribution:
     case UniformAttribution extends FertilizerAttribution
@@ -77,27 +82,29 @@ case class KitchenProfile(
                            ownFallowUse: OwnFallowUse,
                            loanStrategy: LoanStrategy,
                            foodDonationStrategy: FoodDonationStrategy,
-                           drySeasonHerdStrategy: HerdStrategy,
-                           wetSeasonHerdStrategy: HerdStrategy,
+                           drySeasonHerdStrategy: HerdGrazingStrategy,
+                           wetSeasonHerdStrategy: HerdGrazingStrategy,
+                           herdSizeStrategy: HerdSizeStrategy,
                            drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean,
                            fertilizerStrategy: FertilizerStrategy,
                            mulchingStrategy: MulchingStrategy,
-                           nbFaidherbia: NB_BY_HA
+                           nbFaidherbia: TREE_BY_HA
                          )
 
 object KitchenProfile {
   val default = KitchenProfile(
       10,
-      RotationCycle.ThreeYears, 
+      RotationCycle.ThreeYears,
       CropingStrategy.PeanutForInexcess(0.0),
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
-      FoodDonationStrategy.FoodForAllStrategy, 
-      HerdStrategy.EverywhereByDayOwnerByNight,
-      HerdStrategy.EverywhereByDayOwnerByNight,
+      FoodDonationStrategy.FoodForAllStrategy,
+      HerdGrazingStrategy.EverywhereByDayOwnerByNight,
+      HerdGrazingStrategy.EverywhereByDayOwnerByNight,
+      HerdSizeStrategy.LSUByArea(0.42),
       (_, _) => true,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.Mulching(0.0),
+      MulchingStrategy.CropResidue(0.0),
       4
   )
 }

@@ -35,7 +35,7 @@ object World {
               crop = Fallow,
               cropZone = intToCropZone(p.r, kitchensMap(p.oID).head.rotationCycle, p.oID),
               area = area,
-              faidherbiaTrees = kitchensMap(p.oID).head.nbFaidherbia * area,
+              faidherbiaTreesByHa = kitchensMap(p.oID).head.nbFaidherbiaByHa,
               Seq()
             )
         World(parcels, kitchens.size)
@@ -67,6 +67,8 @@ object World {
   def zoneThreeParcels(world: World) = zoneParcels(world, Three)
 
   def parcelsForKitchen(world: World, kitchen: Kitchen) = world.parcels.filter(_.ownerID == kitchen.id)
+  
+  def ownedAreaForKitchen(world: World, kitchen: Kitchen) = parcelsForKitchen(world, kitchen).map(_.area).sum
 
   def farmedParcelsForKitchen(parcels: Seq[Parcel], kitchen: Kitchen): Seq[Parcel] = farmedParcelsForKitchenID(parcels,kitchen.id)
   
@@ -84,7 +86,7 @@ object World {
 
   def cultivatedParcels(parcels: Seq[Parcel]): Seq[Parcel] = parcels.filter(Parcel.isCultivated(_))
 
-  def milParcels(parcels: Seq[Parcel]) = parcels.filter(_.crop == Mil)
+  def milParcels(parcels: Seq[Parcel]) = parcels.filter(_.crop == Millet)
 
   def peanutParcels(parcels: Seq[Parcel]) = parcels.filter(_.crop == Peanut)
 

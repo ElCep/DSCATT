@@ -16,7 +16,6 @@ val kitchenSizeAverage = Val[Double]
 val milYieldLast5YearsAverage = Val[Double]
 
 val last5yearsAverageHerdSize = Val[Double]
-val last5yearsAverageSoilQuality = Val[Double]
 val numberOfUnbalancedKitchen = Val[Int]
 val foodStress = Val[Array[Double]]
 val milYieldDynamic = Val[Array[Double]]
@@ -27,7 +26,7 @@ val herdDynamic = Val[Array[Int]]
 
 val rainFall = Val[Int]
 val lastPopulation = Val[Int]
-val lastSoilQuality = Val[Double]
+val soilQuality = Val[Array[Double]]
 val lastEffectiveFallowRatio = Val[Double]
 val migrantDynamic=Val[Array[Int]]
 
@@ -41,6 +40,10 @@ val giniParcels = Val[Double]
 val mulching=Val[Double]
 val nbFaidherbia=Val[Int]
 val lastHerdSize=Val[Int]
+val lastMilYield=Val[Double]
+val medianMilYield=Val[Double]
+val erosion=Val[Double]
+val nbAbsorbedKitchens=Val[Int]
 
 val model = ScalaTask(
 """
@@ -59,7 +62,7 @@ hookFile = Some(hookFile)
 )
 
 val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
-Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Croping.Mil
+Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Croping.Millet
 }
 
 val kitchenProfile1 = KitchenProfile(
@@ -89,6 +92,7 @@ supportPolicy = supportPolicy,
 simulationLength = 26,
 soilQualityBasis = soilQualityBasis,
 fallowBoost = fallowBoost,
+erosion=erosion,
 peanutSeedToFood = peanutSeedToFood,
 expandingHerdSize = expandingHerdSize,
 dailyFoodNeedPerPerson = 0.555,
@@ -125,24 +129,24 @@ val herdDynamic = simulationState.herdDynamic
 val lastHerdSize = simulationState.herdDynamic.last
 
 val lastPopulation = simulationState.populationDynamic.last
-val lastSoilQuality = simulationState.averageSoilQualityDynamic.last
-val lastEffectiveFallowRatio = simulationState.effectiveFallowRatioDynamic.last
+val soilQuality = simulationState.averageSoilQualityDynamic
+//val lastEffectiveFallowRatio = simulationState.effectiveFallowRatioDynamic.last
+val lastMilYield = simulationState.averageMilYieldDynamic.last
+val medianMilYield = simulationState.averageMilYieldDynamic.median
 val migrantDynamic = simulationState.migrantsDynamic
+val nbAbsorbedKitchens = simulationState.numberOfAbsorbedKitchens
 
 """
 ) set (
-inputs += (soilQualityBasis, fallowBoost, expandingHerdSize, peanutSeedToFood ),
-outputs += (populationSlope, populationRSquare, populationDynamic, milYieldDynamic, kitchenSizeAverage,
-effectiveFallowRatioDynamic, kitchenSizeDynamic, herdDynamic, migrantDynamic, milYieldLast5YearsAverage, lastHerdSize),
-// Under calibration
-// soilQualityBasis := 0.4799942954983587,
-// fallowBoost := 0.9386211730107059,
-// peanutSeedToFood := 1.673257241816671,
-// expandingHerdSize := 1.2611395174708617
-// soilQualityBasis := 0.037566386501967745,
-// fallowBoost := 1.1600945798567732,
-// peanutSeedToFood := 1.379729887022548,
-// expandingHerdSize := 1.6991464444068525,
+inputs += (peanutSeedToFood, peanutForInexcess, mulching, nbFaidherbia, giniParcels, fallowBoost, populationGrowth),
+outputs += (populationSlope, populationRSquare, populationDynamic, medianMilYield, populationGrowth,
+kitchenSizeAverage, effectiveFallowRatioDynamic, kitchenSizeDynamic, fallowBoost, soilQuality,
+herdDynamic, migrantDynamic, lastPopulation, lastMilYield, lastHerdSize, nbAbsorbedKitchens, milYieldLast5YearsAverage),
+//soilQualityBasis := 0.7874453069152874, // calibration
+soilQualityBasis := 0.527444998, // optim
+fallowBoost := 0.0,
+erosion := 0.01,
+expandingHerdSize := 1.33,
 rotationCycle := RotationCycle.ThreeYears,
 ownFallowUse := OwnFallowUse.NeverUseFallow,
 loanStrategy := LoanStrategy.AllExtraParcelsLoaner,
@@ -153,7 +157,7 @@ peanutForInexcess := 0.0,
 mulching := 0.0,
 nbFaidherbia := 4,
 giniParcels := 0.2,
-populationGrowth := 0.02,
+populationGrowth := 0.012,
 rainFall := 600
 )
 

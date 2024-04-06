@@ -33,6 +33,7 @@ object Kitchen {
         kp.foodDonationStrategy,
         kp.drySeasonHerdStrategy,
         kp.wetSeasonHerdStrategy,
+        kp.herdSizeStrategy,
         kp.drySeasonManureCriteria,
         kp.fertilizerStrategy,
         kp.mulchingStrategy,
@@ -45,33 +46,27 @@ object Kitchen {
 
   def foodNeeds(kitchen: Kitchen, data: Data) = kitchen.size * data.DAILY_FOOD_NEED_PER_PERSON * 365
 
-  def parcelFoodProduction(parcel: Parcel, data: Data): Double = {
+  def parcelFoodProduction(parcel: Parcel, data: Data, year: Int): Double = {
     (parcel.crop match {
-      case Mil => Fertility.milNRF(parcel, data) * milSeedFullPontential(data)
+      // QS * KG / HA
+      case Millet => Fertility.milNRF(parcel, data, year) * milSeedFullPontential(data)
       case Peanut => Fertility.peanutNRF * peanutSeedFullPotential(data) * data.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
     }) * parcel.area
   }
 
-  // Fallow and Peanut are considered as Mil in case of loan (since loan is for food) and will be set as Mil once the loan will be effective
-  def parcelFoodProductionForLoan(parcel: Parcel, data: Data) =
-    (parcel.crop match {
-      case Mil | Fallow | Peanut => Fertility.milNRF(parcel, data) * milSeedFullPontential(data)
-    }) * parcel.area
-
-
-  def parcelsFoodProduction(parcels: Seq[Parcel], data: Data) = {
-    parcels.map {p=>
-      parcelFoodProduction(p, data)
+  def parcelsFoodProduction(parcels: Seq[Parcel], data: Data, year: Int) = {
+    parcels.map { p =>
+      parcelFoodProduction(p, data, year)
     }.sum
   }
 
-  def foodBalance(world: World, kitchen: Kitchen, data: Data): FoodBalance = {
-    foodBalance(world.parcels, kitchen, data)
+  def foodBalance(world: World, kitchen: Kitchen, data: Data, year: Int): FoodBalance = {
+    foodBalance(world.parcels, kitchen, data, year)
   }
 
-  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen, data: Data): FoodBalance = {
-    FoodBalance(kitchen.id, parcelsFoodProduction(World.parcelsInCultureForKitchen(parcels, kitchen), data) - foodNeeds(kitchen, data))
+  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen, data: Data, year: Int): FoodBalance = {
+    FoodBalance(kitchen.id, parcelsFoodProduction(World.parcelsInCultureForKitchen(parcels, kitchen), data, year) - foodNeeds(kitchen, data))
   }
 
   def evolve(
@@ -87,7 +82,7 @@ object Kitchen {
     val (emigrantsUpdated, nbEmigrants): (Seq[Kitchen], Map[KitchenID, Int]) =
       emigrationProcess match {
         case true => Population.evolveEmigrants(populationUpdated, foodAssessment, data)
-        case false => (populationUpdated, Map())
+        case false => (populationUpdated, Map[KitchenID, Int]())
       }
 
     val (afterSplitKitchens, afterSplitWorld, splittedInto) = kitchenSplit(emigrantsUpdated, simulationState.world, data)
@@ -133,9 +128,9 @@ object Kitchen {
       else {
         val oneAbsorbing = absorbing.head
         val newAbsorbing = oneAbsorbing.copy(
-            kitchen = oneAbsorbing.kitchen.copy(size = oneAbsorbing.kitchen.size + toBeAbsorbed.head.size),
-            absorbedIDs = oneAbsorbing.absorbedIDs :+ toBeAbsorbed.head.id
-          )
+          kitchen = oneAbsorbing.kitchen.copy(size = oneAbsorbing.kitchen.size + toBeAbsorbed.head.size),
+          absorbedIDs = oneAbsorbing.absorbedIDs :+ toBeAbsorbed.head.id
+        )
 
         absorption(toBeAbsorbed.tail, absorbing.tail, alreadyAbsorbing :+ newAbsorbing)
       }
@@ -213,24 +208,24 @@ object Kitchen {
 
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
   // If fallows are present in the cultivableParcelForKitchen, it means the fallow can be used as a culture. In that case it is switched to a mil
-  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double, data: Data) = {
+  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double, data: Data, year: Int) = {
 
     @tailrec
     def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel]): CropNeeded = {
 
       val needsCondition = production > needs
 
-      if (sortedParcels.isEmpty || needsCondition )
+      if (sortedParcels.isEmpty || needsCondition)
         CropNeeded(inCulture, sortedParcels, if (needsCondition) production - needs else 0.0)
       else {
         val head = sortedParcels.head
 
         val parcel = head.crop match {
-          case Fallow => head.copy(crop = Mil)
+          case Fallow => head.copy(crop = Millet)
           case _ => head
         }
 
-        val pproduction = Kitchen.parcelFoodProduction(parcel, data)
+        val pproduction = Kitchen.parcelFoodProduction(parcel, data, year)
         cropsToBeCultivated(kitchen, production + pproduction, sortedParcels.tail, inCulture :+ parcel)
       }
     }
@@ -247,10 +242,11 @@ case class Kitchen(id: Kitchen.KitchenID,
                    ownFallowUse: OwnFallowUse,
                    loanStrategy: LoanStrategy,
                    foodDonationStrategy: FoodDonationStrategy,
-                   drySeasonHerdStrategy: HerdStrategy,
-                   wetSeasonHerdStrategy: HerdStrategy,
+                   drySeasonHerdStrategy: HerdGrazingStrategy,
+                   wetSeasonHerdStrategy: HerdGrazingStrategy,
+                   herdSizeStrategy: HerdSizeStrategy,
                    drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean, //how to choose parcel to be fertilized during dry season
                    fertilizerStrategy: FertilizerStrategy,
                    mulchingStrategy: MulchingStrategy,
-                   nbFaidherbia: NB_BY_HA
+                   nbFaidherbiaByHa: TREE_BY_HA
                   )
