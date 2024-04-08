@@ -28,7 +28,8 @@ class Data(
             sqrf: Double,
             peanutSeedToFood: Double, // exposed for calibration
             dailyFoodNeedPerPerson: Double,
-            rainFall: MM
+            rainFall: MM,
+            populationGrowth: Double
           ) {
 
   def copy(rFall: MM) = new Data(
@@ -38,9 +39,20 @@ class Data(
     sqrf: Double,
     peanutSeedToFood: Double,
     dailyFoodNeedPerPerson: Double,
-    rFall
+    rainFall = rFall,
+    populationGrowth
   )
 
+  def copy(populationGrowth: Double) = new Data(
+    soilQualityBasis: SOIL_QUALITY_BY_HA,
+    fallowBoost: SOIL_QUALITY_BY_HA,
+    erosion: Double,
+    sqrf: Double,
+    peanutSeedToFood: Double,
+    dailyFoodNeedPerPerson: Double,
+    rainFall: MM,
+    populationGrowth =  populationGrowth
+  )
 
   // FOOD
   // 0.825: ratio of people eating a 100% meal
@@ -60,6 +72,7 @@ class Data(
   val CULTIVATED_AREA_PER_WORKER: HA = 15
   val WORKERS_RATIO_PER_KITCHEN = 0.66 // Source: Robert and co
 
+  val POPULATION_GROWTH = populationGrowth
   val KITCHEN_MINIMUM_SIZE = 8
   val KITCHEN_MAXIMUM_SIZE = 31
   val SPLIT_KITCHEN_OFFSPRING_SIZE = 13
@@ -73,7 +86,7 @@ class Data(
   val FERTILITY_BOOST_PER_MANURE_KG_PER_HA = 0.000075 // Converted from the data: "A boost of +15% with 2T per ha"
 
   // Nitrogen
-  val ATMOSPHERIC_NITROGEN: KG_NITROGEN_BY_HA = 7.5  // Scriban and Grillot
+  val ATMOSPHERIC_NITROGEN: KG_NITROGEN_BY_HA = 7.5 // Scriban and Grillot
   val ATMOSPHERIC_NITROGEN_AFTER_PEANUT: KG_NITROGEN_BY_HA = 20.0 // Scriban and Grillot
   val NITROGEN_MINERALIZATION: KG_NITROGEN_BY_HA = 12 // kg/ha
   val NITROGEN_FROM_FAIDHERBIA: KG_NITROGEN_BY_TREE = 4.0 // Scriban and Grillot
@@ -104,8 +117,8 @@ class Data(
   val FALLOW_BOOST: SOIL_QUALITY_BY_HA = fallowBoost
   val EROSION: Double = erosion
   val SQRF: Double = sqrf // Soil Quality Reduction factor
-  val MULCHING_EFFECT_SLOPE: SOIL_QUALITY_BY_KG = 0.00022
-  val MULCHING_EFFECT_INTERSECT: SOIL_QUALITY = 0.04
+  val MULCHING_EFFECT_SLOPE: SOIL_QUALITY_BY_KG = 0.00022 // Linear regression from K.Michels et al 1995 (Field crop research) ((500kg/ha,+15%), (2000kg/ha,+48%))
+  val MULCHING_EFFECT_INTERSECT: SOIL_QUALITY = 0.04 // Linear regression from K.Michels et al 1995 (Field crop research) ((500kg/ha,+15%), (2000kg/ha,+48%))
   val MANURE_BOOST_1_YEAR_AGO: SOIL_QUALITY_BY_KG = 0.00012
   val MANURE_BOOST_2_YEARS_AGO: SOIL_QUALITY_BY_KG = 0.00008
   val FAIDHERBIA_BOOST_PER_TREE: SOIL_QUALITY_BY_HA = 0.06 // QS / TREE
