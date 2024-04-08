@@ -25,6 +25,7 @@ class Data(
             soilQualityBasis: SOIL_QUALITY_BY_HA, // exposed for calibration
             fallowBoost: SOIL_QUALITY_BY_HA, // exposed for calibration
             erosion: Double, //exposed for calibration
+            sqrf: Double,
             peanutSeedToFood: Double, // exposed for calibration
             dailyFoodNeedPerPerson: Double,
             rainFall: MM
@@ -34,6 +35,7 @@ class Data(
     soilQualityBasis: SOIL_QUALITY_BY_HA,
     fallowBoost: SOIL_QUALITY_BY_HA,
     erosion: Double,
+    sqrf: Double,
     peanutSeedToFood: Double,
     dailyFoodNeedPerPerson: Double,
     rFall
@@ -101,6 +103,7 @@ class Data(
   val SOIL_QUALITY_BASIS: SOIL_QUALITY_BY_HA = soilQualityBasis // soil quality by hectare
   val FALLOW_BOOST: SOIL_QUALITY_BY_HA = fallowBoost
   val EROSION: Double = erosion
+  val SQRF: Double = sqrf // Soil Quality Reduction factor
   val MULCHING_EFFECT_SLOPE: SOIL_QUALITY_BY_KG = 0.00022
   val MULCHING_EFFECT_INTERSECT: SOIL_QUALITY = 0.04
   val MANURE_BOOST_1_YEAR_AGO: SOIL_QUALITY_BY_KG = 0.00012
