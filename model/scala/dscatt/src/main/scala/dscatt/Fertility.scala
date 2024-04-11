@@ -115,13 +115,7 @@ object Fertility {
   }
 
   private def soilQualityByHa(parcel: Parcel, data: Data, year: Int): SOIL_QUALITY_BY_HA = {
-
-    // manureMASS: KG, manureBoost: SQ / HA <-> KG / HA * SQ / KG
-    val manureBoost =
-      // Last 2 years of manure are used to compute the boost: 0.6 for the most recent deposit and 0.4 for the oldest
-      val last2Years = parcel.fertilityHistory.takeRight(2)
-      last2Years.lastOption.map(_.manureMassByHa * data.MANURE_BOOST_1_YEAR_AGO).getOrElse(0.0) + last2Years.headOption.map(_.manureMassByHa * data.MANURE_BOOST_2_YEARS_AGO).getOrElse(0.0)
-
+    
     // mulchingMASS: KG, mulchingBoost: SQ / HA <-> KG / HA * QS / KG
     val mulchingBoost = parcel.fertilityHistory.lastOption.map(_.mulchingMassByHa) match
       case Some(m: Double) if m > 0.0 => m * data.MULCHING_EFFECT_SLOPE + data.MULCHING_EFFECT_INTERSECT
@@ -136,13 +130,10 @@ object Fertility {
       case _ => 0.0
     }
 
-    // SQ / HA <-> TREE / HA x SQ / TREE
-    val faidherbiaBoost = parcel.faidherbiaTreesByHa * data.FAIDHERBIA_BOOST_PER_TREE
-
     // SQ / HA
     val soilQualityPreviousYearOnParcel = parcel.fertilityHistory.lift(year - 2).map(_.agronomicMetrics.soilQuality).getOrElse(data.SOIL_QUALITY_BASIS)
 
-    soilQualityPreviousYearOnParcel * data.EROSION + manureBoost + mulchingBoost + faidherbiaBoost + fallowBoost
+    soilQualityPreviousYearOnParcel * (1 - data.EROSION) + mulchingBoost + fallowBoost
   }
 
   // in kg. Computed from previous year soil quality and manure production
@@ -185,20 +176,20 @@ object Fertility {
     val metrics = agronomicMetrics(parcel: Parcel, data, year)
 
     // _ / HA * HA
-    val nrf = metrics.soilQuality * parcel.area * (metrics.availableNitrogen match
+    val nrf = metrics.soilQuality * data.SQRF * parcel.area * (metrics.availableNitrogen match
       case n if n < 18 => 0.25
       case n if n >= 18 && n <= 83 => 0.501 * Math.log(n) - 1.2179
       case _ => 1.0
       )
     // Ensure that soilQuality boost does not make NRF exceed 1
-    println("NRF " + nrf)
+    //println("NRF " + nrf)
     if (nrf > 1) 1.0 else nrf
 
   def fallowNRF(parcel: Parcel, data: Data, year: Int) =
 
     val metrics = agronomicMetrics(parcel: Parcel, data, year)
 
-    val nrf = metrics.soilQuality * ((metrics.availableNitrogen / parcel.area) match
+    val nrf = metrics.soilQuality * data.SQRF * parcel.area * (metrics.availableNitrogen match
       case n if n < 10 => 0.25
       case n if n >= 10 && n <= 50 => 0.501 * Math.log(n) - 1.2179
       case _ => 1.0

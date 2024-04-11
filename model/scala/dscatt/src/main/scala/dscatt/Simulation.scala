@@ -35,6 +35,7 @@ object Simulation {
              soilQualityBasis: SOIL_QUALITY_BY_HA, // exposed for calibration
              fallowBoost: SOIL_QUALITY_BY_HA, // exposed for calibration
              erosion: Double, // exposed for calibration
+             sqrf: Double,
              peanutSeedToFood: Double, // exposed for calibration
              dailyFoodNeedPerPerson: Double,
              hookParameters: HookParameters,
@@ -48,9 +49,11 @@ object Simulation {
       soilQualityBasis = soilQualityBasis,
       fallowBoost = fallowBoost,
       erosion = erosion,
+      sqrf = sqrf,
       peanutSeedToFood = peanutSeedToFood,
       dailyFoodNeedPerPerson = dailyFoodNeedPerPerson,
-      rainFall = rainFall
+      rainFall = rainFall,
+      populationGrowth = populationGrowth
     )
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
@@ -75,7 +78,7 @@ object Simulation {
       History.printParcels(finalState, hookParameters, data)
     if (hookParameters.displayKitchens)
       History.printKitckens(finalState, hookParameters)
-
+    
     (finalState, data)
   }
 
@@ -106,7 +109,6 @@ object Simulation {
         // Process kitchen dynamics (population, emmigrants, absorptions, splits)
         val resizedSimulationState = Kitchen.evolve(
           afterRotationsSimulationState,
-          populationGrowth,
           afterDonationFoods,
           emigrationProcess,
           switchedData
@@ -115,11 +117,14 @@ object Simulation {
         // Process Fertiliy
         val afterFertilizationState = Fertility.assign(resizedSimulationState, switchedData)
 
-        val effectiveFallowParcels = World.fallowParcels(afterFertilizationState.world).length
+        val effectiveFallowParcels =
+          val fp = World.fallowParcels(afterFertilizationState.world).length.toDouble
+          if(fp.isNaN) 0.0
+          else fp
 
         val finalHistory = afterFertilizationState.history
           .updateFoods(afterFertilizationState.year, afterDonationFoods)
-          .updateEffectiveFallowRatio(afterFertilizationState.year, effectiveFallowParcels.toDouble / theoriticalFallowParcels)
+          .updateEffectiveFallowRatio(afterFertilizationState.year, effectiveFallowParcels / theoriticalFallowParcels)
 
         val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
 

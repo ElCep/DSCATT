@@ -11,11 +11,11 @@ object Population {
     xs.tail.scanLeft(xs.head)(num.plus)
   }
 
-  def evolve(kitchens: Seq[Kitchen], populationGrowth: Double)(using mT: MersenneTwister): (Seq[Kitchen], Map[KitchenID, Int]) = {
+  def evolve(kitchens: Seq[Kitchen], data: Data)(using mT: MersenneTwister): (Seq[Kitchen], Map[KitchenID, Int]) = {
     val totalPopulation = kitchens.map {
       _.size
     }.sum
-    val nbBirths = (totalPopulation * populationGrowth).floor.toInt
+    val nbBirths = (totalPopulation * data.POPULATION_GROWTH).floor.toInt
 
     //Uniform distribution for births
     val weight = 1.0 / kitchens.size

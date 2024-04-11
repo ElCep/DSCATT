@@ -71,13 +71,12 @@ object Kitchen {
 
   def evolve(
               simulationState: SimulationState,
-              populationGrowth: Double,
               foodAssessment: Seq[Food],
               emigrationProcess: Boolean = true,
               data: Data
             )(using mT: MersenneTwister) = {
 
-    val (populationUpdated, births): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolve(simulationState.kitchens, populationGrowth)
+    val (populationUpdated, births): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolve(simulationState.kitchens, data)
 
     val (emigrantsUpdated, nbEmigrants): (Seq[Kitchen], Map[KitchenID, Int]) =
       emigrationProcess match {

@@ -37,6 +37,11 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       fh.map(_.agronomicMetrics.soilQuality)
     ).transpose.map(average(_)).toArray
 
+  def averageSQByNitrogenDynamic =
+    simulationState.fertilityHistory.map(fh =>
+      fh.map(x=> x.agronomicMetrics.soilQuality * x.agronomicMetrics.availableNitrogen)
+    ).transpose.map(average(_)).toArray
+    
   def averageInexcessDynamic: Array[Double] =
     simulationState.foodStats.map(x =>
       average(x.map(_._2.inexess).toArray)

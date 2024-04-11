@@ -69,6 +69,7 @@ object Exploration:
       // soilQualityBasis = 0.7468161238013162,
       fallowBoost = 0.0,
       erosion = 1.0,
+      sqrf = 1.0,
       peanutSeedToFood = 1.1523627835184518,
       dailyFoodNeedPerPerson = 0.555,
       //      soilQualityBasis = 0.037566386501967745,

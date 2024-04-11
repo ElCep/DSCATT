@@ -13,16 +13,17 @@ enum SwitchType:
   case Grazing(dryHerdStrategy: HerdGrazingStrategy, wetHerdStrategy: HerdGrazingStrategy) extends SwitchType
   case HerdSize(herdSizeStrategy: HerdSizeStrategy) extends SwitchType
   case Mulching(mulchingStrategy: MulchingStrategy) extends SwitchType
+  case Demography(populationGrowth: Double) extends SwitchType
 
 import SwitchType._
 
-case class Switcher(time: Int, swithType: SwitchType)
+case class Switcher(time: Int, switchType: SwitchType)
 
 implicit class SimulationStateWrapper(simulationState: SimulationState) {
   def enventuallySwitch(switcher: Switcher, data: Data): (SimulationState, Data) =
     if (switcher.time == simulationState.year) {
 
-      switcher.swithType match
+      switcher.switchType match
         case RainFall(r) =>
           (simulationState, data.copy(r))
         case Faidherbia(nb) =>
@@ -56,6 +57,8 @@ implicit class SimulationStateWrapper(simulationState: SimulationState) {
           val newKitchens = simulationState.kitchens.map(_.copy(herdSizeStrategy = hsStrategy))
           val switchedState = simulationState.copy(kitchens = newKitchens)
           (switchedState, data)
+        case Demography(populationGrowth)=>
+          (simulationState, data.copy(populationGrowth))
 
     }
     else (simulationState, data)
