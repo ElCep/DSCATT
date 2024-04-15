@@ -17,8 +17,11 @@ import org.apache.commons.math3.stat.regression.SimpleRegression
 object SwitchExplorer:
 
   def explore(outputPath: String) =
+    val file = File(outputPath)
+    file.createDirectories()
+
     val hookFile = HookFile(
-      outputPath = "/tmp",
+      outputPath = outputPath,
       parcels = false,
       kitchens = false,
       dynamics = true
@@ -58,32 +61,32 @@ object SwitchExplorer:
 
     val switchers =
       Seq(
-        None,
-        Some(Switcher(26, RainFall(700))),
-        Some(Switcher(26, Faidherbia(6))),
-        Some(Switcher(26, HerdSize(LSUByArea(0.315)))),
-        Some(Switcher(26, HerdSize(LSUByArea(0.435)))),
-        Some(Switcher(26, HerdSize(FullCapacity))),
-        Some(Switcher(26, Mulching(CropResidue(0.5)))),
-        Some(Switcher(26, Rotation(TwoYears))),
-        Some(Switcher(26, SwitchType.Grazing(AnywhereAnyTime, AnywhereAnyTime))),
-        Some(Switcher(26, Solidarity(Selfish, FoodForUsOnlyStrategy))),
-        Some(Switcher(26, Demography(0.011335848))) // 80%
+        Seq(),
+        Seq(Switcher(26, RainFall(700))),
+        Seq(Switcher(26, Faidherbia(6))),
+        Seq(Switcher(26, HerdSize(LSUByArea(0.525)))),
+        Seq(Switcher(26, HerdSize(FullCapacity))),
+        Seq(Switcher(26, Mulching(CropResidue(0.5)))),
+       // Some(Switcher(26, Rotation(TwoYears))),
+        Seq(Switcher(26, SwitchType.Grazing(AnywhereAnyTime, AnywhereAnyTime))),
+        Seq(Switcher(26, Solidarity(Selfish, FoodForUsOnlyStrategy))),
+        Seq(Switcher(26, Demography(0.006433183))) // 50%
       )
 
     val dynamics = switchers.map: s=>
+      println("Running " + s)
       val (state: SimulationState, simulationData: Data) = Simulation(
         7L,
         giniParcels = 0.2,
-        populationGrowth = 0.013326770017503558,
+        populationGrowth = 0.013222486737573532,
         kitchenPartition = kitchenPartition,
         supportPolicy = supportPolicy,
         simulationLength = 50,
         soilQualityBasis = 100,
-        fallowBoost = 0.9891326717734898,
+        fallowBoost = 1.8226887818701696,
         erosion = 0.02,
-        sqrf = 0.020412535763914292,
-        peanutSeedToFood = 1.1287233888961588,
+        sqrf = 0.02162343712017012,
+        peanutSeedToFood = 1.1264894749651675,
         dailyFoodNeedPerPerson = 0.555,
         hookParameters = hooks,
         rainFall = 600,
@@ -97,15 +100,17 @@ object SwitchExplorer:
         state.averageNitrogenDynamic.tail.toSeq,
         state.averageSQByNitrogenDynamic.tail.toSeq,
         state.averageMilYieldDynamic.tail.toSeq,
-        state.effectiveFallowRatioDynamic.tail.toSeq
+        state.effectiveFallowRatioDynamic.tail.toSeq,
+        state.loanedAreaDynamic.tail.toSeq,
+        state.foodStress.tail.toSeq
     )
       
     val transposed = dynamics.transpose
 
-    transposed.zip(Seq("pop", "herd", "qs", "nitrogen", "qsXnitrogen", "milletYield", "ef")).foreach: (metrics, label)=> 
-      val file = File(s"${outputPath}/other/${label}.csv")
+    transposed.zip(Seq("pop", "herd", "qs", "nitrogen", "qsXnitrogen", "milletYield", "ef", "loan", "foodStress")).foreach: (metrics, label)=>
+      val file = File(s"${outputPath}/${label}.csv")
       val content =
-        val headers = Seq("Base", "RainFall","Faidherbia", "LSU -25%", "LSU +25%", "LSU Full capacity", "Crop residue 50%", "Two years rotation", "Grazing anywhere anytime", "No loan no food donation", "Demography -20%")
+        val headers = Seq("Base", "RainFall","Faidherbia", "LSU +25%", "LSU Full capacity", "Crop residue 50%", "Grazing anywhere anytime", "No loan no food donation", "Demography -50%")
         (headers zip metrics.map(_.map(_.toString))).map((h,t)=> h +: t).transpose.map(_.mkString(",")).mkString("\n")
 
 

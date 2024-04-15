@@ -40,7 +40,7 @@ object Simulation {
              dailyFoodNeedPerPerson: Double,
              hookParameters: HookParameters,
              rainFall: MM,
-             switcher: Option[Switcher] = None,
+             switchers: Seq[Switcher] = Seq(),
              world: Option[World] = None
            ) = {
     given MersenneTwister(seed)
@@ -60,7 +60,6 @@ object Simulation {
 
     val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, giniParcels, data))
 
-    println("Area " + nakedWorld.parcels.map(_.area).sum)
     val initialHistory = History.initialize(simulationLength, kitchens)
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
@@ -71,17 +70,23 @@ object Simulation {
         world = initialState.world.copy(parcels = initialState.world.parcels.map(_.resetFertilityHistory))
       )
 
-    println("------------------------------------------------ ")
-    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, true, data, switcher)
+    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, true, data, switchers)
 
     if (hookParameters.displayParcels)
       History.printParcels(finalState, hookParameters, data)
     if (hookParameters.displayKitchens)
       History.printKitckens(finalState, hookParameters)
-    
+
     (finalState, data)
   }
 
+  @tailrec
+  def applySwitchers(switchers: Seq[Switcher], simulationState: SimulationState, data: Data): (SimulationState, Data) =
+    if (switchers.isEmpty) (simulationState, data)
+    else 
+      val (newSS, newData) = simulationState.enventuallySwitch(switchers.head, data)
+      applySwitchers(switchers.tail, newSS, newData)
+      
 
   def evolve(
               simulationState: SimulationState,
@@ -89,14 +94,14 @@ object Simulation {
               simulationLenght: Int,
               emigrationProcess: Boolean,
               data: Data,
-              switcher: Option[Switcher] = None
+              switchers: Seq[Switcher] = Seq()
             )(using MersenneTwister): SimulationState = {
 
     @tailrec
     def evolve0(simulationState: SimulationState, data: Data): SimulationState = {
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size < 1) simulationState
       else {
-        val (switchedSimulationState, switchedData) = switcher.map(sw => simulationState.enventuallySwitch(sw, data)).getOrElse((simulationState, data))
+        val (switchedSimulationState, switchedData) = applySwitchers(switchers, simulationState, data)
 
         val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k, switchedData)) }
 
@@ -119,7 +124,7 @@ object Simulation {
 
         val effectiveFallowParcels =
           val fp = World.fallowParcels(afterFertilizationState.world).length.toDouble
-          if(fp.isNaN) 0.0
+          if (fp.isNaN) 0.0
           else fp
 
         val finalHistory = afterFertilizationState.history

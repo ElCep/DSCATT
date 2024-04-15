@@ -11,7 +11,7 @@ import dscatt.HerdSizeStrategy.{FullCapacity, LSUByArea}
 import dscatt.LoanStrategy.Selfish
 import dscatt.MulchingStrategy.CropResidue
 import dscatt.RotationCycle.TwoYears
-import dscatt.SwitchType.Solidarity
+import dscatt.SwitchType.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
 object Diohine {
@@ -21,7 +21,23 @@ object Diohine {
   case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile])
 
   def main(args: Array[String])=
-    SwitchExplorer.explore("/tmp")
+   // SwitchExplorer.explore("/tmp/newQS")
+
+    HubExplorer.explore(
+      switchTime = 26,
+      rainfall = RainFall(700),
+      faidherbia = Faidherbia(6),
+      loan = Loan(LoanStrategy.AllExtraParcelsLoaner),
+      foodDonation = FoodDonation(FoodDonationStrategy.FoodForUsOnlyStrategy),
+      rotation = Rotation(RotationCycle.ThreeYears),
+      dryGrazing = DryGrazing(HerdGrazingStrategy.EverywhereByDayOwnerByNight),
+      wetGrazing = WetGrazing(HerdGrazingStrategy.AnywhereAnyTime),
+      herdSize = HerdSize(HerdSizeStrategy.LSUByArea(0.6)),
+      mulching = Mulching(CropResidue(0.3)),
+      demography = Demography(0.010),
+      peanutSeedToFood = PeanutSeedToFood(1.3),
+      peanutForInexcess = PeanutInexcess(0.1)
+    )
 
   def unitary = {
 
@@ -79,7 +95,7 @@ object Diohine {
       hookParameters = hooks,
       rainFall = 600,
      // None,
-     Some(Switcher(26, SwitchType.Solidarity(Selfish, FoodForUsOnlyStrategy)))
+     Seq(Switcher(26, SwitchType.Solidarity(Selfish, FoodForUsOnlyStrategy)))
     )
 
     given data: Data = simulationData
