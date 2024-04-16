@@ -79,7 +79,7 @@ object Exploration:
       hookParameters = hooks,
       rainFall = 600,
       //None
-      Some(Switcher(5, SwitchType.Mulching(CropResidueAmendment(500)))),
+      Seq(Switcher(5, SwitchType.Mulching(CropResidueAmendment(500)))),
       Some(world)
     )
 

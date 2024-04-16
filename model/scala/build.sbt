@@ -16,7 +16,7 @@ lazy val circe = Seq(
 
 lazy val betterFile = libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.9.2"
 
-lazy val dscatt = project.in(file("dscatt")) enablePlugins (SbtOsgi) settings(
+lazy val dscatt = project.in(file("dscatt")) enablePlugins SbtOsgi settings(
   name := "DSCATT",
   scalaVersion := ScalaVersion,
 
@@ -33,7 +33,7 @@ lazy val dscatt = project.in(file("dscatt")) enablePlugins (SbtOsgi) settings(
   OsgiKeys.privatePackage := Seq("!scala.*","*"),
   OsgiKeys.requireCapability := """osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"""",
   Compile / run / mainClass := Some("dscatt.Diohine")
-) dependsOn(data)
+) dependsOn data
 
 lazy val parcelGenerator = project.in(file("parcelGenerator")) settings(
   name := "Parcellor",
@@ -42,7 +42,7 @@ lazy val parcelGenerator = project.in(file("parcelGenerator")) settings(
   betterFile,
   circe,
   Compile / run / mainClass := Some("parcelgenerator.App")
-) dependsOn(data)
+) dependsOn data
 
 
 lazy val data = project.in(file("shared")) settings (

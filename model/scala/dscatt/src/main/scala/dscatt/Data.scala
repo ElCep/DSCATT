@@ -32,7 +32,7 @@ class Data(
             populationGrowth: Double
           ) {
 
-  def copy(rFall: MM) = new Data(
+  def copyRainFall(rFall: MM) = new Data(
     soilQualityBasis: SOIL_QUALITY_BY_HA,
     fallowBoost: SOIL_QUALITY_BY_HA,
     erosion: Double,
@@ -43,7 +43,7 @@ class Data(
     populationGrowth
   )
 
-  def copy(populationGrowth: Double) = new Data(
+  def copyPopulationGrowth(populationGrowth: Double) = new Data(
     soilQualityBasis: SOIL_QUALITY_BY_HA,
     fallowBoost: SOIL_QUALITY_BY_HA,
     erosion: Double,
@@ -52,6 +52,17 @@ class Data(
     dailyFoodNeedPerPerson: Double,
     rainFall: MM,
     populationGrowth =  populationGrowth
+  )
+
+  def copyPeanutSeedToFood(peanutSeedToFood: Double) = new Data(
+    soilQualityBasis: SOIL_QUALITY_BY_HA,
+    fallowBoost: SOIL_QUALITY_BY_HA,
+    erosion: Double,
+    sqrf: Double,
+    peanutSeedToFood = peanutSeedToFood,
+    dailyFoodNeedPerPerson: Double,
+    rainFall: MM,
+    populationGrowth: Double
   )
 
   // FOOD

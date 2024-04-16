@@ -41,7 +41,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     simulationState.fertilityHistory.map(fh =>
       fh.map(x=> x.agronomicMetrics.soilQuality * x.agronomicMetrics.availableNitrogen)
     ).transpose.map(average(_)).toArray
-    
+
   def averageInexcessDynamic: Array[Double] =
     simulationState.foodStats.map(x =>
       average(x.map(_._2.inexess).toArray)
@@ -52,7 +52,10 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       _.map(_._2.toBalance).filter(_ < 0)
     ).size
 
-  def loanedAreaDynamic = simulationState.parcelStats.flatMap(_.map(_._2.loanedArea)).toArray
+  def loanedAreaDynamic =
+    val o = simulationState.parcelStats.map(_.map(_._2.loanedArea).sum).toArray
+    println("O " + o.size)
+    o
 
   def totalLoanedArea = loanedAreaDynamic.sum
 
