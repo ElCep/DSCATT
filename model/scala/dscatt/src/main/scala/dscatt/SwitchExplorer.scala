@@ -14,6 +14,7 @@ import dscatt.Simulation.SimulationState
 import dscatt.SwitchType.{Demography, Faidherbia, HerdSize, Mulching, RainFall, Rotation, Solidarity}
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
+// Apply n switchers in n similations (one switcher per simulation) 
 object SwitchExplorer:
 
   def explore(outputPath: String) =

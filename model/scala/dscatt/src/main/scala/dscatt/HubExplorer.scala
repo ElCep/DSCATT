@@ -14,6 +14,7 @@ import dscatt.Simulation.SimulationState
 import dscatt.SwitchType.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
+// Apply p switchers among n available switchers in one simulation
 object HubExplorer:
 
   def explore(switchTime: Int,
