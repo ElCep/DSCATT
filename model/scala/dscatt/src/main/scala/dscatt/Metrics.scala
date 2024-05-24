@@ -53,9 +53,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     ).size
 
   def loanedAreaDynamic =
-    val o = simulationState.parcelStats.map(_.map(_._2.loanedArea).sum).toArray
-    println("O " + o.size)
-    o
+    simulationState.parcelStats.map(_.map(_._2.loanedArea).sum).toArray
 
   def totalLoanedArea = loanedAreaDynamic.sum
 

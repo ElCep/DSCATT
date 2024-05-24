@@ -8,6 +8,7 @@ enum SwitchType:
   case RainFall(r: Int) extends SwitchType
   case Faidherbia(nb: Int) extends SwitchType
   case Solidarity(l: LoanStrategy, fd: FoodDonationStrategy) extends SwitchType
+  case OwnFallow(ofu: OwnFallowUse) extends SwitchType
   case Loan(strategy: LoanStrategy) extends SwitchType
   case FoodDonation(strategy: FoodDonationStrategy) extends SwitchType
   case Rotation(rC: RotationCycle) extends SwitchType
@@ -44,6 +45,9 @@ implicit class SimulationStateWrapper(simulationState: SimulationState) {
           (switchedState, data)
         case Solidarity(l: LoanStrategy, fd: FoodDonationStrategy) =>
           val newKitchens = simulationState.kitchens.map(_.copy(loanStrategy = l, foodDonationStrategy = fd))
+          kitchenToStateAndData(newKitchens, data)
+        case OwnFallow(ofu: OwnFallowUse)=>
+          val newKitchens = simulationState.kitchens.map(_.copy(ownFallowUse = ofu))
           kitchenToStateAndData(newKitchens, data)
         case Loan(ls: LoanStrategy)=>
           val newKitchens = simulationState.kitchens.map(_.copy(loanStrategy = ls))

@@ -21,23 +21,23 @@ object Diohine {
   case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile])
 
   def main(args: Array[String])=
-   // SwitchExplorer.explore("/tmp/newQS")
+    SwitchExplorer.explore("/tmp/newQS")
 
-    HubExplorer.explore(
-      switchTime = 26,
-      rainfall = RainFall(700),
-      faidherbia = Faidherbia(6),
-      loan = Loan(LoanStrategy.AllExtraParcelsLoaner),
-      foodDonation = FoodDonation(FoodDonationStrategy.FoodForUsOnlyStrategy),
-      rotation = Rotation(RotationCycle.ThreeYears),
-      dryGrazing = DryGrazing(HerdGrazingStrategy.EverywhereByDayOwnerByNight),
-      wetGrazing = WetGrazing(HerdGrazingStrategy.AnywhereAnyTime),
-      herdSize = HerdSize(HerdSizeStrategy.LSUByArea(0.6)),
-      mulching = Mulching(CropResidue(0.3)),
-      demography = Demography(0.010),
-      peanutSeedToFood = PeanutSeedToFood(1.3),
-      peanutForInexcess = PeanutInexcess(0.1)
-    )
+//    HubExplorer.explore(
+//      switchTime = 26,
+//      rainfall = RainFall(700),
+//      faidherbia = Faidherbia(6),
+//      loan = Loan(LoanStrategy.AllExtraParcelsLoaner),
+//      foodDonation = FoodDonation(FoodDonationStrategy.FoodForUsOnlyStrategy),
+//      rotation = Rotation(RotationCycle.ThreeYears),
+//      dryGrazing = DryGrazing(HerdGrazingStrategy.EverywhereByDayOwnerByNight),
+//      wetGrazing = WetGrazing(HerdGrazingStrategy.AnywhereAnyTime),
+//      herdSize = HerdSize(HerdSizeStrategy.LSUByArea(0.6)),
+//      mulching = Mulching(CropResidue(0.3)),
+//      demography = Demography(0.010),
+//      peanutSeedToFood = PeanutSeedToFood(1.3),
+//      peanutForInexcess = PeanutInexcess(0.1)
+//    )
 
   def unitary = {
 
