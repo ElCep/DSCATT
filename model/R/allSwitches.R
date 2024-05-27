@@ -6,7 +6,7 @@ library(stringr)
 
 buildImage = function(dynamicName, dirPath) {
   fifi = paste0(dirPath, dynamicName,".csv")
-  df = read.csv(fifi, header = T, sep=",", fileEncoding = "UTF-8")
+  df = read.csv(fifi, header = T, sep=",", fileEncoding = "UTF-8", check.names = F)
   i = 1
   
   traceColumn = function(i){
@@ -33,6 +33,11 @@ buildImage = function(dynamicName, dirPath) {
   ggsave(pngFileName, ploplot, width=1500, height = 891, units = "px", dpi=150)
 }
 
-dynamicNames = c("qs","nitrogen", "ef", "qsXnitrogen", "pop", "herd", "milletYield", "loan", "foodStress")
-lapply(dynamicNames, buildImage, "/tmp/newQS/")
+dynamicNames = c("qs","nitrogen")
+lapply(dynamicNames, buildImage, "~/tmp/")
+
+
+df = read.csv("~/tmp/qs.csv", header = T, sep=",", fileEncoding = "UTF-8", check.names = F)
+
+
 
