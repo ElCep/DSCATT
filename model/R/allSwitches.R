@@ -27,7 +27,8 @@ buildImage = function(dynamicName, dirPath) {
     theme_light()+
     xlab("Years")+
     ylab(dynamicName)+
-    geom_vline(xintercept=25, linetype='dotted', col = 'black')
+    geom_vline(xintercept=25, linetype='dotted', col = 'black')+
+    labs(color="Scenario")
   
   pngFileName = str_replace(fifi,".csv",".png")
   ggsave(pngFileName, ploplot, width=1500, height = 891, units = "px", dpi=150)
@@ -37,7 +38,7 @@ dynamicNames = c("qs","nitrogen")
 lapply(dynamicNames, buildImage, "~/tmp/")
 
 
-df = read.csv("~/tmp/qs.csv", header = T, sep=",", fileEncoding = "UTF-8", check.names = F)
+
 
 
 
