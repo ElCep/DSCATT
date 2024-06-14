@@ -21,7 +21,8 @@ object Diohine {
   case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile])
 
   def main(args: Array[String])=
-    SwitchExplorer.explore("/tmp/newQS")
+   // SwitchExplorer.explore("/tmp/newQS")
+   CSVExplorer.run
 
 //    HubExplorer.explore(
 //      switchTime = 26,
