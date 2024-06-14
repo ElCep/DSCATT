@@ -6,7 +6,6 @@ import dscatt.Fertility.{fallowFullPotential, fallowNRF}
 import dscatt.FoodDonationStrategy.FoodForUsOnlyStrategy
 import dscatt.HerdGrazingStrategy.AnywhereAnyTime
 import dscatt.LoanStrategy.Selfish
-import dscatt.MulchingStrategy.CropResidueAmendment
 import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
@@ -29,7 +28,7 @@ object Exploration:
       HerdSizeStrategy.NoHerd,
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.CropResidueAmendment(0.0),
+      MulchingStrategy.NoMulching,
       0
     )
 
@@ -79,7 +78,7 @@ object Exploration:
       hookParameters = hooks,
       rainFall = 600,
       //None
-      Seq(Switcher(5, SwitchType.Mulching(CropResidueAmendment(500)))),
+      Seq(Switcher(5, SwitchType.Mulching(MulchingStrategy.CropResidue))),
       Some(world)
     )
 

@@ -72,7 +72,7 @@ object Diohine {
       HerdSizeStrategy.LSUByArea(0.42), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.CropResidue(0.0),
+      MulchingStrategy.NoMulching,
       4
     )
 

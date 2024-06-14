@@ -47,7 +47,7 @@ object SwitchExplorer:
       HerdSizeStrategy.LSUByArea(0.42), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.CropResidue(0.0),
+      MulchingStrategy.NoMulching,
       4
     )
 
@@ -68,10 +68,10 @@ object SwitchExplorer:
         Seq(Switcher(26, Faidherbia(6))),
         Seq(Switcher(26, HerdSize(LSUByArea(0.525)))),
         Seq(Switcher(26, HerdSize(FullCapacity))),
-        Seq(Switcher(26, Mulching(CropResidue(0.5)))),
-        //Seq(Switcher(26, Rotation(TwoYears))),
+        Seq(Switcher(26, Mulching(CropResidue))),
+        Seq(Switcher(26, Rotation(TwoYears))),
         Seq(Switcher(26, SwitchType.Grazing(AnywhereAnyTime, AnywhereAnyTime))),
-        Seq(Switcher(26, Solidarity(Selfish, FoodForUsOnlyStrategy))),
+        //Seq(Switcher(26, Solidarity(Selfish, FoodForUsOnlyStrategy))),
         Seq(Switcher(26, OwnFallow(UseFallowIfNeeded))),
         Seq(Switcher(26, Demography(0.006433183))) // 50%
       )

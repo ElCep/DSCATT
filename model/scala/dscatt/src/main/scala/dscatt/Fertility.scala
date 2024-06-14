@@ -7,7 +7,6 @@ import Kitchen.{KitchenID, parcelFoodProduction}
 import Parcel.{ManureDeposit, ParcelID}
 import Simulation.SimulationState
 import Data.*
-import dscatt.MulchingStrategy.CropResidueAmendment
 
 import scala.annotation.tailrec
 
@@ -44,14 +43,11 @@ object Fertility {
             val parcel = allParcels.head
 
             val mulchingMass: KG_BY_HA =
-              parcel.crop match {
-                case Millet => kitchen.mulchingStrategy match {
-                  case MulchingStrategy.CropResidue(leftOnTheGroundRatio: Double) =>
-                    milNRF(parcel, data, state.year) * milFullPotential(data.RAIN_FALL) * leftOnTheGroundRatio * data.MIL_STRAW_RATIO
-                  case CropResidueAmendment(mass: KG_BY_HA) => mass
-                }
+              parcel.crop match
+                case Millet => kitchen.mulchingStrategy match
+                  case MulchingStrategy.CropResidue => milNRF(parcel, data, state.year) * milFullPotential(data.RAIN_FALL) * data.MIL_STRAW_RATIO
+                  case MulchingStrategy.NoMulching=> 0.0
                 case _ => 0.0
-              }
 
             val manureMass: KG_BY_HA =
               val dryToBeManuredArea = parcelsForK.filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)).map {

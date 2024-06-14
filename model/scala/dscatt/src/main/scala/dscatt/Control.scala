@@ -61,8 +61,9 @@ enum FertilizerStrategy extends Control:
 
 
 enum MulchingStrategy extends Control:
-    case CropResidue(leftOnTheGroundRatio: Double = 0.0) extends MulchingStrategy // Mulch ratio led on the ground to enrich it (and not used for winter herd food)
-    case CropResidueAmendment(mass: KG_BY_HA = 0.0) extends MulchingStrategy
+    case CropResidue extends MulchingStrategy // All crop residue are left on the ground
+    case NoMulching extends MulchingStrategy
+
 /*
 enum FertilizerAttribution:
     case UniformAttribution extends FertilizerAttribution
@@ -104,7 +105,7 @@ object KitchenProfile {
       HerdSizeStrategy.LSUByArea(0.42),
       (_, _) => true,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.CropResidue(0.0),
+      MulchingStrategy.CropResidue,
       4
   )
 }
