@@ -10,6 +10,7 @@ type KitchenSize = Int
 enum RotationCycle extends Control:
         case ThreeYears extends RotationCycle
         case TwoYears extends RotationCycle
+        case MilOnly extends RotationCycle
 
 enum CropingStrategy extends Control:
 // Peanut food provisioned from the food needs: cultivated = FoodNeeds + savvingRate(MaxCultivable-FoodNeed)

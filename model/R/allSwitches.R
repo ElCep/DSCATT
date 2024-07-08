@@ -34,8 +34,8 @@ buildImage = function(dynamicName, dirPath) {
   ggsave(pngFileName, ploplot, width=1500, height = 891, units = "px", dpi=150)
 }
 
-dynamicNames = c("qs","nitrogen", "ef", "qsXnitrogen", "pop", "herd", "milletYield", "loan", "foodStress" )
-lapply(dynamicNames, buildImage, "~/tmp/")
+dynamicNames = c("yqs","rqs","nitrogen", "ef", "qsXnitrogen", "pop", "herd", "milletYield", "loan", "foodStress" )
+lapply(dynamicNames, buildImage, "/tmp/newQS/")
 
 
 

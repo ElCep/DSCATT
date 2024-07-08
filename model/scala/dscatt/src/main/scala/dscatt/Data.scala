@@ -24,6 +24,7 @@ import Data._
 class Data(
             soilQualityBasis: SOIL_QUALITY_BY_HA, // exposed for calibration
             fallowBoost: SOIL_QUALITY_BY_HA, // exposed for calibration
+            cropResidueBoost: SOIL_QUALITY_BY_HA, //exposed fort calibration
             erosion: Double, //exposed for calibration
             sqrf: Double,
             peanutSeedToFood: Double, // exposed for calibration
@@ -35,6 +36,7 @@ class Data(
   def copyRainFall(rFall: MM) = new Data(
     soilQualityBasis: SOIL_QUALITY_BY_HA,
     fallowBoost: SOIL_QUALITY_BY_HA,
+    cropResidueBoost: SOIL_QUALITY_BY_HA,
     erosion: Double,
     sqrf: Double,
     peanutSeedToFood: Double,
@@ -46,6 +48,7 @@ class Data(
   def copyPopulationGrowth(populationGrowth: Double) = new Data(
     soilQualityBasis: SOIL_QUALITY_BY_HA,
     fallowBoost: SOIL_QUALITY_BY_HA,
+    cropResidueBoost: SOIL_QUALITY_BY_HA,
     erosion: Double,
     sqrf: Double,
     peanutSeedToFood: Double,
@@ -57,6 +60,7 @@ class Data(
   def copyPeanutSeedToFood(peanutSeedToFood: Double) = new Data(
     soilQualityBasis: SOIL_QUALITY_BY_HA,
     fallowBoost: SOIL_QUALITY_BY_HA,
+    cropResidueBoost: SOIL_QUALITY_BY_HA,
     erosion: Double,
     sqrf: Double,
     peanutSeedToFood = peanutSeedToFood,
@@ -128,8 +132,7 @@ class Data(
   val FALLOW_BOOST: SOIL_QUALITY_BY_HA = fallowBoost
   val EROSION: Double = erosion
   val SQRF: Double = sqrf // Soil Quality Reduction factor
-  val MULCHING_EFFECT_SLOPE: SOIL_QUALITY_BY_KG = 0.00022 // Linear regression from K.Michels et al 1995 (Field crop research) ((500kg/ha,+15%), (2000kg/ha,+48%))
-  val MULCHING_EFFECT_INTERSECT: SOIL_QUALITY = 0.04 // Linear regression from K.Michels et al 1995 (Field crop research) ((500kg/ha,+15%), (2000kg/ha,+48%))
+  val CROP_RESIDUE_BOOST: SOIL_QUALITY_BY_KG = cropResidueBoost
   val MANURE_BOOST_1_YEAR_AGO: SOIL_QUALITY_BY_KG = 0.00012
   val MANURE_BOOST_2_YEARS_AGO: SOIL_QUALITY_BY_KG = 0.00008
   val FAIDHERBIA_BOOST_PER_TREE: SOIL_QUALITY_BY_HA = 0.06 // QS / TREE

@@ -67,6 +67,7 @@ object Exploration:
       soilQualityBasis = 1.0,
       // soilQualityBasis = 0.7468161238013162,
       fallowBoost = 0.0,
+      cropResidueBoost = 0.0,
       erosion = 1.0,
       sqrf = 1.0,
       peanutSeedToFood = 1.1523627835184518,
@@ -84,6 +85,6 @@ object Exploration:
 
     given data: Data = simulationData
 
-    println("\nSoil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
+    println("\nSoil Quality " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
     println("\nTotal mulching  " + simulationState.averageMulchingDynamic.toSeq)
     println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)

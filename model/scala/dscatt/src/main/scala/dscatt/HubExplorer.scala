@@ -77,6 +77,7 @@ object HubExplorer:
       simulationLength = 50,
       soilQualityBasis = 100,
       fallowBoost = 1.8226887818701696,
+      cropResidueBoost = 0.0,
       erosion = 0.02,
       sqrf = 0.02162343712017012,
       peanutSeedToFood = 1.1264894749651675,
@@ -96,7 +97,8 @@ object HubExplorer:
     println("\nEffective fallow " + simulationState.effectiveFallowRatioDynamic.toSeq)
     println("\nFood stress " + simulationState.foodStress.toSeq)
     println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)
-    println("\nSoil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
+    println("\nSoil Quality " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
+    println("\nSoil Quality " + simulationState.averageResidualSoilQualityDynamic.toSeq)
     println("NB Absorbed " + simulationState.numberOfAbsorbedKitchens)
     println("SQ x N " + simulationState.averageSQByNitrogenDynamic.toSeq)
 

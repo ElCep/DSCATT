@@ -15,43 +15,45 @@ object CSVExplorer:
       rowData.copy(content = content)
 
     // QS do not increase much more than 10% and is not monotonic
-    def getMaxLast10PCAndNotSequenceMax: RowData =
+    def fivePCTube: RowData =
       val content =
         rowData.content.filter: line =>
-          val qs = line(20).tail.dropRight(1).split(",").map(_.toDouble)
-          val max = qs.max
-          qs.head * 1.05 >= qs.last && max != qs.last
+          val qs = line(21).tail.dropRight(1).split(",").map(_.toDouble)
+          val maxTube = qs.head * 1.02
+          val minTube = qs.head * 0.97
+          qs.forall(el=> el <= maxTube && el >= minTube)
       rowData.copy(content = content)
 
-    def closestTo700Yield =
-      val sort = rowData.content.sortBy(c=> math.abs(c(21).toDouble - 700))
-      rowData.copy(content = Seq(sort.head))
+    def around700Yield =
+      val sort = rowData.content.filter(c=>
+        c(22).toDouble >= 670 && c(22).toDouble <= 730)
+      rowData.copy(content = sort)
 
     def printObjectivesAndCo =
       rowData.content.foreach: line=>
-        println(line(2) + " - " + line(3) + " - "  + line(4) + " - "  + line(5) + " - "  + line(6) + " - " + line(21) + " - " + line(14))
+        println(line(2) + " - " + line(3) + " - "  + line(4) + " - "  + line(5) + " - "  + line(6) + " - " + line(22) + " - " + line(15))
 
     def printQS =
       rowData.content.foreach: line=>
-        val qs = line(20).tail.dropRight(1).split(",").map(_.toDouble)
+        val qs = line(11).tail.dropRight(1).split(",").map(_.toDouble)
         println(qs.toSeq)
 
     def printEF17andLast =
       rowData.content.foreach: line=>
-        val ef = line(15).tail.dropRight(1).split(",").map(_.toDouble)
+        val ef = line(16).tail.dropRight(1).split(",").map(_.toDouble)
         println(ef(17) + " - " + ef.last)
 
     def printPop =
       rowData.content.foreach: line =>
-        val pop = line(18).tail.dropRight(1).split(",").map(_.toDouble).toSeq
+        val pop = line(19).tail.dropRight(1).split(",").map(_.toDouble).toSeq
         println(pop)
 
   def run =
     val content = scala.io.Source.fromFile("/tmp/out.csv").getLines().toSeq
     val rowData = fromCSV(content)
-    val result = rowData.getNullAgroObjective.getMaxLast10PCAndNotSequenceMax.closestTo700Yield
+    val result = rowData.getNullAgroObjective.fivePCTube.around700Yield
 
-    //result.printEF17andLast
+    result.printQS
     //result.printObjectivesAndCo
     println("# " + result.content.length)
     println("closest " + result.printObjectivesAndCo)

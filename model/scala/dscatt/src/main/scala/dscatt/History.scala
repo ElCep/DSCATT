@@ -7,8 +7,10 @@ import Kitchen.*
 import Loan.*
 import Diohine.*
 import Simulation.*
+
 import java.io.File as JFile
 import Data.*
+import dscatt.Fertility.SoilQuality
 
 object History {
 
@@ -77,10 +79,11 @@ object History {
         }
         val manureMassMean = parcelFertilities.map(_.manureMassByHa).sum / parcelFertilities.size
         val mulchingMassMean = parcelFertilities.map(_.mulchingMassByHa).sum / parcelFertilities.size
-        val soilQualityMean = parcelFertilities.map(_.agronomicMetrics.soilQuality).sum / parcelFertilities.size
+        val annualSoilQualityMean = parcelFertilities.map(_.agronomicMetrics.soilQuality.annualSoilQuality).sum / parcelFertilities.size
+        val residualSoilQualityMean = parcelFertilities.map(_.agronomicMetrics.soilQuality.residualSoilQuality).sum / parcelFertilities.size
         val availableNitrogenMean = parcelFertilities.map(_.agronomicMetrics.availableNitrogen).sum / parcelFertilities.size
 
-        k.id -> Fertility.Metrics(year, Croping.Fallow, manureMassMean, mulchingMassMean, Fertility.AgronomicMetrics(availableNitrogenMean, soilQualityMean))
+        k.id -> Fertility.Metrics(year, Croping.Fallow, manureMassMean, mulchingMassMean, Fertility.AgronomicMetrics(availableNitrogenMean, SoilQuality(residualSoilQualityMean, annualSoilQualityMean)))
       }.toMap
 
       history.updated(year, historyOfYear.copy(fertilities = historyOfYear.fertilities ++ newFertilities))
@@ -131,7 +134,7 @@ object History {
 
 
   def printKitckens(state: SimulationState, hookParameters: HookParameters) = {
-    val header = Seq("Year", "KID", "Owd pcl", "Owd area", "Lnd pcl", "Lnd area", "Herd", "Manure", "Mulch", "N", "SQ", "FN", "FFC", "FFL", "FFD", "Balance", "FinX", "Size", "Births", "Migs", "Absor", "Split")
+    val header = Seq("Year", "KID", "Owd pcl", "Owd area", "Lnd pcl", "Lnd area", "Herd", "Manure", "Mulch", "N", "YSQ", "FN", "FFC", "FFL", "FFD", "Balance", "FinX", "Size", "Births", "Migs", "Absor", "Split")
 
     val years = historyByYear(state).map { yearHistory =>
       val sortedPop = yearHistory.population.map { kp =>
@@ -158,7 +161,7 @@ object History {
           s"${fertilityStatK.manureMassByHa.toInt}",
           s"${fertilityStatK.mulchingMassByHa.toInt}",
           s"${toDouble(fertilityStatK.agronomicMetrics.availableNitrogen)}",
-          s"${toDouble(fertilityStatK.agronomicMetrics.soilQuality)}",
+          s"${toDouble(fertilityStatK.agronomicMetrics.soilQuality.annualSoilQuality)}",
           s"${fbStatsK.needs.toInt}",
           s"${fbStatsK.fromCulture.toInt}",
           s"${fbStatsK.fromLoan.toInt}",
@@ -205,7 +208,7 @@ object History {
     val first20 = state.world.parcels.take(20)
 
 
-    val header = Seq("Year", "ID", "Area", "QS", "N/ha", "Manure/ha", "Mulch/ha", "#Faid","Yield/ha", "for crop")
+    val header = Seq("Year", "ID", "Area", "YQS", "N/ha", "Manure/ha", "Mulch/ha", "#Faid","Yield/ha", "for crop")
     val years = state.history.keys.toSeq.sorted.map { y =>
       first20.map { p =>
         val fertility = p.fertilityHistory(y - 1)
@@ -216,7 +219,7 @@ object History {
           y,
           p.id,
           toDouble(area),
-          toDouble(fertility.agronomicMetrics.soilQuality),
+          toDouble(fertility.agronomicMetrics.soilQuality.annualSoilQuality),
           toDouble(fertility.agronomicMetrics.availableNitrogen / area),
           toDouble(fertility.manureMassByHa / area),
           toDouble(fertility.mulchingMassByHa / area),
