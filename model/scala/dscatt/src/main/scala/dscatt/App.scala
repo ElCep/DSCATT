@@ -21,9 +21,9 @@ object Diohine {
   case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile])
 
   def main(args: Array[String])=
-    SwitchExplorer.explore("/tmp/newQS")
+   // SwitchExplorer.explore("/tmp/newQS")
     //CSVExplorer.run
-   // unitary
+    unitary
 
 //    HubExplorer.explore(
 //      switchTime = 26,
@@ -52,8 +52,8 @@ object Diohine {
     )
 
     val hooks = HookParameters(
-      displayParcels = true,
-      displayKitchens = false,
+      displayParcels = false,
+      displayKitchens = true,
       hookFile = None
     )
 
@@ -70,11 +70,11 @@ object Diohine {
       FoodDonationStrategy.FoodForAllStrategy,
       HerdGrazingStrategy.EverywhereByDayOwnerByNight,
       HerdGrazingStrategy.EverywhereByDayOwnerByNight,
-      HerdSizeStrategy.LSUByArea(0.0), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
+      HerdSizeStrategy.LSUByArea(0.42), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.CropResidue,
-      0
+      MulchingStrategy.NoMulching,
+      4
     )
 
     val kitchenPartition = KitchenPartition((kitchenProfile1, 22))
@@ -90,7 +90,7 @@ object Diohine {
       simulationLength = 26,
       soilQualityBasis = 100,
       fallowBoost = 3.8128574231585395,
-      cropResidueBoost = 1,
+      cropResidueBoost = 37,
       erosion = 0.0010170508493904445,
       sqrf = 0.014806514692699349,
       peanutSeedToFood = 1.680505278034874,

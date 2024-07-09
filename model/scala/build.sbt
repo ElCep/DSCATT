@@ -41,7 +41,7 @@ lazy val parcelGenerator = project.in(file("parcelGenerator")) settings(
   libraryDependencies += "fr.ign.artiscales.pm" % "ParcelManager" % "1.4.3" from "https://gitlab.inria.fr/api/v4/projects/39367/packages/maven/fr/ign/artiscales/pm/ParcelManager/1.4.3/ParcelManager-1.4.3-shaded.jar",
   betterFile,
   circe,
-  Compile / run / mainClass := Some("parcelgenerator.App")
+  //Compile / run / mainClass := Some("parcelgenerator.App")
 ) dependsOn data
 
 

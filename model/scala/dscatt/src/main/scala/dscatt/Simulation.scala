@@ -60,7 +60,7 @@ object Simulation {
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
-    val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, giniParcels, data))
+    val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, giniParcels, seed, data))
 
     val initialHistory = History.initialize(simulationLength, kitchens)
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
