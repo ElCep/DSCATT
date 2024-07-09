@@ -14,7 +14,7 @@ sample.v <- seq(from = 2, to = 10, by = 2) # vecteur du nombre de tirage
 
 df.gp <- data.frame()
 for(i in sample.v){
-  for(j in 1:5){
+  for(j in 1:10){
     a <- df %>% slice_sample(n = i, replace = T)
     a$gp <- j
     df.gp <- rbind(df.gp, a)
@@ -22,6 +22,7 @@ for(i in sample.v){
   ggplot(data = df.gp)+
     geom_boxplot(aes(x = as.factor(gp), y = ef))+
     labs(x  = "sample", title = paste("nombre de réplication:", i))+
+    geom_hline(yintercept = 0.3945418, linetype='dotted', col = 'grey')+
     ylim(c(0.30,0.50))+
     theme_bw()
   ggsave(paste0("../img/sample/ef_sample_",i,".png"))
@@ -36,6 +37,7 @@ for(i in sample.v){
   ggplot(data = df.gp)+
     geom_boxplot(aes(x = as.factor(gp), y = yield))+
     labs(x  = "sample", title = paste("nombre de réplication:", i))+
+    geom_hline(yintercept = 691.8634, linetype='dotted', col = 'grey')+
     ylim(c(600,750))+
     theme_bw()
   ggsave(paste0("../img/sample/yield_sample_",i,".png"))
@@ -43,6 +45,7 @@ for(i in sample.v){
   ggplot(data = df.gp)+
     geom_boxplot(aes(x = as.factor(gp), y = herd))+
     labs(x  = "sample", title = paste("nombre de réplication:", i))+
+    geom_hline(yintercept = 88, linetype='dotted', col = 'grey')+
     ylim(c(50,100))+
     theme_bw()
   ggsave(paste0("../img/sample/herd_sample_",i,".png"))
