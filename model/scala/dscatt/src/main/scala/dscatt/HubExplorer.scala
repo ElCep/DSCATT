@@ -14,6 +14,7 @@ import dscatt.Simulation.SimulationState
 import dscatt.SwitchType.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
+// Apply p switchers among n available switchers in one simulation
 object HubExplorer:
 
   def explore(switchTime: Int,
@@ -50,7 +51,7 @@ object HubExplorer:
       HerdSizeStrategy.LSUByArea(0.42), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.CropResidue(0.0),
+      MulchingStrategy.NoMulching,
       4
     )
 
@@ -76,6 +77,7 @@ object HubExplorer:
       simulationLength = 50,
       soilQualityBasis = 100,
       fallowBoost = 1.8226887818701696,
+      cropResidueBoost = 0.0,
       erosion = 0.02,
       sqrf = 0.02162343712017012,
       peanutSeedToFood = 1.1264894749651675,
@@ -95,7 +97,8 @@ object HubExplorer:
     println("\nEffective fallow " + simulationState.effectiveFallowRatioDynamic.toSeq)
     println("\nFood stress " + simulationState.foodStress.toSeq)
     println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)
-    println("\nSoil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
+    println("\nSoil Quality " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
+    println("\nSoil Quality " + simulationState.averageResidualSoilQualityDynamic.toSeq)
     println("NB Absorbed " + simulationState.numberOfAbsorbedKitchens)
     println("SQ x N " + simulationState.averageSQByNitrogenDynamic.toSeq)
 

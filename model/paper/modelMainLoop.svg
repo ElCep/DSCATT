@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="299.63086mm"
+   height="270.93939mm"
+   viewBox="0 0 299.63086 270.93938"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="modelMainLoop.svg"
+   inkscape:export-filename="modelMainLoop.png"
+   inkscape:export-xdpi="169.54195"
+   inkscape:export-ydpi="169.54195"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="3.9275859"
+     inkscape:cx="861.08875"
+     inkscape:cy="841.48383"
+     inkscape:window-width="1824"
+     inkscape:window-height="957"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="marker28225"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="15"
+       markerHeight="18"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path28223" />
+    </marker>
+    <rect
+       x="1076.3558"
+       y="852.32237"
+       width="56.107304"
+       height="59.569741"
+       id="rect27465" />
+    <marker
+       style="overflow:visible"
+       id="marker27365"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="15"
+       markerHeight="18"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path27363" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleStart"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="15"
+       markerHeight="18"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+    <rect
+       x="312.55881"
+       y="176.99394"
+       width="213.95995"
+       height="131.02888"
+       id="rect4760" />
+    <symbol
+       id="Terminal">
+      <title
+         id="title377">Terminal/Interrupt</title>
+      <desc
+         id="desc379">A terminal point in a flowchart: start, stop, halt, etc.</desc>
+      <path
+         d="m 35,95 a 20,20 0 0 1 0,-40 h 80 a 20,20 0 0 1 0,40 z"
+         style="stroke-width:2"
+         id="path381" />
+    </symbol>
+    <symbol
+       id="AuxillaryOp">
+      <title
+         id="title356">Auxiliary Operation</title>
+      <desc
+         id="desc358">Offline operation.</desc>
+      <rect
+         x="35"
+         y="35"
+         width="80"
+         height="80"
+         style="stroke-width:2"
+         id="rect360" />
+    </symbol>
+    <rect
+       x="312.55881"
+       y="176.99394"
+       width="222.58493"
+       height="146.68856"
+       id="rect4760-3" />
+    <rect
+       x="312.55881"
+       y="176.99394"
+       width="222.90493"
+       height="176.47177"
+       id="rect4760-3-3" />
+    <rect
+       x="312.55881"
+       y="176.99394"
+       width="312.15504"
+       height="198.97343"
+       id="rect5021" />
+    <rect
+       x="312.55881"
+       y="176.99394"
+       width="337.29341"
+       height="222.53431"
+       id="rect5021-9" />
+    <rect
+       x="312.55881"
+       y="176.99394"
+       width="253.56989"
+       height="181.63612"
+       id="rect5021-9-0" />
+    <rect
+       x="312.55881"
+       y="176.99394"
+       width="253.56989"
+       height="181.63612"
+       id="rect5021-9-0-3" />
+    <rect
+       x="312.55881"
+       y="176.99394"
+       width="253.56989"
+       height="181.63612"
+       id="rect5021-9-0-3-6" />
+    <rect
+       x="312.55881"
+       y="176.99394"
+       width="253.56989"
+       height="181.63612"
+       id="rect5021-9-0-3-6-1" />
+    <rect
+       x="312.55881"
+       y="176.99394"
+       width="253.56989"
+       height="181.63612"
+       id="rect5021-9-0-9" />
+    <rect
+       x="312.55881"
+       y="176.99394"
+       width="253.56989"
+       height="181.63612"
+       id="rect5021-9-0-9-2" />
+    <marker
+       style="overflow:visible"
+       id="TriangleStart-9"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="14.999999"
+       markerHeight="17.34104"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleStart-9-9"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="15"
+       markerHeight="18"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-3-4" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleStart-8"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="15"
+       markerHeight="18"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-4" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(36.818083,-7.304437)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-8)"
+       d="m 209.59172,237.84737 v 16.34497"
+       id="path22095-5"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker28225)"
+       d="m 83.175354,133.31053 v 13.77913 H 105.66302 V 55.49655 l 32.29979,-0.20374 v 8.847581"
+       id="path28383"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker28225)"
+       d="m 140.85449,189.4022 v 9.5458 H 163.8713 V 55.49655 l 32.29971,-0.20374 v 8.847581"
+       id="path28391"
+       sodipodi:nodetypes="cccccc" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#646464;stroke-width:0.403;stroke-miterlimit:4;stroke-dasharray:0.80599999,0.403;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect24288"
+       width="234.89569"
+       height="176.63939"
+       x="-4.4505038"
+       y="61.129871" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9-9)"
+       d="m 196.39279,89.099832 v 7.349139"
+       id="path24206"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9-9)"
+       d="m 140.3009,158.42089 v 7.34916"
+       id="path24192"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9-9)"
+       d="M 140.3009,124.02484 V 131.374"
+       id="path24188"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9-9)"
+       d="m 140.3009,89.628999 v 7.349139"
+       id="path24184"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9)"
+       d="m 23.90867,124.42527 v 7.34918"
+       id="path22557"
+       sodipodi:nodetypes="cc" />
+    <use
+       xlink:href="#AuxillaryOp"
+       style="fill:#abc837;stroke:none"
+       id="use4664-7"
+       transform="matrix(0.42764211,0,0,0.32758586,-8.164486,89.617089)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9)"
+       d="m 23.90867,91.087619 v 7.34914"
+       id="path22095-1"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+       x="100.50403"
+       y="48.340065"
+       id="text4697"><tspan
+         sodipodi:role="line"
+         id="tspan4695"
+         style="stroke-width:0.264583"
+         x="100.50403"
+         y="48.340065" /></text>
+    <use
+       xlink:href="#AuxillaryOp"
+       style="fill:#abc837;stroke:none"
+       id="use4664"
+       transform="matrix(0.42746951,0,0,0.32769788,-8.151541,57.067698)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.14117852,0,0,0.14117852,-34.913187,50.208414)"
+       id="text4758"
+       style="font-size:27.4869px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect4760);display:inline"><tspan
+         x="330.75691"
+         y="202.00379"
+         id="tspan30761"><tspan
+           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
+           id="tspan30759">Compute annual </tspan></tspan><tspan
+         x="326.52919"
+         y="237.01732"
+         id="tspan30765"><tspan
+           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
+           id="tspan30763">food needs (KFN) </tspan></tspan><tspan
+         x="339.48749"
+         y="272.03086"
+         id="tspan30769"><tspan
+           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
+           id="tspan30767">for all kitchens </tspan></tspan></text>
+    <use
+       xlink:href="#AuxillaryOp"
+       style="fill:#abc837;stroke:none"
+       id="use4664-7-6"
+       transform="matrix(0.42764211,0,0,0.32758586,-8.164486,122.62566)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.14117852,0,0,0.14117852,-35.110788,112.79271)"
+       id="text4758-5-2"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect4760-3-3);display:inline"><tspan
+         x="347.73057"
+         y="201.34888"
+         id="tspan30771">Compute food </tspan><tspan
+         x="335.75873"
+         y="235.70751"
+         id="tspan30773">production from </tspan><tspan
+         x="352.87765"
+         y="270.06614"
+         id="tspan30775">kitchen (KFP) </tspan><tspan
+         x="386.30349"
+         y="304.42475"
+         id="tspan30777">parcels</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9-9)"
+       d="m 83.679899,95.979001 v 7.349149"
+       id="path22095-1-7"
+       sodipodi:nodetypes="cc" />
+    <use
+       xlink:href="#AuxillaryOp"
+       style="fill:#87cdde;stroke:none;stroke-width:0.867957"
+       id="use5017"
+       transform="matrix(0.51760759,0,0,0.35925998,43.306582,55.27046)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.14117852,0,0,0.14117852,17.281113,45.822003)"
+       id="text5019"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021);display:inline"><tspan
+         x="347.51488"
+         y="201.34888"
+         id="tspan30779">Carry out parcel loans 
+</tspan><tspan
+         x="348.56174"
+         y="235.70751"
+         id="tspan30781">from surplus kitchens 
+</tspan><tspan
+         x="402.95842"
+         y="270.06614"
+         id="tspan30783">(KFP &gt; KFN) 
+</tspan><tspan
+         x="355.29925"
+         y="304.42475"
+         id="tspan30785">to kitchens in deficit 
+</tspan><tspan
+         x="406.35402"
+         y="338.78339"
+         id="tspan30787">(KFN &gt; KFP)</tspan></text>
+    <use
+       xlink:href="#AuxillaryOp"
+       style="fill:#87cdde;stroke:none;stroke-width:0.838401;stroke-miterlimit:4;stroke-opacity:1"
+       id="use5017-1"
+       transform="matrix(0.51760759,0,0,0.4469867,43.306582,90.135156)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.14117852,0,0,0.14117852,13.917846,84.786361)"
+       id="text5019-2"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9);display:inline"><tspan
+         x="348.20633"
+         y="201.34888"
+         id="tspan30789">Carry out food donation 
+</tspan><tspan
+         x="361.13108"
+         y="235.70751"
+         id="tspan30791">from surplus kitchens 
+</tspan><tspan
+         x="415.52776"
+         y="270.06614"
+         id="tspan30793">(KFP &gt; KFN) 
+</tspan><tspan
+         x="344.98521"
+         y="304.42475"
+         id="tspan30795">to kitchens still in deficit 
+</tspan><tspan
+         x="383.92722"
+         y="338.78339"
+         id="tspan30797">after parcel loans 
+</tspan><tspan
+         x="418.92336"
+         y="373.14203"
+         id="tspan30799">(KFN &gt; KFP)</tspan></text>
+    <use
+       xlink:href="#AuxillaryOp"
+       style="fill:#de87aa;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
+       id="use9456"
+       transform="matrix(0.49755186,0,0,0.32685858,102.55113,54.951521)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.14117852,0,0,0.14117852,77.586881,47.336257)"
+       id="text5019-2-9"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0);display:inline"><tspan
+         x="318.15578"
+         y="201.34888"
+         id="tspan30801">Grow the kitchen sizes </tspan><tspan
+         x="373.2705"
+         y="235.70751"
+         id="tspan30803">according to </tspan><tspan
+         x="338.26765"
+         y="270.06614"
+         id="tspan30805">population growth</tspan></text>
+    <use
+       xlink:href="#AuxillaryOp"
+       style="fill:#de87aa;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
+       id="use9456-6"
+       transform="matrix(0.49755186,0,0,0.32685858,102.73663,88.055043)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.14117852,0,0,0.14117852,77.772378,77.793943)"
+       id="text5019-2-9-0"
+       style="font-size:27.4869px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0-3);display:inline"><tspan
+         x="318.15578"
+         y="202.00379"
+         id="tspan30809"><tspan
+           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
+           id="tspan30807">Grow the kitchen sizes </tspan></tspan><tspan
+         x="373.2705"
+         y="237.01732"
+         id="tspan30813"><tspan
+           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
+           id="tspan30811">according to </tspan></tspan><tspan
+         x="314.92124"
+         y="272.03086"
+         id="tspan30817"><tspan
+           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
+           id="tspan30815">emigration (because of </tspan></tspan><tspan
+         x="361.16446"
+         y="307.04438"
+         id="tspan30821"><tspan
+           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
+           id="tspan30819">overcrowding)</tspan></tspan></text>
+    <use
+       xlink:href="#AuxillaryOp"
+       style="fill:#de87aa;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
+       id="use9456-6-2"
+       transform="matrix(0.49755186,0,0,0.32685858,102.84169,122.77851)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.14117852,0,0,0.14117852,77.877427,116.75075)"
+       id="text5019-2-9-0-6"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0-3-6);display:inline"><tspan
+         x="346.02519"
+         y="201.34888"
+         id="tspan30823">Process too small </tspan><tspan
+         x="327.89967"
+         y="235.70751"
+         id="tspan30825">kitchens absorptions</tspan></text>
+    <use
+       xlink:href="#AuxillaryOp"
+       style="fill:#de87aa;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
+       id="use9456-6-2-8"
+       transform="matrix(0.49755186,0,0,0.32685858,102.88137,156.60294)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.14117852,0,0,0.14117852,77.91712,151.10435)"
+       id="text5019-2-9-0-6-7"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0-3-6-1);display:inline"><tspan
+         x="358.37953"
+         y="201.34888"
+         id="tspan30827">Process too big
+</tspan><tspan
+         x="359.63442"
+         y="235.70751"
+         id="tspan30829"> kitchens splits </tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+       x="27.782169"
+       y="221.52216"
+       id="text20056"><tspan
+         sodipodi:role="line"
+         id="tspan20054"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
+         x="27.782169"
+         y="221.52216">AGRICULTURE</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+       x="83.616371"
+       y="217.99438"
+       id="text20056-0"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
+         x="83.616371"
+         y="217.99438"
+         id="tspan20103">SOCIAL</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
+         x="83.616371"
+         y="225.18442"
+         id="tspan21115">ORGANIZATION</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.14117852,0,0,0.14117852,-35.594778,80.004945)"
+       id="text4758-5"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect4760-3);display:inline"><tspan
+         x="358.26819"
+         y="201.34888"
+         id="tspan30831">Switch crop 
+</tspan><tspan
+         x="327.87557"
+         y="235.70751"
+         id="tspan30833">culture on parcels </tspan><tspan
+         x="357.77832"
+         y="270.06614"
+         id="tspan30835">according to </tspan><tspan
+         x="350.69185"
+         y="304.42475"
+         id="tspan30837">rotation cycle</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+       x="200.6095"
+       y="220.6693"
+       id="text20056-0-3-7"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
+         x="200.6095"
+         y="220.6693"
+         id="tspan20441-1">SOIL FERTILITY</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+       x="141.40601"
+       y="219.14679"
+       id="text20056-0-3"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
+         x="141.40601"
+         y="219.14679"
+         id="tspan20441">KITCHEN STRUCTURE</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
+         x="141.40601"
+         y="226.33682"
+         id="tspan21124">EVOLUTION</tspan></text>
+    <use
+       xlink:href="#AuxillaryOp"
+       style="fill:#ff9955;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
+       id="use20648"
+       transform="matrix(0.49755186,0,0,0.32685858,158.93194,55.246398)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.14117852,0,0,0.14117852,134.68233,50.63847)"
+       id="text5019-2-9-2"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0-9);display:inline"><tspan
+         x="351.65544"
+         y="201.34888"
+         id="tspan30839">Update nitrogen </tspan><tspan
+         x="338.89846"
+         y="235.70751"
+         id="tspan30841">amount  in parcels</tspan></text>
+    <use
+       xlink:href="#AuxillaryOp"
+       style="fill:#ff9955;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
+       id="use20844"
+       transform="matrix(0.49755186,0,0,0.32685858,158.9982,88.27319)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.14117852,0,0,0.14117852,134.68233,85.456843)"
+       id="text5019-2-9-2-8"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0-9-2);display:inline"><tspan
+         x="320.98097"
+         y="201.34888"
+         id="tspan30843">Update soil quality  in </tspan><tspan
+         x="401.6365"
+         y="235.70751"
+         id="tspan30845">parcels</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 24.437838,37.375476 V 58.482949"
+       id="path22095" />
+    <g
+       id="g4756"
+       transform="translate(-10.044434,-2.9393052)">
+      <use
+         xlink:href="#Terminal"
+         style="fill:#aaccee;stroke:#000000"
+         id="use4256"
+         transform="matrix(0.26458333,0,0,0.26458333,14.638523,22.587703)" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="34.400429"
+         y="44.446518"
+         id="text4701"><tspan
+           sodipodi:role="line"
+           id="tspan4699"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
+           x="34.400429"
+           y="44.446518">START</tspan></text>
+    </g>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.403;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect25983"
+       width="299.22784"
+       height="268.16748"
+       x="-36.61657"
+       y="8.6903849" />
+    <use
+       xlink:href="#Terminal"
+       style="fill:#aaccee;stroke:#000000;stroke-opacity:1"
+       id="use4256-3"
+       transform="matrix(0.26458333,0,0,0.26458333,190.27714,242.28609)" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke:none;stroke-width:0.264583"
+       x="210.03905"
+       y="264.14493"
+       id="text4701-6"><tspan
+         sodipodi:role="line"
+         id="tspan4699-1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke:none;stroke-width:0.264583"
+         x="210.03905"
+         y="264.14493">FINISH</tspan></text>
+    <path
+       style="fill:none;stroke:#35351e;stroke-width:0.403;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:0.80599999,0.403;stroke-dashoffset:0;fill-opacity:1"
+       d="m 55.452745,61.129873 v 176.639387 0"
+       id="path26787" />
+    <path
+       style="fill:none;stroke:#35351e;stroke-width:0.403;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:0.80599999,0.403;stroke-dashoffset:0;stroke-opacity:1;fill-opacity:1"
+       d="m 110.48611,61.129873 v 176.639387 0"
+       id="path26791" />
+    <path
+       style="fill:none;stroke:#35351e;stroke-width:0.403;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:0.80599999,0.403;stroke-dashoffset:0;stroke-opacity:1;fill-opacity:1"
+       d="m 168.69458,61.129873 v 176.639387 0"
+       id="path26793" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker27365)"
+       d="m 224.47671,237.76926 v 9.91578 l 21.37146,-0.16044 v -15.57346 h -12.75715"
+       id="path26795"
+       sodipodi:nodetypes="ccccc" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,-39.463918,8.3627704)"
+       id="text27463"
+       style="font-size:16px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect27465);display:inline"><tspan
+         x="1089.1279"
+         y="866.88027"
+         id="tspan30849"><tspan
+           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
+           id="tspan30847">Time </tspan></tspan><tspan
+         x="1090.624"
+         y="887.26149"
+         id="tspan30853"><tspan
+           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
+           id="tspan30851">loop</tspan></tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker28225)"
+       d="m 23.908673,160.29803 v 9.5458 H 46.925496 V 55.49655 l 36.003883,-0.20374 v 10.435081"
+       id="path28221"
+       sodipodi:nodetypes="cccccc" />
+  </g>
+</svg>

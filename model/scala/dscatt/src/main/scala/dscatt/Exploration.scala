@@ -6,7 +6,6 @@ import dscatt.Fertility.{fallowFullPotential, fallowNRF}
 import dscatt.FoodDonationStrategy.FoodForUsOnlyStrategy
 import dscatt.HerdGrazingStrategy.AnywhereAnyTime
 import dscatt.LoanStrategy.Selfish
-import dscatt.MulchingStrategy.CropResidueAmendment
 import dscatt.Simulation.SimulationState
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
@@ -29,7 +28,7 @@ object Exploration:
       HerdSizeStrategy.NoHerd,
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.CropResidueAmendment(0.0),
+      MulchingStrategy.NoMulching,
       0
     )
 
@@ -68,6 +67,7 @@ object Exploration:
       soilQualityBasis = 1.0,
       // soilQualityBasis = 0.7468161238013162,
       fallowBoost = 0.0,
+      cropResidueBoost = 0.0,
       erosion = 1.0,
       sqrf = 1.0,
       peanutSeedToFood = 1.1523627835184518,
@@ -79,12 +79,12 @@ object Exploration:
       hookParameters = hooks,
       rainFall = 600,
       //None
-      Seq(Switcher(5, SwitchType.Mulching(CropResidueAmendment(500)))),
+      Seq(Switcher(5, SwitchType.Mulching(MulchingStrategy.CropResidue))),
       Some(world)
     )
 
     given data: Data = simulationData
 
-    println("\nSoil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
+    println("\nSoil Quality " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
     println("\nTotal mulching  " + simulationState.averageMulchingDynamic.toSeq)
     println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)

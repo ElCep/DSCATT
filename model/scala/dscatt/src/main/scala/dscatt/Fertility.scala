@@ -7,15 +7,16 @@ import Kitchen.{KitchenID, parcelFoodProduction}
 import Parcel.{ManureDeposit, ParcelID}
 import Simulation.SimulationState
 import Data.*
-import dscatt.MulchingStrategy.CropResidueAmendment
 
 import scala.annotation.tailrec
 
 object Fertility {
 
-  case class AgronomicMetrics(availableNitrogen: KG_NITROGEN_BY_HA = 0.0, soilQuality: SOIL_QUALITY_BY_HA = 0.0)
+  case class SoilQuality(residualSoilQuality: SOIL_QUALITY_BY_HA, annualSoilQuality: SOIL_QUALITY_BY_HA)
 
-  case class Metrics(year: Int, crop: Crop = Fallow, manureMassByHa: KG_BY_HA = 0.0, mulchingMassByHa: KG_BY_HA = 0.0, agronomicMetrics: AgronomicMetrics = AgronomicMetrics(0.0, 0.0))
+  case class AgronomicMetrics(availableNitrogen: KG_NITROGEN_BY_HA = 0.0, soilQuality: SoilQuality = SoilQuality(0.0, 0.0))
+
+  case class Metrics(year: Int, crop: Crop = Fallow, manureMassByHa: KG_BY_HA = 0.0, mulchingMassByHa: KG_BY_HA = 0.0, agronomicMetrics: AgronomicMetrics = AgronomicMetrics())
 
   def assign(state: SimulationState, data: Data): SimulationState = {
 
@@ -44,14 +45,11 @@ object Fertility {
             val parcel = allParcels.head
 
             val mulchingMass: KG_BY_HA =
-              parcel.crop match {
-                case Millet => kitchen.mulchingStrategy match {
-                  case MulchingStrategy.CropResidue(leftOnTheGroundRatio: Double) =>
-                    milNRF(parcel, data, state.year) * milFullPotential(data.RAIN_FALL) * leftOnTheGroundRatio * data.MIL_STRAW_RATIO
-                  case CropResidueAmendment(mass: KG_BY_HA) => mass
-                }
+              parcel.crop match
+                case Millet => kitchen.mulchingStrategy match
+                  case MulchingStrategy.CropResidue => milNRF(parcel, data, state.year) * milFullPotential(data.RAIN_FALL) * data.MIL_STRAW_RATIO
+                  case MulchingStrategy.NoMulching=> 0.0
                 case _ => 0.0
-              }
 
             val manureMass: KG_BY_HA =
               val dryToBeManuredArea = parcelsForK.filter(p => kitchen.drySeasonManureCriteria(p, kitchen.rotationCycle)).map {
@@ -114,11 +112,11 @@ object Fertility {
     )
   }
 
-  private def soilQualityByHa(parcel: Parcel, data: Data, year: Int): SOIL_QUALITY_BY_HA = {
+  private def soilQualityByHa(parcel: Parcel, data: Data, year: Int): SoilQuality = {
     
     // mulchingMASS: KG, mulchingBoost: SQ / HA <-> KG / HA * QS / KG
-    val mulchingBoost = parcel.fertilityHistory.lastOption.map(_.mulchingMassByHa) match
-      case Some(m: Double) if m > 0.0 => m * data.MULCHING_EFFECT_SLOPE + data.MULCHING_EFFECT_INTERSECT
+    val cropResidueBoost = parcel.fertilityHistory.lastOption.map(_.mulchingMassByHa) match
+      case Some(x) if x != 0.0 => data.CROP_RESIDUE_BOOST
       case _ => 0.0
 
     // The soil quality it computed at the begining of the year before the the rotation process, so that the parcel crop here
@@ -131,9 +129,12 @@ object Fertility {
     }
 
     // SQ / HA
-    val soilQualityPreviousYearOnParcel = parcel.fertilityHistory.lift(year - 2).map(_.agronomicMetrics.soilQuality).getOrElse(data.SOIL_QUALITY_BASIS)
+    val soilQualityPreviousYearOnParcel = parcel.fertilityHistory.lift(year - 2).map(_.agronomicMetrics.soilQuality).map(_.residualSoilQuality).getOrElse(data.SOIL_QUALITY_BASIS)
+    val residualSoilQuality = soilQualityPreviousYearOnParcel * (1 - data.EROSION)
+    val annualSoilQuality = residualSoilQuality + cropResidueBoost + fallowBoost
 
-    soilQualityPreviousYearOnParcel * (1 - data.EROSION) + mulchingBoost + fallowBoost
+    SoilQuality(residualSoilQuality = residualSoilQuality, annualSoilQuality = annualSoilQuality)
+
   }
 
   // in kg. Computed from previous year soil quality and manure production
@@ -176,7 +177,7 @@ object Fertility {
     val metrics = agronomicMetrics(parcel: Parcel, data, year)
 
     // _ / HA * HA
-    val nrf = metrics.soilQuality * data.SQRF * parcel.area * (metrics.availableNitrogen match
+    val nrf = metrics.soilQuality.annualSoilQuality * data.SQRF * parcel.area * (metrics.availableNitrogen match
       case n if n < 18 => 0.25
       case n if n >= 18 && n <= 83 => 0.501 * Math.log(n) - 1.2179
       case _ => 1.0
@@ -189,7 +190,7 @@ object Fertility {
 
     val metrics = agronomicMetrics(parcel: Parcel, data, year)
 
-    val nrf = metrics.soilQuality * data.SQRF * parcel.area * (metrics.availableNitrogen match
+    val nrf = metrics.soilQuality.annualSoilQuality * data.SQRF * parcel.area * (metrics.availableNitrogen match
       case n if n < 10 => 0.25
       case n if n >= 10 && n <= 50 => 0.501 * Math.log(n) - 1.2179
       case _ => 1.0

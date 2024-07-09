@@ -1,5 +1,7 @@
 package dscatt
 
+import dscatt.RotationCycle.MilOnly
+
 object Croping {
 
   sealed trait Crop
@@ -29,53 +31,46 @@ object Croping {
   def intToCropZone(cz: Int, rotationCycle: RotationCycle, parcelID: Int): CropZone = cz match
     case 1 => One
     case 2 => Two
-    case 3 => rotationCycle match {
+    case 3 => rotationCycle match
       case RotationCycle.TwoYears if (parcelID % 2 == 0) => One
       case RotationCycle.TwoYears => Two
       case RotationCycle.ThreeYears => Three
-    }
+      case RotationCycle.MilOnly=> One
+    
 
-  def evolveCropZone(cropZone: CropZone, rotationCycle: RotationCycle): CropZone = {
-    rotationCycle match {
+  def evolveCropZone(cropZone: CropZone, rotationCycle: RotationCycle): CropZone =
+    rotationCycle match
       // In this case, reassign at the begiging cropZones into 2 cropZones only
-      case RotationCycle.TwoYears => cropZone match {
+      case RotationCycle.TwoYears => cropZone match
         case One => Two
         case _ => One
-      }
-      case RotationCycle.ThreeYears => cropZone match {
+      case RotationCycle.ThreeYears => cropZone match
         case One => Two
         case Two => Three
         case Three => One
-      }
-    }
-  }
+      case RotationCycle.MilOnly=> One
 
-  def evolveCrop(crop: Crop, rotationCycle: RotationCycle, targetCropZone: CropZone) = {
-    rotationCycle match {
-      case RotationCycle.TwoYears => targetCropZone match {
+  def evolveCrop(crop: Crop, rotationCycle: RotationCycle, targetCropZone: CropZone) =
+    rotationCycle match 
+      case RotationCycle.TwoYears => targetCropZone match
         case One => Millet
         case _ => Peanut
-      }
       case RotationCycle.ThreeYears =>
-        targetCropZone match {
+        targetCropZone match
           case One => Millet
           case Two => Peanut
           case Three => Fallow
-        }
-    }
-  }
+      case RotationCycle.MilOnly=> Millet
+    
 
-  implicit class AParcel(parcel: Parcel) {
-    def setFallowIfCropZoneThree = parcel.cropZone match {
+  implicit class AParcel(parcel: Parcel):
+    def setFallowIfCropZoneThree = parcel.cropZone match
       case Three => parcel.copy(crop = Fallow)
       case _ => parcel
-    }
 
-    def updateCrops = parcel.cropZone match {
+    def updateCrops = parcel.cropZone match
       case Two => parcel.copy(crop = Peanut)
       case Three=> parcel.copy(crop = Fallow)
       case _ => parcel
-    }
-  }
 }
 

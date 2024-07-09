@@ -34,6 +34,7 @@ object Simulation {
              simulationLength: Int = 20,
              soilQualityBasis: SOIL_QUALITY_BY_HA, // exposed for calibration
              fallowBoost: SOIL_QUALITY_BY_HA, // exposed for calibration
+             cropResidueBoost: SOIL_QUALITY_BY_HA, // exposed for calibration
              erosion: Double, // exposed for calibration
              sqrf: Double,
              peanutSeedToFood: Double, // exposed for calibration
@@ -48,6 +49,7 @@ object Simulation {
     val data = new Data(
       soilQualityBasis = soilQualityBasis,
       fallowBoost = fallowBoost,
+      cropResidueBoost = cropResidueBoost,
       erosion = erosion,
       sqrf = sqrf,
       peanutSeedToFood = peanutSeedToFood,
@@ -58,7 +60,7 @@ object Simulation {
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
-    val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, giniParcels, data))
+    val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, giniParcels, seed, data))
 
     val initialHistory = History.initialize(simulationLength, kitchens)
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
