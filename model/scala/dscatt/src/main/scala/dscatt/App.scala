@@ -23,7 +23,7 @@ object Diohine {
   def main(args: Array[String])=
    // SwitchExplorer.explore("/tmp/newQS")
     //CSVExplorer.run
-    unitary
+    unitary(7L)
 
 //    HubExplorer.explore(
 //      switchTime = 26,
@@ -41,7 +41,7 @@ object Diohine {
 //      peanutForInexcess = PeanutInexcess(0.1)
 //    )
 
-  def unitary = {
+  def unitary(seed: Long) = {
 
     println("MAIN")
     val hookFile = HookFile(
@@ -82,7 +82,7 @@ object Diohine {
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
     val (simulationState, simulationData) = Simulation(
-      7L,
+      seed = seed,
       giniParcels = 0.2,
       populationGrowth = 0.014459473589348654,
       kitchenPartition = kitchenPartition,
