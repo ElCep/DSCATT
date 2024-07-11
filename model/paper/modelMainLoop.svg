@@ -2,14 +2,14 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="299.63086mm"
-   height="270.93939mm"
-   viewBox="0 0 299.63086 270.93938"
+   width="346.07962mm"
+   height="268.16748mm"
+   viewBox="0 0 346.07962 268.16747"
    version="1.1"
    id="svg5"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="modelMainLoop.svg"
-   inkscape:export-filename="modelMainLoop.png"
+   inkscape:export-filename="../../../../../../../tmp/modelMainLoop.png"
    inkscape:export-xdpi="169.54195"
    inkscape:export-ydpi="169.54195"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -28,11 +28,11 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="3.9275859"
-     inkscape:cx="861.08875"
-     inkscape:cy="841.48383"
-     inkscape:window-width="1824"
-     inkscape:window-height="957"
+     inkscape:zoom="1.6141343"
+     inkscape:cx="829.54683"
+     inkscape:cy="398.97547"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -60,29 +60,10 @@
     </marker>
     <rect
        x="1076.3558"
-       y="852.32237"
+       y="852.32239"
        width="56.107304"
-       height="59.569741"
+       height="59.56974"
        id="rect27465" />
-    <marker
-       style="overflow:visible"
-       id="marker27365"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       inkscape:stockid="TriangleStart"
-       markerWidth="15"
-       markerHeight="18"
-       viewBox="0 0 5.3244081 6.1553851"
-       inkscape:isstock="true"
-       inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <path
-         transform="scale(0.5)"
-         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
-         d="M 5.77,0 -2.88,5 V -5 Z"
-         id="path27363" />
-    </marker>
     <marker
        style="overflow:visible"
        id="TriangleStart"
@@ -137,25 +118,25 @@
        x="312.55881"
        y="176.99394"
        width="222.58493"
-       height="146.68856"
+       height="146.68855"
        id="rect4760-3" />
     <rect
        x="312.55881"
        y="176.99394"
-       width="222.90493"
+       width="222.90492"
        height="176.47177"
        id="rect4760-3-3" />
     <rect
        x="312.55881"
        y="176.99394"
-       width="312.15504"
+       width="312.15503"
        height="198.97343"
        id="rect5021" />
     <rect
        x="312.55881"
        y="176.99394"
-       width="337.29341"
-       height="222.53431"
+       width="337.2934"
+       height="222.53432"
        id="rect5021-9" />
     <rect
        x="312.55881"
@@ -250,67 +231,78 @@
          d="M 5.77,0 -2.88,5 V -5 Z"
          id="path135-4" />
     </marker>
+    <rect
+       x="1076.3558"
+       y="852.32239"
+       width="56.107304"
+       height="59.56974"
+       id="rect27465-3" />
   </defs>
   <g
      inkscape:label="Calque 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(36.818083,-7.304437)">
+     transform="translate(36.61657,-8.6903849)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 226.25965,112.39636 40.42146,-0.16044 V 43.745799 H 37.25394"
+       id="path26795"
+       sodipodi:nodetypes="cccc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-8)"
-       d="m 209.59172,237.84737 v 16.34497"
+       d="m 266.5141,117.88334 v 16.34497"
        id="path22095-5"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker28225)"
-       d="m 83.175354,133.31053 v 13.77913 H 105.66302 V 55.49655 l 32.29979,-0.20374 v 8.847581"
+       d="m 95.875357,113.2022 v 13.77913 H 118.36305 V 55.49655 l 32.29979,-0.20374 v 8.847581"
        id="path28383"
        sodipodi:nodetypes="cccccc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker28225)"
-       d="m 140.85449,189.4022 v 9.5458 H 163.8713 V 55.49655 l 32.29971,-0.20374 v 8.847581"
+       d="m 153.55452,184.6397 v 9.5458 h 23.01681 V 55.49655 l 32.29971,-0.20374 v 8.847581"
        id="path28391"
        sodipodi:nodetypes="cccccc" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#646464;stroke-width:0.403;stroke-miterlimit:4;stroke-dasharray:0.80599999,0.403;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+       style="fill:none;fill-opacity:1;stroke:#646464;stroke-width:0.403;stroke-miterlimit:4;stroke-dasharray:0.806, 0.403;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
        id="rect24288"
        width="234.89569"
        height="176.63939"
-       x="-4.4505038"
+       x="8.2494965"
        y="61.129871" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9-9)"
-       d="m 196.39279,89.099832 v 7.349139"
+       d="m 209.09282,89.099832 v 7.349139"
        id="path24206"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9-9)"
-       d="m 140.3009,158.42089 v 7.34916"
+       d="m 153.00093,152.60004 v 7.34916"
        id="path24192"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9-9)"
-       d="M 140.3009,124.02484 V 131.374"
+       d="m 153.00093,118.20399 v 7.34916"
        id="path24188"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9-9)"
-       d="m 140.3009,89.628999 v 7.349139"
+       d="m 153.00093,89.628999 v 7.349139"
        id="path24184"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9)"
-       d="m 23.90867,124.42527 v 7.34918"
+       d="m 36.608673,124.42527 v 7.34918"
        id="path22557"
        sodipodi:nodetypes="cc" />
     <use
        xlink:href="#AuxillaryOp"
        style="fill:#abc837;stroke:none"
        id="use4664-7"
-       transform="matrix(0.42764211,0,0,0.32758586,-8.164486,89.617089)" />
+       transform="matrix(0.42764211,0,0,0.32758586,4.5355142,89.617089)" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9)"
-       d="m 23.90867,91.087619 v 7.34914"
+       d="m 36.608673,91.087619 v 7.34914"
        id="path22095-1"
        sodipodi:nodetypes="cc" />
     <text
@@ -328,309 +320,282 @@
        xlink:href="#AuxillaryOp"
        style="fill:#abc837;stroke:none"
        id="use4664"
-       transform="matrix(0.42746951,0,0,0.32769788,-8.151541,57.067698)" />
+       transform="matrix(0.42746951,0,0,0.32769788,4.5484592,57.067698)" />
     <text
        xml:space="preserve"
-       transform="matrix(0.14117852,0,0,0.14117852,-34.913187,50.208414)"
+       transform="matrix(0.14117852,0,0,0.14117852,-22.213184,50.208414)"
        id="text4758"
        style="font-size:27.4869px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect4760);display:inline"><tspan
          x="330.75691"
          y="202.00379"
-         id="tspan30761"><tspan
+         id="tspan34331"><tspan
            style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
-           id="tspan30759">Compute annual </tspan></tspan><tspan
-         x="326.52919"
+           id="tspan34329">Compute annual </tspan></tspan><tspan
+         x="324.77099"
          y="237.01732"
-         id="tspan30765"><tspan
+         id="tspan34335"><tspan
            style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
-           id="tspan30763">food needs (KFN) </tspan></tspan><tspan
-         x="339.48749"
+           id="tspan34333">food needs for all </tspan></tspan><tspan
+         x="374.78561"
          y="272.03086"
-         id="tspan30769"><tspan
+         id="tspan34339"><tspan
            style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
-           id="tspan30767">for all kitchens </tspan></tspan></text>
+           id="tspan34337">kitchens </tspan></tspan></text>
     <use
        xlink:href="#AuxillaryOp"
-       style="fill:#abc837;stroke:none"
+       style="fill:#abc837;stroke:none;stroke-width:1.09424"
        id="use4664-7-6"
-       transform="matrix(0.42764211,0,0,0.32758586,-8.164486,122.62566)" />
+       transform="matrix(0.42764211,0,0,0.27359202,4.5355142,124.51544)" />
     <text
        xml:space="preserve"
-       transform="matrix(0.14117852,0,0,0.14117852,-35.110788,112.79271)"
+       transform="matrix(0.14117852,0,0,0.14117852,-22.410785,112.79271)"
        id="text4758-5-2"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect4760-3-3);display:inline"><tspan
          x="347.73057"
          y="201.34888"
-         id="tspan30771">Compute food </tspan><tspan
+         id="tspan34341">Compute food </tspan><tspan
          x="335.75873"
          y="235.70751"
-         id="tspan30773">production from </tspan><tspan
-         x="352.87765"
+         id="tspan34343">production from </tspan><tspan
+         x="343.29482"
          y="270.06614"
-         id="tspan30775">kitchen (KFP) </tspan><tspan
-         x="386.30349"
-         y="304.42475"
-         id="tspan30777">parcels</tspan></text>
+         id="tspan34345">kitchen parcels</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart-9-9)"
-       d="m 83.679899,95.979001 v 7.349149"
+       d="M 96.379902,84.337331 V 91.68648"
        id="path22095-1-7"
        sodipodi:nodetypes="cc" />
     <use
        xlink:href="#AuxillaryOp"
-       style="fill:#87cdde;stroke:none;stroke-width:0.867957"
+       style="fill:#87cdde;stroke:none;stroke-width:1.05109"
        id="use5017"
-       transform="matrix(0.51760759,0,0,0.35925998,43.306582,55.27046)" />
+       transform="matrix(0.51760759,0,0,0.24497678,56.006585,59.270372)" />
     <text
        xml:space="preserve"
-       transform="matrix(0.14117852,0,0,0.14117852,17.281113,45.822003)"
+       transform="matrix(0.14117852,0,0,0.14117852,29.981116,45.822003)"
        id="text5019"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021);display:inline"><tspan
          x="347.51488"
          y="201.34888"
-         id="tspan30779">Carry out parcel loans 
+         id="tspan34347">Carry out parcel loans 
 </tspan><tspan
-         x="348.56174"
+         x="396.03972"
          y="235.70751"
-         id="tspan30781">from surplus kitchens 
+         id="tspan34349">from kitchen 
 </tspan><tspan
-         x="402.95842"
+         x="414.37998"
          y="270.06614"
-         id="tspan30783">(KFP &gt; KFN) 
-</tspan><tspan
-         x="355.29925"
-         y="304.42475"
-         id="tspan30785">to kitchens in deficit 
-</tspan><tspan
-         x="406.35402"
-         y="338.78339"
-         id="tspan30787">(KFN &gt; KFP)</tspan></text>
+         id="tspan34351">to kitchen</tspan></text>
     <use
        xlink:href="#AuxillaryOp"
-       style="fill:#87cdde;stroke:none;stroke-width:0.838401;stroke-miterlimit:4;stroke-opacity:1"
+       style="fill:#87cdde;stroke:none;stroke-width:1.12489;stroke-miterlimit:4;stroke-opacity:1"
        id="use5017-1"
-       transform="matrix(0.51760759,0,0,0.4469867,43.306582,90.135156)" />
+       transform="matrix(0.51760759,0,0,0.24830112,56.006585,85.447481)" />
     <text
        xml:space="preserve"
-       transform="matrix(0.14117852,0,0,0.14117852,13.917846,84.786361)"
+       transform="matrix(0.14117852,0,0,0.14117852,26.617849,72.615522)"
        id="text5019-2"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9);display:inline"><tspan
          x="348.20633"
          y="201.34888"
-         id="tspan30789">Carry out food donation 
+         id="tspan34353">Carry out food donation 
 </tspan><tspan
-         x="361.13108"
+         x="408.60906"
          y="235.70751"
-         id="tspan30791">from surplus kitchens 
+         id="tspan34355">from kitchen 
 </tspan><tspan
-         x="415.52776"
+         x="426.94932"
          y="270.06614"
-         id="tspan30793">(KFP &gt; KFN) 
-</tspan><tspan
-         x="344.98521"
-         y="304.42475"
-         id="tspan30795">to kitchens still in deficit 
-</tspan><tspan
-         x="383.92722"
-         y="338.78339"
-         id="tspan30797">after parcel loans 
-</tspan><tspan
-         x="418.92336"
-         y="373.14203"
-         id="tspan30799">(KFN &gt; KFP)</tspan></text>
+         id="tspan34357">to kitchen</tspan></text>
     <use
        xlink:href="#AuxillaryOp"
        style="fill:#de87aa;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
        id="use9456"
-       transform="matrix(0.49755186,0,0,0.32685858,102.55113,54.951521)" />
+       transform="matrix(0.49755186,0,0,0.32685858,115.25116,54.951521)" />
     <text
        xml:space="preserve"
-       transform="matrix(0.14117852,0,0,0.14117852,77.586881,47.336257)"
+       transform="matrix(0.14117852,0,0,0.14117852,90.286884,47.336257)"
        id="text5019-2-9"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0);display:inline"><tspan
          x="318.15578"
          y="201.34888"
-         id="tspan30801">Grow the kitchen sizes </tspan><tspan
+         id="tspan34359">Grow the kitchen sizes </tspan><tspan
          x="373.2705"
          y="235.70751"
-         id="tspan30803">according to </tspan><tspan
+         id="tspan34361">according to </tspan><tspan
          x="338.26765"
          y="270.06614"
-         id="tspan30805">population growth</tspan></text>
+         id="tspan34363">population growth</tspan></text>
     <use
        xlink:href="#AuxillaryOp"
-       style="fill:#de87aa;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
+       style="fill:#de87aa;stroke:none;stroke-width:1.09151;stroke-miterlimit:4;stroke-opacity:1"
        id="use9456-6"
-       transform="matrix(0.49755186,0,0,0.32685858,102.73663,88.055043)" />
+       transform="matrix(0.49755186,0,0,0.27434727,115.43666,89.892939)" />
     <text
        xml:space="preserve"
-       transform="matrix(0.14117852,0,0,0.14117852,77.772378,77.793943)"
+       transform="matrix(0.14117852,0,0,0.14117852,90.472381,77.793943)"
        id="text5019-2-9-0"
        style="font-size:27.4869px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0-3);display:inline"><tspan
          x="318.15578"
          y="202.00379"
-         id="tspan30809"><tspan
+         id="tspan34367"><tspan
            style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
-           id="tspan30807">Grow the kitchen sizes </tspan></tspan><tspan
+           id="tspan34365">Grow the kitchen sizes </tspan></tspan><tspan
          x="373.2705"
          y="237.01732"
-         id="tspan30813"><tspan
+         id="tspan34371"><tspan
            style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
-           id="tspan30811">according to </tspan></tspan><tspan
-         x="314.92124"
+           id="tspan34369">according to </tspan></tspan><tspan
+         x="380.16236"
          y="272.03086"
-         id="tspan30817"><tspan
+         id="tspan34375"><tspan
            style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
-           id="tspan30815">emigration (because of </tspan></tspan><tspan
-         x="361.16446"
-         y="307.04438"
-         id="tspan30821"><tspan
-           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
-           id="tspan30819">overcrowding)</tspan></tspan></text>
+           id="tspan34373">emigration</tspan></tspan></text>
     <use
        xlink:href="#AuxillaryOp"
        style="fill:#de87aa;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
        id="use9456-6-2"
-       transform="matrix(0.49755186,0,0,0.32685858,102.84169,122.77851)" />
+       transform="matrix(0.49755186,0,0,0.32685858,115.54172,116.95766)" />
     <text
        xml:space="preserve"
-       transform="matrix(0.14117852,0,0,0.14117852,77.877427,116.75075)"
+       transform="matrix(0.14117852,0,0,0.14117852,90.57743,110.9299)"
        id="text5019-2-9-0-6"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0-3-6);display:inline"><tspan
          x="346.02519"
          y="201.34888"
-         id="tspan30823">Process too small </tspan><tspan
+         id="tspan34377">Process too small </tspan><tspan
          x="327.89967"
          y="235.70751"
-         id="tspan30825">kitchens absorptions</tspan></text>
+         id="tspan34379">kitchens absorptions</tspan></text>
     <use
        xlink:href="#AuxillaryOp"
        style="fill:#de87aa;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
        id="use9456-6-2-8"
-       transform="matrix(0.49755186,0,0,0.32685858,102.88137,156.60294)" />
+       transform="matrix(0.49755186,0,0,0.32685858,115.5814,150.78209)" />
     <text
        xml:space="preserve"
-       transform="matrix(0.14117852,0,0,0.14117852,77.91712,151.10435)"
+       transform="matrix(0.14117852,0,0,0.14117852,90.617123,145.2835)"
        id="text5019-2-9-0-6-7"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0-3-6-1);display:inline"><tspan
          x="358.37953"
          y="201.34888"
-         id="tspan30827">Process too big
+         id="tspan34381">Process too big
 </tspan><tspan
          x="359.63442"
          y="235.70751"
-         id="tspan30829"> kitchens splits </tspan></text>
+         id="tspan34383"> kitchens splits </tspan></text>
     <text
        xml:space="preserve"
        style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
-       x="27.782169"
+       x="40.482178"
        y="221.52216"
        id="text20056"><tspan
          sodipodi:role="line"
          id="tspan20054"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
-         x="27.782169"
+         x="40.482178"
          y="221.52216">AGRICULTURE</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
-       x="83.616371"
+       x="96.316383"
        y="217.99438"
        id="text20056-0"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
-         x="83.616371"
+         x="96.316383"
          y="217.99438"
          id="tspan20103">SOCIAL</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
-         x="83.616371"
+         x="96.316383"
          y="225.18442"
          id="tspan21115">ORGANIZATION</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0.14117852,0,0,0.14117852,-35.594778,80.004945)"
+       transform="matrix(0.14117852,0,0,0.14117852,-22.894775,80.004945)"
        id="text4758-5"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect4760-3);display:inline"><tspan
          x="358.26819"
          y="201.34888"
-         id="tspan30831">Switch crop 
+         id="tspan34385">Switch crop 
 </tspan><tspan
          x="327.87557"
          y="235.70751"
-         id="tspan30833">culture on parcels </tspan><tspan
+         id="tspan34387">culture on parcels </tspan><tspan
          x="357.77832"
          y="270.06614"
-         id="tspan30835">according to </tspan><tspan
+         id="tspan34389">according to </tspan><tspan
          x="350.69185"
          y="304.42475"
-         id="tspan30837">rotation cycle</tspan></text>
+         id="tspan34391">rotation cycle</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
-       x="200.6095"
+       x="213.3094"
        y="220.6693"
        id="text20056-0-3-7"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
-         x="200.6095"
+         x="213.3094"
          y="220.6693"
          id="tspan20441-1">SOIL FERTILITY</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
-       x="141.40601"
+       x="154.10591"
        y="219.14679"
        id="text20056-0-3"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
-         x="141.40601"
+         x="154.10591"
          y="219.14679"
          id="tspan20441">KITCHEN STRUCTURE</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke-width:0.264583"
-         x="141.40601"
+         x="154.10591"
          y="226.33682"
          id="tspan21124">EVOLUTION</tspan></text>
     <use
        xlink:href="#AuxillaryOp"
        style="fill:#ff9955;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
        id="use20648"
-       transform="matrix(0.49755186,0,0,0.32685858,158.93194,55.246398)" />
+       transform="matrix(0.49755186,0,0,0.32685858,171.63197,55.246398)" />
     <text
        xml:space="preserve"
-       transform="matrix(0.14117852,0,0,0.14117852,134.68233,50.63847)"
+       transform="matrix(0.14117852,0,0,0.14117852,147.38236,50.63847)"
        id="text5019-2-9-2"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0-9);display:inline"><tspan
          x="351.65544"
          y="201.34888"
-         id="tspan30839">Update nitrogen </tspan><tspan
-         x="338.89846"
+         id="tspan34393">Update nitrogen </tspan><tspan
+         x="342.29405"
          y="235.70751"
-         id="tspan30841">amount  in parcels</tspan></text>
+         id="tspan34395">amount in parcels</tspan></text>
     <use
        xlink:href="#AuxillaryOp"
        style="fill:#ff9955;stroke:none;stroke-miterlimit:4;stroke-opacity:1"
        id="use20844"
-       transform="matrix(0.49755186,0,0,0.32685858,158.9982,88.27319)" />
+       transform="matrix(0.49755186,0,0,0.32685858,171.69823,88.27319)" />
     <text
        xml:space="preserve"
-       transform="matrix(0.14117852,0,0,0.14117852,134.68233,85.456843)"
+       transform="matrix(0.14117852,0,0,0.14117852,147.38236,85.456843)"
        id="text5019-2-9-2-8"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.4869px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect5021-9-0-9-2);display:inline"><tspan
-         x="320.98097"
+         x="324.37657"
          y="201.34888"
-         id="tspan30843">Update soil quality  in </tspan><tspan
+         id="tspan34397">Update soil quality in </tspan><tspan
          x="401.6365"
          y="235.70751"
-         id="tspan30845">parcels</tspan></text>
+         id="tspan34399">parcels</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#TriangleStart)"
-       d="M 24.437838,37.375476 V 58.482949"
-       id="path22095" />
+       d="M 37.137841,34.200478 V 66.420451"
+       id="path22095"
+       sodipodi:nodetypes="cc" />
     <g
        id="g4756"
-       transform="translate(-10.044434,-2.9393052)">
+       transform="translate(2.6555662,-13.52264)">
       <use
          xlink:href="#Terminal"
          style="fill:#aaccee;stroke:#000000"
@@ -651,7 +616,7 @@
     <rect
        style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.403;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
        id="rect25983"
-       width="299.22784"
+       width="346.07962"
        height="268.16748"
        x="-36.61657"
        y="8.6903849" />
@@ -659,54 +624,81 @@
        xlink:href="#Terminal"
        style="fill:#aaccee;stroke:#000000;stroke-opacity:1"
        id="use4256-3"
-       transform="matrix(0.26458333,0,0,0.26458333,190.27714,242.28609)" />
+       transform="matrix(0.26458333,0,0,0.26458333,246.67035,122.65037)" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke:none;stroke-width:0.264583"
-       x="210.03905"
-       y="264.14493"
+       x="266.4321"
+       y="144.50923"
        id="text4701-6"><tspan
          sodipodi:role="line"
          id="tspan4699-1"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, ';stroke:none;stroke-width:0.264583"
-         x="210.03905"
-         y="264.14493">FINISH</tspan></text>
+         x="266.4321"
+         y="144.50923">FINISH</tspan></text>
     <path
-       style="fill:none;stroke:#35351e;stroke-width:0.403;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:0.80599999,0.403;stroke-dashoffset:0;fill-opacity:1"
-       d="m 55.452745,61.129873 v 176.639387 0"
+       style="fill:none;fill-opacity:1;stroke:#35351e;stroke-width:0.403;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:0.806, 0.403;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 68.152748,61.129873 v 176.639387 0"
        id="path26787" />
     <path
-       style="fill:none;stroke:#35351e;stroke-width:0.403;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:0.80599999,0.403;stroke-dashoffset:0;stroke-opacity:1;fill-opacity:1"
-       d="m 110.48611,61.129873 v 176.639387 0"
+       style="fill:none;fill-opacity:1;stroke:#35351e;stroke-width:0.403;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:0.806, 0.403;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 123.18614,61.129873 v 176.639387 0"
        id="path26791" />
     <path
-       style="fill:none;stroke:#35351e;stroke-width:0.403;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:0.80599999,0.403;stroke-dashoffset:0;stroke-opacity:1;fill-opacity:1"
-       d="m 168.69458,61.129873 v 176.639387 0"
+       style="fill:none;fill-opacity:1;stroke:#35351e;stroke-width:0.403;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:0.806, 0.403;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 181.39461,61.129873 v 176.639387 0"
        id="path26793" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker27365)"
-       d="m 224.47671,237.76926 v 9.91578 l 21.37146,-0.16044 v -15.57346 h -12.75715"
-       id="path26795"
-       sodipodi:nodetypes="ccccc" />
     <text
        xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,-39.463918,8.3627704)"
+       transform="matrix(0.26458333,0,0,0.26458333,-16.224096,-150.92404)"
        id="text27463"
        style="font-size:16px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect27465);display:inline"><tspan
          x="1089.1279"
          y="866.88027"
-         id="tspan30849"><tspan
+         id="tspan34403"><tspan
            style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
-           id="tspan30847">Time </tspan></tspan><tspan
+           id="tspan34401">Time </tspan></tspan><tspan
          x="1090.624"
          y="887.26149"
-         id="tspan30853"><tspan
+         id="tspan34407"><tspan
            style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
-           id="tspan30851">loop</tspan></tspan></text>
+           id="tspan34405">loop</tspan></tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker28225)"
-       d="m 23.908673,160.29803 v 9.5458 H 46.925496 V 55.49655 l 36.003883,-0.20374 v 10.435081"
+       d="m 36.608676,154.4772 v 9.01663 H 59.625499 V 55.49655 l 36.003883,-0.20374 v 10.435081"
        id="path28221"
        sodipodi:nodetypes="cccccc" />
+    <rect
+       style="fill:#aaccee;fill-opacity:1;stroke:none;stroke-width:0.403;stroke-miterlimit:4;stroke-dasharray:0.805997, 0.403;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect31009"
+       width="10.449986"
+       height="10.289455"
+       x="105.56586"
+       y="262.04407"
+       transform="rotate(-44.643517)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.18146141,0,0,0.18146141,66.386619,-46.225431)"
+       id="text27463-2"
+       style="font-size:16px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect27465-3);display:inline;stroke-width:1.45807"><tspan
+         x="1087.5029"
+         y="866.88027"
+         id="tspan34411"><tspan
+           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
+           id="tspan34409">For N
+</tspan></tspan><tspan
+         x="1087.7412"
+         y="887.26149"
+         id="tspan34415"><tspan
+           style="font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '"
+           id="tspan34413">years</tspan></tspan></text>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 200.62631,41.457759 -0.0629,4.50478 -3.80026,-2.21674 z"
+       id="path32622" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 256.02076,109.98087 0.0629,4.50478 3.80026,-2.21674 z"
+       id="path32622-0" />
   </g>
 </svg>
