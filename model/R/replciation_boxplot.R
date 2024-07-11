@@ -37,9 +37,9 @@ ggplot(df_group, aes(group=size, x=size))+
 
 
 ggplot(df_group, aes( x=group))+
-  geom_boxplot(aes(y=yield ,  color= group, group=group),orientation = "x")+
+  geom_boxplot(aes(y=yield , group=group),orientation = "x")+
   theme_light() +
-  facet_grid(rows = vars(size))
+  facet_wrap(~size)
 
 
 df_group$pop %>% unique()
