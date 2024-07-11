@@ -18,7 +18,7 @@ import org.apache.commons.math3.stat.regression.SimpleRegression
 // Apply n switchers in n similations (one switcher per simulation)
 object SwitchExplorer:
 
-  def explore(outputPath: String) =
+  def explore(lands: java.io.File, outputPath: String) =
     val file = File(outputPath)
     file.createDirectories()
 
@@ -80,7 +80,7 @@ object SwitchExplorer:
       println("Running " + s)
       val (state: SimulationState, simulationData: Data) = Simulation(
         7L,
-        giniParcels = 0.2,
+        lands = lands,
         populationGrowth = 0.014459473589348654,
         kitchenPartition = kitchenPartition,
         supportPolicy = supportPolicy,

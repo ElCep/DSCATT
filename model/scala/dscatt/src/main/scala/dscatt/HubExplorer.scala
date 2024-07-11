@@ -18,6 +18,7 @@ import org.apache.commons.math3.stat.regression.SimpleRegression
 object HubExplorer:
 
   def explore(switchTime: Int,
+              lands: java.io.File,
               rainfall: RainFall,
               faidherbia: Faidherbia,
               loan: Loan,
@@ -70,7 +71,7 @@ object HubExplorer:
     switchers.foreach(println)
     val (simulationState: SimulationState, simulationData: Data) = Simulation(
       7L,
-      giniParcels = 0.2,
+      lands = lands,
       populationGrowth = 0.013222486737573532,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,

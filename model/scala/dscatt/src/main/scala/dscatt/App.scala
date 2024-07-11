@@ -21,9 +21,12 @@ object Diohine {
   case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile])
 
   def main(args: Array[String])=
+    val landsDirectory = java.io.File(args.head)
    // SwitchExplorer.explore("/tmp/newQS")
     //CSVExplorer.run
-    unitary(7L)
+    val seed = 777
+    unitary(seed.toLong, java.io.File(landsDirectory, s"s${seed}k22g0,20.json"))
+   // replicate(1000, landsDirectory)
 
 //    HubExplorer.explore(
 //      switchTime = 26,
@@ -41,9 +44,8 @@ object Diohine {
 //      peanutForInexcess = PeanutInexcess(0.1)
 //    )
 
-  def unitary(seed: Long) = {
+  def unitary(seed: Long, lands: java.io.File) = {
 
-    println("MAIN")
     val hookFile = HookFile(
       outputPath = "/tmp",
       parcels = false,
@@ -53,7 +55,7 @@ object Diohine {
 
     val hooks = HookParameters(
       displayParcels = false,
-      displayKitchens = true,
+      displayKitchens = false,
       hookFile = None
     )
 
@@ -83,7 +85,7 @@ object Diohine {
 
     val (simulationState, simulationData) = Simulation(
       seed = seed,
-      giniParcels = 0.2,
+      lands = lands,
       populationGrowth = 0.014459473589348654,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
@@ -126,7 +128,7 @@ object Diohine {
 //    //    println("\nKSA " + average(simulationState.averageKitchenSizeDynamic.toSeq))
 //    println("\nEffective fallow " + simulationState.effectiveFallowRatioDynamic.toSeq)
 //    println("\nFood stress " + simulationState.foodStress.toSeq)
-    println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)
+  //  println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)
 //    //    println("\nPeanut yield dynamic  " + simulationState.averagePeanutYieldDynamic.toSeq)
 //    //    println("\nNb of kitchens " + simulationState.numberOfKitchens.toSeq)
 //    //    val kitchenSoilQuality =
@@ -135,10 +137,16 @@ object Diohine {
 //    //println("SQ for K1 " + kitchenSoilQuality)
 //    println("\nSoil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
 //    println("NB Absorbed " + simulationState.numberOfAbsorbedKitchens)
-    println("SQ " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
+  //  println("SQ " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
 
-    println("MIL yield " + simulationState.averageMilYieldDynamic.sum / simulationState.averageMilYieldDynamic.length)
+    //println("MIL yield " + simulationState.averageMilYieldDynamic.sum / simulationState.averageMilYieldDynamic.length)
+    println(s"$seed, ${simulationState.effectiveFallowRatioDynamic.last},${simulationState.populationDynamic.last},${simulationState.averageMilYieldDynamic.last},${simulationState.herdDynamic.last}")
   }
+
+  def replicate(iterations: Int, landsDirectory: java.io.File) =
+    println("seed,ef,pop,yield,herd")
+    for i<- 1 to iterations
+    do unitary(i.toLong, java.io.File(s"landsDirectory/s{$i}k22g0,20.json"))
 
 
 }

@@ -3,11 +3,15 @@ package dscatt
 import Parcel.*
 import Croping.*
 import Kitchen.KitchenID
+import better.files.File
 import io.circe.Decoder.*
 import io.circe.*
 import io.circe.parser.*
 import io.circe.generic.semiauto.*
 import shared.Data
+import better.files._
+import java.io.{File => JFile, _}
+import better.files.{File => ScalaFile, _}
 
 import java.text.DecimalFormat
 import scala.io.Source
@@ -15,16 +19,15 @@ import scala.io.Source
 object World {
 
   def buildWorldGeometry(kitchens: Seq[Kitchen],
-                         giniIndex: Double,
-                         seed: Long,
+                         lands: java.io.File,
                          data: Data
                         ): World =
 
-    val parcelPath = s"json/s${seed.toString}k${kitchens.size}g${String.format(java.util.Locale.FRANCE, "%.2f", giniIndex)}.json"
-    val resource = scala.io.Source.fromResource(parcelPath, World.getClass.getClassLoader).getLines().mkString("\n")
+    val resource: File = File(lands.getAbsolutePath)
+    val content = resource.contentAsString
 
     implicit val parcelJsonDecoder: Decoder[Data.ParcelJson] = deriveDecoder[Data.ParcelJson]
-    decode[List[Data.ParcelJson]](resource) match
+    decode[List[Data.ParcelJson]](content) match
       case Right(ps) =>
         val kitchensMap = kitchens.groupBy(_.id)
         val parcels = ps map: p=>

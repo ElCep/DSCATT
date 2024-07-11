@@ -27,7 +27,7 @@ object Simulation {
 
   def apply(
              seed: Long,
-             giniParcels: Double,
+             lands: java.io.File,
              populationGrowth: Double,
              kitchenPartition: KitchenPartition = KitchenPartition((KitchenProfile.default, 1)),
              supportPolicy: SupportPolicy,
@@ -60,7 +60,7 @@ object Simulation {
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
-    val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, giniParcels, seed, data))
+    val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, lands, data))
 
     val initialHistory = History.initialize(simulationLength, kitchens)
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
