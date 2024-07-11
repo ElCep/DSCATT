@@ -21,11 +21,11 @@ object Diohine {
   case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile])
 
   def main(args: Array[String])=
-    val landsDirectory = java.io.File(args.head)
-   // SwitchExplorer.explore("/tmp/newQS")
-    //CSVExplorer.run
+    val landsDirectory = java.io.File(args.head + "/s777k22g0,20.json")
+    SwitchExplorer.explore(landsDirectory, "/tmp/newQS")
+   // CSVExplorer.run
     val seed = 777
-    unitary(seed.toLong, java.io.File(landsDirectory, s"s${seed}k22g0,20.json"))
+  //  unitary(seed.toLong, java.io.File(landsDirectory, s"s${seed}k22g0,20.json"))
    // replicate(1000, landsDirectory)
 
 //    HubExplorer.explore(
@@ -86,16 +86,16 @@ object Diohine {
     val (simulationState, simulationData) = Simulation(
       seed = seed,
       lands = lands,
-      populationGrowth = 0.014459473589348654,
+      populationGrowth = 0.014488068822213016,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
       simulationLength = 26,
       soilQualityBasis = 100,
-      fallowBoost = 3.8128574231585395,
+      fallowBoost = 2.505042416468803,
       cropResidueBoost = 37,
-      erosion = 0.0010170508493904445,
-      sqrf = 0.014806514692699349,
-      peanutSeedToFood = 1.680505278034874,
+      erosion = 0.001,
+      sqrf = 0.015458790627221223,
+      peanutSeedToFood = 1.5831974550765018,
       dailyFoodNeedPerPerson = 0.555,
       hookParameters = hooks,
       rainFall = 600,

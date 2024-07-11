@@ -10,7 +10,7 @@ import dscatt.LoanStrategy.Selfish
 import dscatt.{Croping, CropingStrategy, Data, FertilizerStrategy, FoodDonationStrategy, HerdGrazingStrategy, HerdSizeStrategy, KitchenPartition, KitchenProfile, LoanStrategy, MulchingStrategy, OwnFallowUse, Parcel, RotationCycle, Simulation, SupportPolicy, SwitchType, Switcher, utils}
 import dscatt.MulchingStrategy.CropResidue
 import dscatt.OwnFallowUse.UseFallowIfNeeded
-import dscatt.RotationCycle.TwoYears
+import dscatt.RotationCycle.{MilOnly, TwoYears}
 import dscatt.Simulation.SimulationState
 import dscatt.SwitchType.{Demography, Faidherbia, HerdSize, Mulching, OwnFallow, RainFall, Rotation, Solidarity}
 import org.apache.commons.math3.stat.regression.SimpleRegression
@@ -37,18 +37,18 @@ object SwitchExplorer:
 
     val kitchenProfile1 = KitchenProfile(
       kitchenSize = 16,
-      RotationCycle.ThreeYears,
+      RotationCycle.MilOnly,
       CropingStrategy.PeanutForInexcess(0.0),
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
       FoodDonationStrategy.FoodForAllStrategy,
       HerdGrazingStrategy.EverywhereByDayOwnerByNight,
       HerdGrazingStrategy.EverywhereByDayOwnerByNight,
-      HerdSizeStrategy.LSUByArea(0.42), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
+      HerdSizeStrategy.LSUByArea(0.0), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
       MulchingStrategy.NoMulching,
-      4
+      0
     )
 
     val kitchenPartition = KitchenPartition((kitchenProfile1, 22))
@@ -63,17 +63,18 @@ object SwitchExplorer:
 
     val switchers =
       Seq(
-        Seq(),
-        Seq(Switcher(26, RainFall(700))),
-        Seq(Switcher(26, Faidherbia(6))),
-        Seq(Switcher(26, HerdSize(LSUByArea(0.525)))),
-        Seq(Switcher(26, HerdSize(FullCapacity))),
-        Seq(Switcher(26, Mulching(CropResidue))),
-        Seq(Switcher(26, Rotation(TwoYears))),
-        Seq(Switcher(26, SwitchType.Grazing(AnywhereAnyTime, AnywhereAnyTime))),
-        //Seq(Switcher(26, Solidarity(Selfish, FoodForUsOnlyStrategy))),
-        Seq(Switcher(26, OwnFallow(UseFallowIfNeeded))),
-        Seq(Switcher(26, Demography(0.0072297))) // 50%
+//        Seq(),
+//        Seq(Switcher(26, RainFall(700))),
+//        Seq(Switcher(26, Faidherbia(6))),
+//        Seq(Switcher(26, HerdSize(LSUByArea(0.525)))),
+//        Seq(Switcher(26, HerdSize(FullCapacity))),
+//        Seq(Switcher(26, Mulching(CropResidue))),
+//        Seq(Switcher(26, Rotation(TwoYears))),
+//        Seq(Switcher(26, SwitchType.Grazing(AnywhereAnyTime, AnywhereAnyTime))),
+//        //Seq(Switcher(26, Solidarity(Selfish, FoodForUsOnlyStrategy))),
+//        Seq(Switcher(26, OwnFallow(UseFallowIfNeeded))),
+//        Seq(Switcher(26, Demography(0.0072297))) // 50%
+        Seq(Switcher(2, Mulching(CropResidue)))
       )
 
     val dynamics = switchers.map: s=>
@@ -81,16 +82,16 @@ object SwitchExplorer:
       val (state: SimulationState, simulationData: Data) = Simulation(
         7L,
         lands = lands,
-        populationGrowth = 0.014459473589348654,
+        populationGrowth = 0.014488068822213016,
         kitchenPartition = kitchenPartition,
         supportPolicy = supportPolicy,
-        simulationLength = 50,
+        simulationLength = 3,
         soilQualityBasis = 100,
-        fallowBoost = 3.8128574231585395,
-        cropResidueBoost = 37,
-        erosion = 0.0010170508493904445,
-        sqrf = 0.014806514692699349,
-        peanutSeedToFood = 1.680505278034874,
+        fallowBoost = 2.505042416468803,
+        cropResidueBoost = 40,
+        erosion = 0.001,
+        sqrf = 0.015458790627221223,
+        peanutSeedToFood = 1.5831974550765018,
         dailyFoodNeedPerPerson = 0.555,
         hookParameters = hooks,
         rainFall = 600,
@@ -98,8 +99,8 @@ object SwitchExplorer:
       )
 
       val yields = state.averageMilYieldDynamic.tail.toSeq
-//      println("Yield " +   yields)
-//      println("Gain " +   yields.last / yields(0))
+      println("Yield " +   yields)
+      println("Gain " +   yields.last / yields(0))
 
       Seq(
         state.populationDynamic.tail.toSeq,

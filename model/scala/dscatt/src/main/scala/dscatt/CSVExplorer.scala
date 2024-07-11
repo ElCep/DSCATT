@@ -18,24 +18,29 @@ object CSVExplorer:
     def fivePCTube: RowData =
       val content =
         rowData.content.filter: line =>
-          val qs = line(21).tail.dropRight(1).split(",").map(_.toDouble)
+          val qs = toAADouble(line(13)).transpose.map(_.sum / 20)
           val maxTube = qs.head * 1.02
           val minTube = qs.head * 0.97
           qs.forall(el=> el <= maxTube && el >= minTube)
       rowData.copy(content = content)
 
     def around700Yield =
-      val sort = rowData.content.filter(c=>
-        c(22).toDouble >= 670 && c(22).toDouble <= 730)
+      val sort = rowData.content.filter: line=>
+        val y = toAADouble(line(14)).transpose
+        val yy= y.map(x=> x.sum / x.length)
+        val averageYield = yy.sum / yy.length
+        println("AY " + averageYield)
+        averageYield >= 670 && averageYield <= 730
       rowData.copy(content = sort)
 
     def printObjectivesAndCo =
       rowData.content.foreach: line=>
-        println(line(2) + " - " + line(3) + " - "  + line(4) + " - "  + line(5) + " - "  + line(6) + " - " + line(22) + " - " + line(15))
+        println(line(2) + " - " + line(3) + " - "  + line(4) + " - "  + line(5) + " - "  + line(6) )//+ " - " + line(22) + " - " + line(15))
 
     def printQS =
       rowData.content.foreach: line=>
-        val qs = line(11).tail.dropRight(1).split(",").map(_.toDouble)
+        val qs0 = toAADouble(line(13)).transpose
+        val qs = qs0.map(x=> x.sum / x.length)
         println(qs.toSeq)
 
     def printEF17andLast =
@@ -49,16 +54,19 @@ object CSVExplorer:
         println(pop)
 
   def run =
-    val content = scala.io.Source.fromFile("/tmp/out.csv").getLines().toSeq
+    val content = scala.io.Source.fromFile("/tmp/stochastics.csv").getLines().toSeq
     val rowData = fromCSV(content)
-    val result = rowData.getNullAgroObjective.fivePCTube.around700Yield
 
-    result.printQS
-    //result.printObjectivesAndCo
+    val result = rowData.fivePCTube.around700Yield
+//
+    //result.printQS
+    result.printObjectivesAndCo
     println("# " + result.content.length)
-    println("closest " + result.printObjectivesAndCo)
+//    println("closest " + result.printObjectivesAndCo)
 
+  def toADouble(s: String) = s.tail.dropRight(1).split(",").map(_.toDouble)
 
+  def toAADouble(s: String) = s.tail.dropRight(2).split("],").map(_.tail.split(",").map(_.toDouble))
 
   def fromCSV(lines: Seq[String]) = {
 
@@ -83,6 +91,7 @@ object CSVExplorer:
             case _ => dimension0(toBeParsed.tail, dim)
 
       dimension0(s, 0)
+
 
     @tailrec
     def parse0(toBeChecked: String, pending: Option[Pending], parsed: List[String]): Seq[String] = {
