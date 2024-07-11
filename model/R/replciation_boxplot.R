@@ -6,47 +6,54 @@ rm(list = ls())
 df <- read.csv("../data_simu/replication.csv", header = T, sep = ",")
 
 
-sampleSizes <- seq(1,50, by=5)
+sampleSizes <- seq(0,40, by=5)
 
 
 
 df_group <- data.frame()
+
+  
 for(i in sampleSizes){
-  for(group in 1:3){
-    a <- df %>% slice_sample(n = i, replace = T)
-    a$group <- group
-    a$size <- i
-    df_group <- rbind(df_group, a)
-  }
+  if(i > 0){
+    for(group in 1:3){
+      a <- df %>% slice_sample(n = i, replace = T)
+      a$group <- group
+      a$size <- i
+      df_group <- rbind(df_group, a)
+    }
+  } 
 }
 
 
-ggplot(df_group, aes(group=size, x=size))+
-  geom_boxplot(aes(y=ef),orientation = "x")+
-  theme_light()
-
-ggplot(df_group, aes(group=size, x=size))+
-  geom_boxplot(aes(y=pop),orientation = "x")+
-  theme_light()
-
-ggplot(df_group, aes(group=size, x=size))+
-  geom_boxplot(aes(y=herd, color= group),orientation = "x")+
-  theme_light()+
-  facet_grid(rows = vars(group))
+# ggplot(df_group, aes(group=size, x=size))+
+#   geom_boxplot(aes(y=ef),orientation = "x")+
+#   theme_light()
+# 
+# ggplot(df_group, aes(group=size, x=size))+
+#   geom_boxplot(aes(y=pop),orientation = "x")+
+#   theme_light()
+# 
+# ggplot(df_group, aes(group=size, x=size))+
+#   geom_boxplot(aes(y=herd, color= group),orientation = "x")+
+#   theme_light()+
+#   facet_grid(rows = vars(group))
 
 
 
 ggplot(df_group, aes( x=group))+
   geom_boxplot(aes(y=ef , group=group),orientation = "x")+
+  geom_hline(yintercept = 0.3925234, linetype='dotdash', col = '#bdbdbd')+
   theme_light() +
-  facet_wrap(~size, labeller = "label_both")
+  labs(x = "Groups", y = "Effective Fallow")+
+  facet_wrap(~size, labeller = "label_both",ncol = 4)
+ggsave(filename = "../img/samples_faceted.png", width = 7, height = 9, dpi = 120)
 
 
-df_group$pop %>% unique()
-df_group$herd %>% unique()
-
-df_group$size %>% unique()
-df_group$group %>% unique()
+# df_group$pop %>% unique()
+# df_group$herd %>% unique()
+# 
+# df_group$size %>% unique()
+# df_group$group %>% unique()
 
 
 # on va tirer 10 fois le même nombre de sample 
