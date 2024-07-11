@@ -6,6 +6,24 @@ rm(list = ls())
 df <- read.csv("../data_simu/replication.csv", header = T, sep = ",")
 
 
+
+sampleSizes <- seq(1,50)
+
+
+
+df_group <- data.frame()
+for(i in sampleSizes){
+  for(group in 1:3){
+    a <- df_group %>% slice_sample(n = i, replace = F)
+    a$group <- group
+    df_group <- rbind(df_group, a)
+  }
+}
+
+
+df_group
+
+
 # on va tirer 10 fois le même nombre de sample 
 # créer des groupes dans un data frame
 # et on plotera les boxplot correspondant par groupe
