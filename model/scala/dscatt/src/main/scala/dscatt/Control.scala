@@ -8,9 +8,10 @@ trait Control
 type KitchenSize = Int
 
 enum RotationCycle extends Control:
-        case ThreeYears extends RotationCycle
-        case TwoYears extends RotationCycle
-        case MilOnly extends RotationCycle
+        case FallowMilletPeanut extends RotationCycle // Fallow-Millet-Peanut
+        case MilletPeanut extends RotationCycle // Millet-Peanut
+        case MilletFallow extends RotationCycle // Millet-Fallow
+        case MilletOnly extends RotationCycle // Millet
 
 enum CropingStrategy extends Control:
 // Peanut food provisioned from the food needs: cultivated = FoodNeeds + savvingRate(MaxCultivable-FoodNeed)
@@ -96,7 +97,7 @@ case class KitchenProfile(
 object KitchenProfile {
   val default = KitchenProfile(
       10,
-      RotationCycle.ThreeYears,
+      RotationCycle.FallowMilletPeanut,
       CropingStrategy.PeanutForInexcess(0.0),
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,

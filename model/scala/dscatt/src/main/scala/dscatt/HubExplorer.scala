@@ -9,7 +9,7 @@ import dscatt.HerdSizeStrategy.{FullCapacity, LSUByArea}
 import dscatt.LoanStrategy.Selfish
 import dscatt.{Croping, CropingStrategy, Data, FertilizerStrategy, FoodDonationStrategy, HerdGrazingStrategy, HerdSizeStrategy, KitchenPartition, KitchenProfile, LoanStrategy, MulchingStrategy, OwnFallowUse, Parcel, RotationCycle, Simulation, SupportPolicy, SwitchType, Switcher, utils}
 import dscatt.MulchingStrategy.CropResidue
-import dscatt.RotationCycle.TwoYears
+import dscatt.RotationCycle.MilletPeanut
 import dscatt.Simulation.SimulationState
 import dscatt.SwitchType.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
@@ -42,7 +42,7 @@ object HubExplorer:
 
     val kitchenProfile1 = KitchenProfile(
       kitchenSize = 16,
-      RotationCycle.ThreeYears,
+      RotationCycle.FallowMilletPeanut,
       CropingStrategy.PeanutForInexcess(0.0),
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,

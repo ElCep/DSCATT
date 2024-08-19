@@ -10,7 +10,7 @@ import dscatt.HerdGrazingStrategy.AnywhereAnyTime
 import dscatt.HerdSizeStrategy.{FullCapacity, LSUByArea}
 import dscatt.LoanStrategy.Selfish
 import dscatt.MulchingStrategy.CropResidue
-import dscatt.RotationCycle.TwoYears
+import dscatt.RotationCycle.MilletPeanut
 import dscatt.SwitchType.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
@@ -22,10 +22,10 @@ object Diohine {
 
   def main(args: Array[String])=
     val landsDirectory = java.io.File(args.head + "/s777k22g0,20.json")
-    SwitchExplorer.explore(landsDirectory, "/tmp/newQS")
+   // SwitchExplorer.explore(landsDirectory, "/tmp/newQS")
    // CSVExplorer.run
     val seed = 777
-  //  unitary(seed.toLong, java.io.File(landsDirectory, s"s${seed}k22g0,20.json"))
+    unitary(seed.toLong, landsDirectory)
    // replicate(1000, landsDirectory)
 
 //    HubExplorer.explore(
@@ -54,7 +54,7 @@ object Diohine {
     )
 
     val hooks = HookParameters(
-      displayParcels = false,
+      displayParcels = true,
       displayKitchens = false,
       hookFile = None
     )
@@ -65,7 +65,7 @@ object Diohine {
 
     val kitchenProfile1 = KitchenProfile(
       kitchenSize = 16,
-      RotationCycle.ThreeYears,
+      RotationCycle.FallowMilletPeanut,
       CropingStrategy.PeanutForInexcess(0.0),
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
@@ -92,7 +92,7 @@ object Diohine {
       simulationLength = 26,
       soilQualityBasis = 100,
       fallowBoost = 2.505042416468803,
-      cropResidueBoost = 37,
+      cropResidueBoost = 40,
       erosion = 0.001,
       sqrf = 0.015458790627221223,
       peanutSeedToFood = 1.5831974550765018,
@@ -103,7 +103,10 @@ object Diohine {
      //Seq(Switcher(26, SwitchType.Solidarity(Selfish, FoodForUsOnlyStrategy)))
     )
 
+    println("#parc: " + simulationState.world.parcels.length)
+    println("#surf: " + simulationState.world.parcels.map(_.area).sum)
     given data: Data = simulationData
+
 
 //    //    val (rsquare, slope) = simulationState.populationRSquareAndSlope
 //    println("Pop " + simulationState.populationDynamic.toSeq)

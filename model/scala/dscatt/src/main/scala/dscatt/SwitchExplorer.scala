@@ -10,7 +10,7 @@ import dscatt.LoanStrategy.Selfish
 import dscatt.{Croping, CropingStrategy, Data, FertilizerStrategy, FoodDonationStrategy, HerdGrazingStrategy, HerdSizeStrategy, KitchenPartition, KitchenProfile, LoanStrategy, MulchingStrategy, OwnFallowUse, Parcel, RotationCycle, Simulation, SupportPolicy, SwitchType, Switcher, utils}
 import dscatt.MulchingStrategy.CropResidue
 import dscatt.OwnFallowUse.UseFallowIfNeeded
-import dscatt.RotationCycle.{MilOnly, TwoYears}
+import dscatt.RotationCycle.{MilletOnly, MilletPeanut}
 import dscatt.Simulation.SimulationState
 import dscatt.SwitchType.{Demography, Faidherbia, HerdSize, Mulching, OwnFallow, RainFall, Rotation, Solidarity}
 import org.apache.commons.math3.stat.regression.SimpleRegression
@@ -37,7 +37,7 @@ object SwitchExplorer:
 
     val kitchenProfile1 = KitchenProfile(
       kitchenSize = 16,
-      RotationCycle.MilOnly,
+      RotationCycle.MilletOnly,
       CropingStrategy.PeanutForInexcess(0.0),
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
