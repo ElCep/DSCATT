@@ -11,7 +11,7 @@ object KitchenComposer:
   case class RequiredControls(rotation: RotationCycle, ownFallowUse: OwnFallowUse, loan: LoanStrategy, donation: FoodDonationStrategy, herdSizeStrategy: HerdSizeStrategy, dryHerdGrazing: HerdGrazingStrategy, wetHerdGrazing: HerdGrazingStrategy, mulching: MulchingStrategy)
 
   // controlCompositionID from 0 to 1151
-  case class KitchenProfileBuilder(controlCompositionID: Int, ratio: Double, nbFaidherbia: Int, lsu: Double)
+  case class KitchenProfileBuilder(kitchenProfileID: KitchenProfileID, ratio: Double, nbFaidherbia: Int, lsu: Double)
 
 
   implicit class controlWrapper(c: Control):
@@ -102,7 +102,7 @@ object KitchenComposer:
       else
         val kPBuilder = kPBuilders.head
         val nbK = (kPBuilder.ratio * totalPopulation / 16).floor.toInt
-        val composition = allCompositions(kPBuilder.controlCompositionID)
+        val composition = allCompositions(kPBuilder.kitchenProfileID)
         val herdSizeStrategy =
           composition.herdSizeStrategy match
             case LSUByArea(_)=> LSUByArea(kPBuilder.lsu)
@@ -111,6 +111,7 @@ object KitchenComposer:
         val part = kp.copy(
           profiles = kp.profiles :+
             (KitchenProfile(
+              kPBuilder.kitchenProfileID,
               16,
               composition.rotation,
               CropingStrategy.PeanutForInexcess(0.0),
@@ -134,7 +135,7 @@ object KitchenComposer:
       if (nbExtraKitchen == 0) sortedPartition
       else
         val kp = sortedPartition.profiles(iteration)
-        assignExtraKitchen(sortedPartition.copy(profiles = sortedPartition.profiles.updated(iteration, (kp._1,kp._2 + 1))), iteration - 1, nbExtraKitchen - 1)
+        assignExtraKitchen(sortedPartition.copy(profiles = sortedPartition.profiles.updated(iteration, (kp._1,kp._2 + 1))), iteration + 1, nbExtraKitchen - 1)
 
 
     val partition = assign(kitchenProfileBuilders, totalPopulation, KitchenPartition())
