@@ -56,7 +56,7 @@ object HubExplorer:
       4
     )
 
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 22))
+    val kitchenPartition = KitchenPartition(Seq((kitchenProfile1, 22)))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 

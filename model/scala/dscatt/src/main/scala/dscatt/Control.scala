@@ -112,4 +112,4 @@ object KitchenProfile {
   )
 }
 
-case class KitchenPartition(profiles: (KitchenProfile, Int)*)
+case class KitchenPartition(profiles: Seq[(KitchenProfile, Int)] = Seq())

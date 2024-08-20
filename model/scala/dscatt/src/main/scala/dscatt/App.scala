@@ -8,6 +8,7 @@ import dscatt.Fertility.{fallowFullPotential, fallowNRF}
 import dscatt.FoodDonationStrategy.FoodForUsOnlyStrategy
 import dscatt.HerdGrazingStrategy.AnywhereAnyTime
 import dscatt.HerdSizeStrategy.{FullCapacity, LSUByArea}
+import dscatt.KitchenComposer.KitchenProfileBuilder
 import dscatt.LoanStrategy.Selfish
 import dscatt.MulchingStrategy.CropResidue
 import dscatt.RotationCycle.MilletPeanut
@@ -25,8 +26,19 @@ object Diohine {
    // SwitchExplorer.explore(landsDirectory, "/tmp/newQS")
    // CSVExplorer.run
     val seed = 777
-    unitary(seed.toLong, landsDirectory)
+   // unitary(seed.toLong, landsDirectory)
    // replicate(1000, landsDirectory)
+   val kp = KitchenComposer.compose(
+     500,
+     Seq(
+       KitchenProfileBuilder(5, 0.2, 5, 0.42),
+       KitchenProfileBuilder(15, 0.05, 8, 0.42),
+       KitchenProfileBuilder(725, 0.75, 3, 0.0),
+     )
+   )
+
+   kp.profiles.foreach: p=>
+     println(p._2 + " : " + p._1)
 
 //    HubExplorer.explore(
 //      switchTime = 26,
@@ -79,7 +91,7 @@ object Diohine {
       4
     )
 
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 22))
+    val kitchenPartition = KitchenPartition(Seq((kitchenProfile1, 22)))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 

@@ -29,7 +29,7 @@ object Simulation {
              seed: Long,
              lands: java.io.File,
              populationGrowth: Double,
-             kitchenPartition: KitchenPartition = KitchenPartition((KitchenProfile.default, 1)),
+             kitchenPartition: KitchenPartition = KitchenPartition(Seq((KitchenProfile.default, 1))),
              supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
              soilQualityBasis: SOIL_QUALITY_BY_HA, // exposed for calibration
