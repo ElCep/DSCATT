@@ -1,11 +1,12 @@
 package dscatt
 
 import dscatt.CropingStrategy.PeanutForInexcess
+import dscatt.Data.MM_PER_YEAR
 import dscatt.Simulation.SimulationState
 
 
 enum SwitchType:
-  case RainFall(r: Int) extends SwitchType
+  case RainFall(r: MM_PER_YEAR) extends SwitchType
   case Faidherbia(nb: Int) extends SwitchType
   case Solidarity(l: LoanStrategy, fd: FoodDonationStrategy) extends SwitchType
   case OwnFallow(ofu: OwnFallowUse) extends SwitchType

@@ -108,7 +108,7 @@ object Diohine {
       populationGrowth = 0.014488068822213016,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 50,
+      simulationLength = 150,
       soilQualityBasis = 100,
       fallowBoost = 2.505042416468803,
       cropResidueBoost = 40,
@@ -117,7 +117,7 @@ object Diohine {
       peanutSeedToFood = 1.5831974550765018,
       dailyFoodNeedPerPerson = 0.555,
       hookParameters = hooks,
-      rainFall = 600,
+      rainFall = Seq.fill(50)(600),
       Seq()
      //Seq(Switcher(26, SwitchType.Solidarity(Selfish, FoodForUsOnlyStrategy)))
     )

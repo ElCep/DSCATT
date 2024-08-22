@@ -24,7 +24,7 @@ object Simulation {
     def parcelStats = History.historyByYear(sS).map(_.parcelStats)
 
     def fertilityHistory = sS.world.parcels.map(_.fertilityHistory)
-    
+
     def kitchenProfile = History.historyByYear(sS).map(_.kitchenProfile)
 
   def apply(
@@ -42,11 +42,18 @@ object Simulation {
              peanutSeedToFood: Double, // exposed for calibration
              dailyFoodNeedPerPerson: Double,
              hookParameters: HookParameters,
-             rainFall: MM,
+             rainFall: Int | MM_PER_YEAR,
              switchers: Seq[Switcher] = Seq(),
              world: Option[World] = None
            ) = {
     given MersenneTwister(seed)
+
+    val normalizedRainFall =
+      rainFall match
+        case average: Int=> Seq.fill(simulationLength)(average)
+        case mmpy: MM_PER_YEAR=>
+          assert(mmpy.length == simulationLength)
+          mmpy
 
     val data = new Data(
       soilQualityBasis = soilQualityBasis,
@@ -56,9 +63,10 @@ object Simulation {
       sqrf = sqrf,
       peanutSeedToFood = peanutSeedToFood,
       dailyFoodNeedPerPerson = dailyFoodNeedPerPerson,
-      rainFall = rainFall,
+      rainFall = normalizedRainFall,
       populationGrowth = populationGrowth
     )
+
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
 
@@ -101,10 +109,13 @@ object Simulation {
               switchers: Seq[Switcher] = Seq()
             )(using MersenneTwister): SimulationState = {
 
+    var tour = 0
     @tailrec
     def evolve0(simulationState: SimulationState, data: Data): SimulationState = {
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size < 1) simulationState
       else {
+        tour = tour + 1
+        println("TOURE " + tour)
         val (switchedSimulationState, switchedData) = applySwitchers(switchers, simulationState, data)
 
         val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k, switchedData)) }

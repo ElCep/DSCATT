@@ -50,7 +50,7 @@ object Kitchen {
   def parcelFoodProduction(parcel: Parcel, data: Data, year: Int): Double = {
     (parcel.crop match {
       // QS * KG / HA
-      case Millet => Fertility.milNRF(parcel, data, year) * milSeedFullPontential(data)
+      case Millet => Fertility.milNRF(parcel, data, year) * milSeedFullPontential(data, year)
       case Peanut => Fertility.peanutNRF * peanutSeedFullPotential(data) * data.PEANUT_FOOD_EQUIVALENCE
       case _ => 0.0
     }) * parcel.area

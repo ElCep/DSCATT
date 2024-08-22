@@ -47,7 +47,7 @@ object Fertility {
             val mulchingMass: KG_BY_HA =
               parcel.crop match
                 case Millet => kitchen.mulchingStrategy match
-                  case MulchingStrategy.CropResidue => milNRF(parcel, data, state.year) * milFullPotential(data.RAIN_FALL) * data.MIL_STRAW_RATIO
+                  case MulchingStrategy.CropResidue => milNRF(parcel, data, state.year) * milFullPotential(data.rainFallIn(state.year)) * data.MIL_STRAW_RATIO
                   case MulchingStrategy.NoMulching=> 0.0
                 case _ => 0.0
 
@@ -205,7 +205,7 @@ object Fertility {
     case n if n >= 317 && n < 805 => 1000 * (1.8608 * math.log(rainFall) - 8.6756)
     case _ => 3775
 
-  def milSeedFullPontential(data: Data): KG_BY_HA = milFullPotential(data.RAIN_FALL) * data.MIL_SEED_RATIO
+  def milSeedFullPontential(data: Data, year: Int): KG_BY_HA = milFullPotential(data.rainFallIn(year)) * data.MIL_SEED_RATIO
 
   val peanutFullPotential: KG_BY_HA = 1300
 

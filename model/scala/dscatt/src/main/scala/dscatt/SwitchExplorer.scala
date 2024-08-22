@@ -65,7 +65,7 @@ object SwitchExplorer:
     val switchers =
       Seq(
 //        Seq(),
-//        Seq(Switcher(26, RainFall(700))),
+        Seq(Switcher(26, RainFall(Seq.fill(24)(700)))),
 //        Seq(Switcher(26, Faidherbia(6))),
 //        Seq(Switcher(26, HerdSize(LSUByArea(0.525)))),
 //        Seq(Switcher(26, HerdSize(FullCapacity))),
