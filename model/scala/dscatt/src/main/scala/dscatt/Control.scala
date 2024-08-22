@@ -78,7 +78,10 @@ enum FaidherbiaStrategy extends Control:
     case NoFaidherbiaAttention extends FaidherbiaStrategy
     case FaidherbiaRegrowPreservation extends FaidherbiaStrategy
 */
+type KitchenProfileID = Int
+
 case class KitchenProfile(
+                           id: KitchenProfileID, 
                            kitchenSize: KitchenSize,
                            rotationCycle: RotationCycle,
                            cropingStrategy: CropingStrategy,
@@ -96,6 +99,7 @@ case class KitchenProfile(
 
 object KitchenProfile {
   val default = KitchenProfile(
+      0,
       10,
       RotationCycle.FallowMilletPeanut,
       CropingStrategy.PeanutForInexcess(0.0),

@@ -27,6 +27,7 @@ object History {
   type History = Map[Int, YearHistory]
   type Fertilities = Map[KitchenID, Fertility.Metrics]
   type Herds = Map[KitchenID, Int]
+  type KitchenProfile = Map[KitchenID, KitchenProfileID]
 
   def initialize(simulationLenght: Int, kitchens: Seq[Kitchen]): History = {
     (1 to simulationLenght).map { y =>
@@ -45,6 +46,10 @@ object History {
       val historyOfYear = history(year)
       history.updated(year, historyOfYear.copy(population = populations.toMap))
     }
+
+    def updateKitchenProfile(year: Int, kitchens: Seq[Kitchen]): History =
+      val historyOfYear = history(year)
+      history.updated(year, historyOfYear.copy(kitchenProfile = kitchens.map(k=> k.id-> k.profileID).toMap))
 
     //    private def toSorted(fb: Seq[Food]) = {
     //      fb.sortBy(_.kitchenID).map(_.quantity)
@@ -98,6 +103,7 @@ object History {
   protected case class YearHistory(
                                     year: Int,
                                     population: PopulationStats = Map(),
+                                    kitchenProfile: KitchenProfile = Map(),
                                     parcelStats: ParcelStatsByKitchen = Map(),
                                     loans: Loans = Seq(),
                                     foodStats: FoodStats = Map(),
@@ -134,7 +140,7 @@ object History {
 
 
   def printKitckens(state: SimulationState, hookParameters: HookParameters) = {
-    val header = Seq("Year", "KID", "Owd pcl", "Owd area", "Lnd pcl", "Lnd area", "Herd", "Manure", "Mulch", "N", "YSQ", "FN", "FFC", "FFL", "FFD", "Balance", "FinX", "Size", "Births", "Migs", "Absor", "Split")
+    val header = Seq("Year", "KID", "ProfID","Owd pcl", "Owd area", "Lnd pcl", "Lnd area", "Herd", "Manure", "Mulch", "N", "YSQ", "FN", "FFC", "FFL", "FFD", "Balance", "FinX", "Size", "Births", "Migs", "Absor", "Split")
 
     val years = historyByYear(state).map { yearHistory =>
       val sortedPop = yearHistory.population.map { kp =>
@@ -145,6 +151,7 @@ object History {
       val pStats = yearHistory.parcelStats
       val fbStats = yearHistory.foodStats
       val fertilityStats = yearHistory.fertilities
+      val kitchenProfileStats = yearHistory.kitchenProfile
 
       sortedPop.map { p =>
         val fbStatsK = fbStats.getOrElse(p._1, Food(p._1))
@@ -153,6 +160,7 @@ object History {
         Seq(
           yearHistory.year,
           p._1.toString,
+          s"${kitchenProfileStats(p._1)}",
           s"${pStats(p._1).farmedParcelsQuantity}",
           s"${toDouble(pStats(p._1).farmedArea)}",
           s"${pStats(p._1).loanedParcelsQuantity}",

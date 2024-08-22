@@ -36,6 +36,7 @@ object SwitchExplorer:
     }
 
     val kitchenProfile1 = KitchenProfile(
+      9999,
       kitchenSize = 16,
       RotationCycle.MilletOnly,
       CropingStrategy.PeanutForInexcess(0.0),

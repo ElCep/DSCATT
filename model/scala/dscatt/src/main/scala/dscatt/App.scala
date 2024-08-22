@@ -26,19 +26,23 @@ object Diohine {
    // SwitchExplorer.explore(landsDirectory, "/tmp/newQS")
    // CSVExplorer.run
     val seed = 777
-   // unitary(seed.toLong, landsDirectory)
-   // replicate(1000, landsDirectory)
-   val kp = KitchenComposer.compose(
-     500,
-     Seq(
-       KitchenProfileBuilder(5, 0.2, 5, 0.42),
-       KitchenProfileBuilder(15, 0.05, 8, 0.42),
-       KitchenProfileBuilder(725, 0.75, 3, 0.0),
-     )
-   )
 
-   kp.profiles.foreach: p=>
-     println(p._2 + " : " + p._1)
+    val kp = KitchenComposer.compose(
+      352,
+      Seq(
+        KitchenProfileBuilder(35, 0.2, 5, 0.42),
+        KitchenProfileBuilder(21, 0.05, 8, 0.42),
+        KitchenProfileBuilder(256, 0.45, 3, 0.0),
+        KitchenProfileBuilder(1101, 0.30, 3, 0.8)
+      )
+    )
+
+//    kp.profiles.foreach: p=>
+//     println(p._2 + " : " + p._1)
+//
+    unitary(seed.toLong, landsDirectory, kp)
+   // replicate(1000, landsDirectory)
+
 
 //    HubExplorer.explore(
 //      switchTime = 26,
@@ -56,26 +60,13 @@ object Diohine {
 //      peanutForInexcess = PeanutInexcess(0.1)
 //    )
 
-  def unitary(seed: Long, lands: java.io.File) = {
-
-    val hookFile = HookFile(
-      outputPath = "/tmp",
-      parcels = false,
-      kitchens = false,
-      dynamics = true
-    )
-
-    val hooks = HookParameters(
-      displayParcels = true,
-      displayKitchens = false,
-      hookFile = None
-    )
-
+  val defaultKitchenPartition =
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
       Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Millet
     }
 
     val kitchenProfile1 = KitchenProfile(
+      9999,
       kitchenSize = 16,
       RotationCycle.FallowMilletPeanut,
       CropingStrategy.PeanutForInexcess(0.0),
@@ -91,7 +82,23 @@ object Diohine {
       4
     )
 
-    val kitchenPartition = KitchenPartition(Seq((kitchenProfile1, 22)))
+    KitchenPartition(Seq((kitchenProfile1, 22)))
+
+  def unitary(seed: Long, lands: java.io.File, kitchenPartition: KitchenPartition = defaultKitchenPartition) = {
+
+    val hookFile = HookFile(
+      outputPath = "/tmp",
+      parcels = false,
+      kitchens = false,
+      dynamics = true
+    )
+
+    val hooks = HookParameters(
+      displayParcels = false,
+      displayKitchens = false,
+      hookFile = None
+    )
+
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
@@ -101,7 +108,7 @@ object Diohine {
       populationGrowth = 0.014488068822213016,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 26,
+      simulationLength = 50,
       soilQualityBasis = 100,
       fallowBoost = 2.505042416468803,
       cropResidueBoost = 40,
@@ -154,8 +161,9 @@ object Diohine {
 //    println("NB Absorbed " + simulationState.numberOfAbsorbedKitchens)
   //  println("SQ " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
 
+    println("Profile Dyn " + simulationState.kitchenProfileRatiosDynamic.toSeq)
     //println("MIL yield " + simulationState.averageMilYieldDynamic.sum / simulationState.averageMilYieldDynamic.length)
-    println(s"$seed, ${simulationState.effectiveFallowRatioDynamic.last},${simulationState.populationDynamic.last},${simulationState.averageMilYieldDynamic.last},${simulationState.herdDynamic.last}")
+   // println(s"$seed, ${simulationState.effectiveFallowRatioDynamic.last},${simulationState.populationDynamic.last},${simulationState.averageMilYieldDynamic.last},${simulationState.herdDynamic.last}")
   }
 
   def replicate(iterations: Int, landsDirectory: java.io.File) =

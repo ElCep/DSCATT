@@ -24,6 +24,8 @@ object Simulation {
     def parcelStats = History.historyByYear(sS).map(_.parcelStats)
 
     def fertilityHistory = sS.world.parcels.map(_.fertilityHistory)
+    
+    def kitchenProfile = History.historyByYear(sS).map(_.kitchenProfile)
 
   def apply(
              seed: Long,

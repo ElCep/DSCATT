@@ -25,6 +25,7 @@ object Kitchen {
     kitchenPartition.profiles.flatMap { p => Seq.fill[KitchenProfile](p._2)(p._1) }.zipWithIndex.map { case (kp, id) =>
       Kitchen(
         id + 1,
+        kp.id,
         kp.kitchenSize,
         kp.rotationCycle,
         kp.cropingStrategy,
@@ -102,6 +103,7 @@ object Kitchen {
         simulationState.history
           .updatePopulations(simulationState.year, populations)
           .updateParcelStatsAfterPopulationEvolution(simulationState.year, afterAbsorbtionKitchens, afterAbsorbtionWorld)
+          .updateKitchenProfile(simulationState.year, afterSplitKitchens)
     )
 
   }
@@ -235,6 +237,7 @@ object Kitchen {
 }
 
 case class Kitchen(id: Kitchen.KitchenID,
+                   profileID: KitchenProfileID,
                    size: Int,
                    rotationCycle: RotationCycle,
                    cropingStrategy: CropingStrategy,

@@ -41,6 +41,7 @@ object HubExplorer:
     }
 
     val kitchenProfile1 = KitchenProfile(
+      9999,
       kitchenSize = 16,
       RotationCycle.FallowMilletPeanut,
       CropingStrategy.PeanutForInexcess(0.0),
