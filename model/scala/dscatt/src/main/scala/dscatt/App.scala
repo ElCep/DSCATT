@@ -108,7 +108,7 @@ object Diohine {
       populationGrowth = 0.014488068822213016,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 150,
+      simulationLength = 50,
       soilQualityBasis = 100,
       fallowBoost = 2.505042416468803,
       cropResidueBoost = 40,

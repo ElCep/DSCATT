@@ -13,6 +13,7 @@ object KitchenComposer:
   // controlCompositionID from 0 to 1151
   case class KitchenProfileBuilder(kitchenProfileID: KitchenProfileID, ratio: Double, nbFaidherbia: Int, lsu: Double)
 
+  val KITCHEN_SIZE = 16
 
   implicit class controlWrapper(c: Control):
     def toDefaultContext = ControlInContext(c, Seq())
@@ -101,7 +102,7 @@ object KitchenComposer:
       if (kPBuilders.isEmpty || remainingPop == 0 ) kp
       else
         val kPBuilder = kPBuilders.head
-        val nbK = (kPBuilder.ratio * totalPopulation / 16).floor.toInt
+        val nbK = (kPBuilder.ratio * totalPopulation / KITCHEN_SIZE).floor.toInt
         val composition = allCompositions(kPBuilder.kitchenProfileID)
         val herdSizeStrategy =
           composition.herdSizeStrategy match
@@ -112,7 +113,7 @@ object KitchenComposer:
           profiles = kp.profiles :+
             (KitchenProfile(
               kPBuilder.kitchenProfileID,
-              16,
+              KITCHEN_SIZE,
               composition.rotation,
               CropingStrategy.PeanutForInexcess(0.0),
               composition.ownFallowUse,
@@ -128,7 +129,7 @@ object KitchenComposer:
             ), nbK)
           )
 
-        assign(kPBuilders.tail, remainingPop - 16 * nbK, part)
+        assign(kPBuilders.tail, remainingPop - KITCHEN_SIZE * nbK, part)
 
     @tailrec
     def assignExtraKitchen(sortedPartition: KitchenPartition, iteration: Int, nbExtraKitchen: Int): KitchenPartition =
@@ -139,8 +140,8 @@ object KitchenComposer:
 
 
     val partition = assign(kitchenProfileBuilders, totalPopulation, KitchenPartition())
-    val effectivePopulation = partition.profiles.map(_._2).sum * 16
-    val possibleExtraKitchens = ((totalPopulation - effectivePopulation) / 16.0).floor.toInt
+    val effectivePopulation = partition.profiles.map(_._2).sum * KITCHEN_SIZE
+    val possibleExtraKitchens = ((totalPopulation - effectivePopulation) / KITCHEN_SIZE.toDouble).floor.toInt
     //large kitchen are consider first because it will absorb more smoothly the overcrowding
     assignExtraKitchen(partition.copy(profiles = partition.profiles.sortBy(_._2).reverse), 0, possibleExtraKitchens)
 
