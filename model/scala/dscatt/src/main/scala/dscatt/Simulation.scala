@@ -109,13 +109,10 @@ object Simulation {
               switchers: Seq[Switcher] = Seq()
             )(using MersenneTwister): SimulationState = {
 
-    var tour = 0
     @tailrec
     def evolve0(simulationState: SimulationState, data: Data): SimulationState = {
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size < 1) simulationState
       else {
-        tour = tour + 1
-        println("TOURE " + tour)
         val (switchedSimulationState, switchedData) = applySwitchers(switchers, simulationState, data)
 
         val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k, switchedData)) }
