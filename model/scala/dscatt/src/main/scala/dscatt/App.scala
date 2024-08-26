@@ -8,9 +8,10 @@ import dscatt.Fertility.{fallowFullPotential, fallowNRF}
 import dscatt.FoodDonationStrategy.FoodForUsOnlyStrategy
 import dscatt.HerdGrazingStrategy.AnywhereAnyTime
 import dscatt.HerdSizeStrategy.{FullCapacity, LSUByArea}
+import dscatt.KitchenComposer.KitchenProfileBuilder
 import dscatt.LoanStrategy.Selfish
 import dscatt.MulchingStrategy.CropResidue
-import dscatt.RotationCycle.TwoYears
+import dscatt.RotationCycle.MilletPeanut
 import dscatt.SwitchType.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
@@ -22,11 +23,26 @@ object Diohine {
 
   def main(args: Array[String])=
     val landsDirectory = java.io.File(args.head + "/s777k22g0,20.json")
-    SwitchExplorer.explore(landsDirectory, "/tmp/newQS")
+   // SwitchExplorer.explore(landsDirectory, "/tmp/newQS")
    // CSVExplorer.run
     val seed = 777
-  //  unitary(seed.toLong, java.io.File(landsDirectory, s"s${seed}k22g0,20.json"))
+
+    val kp = KitchenComposer.compose(
+      352,
+      Seq(
+        KitchenProfileBuilder(35, 0.2, 5, 0.42),
+        KitchenProfileBuilder(21, 0.05, 8, 0.42),
+        KitchenProfileBuilder(256, 0.45, 3, 0.0),
+        KitchenProfileBuilder(1101, 0.30, 3, 0.8)
+      )
+    )
+
+//    kp.profiles.foreach: p=>
+//     println(p._2 + " : " + p._1)
+//
+    unitary(seed.toLong, landsDirectory, kp)
    // replicate(1000, landsDirectory)
+
 
 //    HubExplorer.explore(
 //      switchTime = 26,
@@ -44,7 +60,31 @@ object Diohine {
 //      peanutForInexcess = PeanutInexcess(0.1)
 //    )
 
-  def unitary(seed: Long, lands: java.io.File) = {
+  val defaultKitchenPartition =
+    val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
+      Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Millet
+    }
+
+    val kitchenProfile1 = KitchenProfile(
+      9999,
+      kitchenSize = 16,
+      RotationCycle.FallowMilletPeanut,
+      CropingStrategy.PeanutForInexcess(0.0),
+      OwnFallowUse.NeverUseFallow,
+      LoanStrategy.AllExtraParcelsLoaner,
+      FoodDonationStrategy.FoodForAllStrategy,
+      HerdGrazingStrategy.EverywhereByDayOwnerByNight,
+      HerdGrazingStrategy.EverywhereByDayOwnerByNight,
+      HerdSizeStrategy.LSUByArea(0.42), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
+      manureDepositStategyMilNextYear,
+      FertilizerStrategy.UniformFertilizing,
+      MulchingStrategy.NoMulching,
+      4
+    )
+
+    KitchenPartition(Seq((kitchenProfile1, 22)))
+
+  def unitary(seed: Long, lands: java.io.File, kitchenPartition: KitchenPartition = defaultKitchenPartition) = {
 
     val hookFile = HookFile(
       outputPath = "/tmp",
@@ -59,27 +99,6 @@ object Diohine {
       hookFile = None
     )
 
-    val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
-      Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Millet
-    }
-
-    val kitchenProfile1 = KitchenProfile(
-      kitchenSize = 16,
-      RotationCycle.ThreeYears,
-      CropingStrategy.PeanutForInexcess(0.0),
-      OwnFallowUse.NeverUseFallow,
-      LoanStrategy.AllExtraParcelsLoaner,
-      FoodDonationStrategy.FoodForAllStrategy,
-      HerdGrazingStrategy.EverywhereByDayOwnerByNight,
-      HerdGrazingStrategy.EverywhereByDayOwnerByNight,
-      HerdSizeStrategy.LSUByArea(0.42), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
-      manureDepositStategyMilNextYear,
-      FertilizerStrategy.UniformFertilizing,
-      MulchingStrategy.NoMulching,
-      4
-    )
-
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 22))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
@@ -89,21 +108,24 @@ object Diohine {
       populationGrowth = 0.014488068822213016,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 26,
+      simulationLength = 50,
       soilQualityBasis = 100,
       fallowBoost = 2.505042416468803,
-      cropResidueBoost = 37,
+      cropResidueBoost = 40,
       erosion = 0.001,
       sqrf = 0.015458790627221223,
       peanutSeedToFood = 1.5831974550765018,
       dailyFoodNeedPerPerson = 0.555,
       hookParameters = hooks,
-      rainFall = 600,
+      rainFall = Seq.fill(50)(600),
       Seq()
      //Seq(Switcher(26, SwitchType.Solidarity(Selfish, FoodForUsOnlyStrategy)))
     )
 
+    println("#parc: " + simulationState.world.parcels.length)
+    println("#surf: " + simulationState.world.parcels.map(_.area).sum)
     given data: Data = simulationData
+
 
 //    //    val (rsquare, slope) = simulationState.populationRSquareAndSlope
 //    println("Pop " + simulationState.populationDynamic.toSeq)
@@ -139,8 +161,9 @@ object Diohine {
 //    println("NB Absorbed " + simulationState.numberOfAbsorbedKitchens)
   //  println("SQ " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
 
+    println("Profile Dyn " + simulationState.kitchenProfileRatiosDynamic.toSeq)
     //println("MIL yield " + simulationState.averageMilYieldDynamic.sum / simulationState.averageMilYieldDynamic.length)
-    println(s"$seed, ${simulationState.effectiveFallowRatioDynamic.last},${simulationState.populationDynamic.last},${simulationState.averageMilYieldDynamic.last},${simulationState.herdDynamic.last}")
+   // println(s"$seed, ${simulationState.effectiveFallowRatioDynamic.last},${simulationState.populationDynamic.last},${simulationState.averageMilYieldDynamic.last},${simulationState.herdDynamic.last}")
   }
 
   def replicate(iterations: Int, landsDirectory: java.io.File) =

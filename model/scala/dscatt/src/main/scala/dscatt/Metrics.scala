@@ -41,10 +41,10 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     simulationState.fertilityHistory.map(fh =>
       fh.map(_.agronomicMetrics.soilQuality.residualSoilQuality)
     ).transpose.map(average(_)).toArray
-  
+
   def averageSQByNitrogenDynamic =
     simulationState.fertilityHistory.map(fh =>
-      fh.map(x=> x.agronomicMetrics.soilQuality.annualSoilQuality * x.agronomicMetrics.availableNitrogen)
+      fh.map(x => x.agronomicMetrics.soilQuality.annualSoilQuality * x.agronomicMetrics.availableNitrogen)
     ).transpose.map(average(_)).toArray
 
   def averageInexcessDynamic: Array[Double] =
@@ -139,3 +139,16 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     simulationState.population.flatMap {
       _.map(_._2.absorbedKitchens.length)
     }.sum
+
+  def kitchenProfileDynamic =
+    simulationState.kitchenProfile.map:
+      _.groupBy(_._2)
+        .map(y => y._1 -> y._2.size)
+    .toArray
+
+  def kitchenProfileRatiosDynamic =
+    kitchenProfileDynamic.map: p=>
+      val nbKitchen = p.values.sum
+      p.map(x=> x._1 -> x._2.toDouble / nbKitchen)
+      
+      

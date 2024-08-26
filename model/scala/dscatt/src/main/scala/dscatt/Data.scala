@@ -6,6 +6,7 @@ object Data {
   type KG_BY_HA = Double
   type NB_BY_HA = Double
   type MM = Int
+  type MM_PER_YEAR = Seq[MM]
   type SOIL_QUALITY = Double
   type SOIL_QUALITY_BY_HA = Double
   type SOIL_QUALITY_BY_KG = Double
@@ -29,11 +30,11 @@ class Data(
             sqrf: Double,
             peanutSeedToFood: Double, // exposed for calibration
             dailyFoodNeedPerPerson: Double,
-            rainFall: MM,
+            rainFall: MM_PER_YEAR,
             populationGrowth: Double
           ) {
 
-  def copyRainFall(rFall: MM) = new Data(
+  def copyRainFall(rFall: MM_PER_YEAR) = new Data(
     soilQualityBasis: SOIL_QUALITY_BY_HA,
     fallowBoost: SOIL_QUALITY_BY_HA,
     cropResidueBoost: SOIL_QUALITY_BY_HA,
@@ -53,7 +54,7 @@ class Data(
     sqrf: Double,
     peanutSeedToFood: Double,
     dailyFoodNeedPerPerson: Double,
-    rainFall: MM,
+    rainFall: MM_PER_YEAR,
     populationGrowth =  populationGrowth
   )
 
@@ -65,7 +66,7 @@ class Data(
     sqrf: Double,
     peanutSeedToFood = peanutSeedToFood,
     dailyFoodNeedPerPerson: Double,
-    rainFall: MM,
+    rainFall: MM_PER_YEAR,
     populationGrowth: Double
   )
 
@@ -116,7 +117,7 @@ class Data(
   val MIL_SEED_RATIO = 0.3
   val PEANUT_SEED_RATIO = 0.333
   val RAIN_FALL = rainFall
-
+  def rainFallIn(year: Int) = RAIN_FALL(year - 1)
 
   //val MIL_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
   //val PEANUT_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_SEED_RATIO

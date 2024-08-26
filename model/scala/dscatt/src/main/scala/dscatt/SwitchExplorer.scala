@@ -10,7 +10,7 @@ import dscatt.LoanStrategy.Selfish
 import dscatt.{Croping, CropingStrategy, Data, FertilizerStrategy, FoodDonationStrategy, HerdGrazingStrategy, HerdSizeStrategy, KitchenPartition, KitchenProfile, LoanStrategy, MulchingStrategy, OwnFallowUse, Parcel, RotationCycle, Simulation, SupportPolicy, SwitchType, Switcher, utils}
 import dscatt.MulchingStrategy.CropResidue
 import dscatt.OwnFallowUse.UseFallowIfNeeded
-import dscatt.RotationCycle.{MilOnly, TwoYears}
+import dscatt.RotationCycle.{MilletOnly, MilletPeanut}
 import dscatt.Simulation.SimulationState
 import dscatt.SwitchType.{Demography, Faidherbia, HerdSize, Mulching, OwnFallow, RainFall, Rotation, Solidarity}
 import org.apache.commons.math3.stat.regression.SimpleRegression
@@ -36,8 +36,9 @@ object SwitchExplorer:
     }
 
     val kitchenProfile1 = KitchenProfile(
+      9999,
       kitchenSize = 16,
-      RotationCycle.MilOnly,
+      RotationCycle.MilletOnly,
       CropingStrategy.PeanutForInexcess(0.0),
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
@@ -51,7 +52,7 @@ object SwitchExplorer:
       0
     )
 
-    val kitchenPartition = KitchenPartition((kitchenProfile1, 22))
+    val kitchenPartition = KitchenPartition(Seq((kitchenProfile1, 22)))
     /*, (kitchenProfile2, 16)),(kitchenProfile3, 8)),*/
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
 
@@ -64,7 +65,7 @@ object SwitchExplorer:
     val switchers =
       Seq(
 //        Seq(),
-//        Seq(Switcher(26, RainFall(700))),
+        Seq(Switcher(26, RainFall(Seq.fill(24)(700)))),
 //        Seq(Switcher(26, Faidherbia(6))),
 //        Seq(Switcher(26, HerdSize(LSUByArea(0.525)))),
 //        Seq(Switcher(26, HerdSize(FullCapacity))),

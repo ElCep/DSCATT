@@ -10,13 +10,14 @@ import dscatt.Simulation.SimulationState
 object Herd {
 
   private def maximumLiveStockUnitByKitchen(state: SimulationState, data: Data) =
+      val rainFall = data.rainFallIn(state.year)
       state.kitchens.map { k =>
         val herdFood = World.parcelsForKitchen(state.world, k).map { p =>
           p.crop match {
-            case Fallow => Fertility.fallowNRF(p, data, state.year) * Fertility.fallowFullPotential(data.RAIN_FALL) * p.area
+            case Fallow => Fertility.fallowNRF(p, data, state.year) * Fertility.fallowFullPotential(rainFall) * p.area
             case Millet => k.mulchingStrategy match {
               case MulchingStrategy.CropResidue => 0.0
-              case MulchingStrategy.NoMulching=> Fertility.milNRF(p, data, state.year) * Fertility.milFullPotential(data.RAIN_FALL) * p.area * data.MIL_STRAW_RATIO
+              case MulchingStrategy.NoMulching=> Fertility.milNRF(p, data, state.year) * Fertility.milFullPotential(rainFall) * p.area * data.MIL_STRAW_RATIO
             }
             case _ => 0.0
           }
