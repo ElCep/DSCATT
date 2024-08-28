@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="111.32864mm"
+   height="124.92492mm"
+   viewBox="0 0 111.32864 124.92492"
    version="1.1"
    id="svg1"
    inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
@@ -24,20 +24,21 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="1.5080481"
-     inkscape:cx="403.17017"
-     inkscape:cy="493.02142"
+     inkscape:cx="65.647775"
+     inkscape:cy="273.5324"
      inkscape:window-width="2560"
      inkscape:window-height="1403"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g38-9-1" />
+     inkscape:current-layer="layer1" />
   <defs
      id="defs1" />
   <g
      inkscape:label="Calque 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-62.578521,-70.749411)">
     <path
        sodipodi:type="star"
        style="fill:#f3f3f3;fill-opacity:1;stroke:#000000;stroke-width:1.978;stroke-dasharray:none"
@@ -649,7 +650,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;font-family:Montserrat;-inkscape-font-specification:Montserrat;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:0.1"
          x="13.795016"
-         y="128.70937"
+         y="128.70935"
          id="tspan23-6-9">variables to calibrate</tspan></text>
     <path
        sodipodi:type="star"
@@ -685,7 +686,7 @@
          id="tspan23-6-8">variables to calibrate</tspan></text>
     <path
        sodipodi:type="star"
-       style="fill:#636363;stroke:#000000;stroke-width:1.978;stroke-dasharray:none;fill-opacity:1"
+       style="fill:#636363;fill-opacity:1;stroke:#000000;stroke-width:1.978;stroke-dasharray:none"
        id="path120-1-35-5-48"
        inkscape:flatsided="false"
        sodipodi:sides="6"
@@ -832,48 +833,48 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;font-family:Montserrat;-inkscape-font-specification:Montserrat;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
-       x="149.91129"
-       y="174.1689"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Montserrat;-inkscape-font-specification:Montserrat;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
+       x="151.04141"
+       y="174.42024"
        id="text22"><tspan
          sodipodi:role="line"
          id="tspan22"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3"
-         x="149.91129"
-         y="174.1689">Targeted focus</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:2.11667px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3"
+         x="151.04141"
+         y="174.42024">Targeted focus</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;font-family:Montserrat;-inkscape-font-specification:Montserrat;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Montserrat;-inkscape-font-specification:Montserrat;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
        x="149.91129"
        y="153.18822"
        id="text22-0"><tspan
          sodipodi:role="line"
          id="tspan22-1"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:2.11667px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3"
          x="149.91129"
          y="153.18822">Numerical methods</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;font-family:Montserrat;-inkscape-font-specification:Montserrat;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
-       x="158.35617"
-       y="141.32378"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Montserrat;-inkscape-font-specification:Montserrat;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
+       x="154.53329"
+       y="143.64696"
        id="text22-0-1"><tspan
          sodipodi:role="line"
          id="tspan22-1-1"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3"
-         x="158.35617"
-         y="141.32378"> model-driven exploration  questions</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:2.11667px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3"
+         x="154.53329"
+         y="143.64696"> model-driven exploration questions</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;font-family:Montserrat;-inkscape-font-specification:Montserrat;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
-       x="153.03452"
-       y="83.859596"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Montserrat;-inkscape-font-specification:Montserrat;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
+       x="152.70966"
+       y="85.06469"
        id="text22-0-1-6"><tspan
          sodipodi:role="line"
          id="tspan22-1-1-3"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3"
-         x="153.03452"
-         y="83.859596">Transformative territorial process</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:2.11667px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3"
+         x="152.70966"
+         y="85.06469">Transformative territorial process</tspan></text>
     <path
        style="fill:#969696;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
        d="M 142.66894,173.93225 H 118.35509"
