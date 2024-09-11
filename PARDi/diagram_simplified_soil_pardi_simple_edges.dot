@@ -125,7 +125,7 @@ digraph g {
 
   /* dynamique */
   // Conflict agriculteur éleveur
-  "Animaux" -> "Parcelles" [label="1 Conflict (divagation accidentelle ou à dessin)" color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
+  "Animaux" -> "Parcelles" [label="1 Conflit (divagation accidentelle ou à dessein)" color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
   "Agriculteur" -> "Parcelles" [label="2 constat" color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
   "Agriculteur" -> "Fourrière" [label="3 flagrant delit"  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
   "Eleveur" -> "Parcelles" [label="3 constat"  color = @@4 pardi=dynamique_conflit lvl_conflict=quartier]
