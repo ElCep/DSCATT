@@ -30,7 +30,6 @@ object SwitchExplorer:
     )
 
 
-
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
       Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Croping.Millet
     }
@@ -38,18 +37,18 @@ object SwitchExplorer:
     val kitchenProfile1 = KitchenProfile(
       9999,
       kitchenSize = 16,
-      RotationCycle.MilletOnly,
+      RotationCycle.FallowMilletPeanut,
       CropingStrategy.PeanutForInexcess(0.0),
       OwnFallowUse.NeverUseFallow,
       LoanStrategy.AllExtraParcelsLoaner,
       FoodDonationStrategy.FoodForAllStrategy,
       HerdGrazingStrategy.EverywhereByDayOwnerByNight,
       HerdGrazingStrategy.EverywhereByDayOwnerByNight,
-      HerdSizeStrategy.LSUByArea(0.0), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
+      HerdSizeStrategy.LSUByArea(0.42), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
       manureDepositStategyMilNextYear,
       FertilizerStrategy.UniformFertilizing,
       MulchingStrategy.NoMulching,
-      0
+      4
     )
 
     val kitchenPartition = KitchenPartition(Seq((kitchenProfile1, 22)))
@@ -64,45 +63,47 @@ object SwitchExplorer:
 
     val switchers =
       Seq(
-//        Seq(),
-        Seq(Switcher(26, RainFall(Seq.fill(24)(700)))),
-//        Seq(Switcher(26, Faidherbia(6))),
-//        Seq(Switcher(26, HerdSize(LSUByArea(0.525)))),
-//        Seq(Switcher(26, HerdSize(FullCapacity))),
-//        Seq(Switcher(26, Mulching(CropResidue))),
-//        Seq(Switcher(26, Rotation(TwoYears))),
-//        Seq(Switcher(26, SwitchType.Grazing(AnywhereAnyTime, AnywhereAnyTime))),
-//        //Seq(Switcher(26, Solidarity(Selfish, FoodForUsOnlyStrategy))),
-//        Seq(Switcher(26, OwnFallow(UseFallowIfNeeded))),
-//        Seq(Switcher(26, Demography(0.0072297))) // 50%
-        Seq(Switcher(2, Mulching(CropResidue)))
+        Seq(),
+        Seq(Switcher(26, RainFall(Seq.fill(50)(645)))),
+        Seq(Switcher(26, Faidherbia(6))),
+        Seq(Switcher(26, HerdSize(LSUByArea(0.525)))),
+        Seq(Switcher(26, HerdSize(FullCapacity))),
+        Seq(Switcher(26, Mulching(CropResidue))),
+        Seq(Switcher(26, Rotation(MilletPeanut))),
+        Seq(Switcher(26, SwitchType.Grazing(AnywhereAnyTime, AnywhereAnyTime))),
+        Seq(Switcher(26, Solidarity(Selfish, FoodForUsOnlyStrategy))),
+        Seq(Switcher(26, OwnFallow(UseFallowIfNeeded))),
+        //   Seq(Switcher(26, Demography(0.0072297))) // 50%
+        //    Seq(Switcher(2, Mulching(CropResidue)))
       )
 
-    val dynamics = switchers.map: s=>
+
+    val dynamics = switchers.map: s =>
       println("Running " + s)
       val (state: SimulationState, simulationData: Data) = Simulation(
-        7L,
+        7007L,
         lands = lands,
-        populationGrowth = 0.014488068822213016,
+        populationGrowth = 0.014408809596970397,
         kitchenPartition = kitchenPartition,
         supportPolicy = supportPolicy,
-        simulationLength = 3,
+        simulationLength = 50,
         soilQualityBasis = 100,
-        fallowBoost = 2.505042416468803,
+        fallowBoost = 0.801866457937334,
         cropResidueBoost = 40,
-        erosion = 0.001,
-        sqrf = 0.015458790627221223,
-        peanutSeedToFood = 1.5831974550765018,
+        erosion = 0.01,
+        sqrf = 0.019437884479790352,
+        peanutSeedToFood = 1.954822292357305,
         dailyFoodNeedPerPerson = 0.555,
         hookParameters = hooks,
-        rainFall = 600,
+        rainFall = Seq(623, 623, 404, 408, 388, 729, 620, 528, 394, 484, 395, 635, 540, 526, 652, 691, 720, 416, 723, 536, 353, 767, 527, 509, 501, 501) ++ Seq.fill(24)(545),
         s
       )
 
       val yields = state.averageMilYieldDynamic.tail.toSeq
-      println("Yield " +   yields)
-      println("Gain " +   yields.last / yields(0))
+      println("Yield " + yields)
+      println("Gain " + yields.last / yields(0))
 
+      println("State " + state.year)
       Seq(
         state.populationDynamic.tail.toSeq,
         state.herdDynamic.tail.toSeq,
@@ -114,15 +115,15 @@ object SwitchExplorer:
         state.effectiveFallowRatioDynamic.tail.toSeq,
         state.loanedAreaDynamic.tail.toSeq,
         state.foodStress.tail.toSeq
-    )
+      )
 
     val transposed = dynamics.transpose
 
-    transposed.zip(Seq("pop", "herd", "yqs", "rqs","nitrogen", "qsXnitrogen", "milletYield", "ef", "loan", "foodStress")).foreach: (metrics, label)=>
+    transposed.zip(Seq("population", "herd size", "yqs", "rqs", "nitrogen", "SQ x Nitrogen", "millet yield", "effective fallow", "loan", "foodStress")).foreach: (metrics, label) =>
       val file = File(s"${outputPath}/${label}.csv")
       val content =
-        val headers = Seq("Base", "RainFall","Faidherbia", "LSU +25%", "LSU Full capacity", "Crop residue", "Rotation 2 years", "Grazing anywhere anytime", "Use own fallow permitted", "Demography -50%")
-        (headers zip metrics.map(_.map(_.toString))).map((h,t)=> h +: t).transpose.map(_.mkString(",")).mkString("\n")
+        val headers = Seq("Base", "RainFall (645 mm)", "Faidherbia (6 / ha)", "LSU +25%", "LSU Full capacity", "Crop residue", "Rotation Millet-Groundhut", "Grazing anywhere anytime", "No solidarity", "Use own fallow permitted")
+        (headers zip metrics.map(_.map(_.toString))).map((h, t) => h +: t).transpose.map(_.mkString(",")).mkString("\n")
 
 
       file.overwrite(content)

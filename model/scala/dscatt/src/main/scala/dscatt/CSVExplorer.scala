@@ -14,13 +14,26 @@ object CSVExplorer:
           line(8) == "0.0"
       rowData.copy(content = content)
 
+    def get20Replications =
+      val content =
+        rowData.content.filter: line =>
+          line(9) == "20"
+      rowData.copy(content = content)
+
+    def filterFallowBoost =
+      val content =
+        rowData.content.filter: line =>
+          val fb = line(4).toDouble
+          fb > 0.8 && fb < 1.0
+      rowData.copy(content = content)
+
     // QS do not increase much more than 10% and is not monotonic
     def fivePCTube: RowData =
       val content =
         rowData.content.filter: line =>
-          val qs = toAADouble(line(13)).transpose.map(_.sum / 20)
+          val qs = toAADouble(line(20)).transpose.map(_.sum / 20)
           val maxTube = qs.head * 1.02
-          val minTube = qs.head * 0.97
+          val minTube = qs.head * 0.85
           qs.forall(el=> el <= maxTube && el >= minTube)
       rowData.copy(content = content)
 
@@ -35,13 +48,20 @@ object CSVExplorer:
 
     def printObjectivesAndCo =
       rowData.content.foreach: line=>
-        println(line(2) + " - " + line(3) + " - "  + line(4) + " - "  + line(5) + " - "  + line(6) )//+ " - " + line(22) + " - " + line(15))
+        println(line(2) + " & " + line(3) + " & "  + line(4) + " & "  + line(5) + " & "  + line(6) + " & "  + line(7) + " & "  + line(8) )//+ " - " + line(22) + " - " + line(15))
 
-    def printQS =
-      rowData.content.foreach: line=>
-        val qs0 = toAADouble(line(13)).transpose
-        val qs = qs0.map(x=> x.sum / x.length)
-        println(qs.toSeq)
+    def printMeanHerdSize = printMean(14)
+    def printMeanEffectiveFallow = printMean(15)
+    def printMeanAnnualQS = printMean(20)
+    def printMeanMilletYield = printMean(22)
+    def printMeanPopulation = printMean(19)
+
+    def printMean(col: Int) =
+        rowData.content.foreach: line =>
+          val x0 = toAADouble(line(col)).transpose
+          val x = x0.map(x => x.sum / x.length)
+          println(x.toSeq.tail.length)
+          println(x.toSeq.tail)
 
     def printEF17andLast =
       rowData.content.foreach: line=>
@@ -54,12 +74,17 @@ object CSVExplorer:
         println(pop)
 
   def run =
-    val content = scala.io.Source.fromFile("/tmp/stochastics.csv").getLines().toSeq
+    val content = scala.io.Source.fromFile("/tmp/realMeteoMedian.csv").getLines().toSeq
     val rowData = fromCSV(content)
 
-    val result = rowData.fivePCTube.around700Yield
-//
-    //result.printQS
+    val result = rowData.get20Replications//.getNullAgroObjective.filterFallowBoost//.fivePCTube//.around700Yield
+
+ //   result.printMeanHerdSize
+ //   result.printMeanEffectiveFallow
+//    result.printMeanAnnualQS
+//    result.printMeanPopulation
+ //   result.printMeanMilletYield
+
     result.printObjectivesAndCo
     println("# " + result.content.length)
 //    println("closest " + result.printObjectivesAndCo)

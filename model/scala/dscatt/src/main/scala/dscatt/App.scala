@@ -23,24 +23,25 @@ object Diohine {
 
   def main(args: Array[String])=
     val landsDirectory = java.io.File(args.head + "/s777k22g0,20.json")
-   // SwitchExplorer.explore(landsDirectory, "/tmp/newQS")
-   // CSVExplorer.run
-    val seed = 777
+    SwitchExplorer.explore(landsDirectory, "/tmp/newQS")
+    //CSVExplorer.run
+   // println(RainFallGenerator.thirtyPercentLess.toString + " / " + RainFallGenerator.thirtyPercentLess.size)
+    val seed = 7770
 
-    val kp = KitchenComposer.compose(
-      352,
-      Seq(
-        KitchenProfileBuilder(35, 0.2, 5, 0.42),
-        KitchenProfileBuilder(21, 0.05, 8, 0.42),
-        KitchenProfileBuilder(256, 0.45, 3, 0.0),
-        KitchenProfileBuilder(1101, 0.30, 3, 0.8)
-      )
-    )
-
-//    kp.profiles.foreach: p=>
-//     println(p._2 + " : " + p._1)
+//    val kp = KitchenComposer.compose(
+//      352,
+//      Seq(
+//        KitchenProfileBuilder(35, 0.2, 5, 0.42),
+//        KitchenProfileBuilder(21, 0.05, 8, 0.42),
+//        KitchenProfileBuilder(256, 0.45, 3, 0.0),
+//        KitchenProfileBuilder(1101, 0.30, 3, 0.8)
+//      )
+//    )
 //
-    unitary(seed.toLong, landsDirectory, kp)
+////    kp.profiles.foreach: p=>
+////     println(p._2 + " : " + p._1)
+////
+  //  unitary(seed.toLong, landsDirectory)
    // replicate(1000, landsDirectory)
 
 
@@ -86,6 +87,8 @@ object Diohine {
 
   def unitary(seed: Long, lands: java.io.File, kitchenPartition: KitchenPartition = defaultKitchenPartition) = {
 
+    val t1 = System.nanoTime
+
     val hookFile = HookFile(
       outputPath = "/tmp",
       parcels = false,
@@ -95,7 +98,7 @@ object Diohine {
 
     val hooks = HookParameters(
       displayParcels = false,
-      displayKitchens = false,
+      displayKitchens = true,
       hookFile = None
     )
 
@@ -105,52 +108,59 @@ object Diohine {
     val (simulationState, simulationData) = Simulation(
       seed = seed,
       lands = lands,
-      populationGrowth = 0.014488068822213016,
+      populationGrowth = 0.014408809596970397,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 50,
+      simulationLength = 26,
       soilQualityBasis = 100,
-      fallowBoost = 2.505042416468803,
+      fallowBoost = 0.801866457937334,
       cropResidueBoost = 40,
-      erosion = 0.001,
-      sqrf = 0.015458790627221223,
-      peanutSeedToFood = 1.5831974550765018,
+      erosion = 0.01,
+      sqrf = 0.019437884479790352,
+      peanutSeedToFood = 1.954822292357305,
       dailyFoodNeedPerPerson = 0.555,
       hookParameters = hooks,
-      rainFall = Seq.fill(50)(600),
+      rainFall = Seq(623,623,404,408,388,729,620,528,394,484,395,635,540,526,652,691,720,416,723,536,353,767,527,509,501,501),
+      //rainFall = 400,
       Seq()
      //Seq(Switcher(26, SwitchType.Solidarity(Selfish, FoodForUsOnlyStrategy)))
     )
 
+    val duration = (System.nanoTime - t1) / 1e9d
+
     println("#parc: " + simulationState.world.parcels.length)
     println("#surf: " + simulationState.world.parcels.map(_.area).sum)
+    println("Time: " + duration)
     given data: Data = simulationData
 
 
 //    //    val (rsquare, slope) = simulationState.populationRSquareAndSlope
-//    println("Pop " + simulationState.populationDynamic.toSeq)
+    println("Pop " + simulationState.populationDynamic.toSeq)
 //    //    println("\nPop R2 " + rsquare)
 //    //    println("\nPop slope " + slope)
 //    println("\nMigrant dynamic  " + simulationState.migrantsDynamic.toSeq)
 //    println("Sum of migrants " + simulationState.migrantsDynamic.sum)
 //    println("Pop " + simulationState.populationDynamic.last)
-//    println("\nherd " + simulationState.herdDynamic.toSeq)
-//    println("\nnitrogen " + simulationState.averageNitrogenDynamic.toSeq)
+    println("\nherd " + simulationState.herdDynamic.toSeq)
+    println("\nnitrogen " + simulationState.averageNitrogenDynamic.toSeq)
 //    //    println("\nSoil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
 //    //    println("\nAverage Inexesse " + simulationState.averageInexcessDynamic.toSeq)
 //    //    println("\n# unbalanced kitchen " + simulationState.numberOfUnbalancedKitchen)
-//    //    println("\nTotal Loaned Area " + simulationState.totalLoanedArea)
+//    println("\nTotal Loaned Area " + simulationState.totalLoanedArea)
+
+    println("LOaned dynamics " + simulationState.loanedAreaDynamic.toSeq)
 //    //    println("\nManure dynamic " + simulationState.averageManureDynamic.toSeq)
-//    //    println("\nTotal Manure  " + simulationState.totalManure)
+    //println("\nTotal Manure  " + simulationState.totalManure)
 //    //    println("\nMulching dynamic " + simulationState.averageMulchingDynamic.toSeq)
 //    //    println("\nTotal Mulching  " + simulationState.totalMulching)
 //    //    println("\nFFL on Food needs dynamic  " + simulationState.foodFromLoanOnFoodNeedsDynamic.toSeq)
-//    //    println("\nFFD on Food needs dynamic  " + simulationState.foodFromDonationOnFoodNeedsDynamic.toSeq)
+   // println("\nFFD on Food needs dynamic  " + simulationState.foodFromDonationOnFoodNeedsDynamic.toSeq)
 //    println("\nKitchen size  " + simulationState.averageKitchenSizeDynamic.toSeq)
 //    //    println("\nKSA " + average(simulationState.averageKitchenSizeDynamic.toSeq))
-//    println("\nEffective fallow " + simulationState.effectiveFallowRatioDynamic.toSeq)
-//    println("\nFood stress " + simulationState.foodStress.toSeq)
-  //  println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)
+    println("\nEffective fallow " + simulationState.effectiveFallowRatioDynamic.toSeq)
+    println("\nFood stress " + simulationState.foodStress.toSeq)
+    println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq.length + " :" + simulationState.averageMilYieldDynamic.toSeq)
+ //   println("\nMil yield average  " + simulationState.averageMilYieldDynamic.sum / simulationState.averageMilYieldDynamic.length)
 //    //    println("\nPeanut yield dynamic  " + simulationState.averagePeanutYieldDynamic.toSeq)
 //    //    println("\nNb of kitchens " + simulationState.numberOfKitchens.toSeq)
 //    //    val kitchenSoilQuality =
@@ -159,9 +169,10 @@ object Diohine {
 //    //println("SQ for K1 " + kitchenSoilQuality)
 //    println("\nSoil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
 //    println("NB Absorbed " + simulationState.numberOfAbsorbedKitchens)
-  //  println("SQ " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
+    println("ASQ " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
+    println("RSQ " + simulationState.averageResidualSoilQualityDynamic.toSeq)
 
-    println("Profile Dyn " + simulationState.kitchenProfileRatiosDynamic.toSeq)
+  //  println("Profile Dyn " + simulationState.kitchenProfileRatiosDynamic.toSeq)
     //println("MIL yield " + simulationState.averageMilYieldDynamic.sum / simulationState.averageMilYieldDynamic.length)
    // println(s"$seed, ${simulationState.effectiveFallowRatioDynamic.last},${simulationState.populationDynamic.last},${simulationState.averageMilYieldDynamic.last},${simulationState.herdDynamic.last}")
   }

@@ -6,12 +6,15 @@ object RainFallGenerator {
 
   val rng = util.Random(77L)
 
+  def sample(duration: Int) =
+    for 
+      i <- 0 to duration
+      rf = realDataRainFall(rng.nextInt(24))
+    yield rf
+    
   // 30 year
   def thirtyPercentLess =
-    for
-      i <- 0 to 29
-      rf = realDataRainFall(rng.nextInt(24)) * 0.8
-    yield rf.toInt
+    sample(30).map(rf=> (rf * 0.8).toInt)
 
 
 }

@@ -1,0 +1,63 @@
+import _file_.modelOptim._
+import dscatt.*
+
+val migrantFitness = Val[Int]
+val fallowFitness = Val[Double]
+
+val fitnessTask = ScalaTask(
+    """
+    val popSlopePenalty = 
+        if (populationSlope < 0) 99999
+        else 1
+    
+    val migrantFitness = totalMigrants * popSlopePenalty
+    val fallowFitness = -lastEffectiveFallowRatio / popSlopePenalty
+    """
+    
+    ) set (
+        inputs += (populationSlope, populationRSquare, populationDynamic, medianMilYield, populationGrowth,
+    kitchenSizeAverage, effectiveFallowRatioDynamic, kitchenSizeDynamic, fallowBoost, annualSoilQuality, residualSoilQuality,
+    herdDynamic, migrantDynamic, lastPopulation, lastMilYield, lastHerdSize, nbAbsorbedKitchens, milYieldAverage, lastEffectiveFallowRatio, 
+    ratio1, ratio2, totalMigrants),
+        outputs += (populationSlope, populationRSquare, populationDynamic, medianMilYield, populationGrowth,
+    kitchenSizeAverage, effectiveFallowRatioDynamic, kitchenSizeDynamic, fallowBoost, annualSoilQuality, residualSoilQuality,
+    herdDynamic, migrantDynamic, lastPopulation, lastMilYield, lastHerdSize, nbAbsorbedKitchens, milYieldAverage, fallowFitness, 
+    ratio1, ratio2, migrantFitness)
+        )
+
+
+val optim = 
+NSGA2Evolution(
+  evaluation = modelOptim -- fitnessTask,
+  objective = Seq(
+      migrantFitness,
+      fallowFitness
+    ),
+  populationSize = 200,
+  genome = Seq(
+    kitchenProfile1 in (0, kpIDMax),
+    kitchenProfile2 in (0, kpIDMax),
+ //   kitchenProfile3 in (0, kpIDMax),
+//    kitchenProfile4 in (0, kpIDMax),
+    r1 in ratioRange,
+    r2 in ratioRange,
+    //r3 in ratioRange,
+   // r4 in ratioRange,
+    nbFaid1 in (4,faidMax),
+    nbFaid2 in (4,faidMax),
+   // nbFaid3 in (4,faidMax),
+  //  nbFaid4 in (4,faidMax),
+    lsu1 in lsuRange,
+    lsu2 in lsuRange,
+   // lsu3 in lsuRange,
+   // lsu4 in lsuRange,
+    peanutSeedToFood in (0.5, 4.0),
+    ),         
+  distribution = Island(5 minutes),
+  parallelism = 1000,
+  termination = 2000000,
+) hook (workDirectory / "results/resilienceToRainfallHazards")
+
+
+val local = LocalEnvironment(100)
+optim on local

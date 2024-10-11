@@ -1,0 +1,200 @@
+import dscatt.*
+
+val rotationCycle = Val[RotationCycle]
+val soilQualityBasis = Val[Double]
+val fallowBoost = Val[Double]
+val cropResidueBoost = Val[Double]
+val populationGrowth = Val[Double]
+val peanutSeedToFood = Val[Double]
+val sqrf = Val[Double]
+
+val last5yearsAveragePopulation = Val[Double]
+val populationDynamic = Val[Array[Int]]
+val kitchenSizeDynamic = Val[Array[Double]]
+val populationRSquare = Val[Double]
+val populationSlope = Val[Double]
+val kitchenSizeAverage = Val[Double]
+val milYieldAverage = Val[Double]
+
+val last5yearsAverageHerdSize = Val[Double]
+val numberOfUnbalancedKitchen = Val[Int]
+val foodStress = Val[Array[Double]]
+val milYieldDynamic = Val[Array[Double]]
+
+val numberOfKitchens = Val[Array[Int]]
+val effectiveFallowRatioDynamic = Val[Array[Double]]
+val herdDynamic = Val[Array[Int]]
+
+val rainFall = Val[Int]
+val lastPopulation = Val[Int]
+val annualSoilQuality = Val[Array[Double]]
+val residualSoilQuality = Val[Array[Double]]
+val lastEffectiveFallowRatio = Val[Double]
+val migrantDynamic=Val[Array[Int]]
+
+val peanutForInexcess = Val[Double]
+val lastHerdSize=Val[Int]
+val lastMilYield=Val[Double]
+val medianMilYield=Val[Double]
+val erosion=Val[Double]
+val nbAbsorbedKitchens=Val[Int]
+val seed = Val[Long]
+val lands = Val[File]
+
+val kitchenProfile1 = Val[Int]
+val kitchenProfile2 = Val[Int]
+val kitchenProfile3 = Val[Int]
+val kitchenProfile4 = Val[Int]
+val r1 = Val[Double]
+val r2 = Val[Double]
+val r3 = Val[Double]
+val r4 = Val[Double]
+val ratio1 = Val[Double]
+val ratio2 = Val[Double]
+val ratio3 = Val[Double]
+val ratio4 = Val[Double]
+val nbFaid1 = Val[Int]
+val nbFaid2 = Val[Int]
+val nbFaid3 = Val[Int]
+val nbFaid4 = Val[Int]
+val lsu1 = Val[Double]
+val lsu2 = Val[Double]
+val lsu3 = Val[Double]
+val lsu4 = Val[Double]
+
+// val setKitchenPartition = ScalaTask(
+//     """
+//     import dscatt.*
+    
+//     val ratios = ratio1 + ratio2 + ratio3 + ratio4
+//     val ratio1:Double = ratio1 / ratios
+//     val ratio2:Double = ratio2 / ratios
+//     val ratio3:Double = ratio3 / ratios
+//     val ratio4:Double = ratio4 / ratios
+    
+//     val kitchenPartition = KitchenComposer.compose(
+//       352,
+//       Seq(
+//         KitchenComposer.KitchenProfileBuilder(kitchenProfile1, ratio1, nbFaid1, lsu1),
+//         KitchenComposer.KitchenProfileBuilder(kitchenProfile2, ratio2, nbFaid2, lsu2),
+//         KitchenComposer.KitchenProfileBuilder(kitchenProfile3, ratio3, nbFaid3, lsu3),
+//         KitchenComposer.KitchenProfileBuilder(kitchenProfile4, ratio4, nbFaid4, lsu4)
+//       )
+//     )
+//     """
+//     ) set(
+//         inputs += (kitchenProfile1, ratio1, nbFaid1, lsu1, kitchenProfile2, ratio2, nbFaid2, lsu2, 
+//         kitchenProfile3, ratio3, nbFaid3, lsu3, kitchenProfile4, ratio4, nbFaid4, lsu4),
+//         outputs += (kitchenProfile1, ratio1, nbFaid1, lsu1, kitchenProfile2, ratio2, nbFaid2, lsu2, 
+//         kitchenProfile3, ratio3, nbFaid3, lsu3, kitchenProfile4, ratio4, nbFaid4, lsu4, kitchenPartition)
+//         )
+
+
+val modelPSE = ScalaTask(
+    """
+    import dscatt.*
+    
+    val hookFile = Diohine.HookFile(
+    outputPath = "/tmp",
+    parcels = false,
+    kitchens = false,
+    dynamics = false
+    )
+    
+    val hooks = Diohine.HookParameters(
+    displayParcels = false,
+    displayKitchens = false,
+    hookFile = Some(hookFile)
+    )
+    
+    
+    val ratios = r1 + r2 + r3 + r4
+    val ratio1 = r1 / ratios
+    val ratio2 = r2 / ratios
+    val ratio3 = r3 / ratios
+    val ratio4 = 
+        if (r1 + r2 + r3 == 0.0) 1.0
+        else r4 / ratios
+    
+    val kitchenPartition = KitchenComposer.compose(
+      352,
+      Seq(
+        KitchenComposer.KitchenProfileBuilder(kitchenProfile1, ratio1, nbFaid1, lsu1),
+        KitchenComposer.KitchenProfileBuilder(kitchenProfile2, ratio2, nbFaid2, lsu2),
+        KitchenComposer.KitchenProfileBuilder(kitchenProfile3, ratio3, nbFaid3, lsu3),
+        KitchenComposer.KitchenProfileBuilder(kitchenProfile4, ratio4, nbFaid4, lsu4)
+      )
+    )
+    
+    val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
+    
+    val (simulationState, simulationData) = Simulation(
+    seed = seed,
+    lands = java.io.File(lands, s"s${seed}k22g0,20.json"),
+    populationGrowth = populationGrowth,
+    kitchenPartition = kitchenPartition,
+    supportPolicy = supportPolicy,
+    simulationLength = 50,
+    soilQualityBasis = soilQualityBasis,
+    fallowBoost = fallowBoost,
+    cropResidueBoost = cropResidueBoost,
+    erosion=erosion,
+    sqrf=sqrf,
+    peanutSeedToFood = peanutSeedToFood,
+    dailyFoodNeedPerPerson = 0.555,
+    hookParameters = hooks,
+    rainFall = rainFall
+    )
+    
+    
+    given data: Data = simulationData
+    
+    
+    val populationDynamic = simulationState.populationDynamic
+    val kitchenSizeDynamic = simulationState.averageKitchenSizeDynamic
+    
+    val (populationRSquare, populationSlope) = simulationState.populationRSquareAndSlope
+    
+    val milYieldAverage = simulationState.averageMilYieldDynamic.average
+    val milYieldDynamic = simulationState.averageMilYieldDynamic
+    
+    val kitchenSizeAverage = simulationState.averageKitchenSizeDynamic.average
+    
+    val numberOfKitchens = simulationState.numberOfKitchens
+    
+    val effectiveFallowRatioDynamic = simulationState.effectiveFallowRatioDynamic
+    
+    val herdDynamic = simulationState.herdDynamic
+    val lastHerdSize = simulationState.herdDynamic.last
+    
+    val lastPopulation = simulationState.populationDynamic.last
+    val annualSoilQuality = simulationState.averageAnnualSoilQualityDynamic
+    val residualSoilQuality = simulationState.averageResidualSoilQualityDynamic
+    val lastEffectiveFallowRatio = simulationState.effectiveFallowRatioDynamic.last
+    val lastMilYield = simulationState.averageMilYieldDynamic.last
+    val medianMilYield = simulationState.averageMilYieldDynamic.median
+    val migrantDynamic = simulationState.migrantsDynamic
+    val nbAbsorbedKitchens = simulationState.numberOfAbsorbedKitchens
+    """
+    ) set (
+    inputs += (peanutSeedToFood, populationGrowth, rainFall, kitchenProfile1, r1, nbFaid1, lsu1, 
+        kitchenProfile2, r2, nbFaid2, lsu2, kitchenProfile3, r3, nbFaid3, lsu3, kitchenProfile4, 
+        r4, nbFaid4, lsu4),
+    outputs += (populationSlope, populationRSquare, populationDynamic, medianMilYield, populationGrowth,
+    kitchenSizeAverage, effectiveFallowRatioDynamic, kitchenSizeDynamic, fallowBoost, annualSoilQuality, residualSoilQuality,
+    herdDynamic, migrantDynamic, lastPopulation, lastMilYield, lastHerdSize, nbAbsorbedKitchens, milYieldAverage, lastEffectiveFallowRatio, ratio1, ratio2,  ratio3,  ratio4),
+    seed := 7L,
+    soilQualityBasis := 100.0, // optim
+    fallowBoost := 6.171808467006881,
+    cropResidueBoost := 40.0,
+    erosion := 0.004407454871925849,
+    sqrf := 0.01739657088046872,
+    peanutSeedToFood := 1.5000723600474144,
+    peanutForInexcess := 0.0,
+    populationGrowth := 0.014539331772985376,
+    rainFall := 600,
+    lands := workDirectory / "lands"
+    )
+
+modelPSE hook display //(workDirectory / "resultsM")
+//diohinemodel1Task hook display

@@ -1,48 +1,25 @@
 import _file_.model._
 
-
-// Objective 1: population dynamics (1995, 2000, 2005, 2010, 2015, 2020)
- val populationSlopeFitness = 
-   ScalaCode("""
-      math.abs(488 - populationDynamic.last)
-   """)
-
-// Objective 2: kitchen size average is quite stable over years around 16
-//val kitchenFitness= 
-//  ScalaCode("""
-//    math.abs(kitchenSizeAverage - 16)
-//  """)
-
-// Objective 3: effective fallow ratio in global landscape around 0.2
-val fallowFitness= 
-  ScalaCode("""
-  math.abs(0.33 * effectiveFallowRatioDynamic.slice(15,20).average - 0.2)
-  """)
-  
-  
-val milYieldFitness= 
-    ScalaCode("""
-    math.abs(milYieldLast5YearsAverage - 700)
-    """)
-  
     
 val popFitness = Val[Double]
 val agroFitness = Val[Double]
+
+// math.abs(0.33 * effectiveFallowRatioDynamic.slice(15,20).average - 0.2) / 0.2 +
+//                       math.abs(0.33 * effectiveFallowRatioDynamic.last - 0.1) / 0.1 +
 
 val fitnessTask = ScalaTask("""
     val popFitness = (math.abs(5.67 - populationSlope) / 5.67 +
                      math.abs(488 - populationDynamic.last) / 488 +
                      math.abs(populationRSquare - 1)) / 3.0
-    val agroFitness = (math.abs(0.33 * effectiveFallowRatioDynamic.slice(15,20).average - 0.2) / 0.2 +
-                       math.abs(0.33 * effectiveFallowRatioDynamic.last - 0.1) / 0.1 +
-                      ( if(soilQuality.last > soilQuality.head) 1.0 else 0.0) + 
-                      math.abs(lastHerdSize - 170) / 170 + 
-                      math.abs(milYieldLast5YearsAverage - 700) / 700) / 5.0
+    val agroFitness = ((if(effectiveFallowRatioDynamic(17) >= 0.55 && effectiveFallowRatioDynamic(17) <= 0.65) 0.0 else math.abs(effectiveFallowRatioDynamic(17) - 0.6)) +
+                      (if(effectiveFallowRatioDynamic.last >= 0.35 && effectiveFallowRatioDynamic.last <= 0.45) 0.0 else math.abs(effectiveFallowRatioDynamic.last - 0.4)) +
+                      (if(milYieldDynamic.median >=665 && milYieldDynamic.median <= 735) 0.0 else math.abs(milYieldDynamic.median - 700) / 700)) / 3.0
+                       
 """) set (
-    inputs += (populationRSquare, populationSlope, milYieldLast5YearsAverage, kitchenSizeAverage, soilQuality, populationGrowth,
-    populationDynamic, effectiveFallowRatioDynamic, kitchenSizeDynamic, herdDynamic, lastHerdSize, fallowBoost),
-    outputs += (popFitness, agroFitness, populationRSquare, populationSlope, milYieldLast5YearsAverage, fallowBoost,soilQuality,populationGrowth,
-    kitchenSizeAverage, populationDynamic, effectiveFallowRatioDynamic, kitchenSizeDynamic, herdDynamic, lastHerdSize)
+    inputs += (populationRSquare, populationSlope, milYieldDynamic, kitchenSizeAverage, annualSoilQuality, populationGrowth,
+    populationDynamic, effectiveFallowRatioDynamic, kitchenSizeDynamic, herdDynamic, lastHerdSize, fallowBoost, lsuByArea),
+    outputs += (popFitness, agroFitness, populationRSquare, populationSlope, milYieldDynamic, fallowBoost,annualSoilQuality,populationGrowth,
+    kitchenSizeAverage, populationDynamic, effectiveFallowRatioDynamic, kitchenSizeDynamic, herdDynamic, lastHerdSize, lsuByArea)
     )
   
 
@@ -50,26 +27,23 @@ val calibration =
 NSGA2Evolution(
   evaluation = model -- fitnessTask,
   objective = Seq(
-      popFitness,
-      agroFitness
+      popFitness aggregate "popFitness.median",
+      agroFitness aggregate "agroFitness.median"
     ),
- //     populationSlope evaluate populationSlopeFitness,
- //     kitchenSizeAverage evaluate kitchenFitness,
- //     effectiveFallowRatioDynamic evaluate fallowFitness
- //   ),
   populationSize = 200,
   genome = Seq(
-    soilQualityBasis in (1.0, 6.0),
-    erosion in (0.5,1.0),
-    fallowBoost in (1.0,1.1), 
-    peanutSeedToFood in (1.0, 1.6),
-    populationGrowth in (0.01, 0.03)
+    erosion in (0.001,0.01),
+    sqrf in (0.0, 0.05),
+    fallowBoost in (0.1, 10.0), 
+    peanutSeedToFood in (1.0, 2.0),
+    populationGrowth in (0.01, 0.015)
     ),         
+  stochastic = Stochastic(seed = seed, sample = 20),
   distribution = Island(5 minutes),
   parallelism = 1000,
   termination = 1500000,
-) hook (workDirectory / "results/caliFixQS")
+) hook (workDirectory / "results/realMeteoMedian")
 
 
-val local = LocalEnvironment(120)
+val local = LocalEnvironment(80)
 calibration on local

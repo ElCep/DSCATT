@@ -1,32 +1,45 @@
-import _file_.model._
+import _file_.modelPSE._
 import dscatt.*
 
+val kpIDMax = 1151
+val ratioRange = Seq(0.0, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
+val faidMax = 10
+val lsuRange = (0 to 100 by 1).map(_.toDouble / 100)
+
 val evolution = PSEEvolution(
-  evaluation = model,
+  evaluation = modelPSE,
   parallelism = 1000,
   termination = 1500000,
   genome = Seq(
-      peanutSeedToFood in (1.0, 2.5),
-      rotationCycle in Seq(RotationCycle.TwoYears, RotationCycle.ThreeYears),
-      ownFallowUse in Seq(OwnFallowUse.NeverUseFallow, OwnFallowUse.UseFallowIfNeeded),
-      loanStrategy in Seq(LoanStrategy.Selfish, LoanStrategy.AllExtraParcelsLoaner, LoanStrategy.ExtraParcelsExceptFallowLoaner),
-      foodDonation in Seq(FoodDonationStrategy.FoodForAllStrategy,FoodDonationStrategy.FoodForUsOnlyStrategy),
-      drySeasonHerdStrategy in Seq(HerdStrategy.EverywhereByDayOwnerByNight, HerdStrategy.AnywhereAnyTime, HerdStrategy.OwnerOnly),
-      wetSeasonHerdStrategy in Seq(HerdStrategy.EverywhereByDayOwnerByNight, HerdStrategy.AnywhereAnyTime, HerdStrategy.OwnerOnly),
-      peanutForInexcess in (0.0,1.0),
-      populationGrowth in (0.0, 0.03),
-      rainFall in (200, 800),
-      giniParcels in Seq(0.1, 0.2, 0.3, 0.4, 0.5),
-      mulching in (0.0, 1.0),
-      nbFaidherbia in (0, 25)
+    kitchenProfile1 in (0, kpIDMax),
+    kitchenProfile2 in (0, kpIDMax),
+    kitchenProfile3 in (0, kpIDMax),
+    kitchenProfile4 in (0, kpIDMax),
+    r1 in ratioRange,
+    r2 in ratioRange,
+    r3 in ratioRange,
+    r4 in ratioRange,
+    nbFaid1 in (4,faidMax),
+    nbFaid2 in (4,faidMax),
+    nbFaid3 in (4,faidMax),
+    nbFaid4 in (4,faidMax),
+    lsu1 in lsuRange,
+    lsu2 in lsuRange,
+    lsu3 in lsuRange,
+    lsu4 in lsuRange,
+    peanutSeedToFood in (0.5, 4.0),
+    populationGrowth in (0.0, 0.02),
+    rainFall in (500, 700)
   ),
   objective = Seq(
-    lastPopulation in (300 to 700 by 20),
-    lastEffectiveFallowRatio in (0.0 to 1.0 by 0.05),
+    lastPopulation in (300 to 1000 by 50),
+   // lastHerdSize in (0 to 400 by 20),
+    lastEffectiveFallowRatio in (0.0 to 1.0 by 0.1),
+ //   nbAbsorbedKitchens in (0 to 30 by 2),
     lastMilYield in (400.0 to 1300.0 by 100.0)
     ),
   distribution = Island(5 minutes),
-) hook (workDirectory / "results/pse", frequency = 60, format=CSV())
+) hook (workDirectory / "results/pse", frequency = 100)
 
 
 //val env = EGIEnvironment("vo.complex-systems.eu")
