@@ -34,9 +34,10 @@ nrfplot <- ggplot(df_NRF, aes(x=navail, y=NRFvalues))+
   geom_line(color="darkcyan")+ 
   theme_light()+
   xlab("Nitrogen available (kg/ha)")+
-  ylab("NRF (dimensionless")
+  ylab("NRF (dimensionless)")
 nrfplot
 
-
+ggsave("./full_potential_millet_curve.png", potential_mil_yieldplot,width = 10, height = 6, units = "cm")
+ggsave("./NRF_curve.png", nrfplot,width = 10, height = 6, units = "cm")
 
 
