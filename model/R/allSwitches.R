@@ -32,10 +32,10 @@ buildImage = function(dynamicName, dirPath) {
   custom_pal<-  c("#7a7a7a",hue_pal()(9))
   # base onmly dataframe
   baseline <- all %>%  filter(variable=="Base")
-  
+  all<- filter(all,years>23)  
   ploplot = ggplot(all, aes(x=years))+
     geom_line( aes(y=value, color=variable,), linewidth = 0.6)+
-    geom_line(data = baseline, aes(y=value, color=variable,), linewidth = 0.6)+
+    geom_line(data = baseline, aes(y=value, color=variable,),linetype="twodash", linewidth = 0.6)+
     theme_light()+
     xlab("Years")+
     ylab("pop")+
@@ -55,7 +55,6 @@ lapply(dynamicNames, buildImage, "~/dev/DSCATT/img_article_JASSS/data_courbes_bi
 
 fifi = "~/dev/DSCATT/img_article_JASSS/data_courbes_bifurcations/population.csv"
 df = read.csv(fifi, header = T, sep=",", fileEncoding = "UTF-8", check.names = F)
-#i = 1
 
 traceColumn = function(i){
   dyn = df[,i]
