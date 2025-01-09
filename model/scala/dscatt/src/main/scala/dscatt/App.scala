@@ -14,6 +14,8 @@ import dscatt.MulchingStrategy.CropResidue
 import dscatt.RotationCycle.MilletPeanut
 import dscatt.SwitchType.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
+import better.files._
+
 
 object Diohine {
 
@@ -22,44 +24,12 @@ object Diohine {
   case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile])
 
   def main(args: Array[String])=
-    val landsDirectory = java.io.File(args.head + "/s777k22g0,20.json")
-    SwitchExplorer.explore(landsDirectory, "/tmp/newQS")
-    //CSVExplorer.run
-   // println(RainFallGenerator.thirtyPercentLess.toString + " / " + RainFallGenerator.thirtyPercentLess.size)
+    val landsDirectory: better.files.File = java.nio.file.Files.createTempFile("","")
+    landsDirectory.overwrite(Geometry.content)
+
     val seed = 7770
 
-//    val kp = KitchenComposer.compose(
-//      352,
-//      Seq(
-//        KitchenProfileBuilder(35, 0.2, 5, 0.42),
-//        KitchenProfileBuilder(21, 0.05, 8, 0.42),
-//        KitchenProfileBuilder(256, 0.45, 3, 0.0),
-//        KitchenProfileBuilder(1101, 0.30, 3, 0.8)
-//      )
-//    )
-//
-////    kp.profiles.foreach: p=>
-////     println(p._2 + " : " + p._1)
-////
-  //  unitary(seed.toLong, landsDirectory)
-   // replicate(1000, landsDirectory)
-
-
-//    HubExplorer.explore(
-//      switchTime = 26,
-//      rainfall = RainFall(700),
-//      faidherbia = Faidherbia(6),
-//      loan = Loan(LoanStrategy.AllExtraParcelsLoaner),
-//      foodDonation = FoodDonation(FoodDonationStrategy.FoodForUsOnlyStrategy),
-//      rotation = Rotation(RotationCycle.ThreeYears),
-//      dryGrazing = DryGrazing(HerdGrazingStrategy.EverywhereByDayOwnerByNight),
-//      wetGrazing = WetGrazing(HerdGrazingStrategy.AnywhereAnyTime),
-//      herdSize = HerdSize(HerdSizeStrategy.LSUByArea(0.6)),
-//      mulching = Mulching(CropResidue(0.3)),
-//      demography = Demography(0.010),
-//      peanutSeedToFood = PeanutSeedToFood(1.3),
-//      peanutForInexcess = PeanutInexcess(0.1)
-//    )
+    unitary(seed.toLong, landsDirectory.toJava)
 
   val defaultKitchenPartition =
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
@@ -141,14 +111,14 @@ object Diohine {
 //    println("\nMigrant dynamic  " + simulationState.migrantsDynamic.toSeq)
 //    println("Sum of migrants " + simulationState.migrantsDynamic.sum)
 //    println("Pop " + simulationState.populationDynamic.last)
-    println("\nherd " + simulationState.herdDynamic.toSeq)
-    println("\nnitrogen " + simulationState.averageNitrogenDynamic.toSeq)
+    println("\nHerd " + simulationState.herdDynamic.toSeq)
+    println("\nNitrogen " + simulationState.averageNitrogenDynamic.toSeq)
 //    //    println("\nSoil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
 //    //    println("\nAverage Inexesse " + simulationState.averageInexcessDynamic.toSeq)
 //    //    println("\n# unbalanced kitchen " + simulationState.numberOfUnbalancedKitchen)
 //    println("\nTotal Loaned Area " + simulationState.totalLoanedArea)
 
-    println("LOaned dynamics " + simulationState.loanedAreaDynamic.toSeq)
+    println("\nLoaned dynamics " + simulationState.loanedAreaDynamic.toSeq)
 //    //    println("\nManure dynamic " + simulationState.averageManureDynamic.toSeq)
     //println("\nTotal Manure  " + simulationState.totalManure)
 //    //    println("\nMulching dynamic " + simulationState.averageMulchingDynamic.toSeq)
@@ -169,8 +139,7 @@ object Diohine {
 //    //println("SQ for K1 " + kitchenSoilQuality)
 //    println("\nSoil Quality " + simulationState.averageSoilQualityDynamic.toSeq)
 //    println("NB Absorbed " + simulationState.numberOfAbsorbedKitchens)
-    println("ASQ " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
-    println("RSQ " + simulationState.averageResidualSoilQualityDynamic.toSeq)
+    println("\nResidual Soil Quality " + simulationState.averageResidualSoilQualityDynamic.toSeq)
 
   //  println("Profile Dyn " + simulationState.kitchenProfileRatiosDynamic.toSeq)
     //println("MIL yield " + simulationState.averageMilYieldDynamic.sum / simulationState.averageMilYieldDynamic.length)
