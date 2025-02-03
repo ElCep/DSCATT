@@ -35,8 +35,8 @@ digraph g {
   "Eau des puis" [color = @@2 pardi=ressource];
   "Pluviometrie" [color = @@2 pardi=ressource];
   "Engrais Chimique" [color = @@2 pardi=ressource];
-  "paille et culture" [color = @@2 pardi=ressource];
-  "Paille darachide" [color = @@2 pardi=ressource];
+  "Paille et culture " [color = @@2 pardi=ressource];
+  "Fanes arachide" [color = @@2 pardi=ressource];
   "Tige de céréale" [color = @@2 pardi=ressource];
   "Sol" [color = @@2 pardi=ressource];
   "Parcelles" [color = @@2 pardi=ressource];
@@ -94,15 +94,15 @@ digraph g {
   
 
   "Sol"  -> "Parcelles" [label="compose" color = @@3 pardi=interaction]
-  "paille et culture"-> "Sol" [label="adaptation à" color = @@3 pardi=interaction]
+  "Paille et culture "-> "Sol" [label="adaptation à" color = @@3 pardi=interaction]
 
-  "Paille darachide"  -> "Sol" [label="adaptation à" color = @@3 pardi=interaction]
+  "Fanes arachide"  -> "Sol" [label="adaptation à" color = @@3 pardi=interaction]
   "Tige de céréale" -> "Sol" [label="adaptation à" color = @@3 pardi=interaction]
 
 
   "Tige de céréale" -> "Agriculteur"  [label="construit" color = @@3 pardi=interaction]
   "Tige de céréale" -> "Eleveur" [label="construit" color = @@3 pardi=interaction]
-  "Paille darachide" -> "Eleveur" [label="stock" color = @@3 pardi=interaction]
+  "Fanes arachide" -> "Eleveur" [label="stock" color = @@3 pardi=interaction]
   "Tapis herbacé" -> "Eleveur" [label="stock" color = @@3 pardi=interaction]
   "Tapis herbacé" -> "Parcelles" [label="Pousse" color = @@3 pardi=interaction]
   "Tapis herbacé" -> "Fertilité" [label="améliore" color = @@3 pardi=interaction]
