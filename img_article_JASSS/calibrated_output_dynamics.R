@@ -130,10 +130,10 @@ yield_rainfall_plot <-  ggplot(yearly_dynamic_with_rainfall, aes(x=year))+
 yield_rainfall_plot
 
 
-
+dev.off()
 
 fallow_rainfall_plot <-  ggplot(yearly_dynamic_with_rainfall, aes(x=year))+
-  geom_line(aes(y=fallowratio), color=fallowratioColor)+
+  geom_line(aes(y=fallowratio*500 + 300  ), color=fallowratioColor)+
   geom_line(aes(y=rainfall), color=rainfallColor)+
   theme_ipsum(base_family = "Arial",) +
   scale_y_continuous(
@@ -141,8 +141,10 @@ fallow_rainfall_plot <-  ggplot(yearly_dynamic_with_rainfall, aes(x=year))+
     # Features of the first axis
     #name = parse(text="Millet yield (kg.ha^-1)"),
     name = expression(paste("Fallow ratio ",(kg.ha^-1))),
+    breaks = c(0,0.25,0.5,0.75,1)*500 + 300,
+        labels=c("0", "0.25", "0.5" , "0.75", "1"),
     # Add a second axis and specify its features
-    sec.axis = sec_axis(~.*800 -400, name="rainfall (mm)")
+    sec.axis = sec_axis(~.*1 , name="rainfall (mm)")
   )+
   theme(
     axis.title.y = element_text(color = fallowratioColor, size=13),
@@ -153,9 +155,25 @@ fallow_rainfall_plot <-  ggplot(yearly_dynamic_with_rainfall, aes(x=year))+
 fallow_rainfall_plot
 
 
+pop_dyn_vs_groundtruth_pop_plot <-   ggplot(yearly_dynamic_with_rainfall, aes(x=year))+
+  geom_line(aes(y=population), color=populationColor)+
+  geom_point(aes(y=population), color=populationColor)+
+  geom_line(aes(y=pop_groundtruth), color=groundtruth_popColor)+
+  geom_point(aes(y=pop_groundtruth), color=groundtruth_popColor)+
+  theme_ipsum(base_family = "Arial") +
+  scale_y_continuous(
+    sec.axis = dup_axis(name = "Simulated inhabitants")
+  )+
+  theme(
+    axis.title.y = element_text(color = groundtruth_popColor, size=13),
+    axis.title.y.right =  element_text(color = populationColor, size=13),
+    
+    axis.title.x = element_text(color = "grey20", size=13)
+  )+
+  labs(x="year", y="Groundtruth inhabitants",title = "Simulated  vs. groundtruth \n population from 1995 to 2020")
+pop_dyn_vs_groundtruth_pop_plot
 
 
-  
 
 
 
