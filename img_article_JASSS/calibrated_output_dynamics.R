@@ -83,7 +83,7 @@ groundtruth_pop_plot <-   ggplot(yearly_dynamic_with_rainfall, aes(x=year))+
     axis.title.x = element_text(color = "grey20", size=13)
   )+
   ylim(350,500)+
-  labs(x="year", y="inhabitants (mm)",title = "Sassem population from 1995 to 2020")
+  labs(x="year", y="inhabitants ",title = "Sassem population from 1995 to 2020")
 groundtruth_pop_plot  
   
 
@@ -104,7 +104,7 @@ yieldplot <-  ggplot(yearly_dynamic_with_rainfall, aes(x=year))+
     axis.title.y = element_text(color = milletYieldColor, size=13),
     axis.title.x = element_text(color = "grey20", size=13)
   )+
-  labs(x="year", y=parse(text='Yield  (kg.ha^(-1))'), title = "Annuel millet yield" )
+  labs(x="year", y=parse(text='Yield  (kg.ha^(-1))'), title = "Annual millet yield" )
 yieldplot
 
 
