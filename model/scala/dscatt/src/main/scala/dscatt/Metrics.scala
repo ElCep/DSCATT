@@ -2,8 +2,11 @@ package dscatt
 
 import Simulation.SimulationState
 import Kitchen.*
+import dscatt.OwnFallowUse.{NeverUseFallow, UseFallowIfNeeded}
 import utils.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
+import Cost.*
+import dscatt.History.historyByYear
 
 
 implicit class HistoryDecorator(simulationState: SimulationState):
@@ -12,6 +15,17 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     simulationState.population.map(
       _.values.map(_.size).sum
     ).toArray
+
+  def popStat(simulationLength: Int) =
+    (simulationState.population.map(
+      _.values.map(_.births).sum
+    ).sum / simulationLength,
+      (
+      simulationState.population.map(
+        _.values.map(_.size).sum / simulationLength
+      ).sum / simulationLength
+    )
+    )
 
   def migrantsDynamic =
     simulationState.population.map(
@@ -150,5 +164,53 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     kitchenProfileDynamic.map: p=>
       val nbKitchen = p.values.sum
       p.map(x=> x._1 -> x._2.toDouble / nbKitchen)
-      
-      
+
+  def socialEffort(populationGrowth: Double) =
+    simulationState.kitchens.map: k=>
+            k.loanStrategy.socialEffort +
+            k.ownFallowUse.socialEffort +
+            k.foodDonationStrategy.socialEffort +
+            k.drySeasonHerdStrategy.socialEffort +
+            k.wetSeasonHerdStrategy.socialEffort +
+            k.mulchingStrategy.socialEffort +
+            k.herdSizeStrategy.socialEffort +
+            Cost.Faidherbia.socialEffort(k.nbFaidherbiaByHa) +
+            Cost.PopulationGrowth.socialEffort(populationGrowth)
+    .sum
+    / simulationState.kitchens.length
+
+
+  def manpowerEffort(populationGrowth: Double) =
+    simulationState.kitchens.map: k=>
+      k.loanStrategy.manpowerEffort +
+      k.ownFallowUse.manpowerEffort +
+      k.foodDonationStrategy.manpowerEffort +
+      HerdGrazing.drySeasonManPower(k.drySeasonHerdStrategy) +
+      HerdGrazing.wetSeasonManPower(k.wetSeasonHerdStrategy) +
+      k.mulchingStrategy.manpowerEffort +
+      k.herdSizeStrategy.manpowerEffort +
+      Cost.Faidherbia.manpowerEffort(k.nbFaidherbiaByHa)
+      Cost.PopulationGrowth.manpowerEffort(populationGrowth)
+    .sum
+    / simulationState.kitchens.length
+
+
+//    simulationState.kitchens.groupBy(_.profileID).map: (pID, ks) =>
+//      Effort(
+//        pID,
+//        (ks.map: k =>
+//          k.loanStrategy.manpowerEffort +
+//            k.ownFallowUse.manpowerEffort +
+//            k.foodDonationStrategy.manpowerEffort +
+//            k.drySeasonHerdStrategy.manpowerEffort +
+//            k.wetSeasonHerdStrategy.manpowerEffort +
+//            k.mulchingStrategy.manpowerEffort +
+//            k.herdSizeStrategy.manpowerEffort +
+//            Cost.Faidherbia.manpowerEffort(k.nbFaidherbiaByHa)
+//          ).reduce(_ + _)
+//      )
+
+
+
+
+

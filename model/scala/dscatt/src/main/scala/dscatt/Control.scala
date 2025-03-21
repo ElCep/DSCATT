@@ -51,6 +51,9 @@ enum HerdGrazingStrategy extends Control:
     case EverywhereByDayOwnerByNight extends HerdGrazingStrategy // the herd is grazing evrywhere by day and only on the manured kitchen parcels by night
     case OwnerOnly extends HerdGrazingStrategy // the herd of the kitchen are grazing on the manured kitchen parcels only
 
+//type DryHerdGrazingStrategy <: HerdGrazingStrategy
+//type WetHerdGrazingStrategy <: HerdGrazingStrategy
+
 enum HerdSizeStrategy extends Control:
     case LSUByArea(lsuByHa: Double) extends HerdSizeStrategy
     case FullCapacity extends HerdSizeStrategy
