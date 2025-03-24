@@ -50,7 +50,7 @@ object Diohine {
 ////     println(p._2 + " : " + p._1)
 ////
 
-    //costCombinatory
+   // costCombinatory
     unitary(seed.toLong, landsDirectory)
     //checkGrowth
 
@@ -238,8 +238,8 @@ object Diohine {
 //    println("NB Absorbed " + simulationState.numberOfAbsorbedKitchens)
  //   println("ASQ " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
   //  println("RSQ " + simulationState.averageResidualSoilQualityDynamic.toSeq)
-    println("Social cost " + simulationState.socialEffort(pg))
     println("manpower cost " + simulationState.manpowerEffort(pg))
+    println("Social cost " + simulationState.socialEffort(pg))
 
   //  println("Profile Dyn " + simulationState.kitchenProfileRatiosDynamic.toSeq)
     //println("MIL yield " + simulationState.averageMilYieldDynamic.sum / simulationState.averageMilYieldDynamic.length)

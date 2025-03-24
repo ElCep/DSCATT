@@ -16,9 +16,9 @@ object Cost:
         0.125 * nbFaid + 3
 
     def manpowerEffort(nbFaid: Double): Double =
-      if (nbFaid <= 4) 0.0
-      else if (4 < nbFaid && nbFaid <= 8) 0.75 * nbFaid - 3
-      else (3 / 8) * nbFaid
+        if (nbFaid <= 4) 0.0
+        else if (4 < nbFaid && nbFaid <= 8) 0.75 * nbFaid - 3
+        else (3.0 / 8) * nbFaid
 
   object PopulationGrowth:
     // Equivalence between population growth and nbChildPerWoman: nbChildPerWoman = 309 pG - 1.22
@@ -27,19 +27,19 @@ object Cost:
       else if (populationGrowth <= 0.0136) 1
       else 0
 
-    def manpowerEffort(populationGrowth: Double) =
+    def manpowerEffort(populationGrowth: Double): Double =
       if (populationGrowth <= 0.0104) 5
       else if (populationGrowth <= 0.0136) 7
       else 10
 
   object HerdGrazing:
-    def drySeasonManPower(hg: HerdGrazingStrategy) =
+    def drySeasonManPower(hg: HerdGrazingStrategy): Double =
         hg match
           case HerdGrazingStrategy.AnywhereAnyTime => 2
           case HerdGrazingStrategy.EverywhereByDayOwnerByNight => 3
           case HerdGrazingStrategy.OwnerOnly => 9
     
-    def wetSeasonManPower(hg: HerdGrazingStrategy) =
+    def wetSeasonManPower(hg: HerdGrazingStrategy): Double =
         hg match
           case HerdGrazingStrategy.AnywhereAnyTime => 4
           case HerdGrazingStrategy.EverywhereByDayOwnerByNight => 3

@@ -12,8 +12,8 @@ import shared.Data
 object App:
 
   @main def run() =
-    replicateLands("/tmp/lands", 1000)
-   // buildLands("/tmp/lands", 7L, 21, List.tabulate(10)(i => 0.05 * (i + 1)))
+    //replicateLands("/tmp/lands", 1000)
+    buildLands("/tmp/lands", 7L, 31, Seq(0.2))
 
   def replicateLands(dirPath: String, quantity: Int) =
       for i <- 1 to quantity

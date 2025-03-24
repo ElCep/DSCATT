@@ -167,15 +167,15 @@ implicit class HistoryDecorator(simulationState: SimulationState):
 
   def socialEffort(populationGrowth: Double) =
     simulationState.kitchens.map: k=>
-            k.loanStrategy.socialEffort +
-            k.ownFallowUse.socialEffort +
-            k.foodDonationStrategy.socialEffort +
-            k.drySeasonHerdStrategy.socialEffort +
-            k.wetSeasonHerdStrategy.socialEffort +
-            k.mulchingStrategy.socialEffort +
-            k.herdSizeStrategy.socialEffort +
-            Cost.Faidherbia.socialEffort(k.nbFaidherbiaByHa) +
-            Cost.PopulationGrowth.socialEffort(populationGrowth)
+      k.loanStrategy.socialEffort +
+      k.ownFallowUse.socialEffort +
+      k.foodDonationStrategy.socialEffort +
+      k.drySeasonHerdStrategy.socialEffort +
+      k.wetSeasonHerdStrategy.socialEffort +
+      k.mulchingStrategy.socialEffort +
+      k.herdSizeStrategy.socialEffort +
+      Cost.Faidherbia.socialEffort(k.nbFaidherbiaByHa) +
+      Cost.PopulationGrowth.socialEffort(populationGrowth)
     .sum
     / simulationState.kitchens.length
 
@@ -189,7 +189,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       HerdGrazing.wetSeasonManPower(k.wetSeasonHerdStrategy) +
       k.mulchingStrategy.manpowerEffort +
       k.herdSizeStrategy.manpowerEffort +
-      Cost.Faidherbia.manpowerEffort(k.nbFaidherbiaByHa)
+      Cost.Faidherbia.manpowerEffort(k.nbFaidherbiaByHa) +
       Cost.PopulationGrowth.manpowerEffort(populationGrowth)
     .sum
     / simulationState.kitchens.length
