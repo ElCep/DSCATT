@@ -44,7 +44,8 @@ object Simulation {
              hookParameters: HookParameters,
              rainFall: Int | MM_PER_YEAR,
              switchers: Seq[Switcher] = Seq(),
-             world: Option[World] = None
+             world: Option[World] = None,
+             stopCriteria: SimulationState=> Boolean = _=> true
            ) = {
     given MersenneTwister(seed)
 
@@ -82,7 +83,7 @@ object Simulation {
         world = initialState.world.copy(parcels = initialState.world.parcels.map(_.resetFertilityHistory))
       )
 
-    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, true, data, switchers)
+    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, true, data, switchers, stopCriteria)
 
     if (hookParameters.displayParcels)
       History.printParcels(finalState, hookParameters, data)
@@ -106,12 +107,13 @@ object Simulation {
               simulationLenght: Int,
               emigrationProcess: Boolean,
               data: Data,
-              switchers: Seq[Switcher] = Seq()
+              switchers: Seq[Switcher] = Seq(),
+              stopCriteria: SimulationState=> Boolean = _=> true
             )(using MersenneTwister): SimulationState = {
 
     @tailrec
     def evolve0(simulationState: SimulationState, data: Data): SimulationState = {
-      if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size < 1) simulationState
+      if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size < 1 || stopCriteria(simulationState)) simulationState
       else {
         val (switchedSimulationState, switchedData) = applySwitchers(switchers, simulationState, data)
 

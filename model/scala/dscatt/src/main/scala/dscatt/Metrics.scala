@@ -138,6 +138,13 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     }.toArray
 
 
+  def populationTrend(bootstrapTime: Int, timeSlice: Int): Double =
+    val effectivePopDyn = populationDynamic.filter(_>0)
+    val slice = effectivePopDyn.takeRight(timeSlice)
+    if (effectivePopDyn.length >= bootstrapTime)
+    then (slice.sum.toDouble / slice.length) - slice.head
+    else 0.0
+
   def populationRSquareAndSlope: (Double, Double) =
     val regression = new SimpleRegression(true)
     populationDynamic.zipWithIndex foreach : (p, id) =>
@@ -193,22 +200,6 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       Cost.PopulationGrowth.manpowerEffort(populationGrowth)
     .sum
     / simulationState.kitchens.length
-
-
-//    simulationState.kitchens.groupBy(_.profileID).map: (pID, ks) =>
-//      Effort(
-//        pID,
-//        (ks.map: k =>
-//          k.loanStrategy.manpowerEffort +
-//            k.ownFallowUse.manpowerEffort +
-//            k.foodDonationStrategy.manpowerEffort +
-//            k.drySeasonHerdStrategy.manpowerEffort +
-//            k.wetSeasonHerdStrategy.manpowerEffort +
-//            k.mulchingStrategy.manpowerEffort +
-//            k.herdSizeStrategy.manpowerEffort +
-//            Cost.Faidherbia.manpowerEffort(k.nbFaidherbiaByHa)
-//          ).reduce(_ + _)
-//      )
 
 
 

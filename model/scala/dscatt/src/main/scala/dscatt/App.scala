@@ -12,6 +12,7 @@ import dscatt.KitchenComposer.KitchenProfileBuilder
 import dscatt.LoanStrategy.Selfish
 import dscatt.MulchingStrategy.CropResidue
 import dscatt.RotationCycle.MilletPeanut
+import dscatt.Simulation.SimulationState
 import dscatt.SwitchType.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
@@ -169,7 +170,7 @@ object Diohine {
       populationGrowth = pg,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 26,
+      simulationLength = 100,
       soilQualityBasis = 100,
       fallowBoost = 0.801866457937334,
       cropResidueBoost = 40,
@@ -178,9 +179,10 @@ object Diohine {
       peanutSeedToFood = 1.954822292357305,
       dailyFoodNeedPerPerson = 0.555,
       hookParameters = hooks,
-      rainFall = Seq(623,623,404,408,388,729,620,528,394,484,395,635,540,526,652,691,720,416,723,536,353,767,527,509,501,501),
-      //rainFall = 400,
-      Seq()
+      //rainFall = Seq(623,623,404,408,388,729,620,528,394,484,395,635,540,526,652,691,720,416,723,536,353,767,527,509,501,501),
+      rainFall = 527,
+      stopCriteria = (simS: SimulationState)=> simS.populationTrend(6,3) < 0,
+    //  Seq(),
      //Seq(Switcher(26, SwitchType.Solidarity(Selfish, FoodForUsOnlyStrategy)))
     )
 
@@ -204,7 +206,7 @@ object Diohine {
 
 
 //    //    println("\nPop R2 " + rsquare)
-//    //    println("\nPop slope " + slope)
+ //   println("\nPop slope " + slope)
 //    println("\nMigrant dynamic  " + simulationState.migrantsDynamic.toSeq)
 //    println("Sum of migrants " + simulationState.migrantsDynamic.sum)
 //    println("Pop " + simulationState.populationDynamic.last)
@@ -240,6 +242,7 @@ object Diohine {
   //  println("RSQ " + simulationState.averageResidualSoilQualityDynamic.toSeq)
     println("manpower cost " + simulationState.manpowerEffort(pg))
     println("Social cost " + simulationState.socialEffort(pg))
+    println("End simu " + simulationState.year)
 
   //  println("Profile Dyn " + simulationState.kitchenProfileRatiosDynamic.toSeq)
     //println("MIL yield " + simulationState.averageMilYieldDynamic.sum / simulationState.averageMilYieldDynamic.length)
