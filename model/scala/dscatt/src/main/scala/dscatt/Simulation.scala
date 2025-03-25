@@ -73,7 +73,7 @@ object Simulation {
 
     val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, lands, data))
 
-    val initialHistory = History.initialize(simulationLength, kitchens)
+    val initialHistory = History.initialize(simulationLength)
     val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
 
     // Two years warming up
@@ -113,9 +113,12 @@ object Simulation {
 
     @tailrec
     def evolve0(simulationState: SimulationState, data: Data): SimulationState = {
+
       if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size < 1 || stopCriteria(simulationState)) simulationState
       else {
-        val (switchedSimulationState, switchedData) = applySwitchers(switchers, simulationState, data)
+
+        val yearSimulationState = simulationState.copy(history = simulationState.history.incrementHistory(simulationState.year))
+        val (switchedSimulationState, switchedData) = applySwitchers(switchers, yearSimulationState, data)
 
         val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k, switchedData)) }
 

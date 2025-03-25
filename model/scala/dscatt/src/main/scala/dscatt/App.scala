@@ -151,13 +151,13 @@ object Diohine {
     val hookFile = HookFile(
       outputPath = "/tmp",
       parcels = false,
-      kitchens = false,
+      kitchens = true,
       dynamics = true
     )
 
     val hooks = HookParameters(
       displayParcels = false,
-      displayKitchens = false,
+      displayKitchens = true,
       hookFile = None
     )
 

@@ -139,9 +139,8 @@ implicit class HistoryDecorator(simulationState: SimulationState):
 
 
   def populationTrend(bootstrapTime: Int, timeSlice: Int): Double =
-    val effectivePopDyn = populationDynamic.filter(_>0)
-    val slice = effectivePopDyn.takeRight(timeSlice)
-    if (effectivePopDyn.length >= bootstrapTime)
+    val slice = populationDynamic.takeRight(timeSlice)
+    if (populationDynamic.length >= bootstrapTime)
     then (slice.sum.toDouble / slice.length) - slice.head
     else 0.0
 

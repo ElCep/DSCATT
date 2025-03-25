@@ -29,13 +29,15 @@ object History {
   type Herds = Map[KitchenID, Int]
   type KitchenProfile = Map[KitchenID, KitchenProfileID]
 
-  def initialize(simulationLenght: Int, kitchens: Seq[Kitchen]): History = {
-    (1 to simulationLenght).map { y =>
-      y -> YearHistory(year = y)
-    }.toMap
-  }
+  def initialize(simulationLenght: Int): History =
+    Map(1 -> YearHistory(year = 1))
+
 
   implicit class HistoryWrap(history: History) {
+
+    def incrementHistory(year: Int): History =
+      history ++ Map(year -> YearHistory(year = year))
+
     def updateLoans(year: Int, loans: Loans, parcels: Seq[Parcel]) = {
       val historyOfYear = history(year)
       val parcelStats = History.toParcelStats(loans, parcels)
