@@ -53,7 +53,7 @@ plot.igraph(x = gg_fertilite,
 ## agriculteurs et eleveurs
 ### L'objectif est de produire automatiquement le graphe qui mets en relation avec Eleveur et/ou agriculteur
 
-gg_agro_pasteur <- subgraph.edges(gg, E(gg)[inc(V(gg)[name=c("Eleveur","Agriculteur")])]) # on se concentre sur eleveur et agriculteur
+gg_agro_pasteur <- subgraph.edges(gg, E(gg)[.inc(V(gg)[name=c("Eleveur","Agriculteur")])]) # on se concentre sur eleveur et agriculteur
 gg_agro_pasteur2 <-subgraph.edges(gg_agro_pasteur, E(gg_agro_pasteur)[pardi_type=="interaction"]) #j'enlève les dynamique qui auront une autre visualisation
 
 plot.igraph(x = gg_agro_pasteur2, 
@@ -114,6 +114,7 @@ library(visNetwork)
 library(htmlwidgets)
 E(gg_agro_pasteur)$color <- "grey"
 V(gg_agro_pasteur)$color <- "blue"
+E(gg_agro_pasteur)$label.color <- "white"
 saveWidget(visIgraph(gg_agro_pasteur, layout = "layout_nicely"), file = "./test.html")
 
 
@@ -129,7 +130,7 @@ nn <- create_node_df(nrow(df_nodes),
                      width = (df_nodes$name) %>% as.character() %>%  nchar / 10,
                      color= ifelse(df_nodes$type== "acteur", "CornflowerBlue", "DarkTurquoise"), 
                      #color="darkgrey",
-                     fillcolor= ifelse(df_nodes$type== "acteur", "CornflowerBlue", "DarkTurquoise") 
+                     fillcolor= ifelse(df_nodes$type== "acteur", "CornflowerBlue", "DarkTurquoise")
                      )
 
 # edges
@@ -146,12 +147,11 @@ dig_gg <- create_graph(graph_name = "interactions",
                 )
 
 #rendu interactif
-render_graph(dig_gg, output = "visNetwork" ) %>% 
-  visNodes(physics = F ) 
+render_graph(dig_gg, output = "visNetwork") %>% 
+  visNodes(physics = FALSE, font = list(color = "white"))
 
 }
 
-I
 
 vizu_interactive(nodes_interac,edges_interac )
 vizu_interactive(nodes_conflit,edges_conflit )
