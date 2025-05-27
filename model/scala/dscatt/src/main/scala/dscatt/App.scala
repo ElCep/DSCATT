@@ -4,7 +4,7 @@ import Croping.*
 import KitchenPartition.*
 import utils.*
 import Data.*
-import dscatt.Fertility.{fallowFullPotential, fallowNRF}
+import dscatt.Fertility.{fallowFullPotential, fallowNRF, peanutNRF, peanutSeedFullPotential}
 import dscatt.FoodDonationStrategy.FoodForUsOnlyStrategy
 import dscatt.HerdGrazingStrategy.AnywhereAnyTime
 import dscatt.HerdSizeStrategy.{FullCapacity, LSUByArea}
@@ -22,6 +22,8 @@ object Diohine {
 
   case class HookParameters(displayParcels: Boolean = true, displayKitchens: Boolean = false, hookFile: Option[HookFile])
 
+  val seed = 7770
+
   def main(args: Array[String]) =
 
     //    def checkGrowth =
@@ -35,7 +37,7 @@ object Diohine {
     // SwitchExplorer.explore(landsDirectory, "/tmp/newQS")
     //CSVExplorer.run
     // println(RainFallGenerator.thirtyPercentLess.toString + " / " + RainFallGenerator.thirtyPercentLess.size)
-    val seed = 7770
+
 
     //val col = utils.collectionWithGini(0.2, 5, Right(31))
     //println("GINI:" + col)
@@ -81,26 +83,44 @@ object Diohine {
   //    )
 
 
-
   val defaultKitchenProfiler =
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
       Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Millet
     }
 
-    KitchenProfiler.build(
+    val dist = {
+      MeanStd(
+        kitchenMean = 10,
+        kitchenStd = 5,
+        solidarityMean = 4,
+        solidarityStd = 1.5,
+        soilCareMean = 5,
+        soilCareStd = 2,
+        mutualizedHerdGrazingMean = 3,
+        mutualizedHerdGrazingStd = 1,
+        faidherbiaMean = 6,
+        faidherbiaStd = 3,
+        maxFaidherbia = 12,
+        breederMean = 0.3,
+        breederStd = 0.1,
+        maxBreeder = 0.7)
+    }
+
+    val kp = KitchenProfiler.build(
       nbKitchenProfile = 4,
       initialTotalNumberOfKitchen = 31,
       initialKitchenSize = 16,
-      kitchenGini = 0.7,
-      solidarityGini = 0.1,
-      soilCareGini = 0.3,
-      mutualizedHerdGrazingGini = 0.1,
-      faidherbiaGini = 0.05,
-      maxFaidherbia = 5,
-      breederGini = 0.25,
-      maxBreeder = 0.7,
-      drySeasonManureCriteria = manureDepositStategyMilNextYear
+      drySeasonManureCriteria = manureDepositStategyMilNextYear,
+      distributionBuilder = dist,
+      seed = seed
     )
+
+    println("Sol " + kp.solidarityScore)
+    println("Soil " + kp.soilCareScore)
+    println("Faid " + kp.faidherbiaScore)
+    println("Grazing " + kp.herdGrazingScore)
+    println("Breeder " + kp.breederScore)
+    kp
 
 
   //    val kitchenProfile1 = KitchenProfile(

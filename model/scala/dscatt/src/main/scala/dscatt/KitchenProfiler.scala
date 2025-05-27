@@ -4,13 +4,55 @@ import dscatt.Cost.HerdGrazing
 import dscatt.SwitchType.Mulching
 
 
+sealed trait SequenceConstraint
+case class SumTarget(sum: Int) extends SequenceConstraint
+case class MaxElement(value: Double) extends SequenceConstraint
+
+sealed trait DistributionBuilder
+case class Gini(
+                 kitchenGini: Double,
+                 solidarityGini: Double,
+                 soilCareGini: Double,
+                 mutualizedHerdGrazingGini: Double,
+                 faidherbiaGini: Double,
+                 maxFaidherbia: Int,
+                 breederGini: Double,
+                 maxBreeder: Double,
+               ) extends DistributionBuilder
+
+case class MeanStd(
+                    kitchenMean: Double,
+                    kitchenStd: Double,
+                    solidarityMean: Double,
+                    solidarityStd: Double,
+                    soilCareMean: Double,
+                    soilCareStd: Double,
+                    mutualizedHerdGrazingMean: Double,
+                    mutualizedHerdGrazingStd: Double,
+                    faidherbiaMean: Double,
+                    faidherbiaStd: Double,
+                    maxFaidherbia: Int,
+                    breederMean: Double,
+                    breederStd: Double,
+                    maxBreeder: Double,
+                  ) extends DistributionBuilder
+
+case class Distributions(
+                          kitchen: Seq[Int],
+                          solidarity: Seq[Int],
+                          soilCare: Seq[Int],
+                          mutualizeGrazing: Seq[Int],
+                          faidherbia: Seq[Int],
+                          breeder: Seq[Double]
+                        )
+
 case class KitchenProfiler(
                             kitchenPartition: KitchenPartition,
                             soilCareScore: Double,
                             solidarityScore: Double,
                             herdGrazingScore: Double,
                             faidherbiaScore: Double,
-                            breezerScore: Double
+                            breederScore: Double
                           )
 
 object KitchenProfiler:
@@ -102,66 +144,89 @@ object KitchenProfiler:
       }
       .sum
 
+  def printDistributionsAndScores(distributions: Distributions) =
+
+    println("Solidarity dist " + distributions.solidarity)
+    println("Soil care dist " + distributions.soilCare)
+    println("Grazing dist " + distributions.mutualizeGrazing)
+    println("Faid dist " + distributions.faidherbia)
+    println("Breeder dist " + distributions.mutualizeGrazing)
+
+    println("sol score:  " + score[Int](distributions.solidarity, distributions.kitchen))
+    println("soil care score:  " + score[Int](distributions.soilCare, distributions.kitchen))
+    println("mutualized grazing score " + score[Int](distributions.mutualizeGrazing, distributions.kitchen))
+    println("faid score:  " + score[Int](distributions.faidherbia, distributions.kitchen))
+    println("breeder score:  " + score[Double](distributions.breeder, distributions.kitchen))
 
   def build(
              nbKitchenProfile: Int,
              initialTotalNumberOfKitchen: Int,
              initialKitchenSize: Int,
-             kitchenGini: Double,
-             solidarityGini: Double,
-             soilCareGini: Double,
-             mutualizedHerdGrazingGini: Double,
-             faidherbiaGini: Double,
-             maxFaidherbia: Int,
-             breederGini: Double,
-             maxBreeder: Double,
              drySeasonManureCriteria: (Parcel, RotationCycle) => Boolean,
+             distributionBuilder: DistributionBuilder,
+             seed: Long
            ) =
 
-    val kitchenDist =
-      val dist = utils.collectionWithGini(kitchenGini, nbKitchenProfile, Left(initialTotalNumberOfKitchen))
-      val zero = dist.indexOf(0)
-      if zero > 0
-      then
-        val max = dist.max
-        dist.updated(zero, 1).updated(dist.indexOf(max), max - 1)
-      else dist
+    val distributions =
+      distributionBuilder match
+        case gini: Gini =>
+          val kitchenDist =
+            val dist = utils.collectionWithGini(targetGini = gini.kitchenGini, sequenceSize = nbKitchenProfile, sequenceConstraint = SumTarget(initialTotalNumberOfKitchen))
+            val zero = dist.indexOf(0)
+            if zero > 0
+            then
+              val max = dist.max
+              dist.updated(zero, 1.0).updated(dist.indexOf(max), max - 1.0).map(_.toInt)
+            else dist.map(_.toInt)
 
-    val solidarityDist = utils.collectionWithGini(solidarityGini, nbKitchenProfile, Right(solidarityModalities.size - 1))
-    val soilCareDist = utils.collectionWithGini(soilCareGini, nbKitchenProfile, Right(soilCareQModalities.size - 1))
-    val mutualizedGrazingDist = utils.collectionWithGini(mutualizedHerdGrazingGini, nbKitchenProfile, Right(mutualizedHerdGrazingModalities.size - 1))
-    val faidherbiaDist = utils.collectionWithGini(faidherbiaGini, nbKitchenProfile, Right(maxFaidherbia))
-    val breederDist = utils.collectionWithGini(breederGini, nbKitchenProfile, Right(maxBreeder))
+          val solidarityDist = utils.collectionWithGini(gini.solidarityGini, nbKitchenProfile, MaxElement(solidarityModalities.size - 1))
+          val soilCareDist = utils.collectionWithGini(gini.soilCareGini, nbKitchenProfile, MaxElement(soilCareQModalities.size - 1))
+          val mutualizedGrazingDist = utils.collectionWithGini(gini.mutualizedHerdGrazingGini, nbKitchenProfile, MaxElement(mutualizedHerdGrazingModalities.size - 1))
+          val faidherbiaDist = utils.collectionWithGini(gini.faidherbiaGini, nbKitchenProfile, MaxElement(gini.maxFaidherbia))
+          val breederDist = utils.collectionWithGini(gini.breederGini, nbKitchenProfile, MaxElement(gini.maxBreeder))
 
-    println("Kitchen dist " + kitchenDist + ", G: " + utils.gini(kitchenDist.map(_.toDouble)))
-    //    println("Solid dist " + solidarityDist + ", G: " + utils.gini(solidarityDist.map(_.toDouble)))
-    //    println("culture diversity dist " + soilCareDist + ", G: " + utils.gini(soilCareDist.map(_.toDouble)))
-    //    println("Grazing dist " + mutualizedGrazingDist + ", G: " + utils.gini(mutualizedGrazingDist.map(_.toDouble)))
-    //    println("Faid dist " + faidherbiaDist + ", G: " + utils.gini(faidherbiaDist.map(_.toDouble)))
-    //    println("Breeder dist " + breederDist + ", G: " + utils.gini(breederDist))
-    //
-    //    println("sol score:  " + score[Int](solidarityDist, kitchenDist))
-    //    println("soil care score:  " + score[Int](soilCareDist, kitchenDist))
-    //    println("mutualized grazing score " + score[Int](mutualizedGrazingDist, kitchenDist))
-    //    println("faid score:  " + score[Int](faidherbiaDist, kitchenDist))
-    //    println("breeder score:  " + score[Double](breederDist, kitchenDist))
+          Distributions(
+            kitchen = kitchenDist.map(_.toInt),
+            solidarity = solidarityDist.map(_.toInt),
+            soilCare = soilCareDist.map(_.toInt),
+            mutualizeGrazing = mutualizedGrazingDist.map(_.toInt),
+            faidherbia = faidherbiaDist.map(_.toInt),
+            breeder = breederDist
+          )
+        case ms: MeanStd =>
+          val kitchenDist = utils.collectionWithMeanAndStd[Int](nbKitchenProfile, ms.kitchenMean, ms.kitchenStd, SumTarget(initialTotalNumberOfKitchen), seed = seed)
+
+          val solidarityDist = utils.collectionWithMeanAndStd[Int](nbKitchenProfile, ms.solidarityMean, ms.solidarityStd, MaxElement(solidarityModalities.size - 1), seed = seed )
+          val soilCareDist = utils.collectionWithMeanAndStd[Int](nbKitchenProfile, ms.soilCareMean, ms.soilCareStd, MaxElement(soilCareQModalities.size - 1), seed = seed)
+          val mutualizedGrazingDist = utils.collectionWithMeanAndStd[Int](nbKitchenProfile, ms.mutualizedHerdGrazingMean, ms.mutualizedHerdGrazingStd, MaxElement(mutualizedHerdGrazingModalities.size - 1), seed = seed)
+          val faidherbiaDist = utils.collectionWithMeanAndStd[Int](nbKitchenProfile, ms.faidherbiaMean, ms.faidherbiaStd, MaxElement(ms.maxFaidherbia), seed = seed)
+          val breederDist = utils.collectionWithMeanAndStd[Double](nbKitchenProfile, ms.breederMean, ms.breederStd, MaxElement(ms.maxBreeder), seed = seed)
+
+          Distributions(
+            kitchen = kitchenDist,
+            solidarity = solidarityDist.map(_.toInt),
+            soilCare = soilCareDist.map(_.toInt),
+            mutualizeGrazing = mutualizedGrazingDist.map(_.toInt),
+            faidherbia = faidherbiaDist.map(_.toInt),
+            breeder = breederDist
+          )
+
 
     val soilCare =
-      soilCareDist.map: sc =>
+      distributions.soilCare.map: sc =>
         val mod = soilCareQModalities(sc)
         (mod._1, mod._2, mod._3)
 
+
     val solidarity =
-      solidarityDist.map: s =>
+      distributions.solidarity.map: s =>
         val mod = solidarityModalities(s)
         (mod._1, mod._2)
 
     val herdGrazing =
-      mutualizedGrazingDist.map: g =>
+      distributions.mutualizeGrazing.map: g =>
         val mod = mutualizedHerdGrazingModalities(g)
         (mod._1, mod._2)
-
-    println("ROC " + soilCare)
 
     KitchenProfiler(
       KitchenPartition(
@@ -177,18 +242,18 @@ object KitchenProfiler:
               foodDonationStrategy = solidarity(kpID)._2,
               drySeasonHerdStrategy = herdGrazing(kpID)._1,
               wetSeasonHerdStrategy = herdGrazing(kpID)._2,
-              herdSizeStrategy = HerdSizeStrategy.LSUByArea(breederDist(kpID)), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
+              herdSizeStrategy = HerdSizeStrategy.LSUByArea(distributions.breeder(kpID)), // = 0.42, // in [0.0; 0.68] 0.68 is more or less equivalent to 140 LSU, which is a maximum possible for the whole area
               drySeasonManureCriteria,
               FertilizerStrategy.UniformFertilizing,
               mulchingStrategy = soilCare(kpID)._3,
-              nbFaidherbia = faidherbiaDist(kpID)
+              nbFaidherbia = distributions.faidherbia(kpID)
             ),
-            kitchenDist(kpID)
+            distributions.kitchen(kpID)
           )
       ),
-      soilCareScore = score[Int](soilCareDist, kitchenDist),
-      solidarityScore = score[Int](solidarityDist, kitchenDist),
-      herdGrazingScore = score[Int](mutualizedGrazingDist, kitchenDist),
-      faidherbiaScore = score[Int](faidherbiaDist, kitchenDist),
-      breezerScore = score[Double](breederDist, kitchenDist)
+      soilCareScore = score[Int](distributions.soilCare, distributions.kitchen),
+      solidarityScore = score[Int](distributions.solidarity, distributions.kitchen),
+      herdGrazingScore = score[Int](distributions.mutualizeGrazing, distributions.kitchen),
+      faidherbiaScore = score[Int](distributions.faidherbia, distributions.kitchen),
+      breederScore = score[Double](distributions.breeder, distributions.kitchen)
     )
