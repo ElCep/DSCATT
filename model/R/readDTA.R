@@ -6,7 +6,11 @@ library('date')
 library("dplyr")
 
 data.df <- unlabelled(read_dta("~/dev/DSCATT/model/R/data/Residents_ES_Etienne Delay_Diohine.dta"))
+data.df <- unlabelled(read_dta("~/Téléchargements/UTF-8Residents_ES_Etienne Delay_Diohine.dta"))
 
+read_dta("~/Téléchargements/UTF-8Residents_ES_Etienne Delay_Diohine.dta")
+
+data.df$Hameau %>% unique()
 sel1 <- data.df$EventCode == "BTH" 
 sel2 <- data.df$EventCode == "DTH" | data.df$EventCode == "OMG"
 
@@ -15,11 +19,22 @@ bth <- data.df[sel1,]
 bth$year <- format(bth$EventDate, format = "%Y")
 s <- bth %>%
       count(year)
-
 naissance_by_year <- bth %>%
   count(year)
 
 data.df$EventCode %>%  levels
+
+naissances <-  data.df %>%  filter(EventCode=="BTH")
+naissances$year <-  format(naissances$EventDate, format = "%Y")
+names(naissances)
+naissances <-  naissances %>%  select(Hameau, year)
+
+
+naissances_par_an_par_hameau <-  naissances %>%  group_by(year, Hameau) %>%  count(year)
+naissances_par_an_par_hameau$Hameau <-  factor(naissances_par_an_par_hameau$Hameau)
+ggplot(naissances_par_an_par_hameau, aes(x = n, group= Hameau))+
+  geom_density(aes(color= Hameau))+
+  theme_light()
 
 
 
@@ -44,6 +59,9 @@ cumsum(movement_by_year$solde)
 
 
 mean(movement_by_year$solde)
+
+
+
 
 
 ggplot(data=movement_by_year,aes( x =  as.numeric(as.character(year)), y = naissances))+

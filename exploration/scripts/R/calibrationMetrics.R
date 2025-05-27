@@ -23,20 +23,164 @@ plot( fs, type="b" , bty="l" , xlab="Years" , ylab="Food stress" , col=rgb(0.2,0
 plot(loaned, type="b" , bty="l" , xlab="Years" , ylab="Loaned parcel area" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=21 , ylim=c(0.0,60.0) )
 plot( asq, type="b" , bty="l" , xlab="Years" , ylab="Annual soil quality" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=21 , ylim=c(70,102) )
 
-par(new=TRUE, mar=c(3,4,2,5))
+
 plot( rsq, type="b" , bty="l" , xlab="Years" , ylab="Annual soil quality" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=21 , ylim=c(70,102) )
 par(new=TRUE)
 plot( ef, type="b" , bty="l" , xlab="Years" , ylab="Effective fallow ratio" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=21 , ylim=c(0.2,1.1) )
 
-#plot( rainfall, type="b"  , xlab="" , ylab="", col=rgb(0.2,0.4,0.9,0.7) , lwd=2 , pch=21 , ylim=c(250,800), axes=FALSE)
-#par(new=TRUE)
-#plot( datapop, type="b"  , xlab="" , ylab="", col=rgb(0.9,0.2,0.1,0.7) , lwd=2 , pch=21 , ylim=c(300,550), axes=FALSE)
+plot( rainfall, type="b"  , xlab="" , ylab="", col=rgb(0.2,0.4,0.9,0.7) , lwd=2 , pch=21 , ylim=c(250,800), axes=FALSE)
+par(new=TRUE)
+plot( datapop, type="b"  , xlab="" , ylab="", col=rgb(0.9,0.2,0.1,0.7) , lwd=2 , pch=21 , ylim=c(300,550), axes=FALSE)
 
 mtext("Rain fall",side=4,col=rgb(0.2,0.4,0.9,0.7),line=4) 
 axis(4, ylim=c(400,1000), col="black",col.axis="black")
-
-#lines( fs, type="b" , bty="l" , xlab="Year" , ylab="Yield" , col=rgb(0.9,0.8,0.3,0.7) , lwd=3 , pch=21 , ylim=c(0,1.5) )
+#dev.off()
+lines( fs, type="b" , bty="l" , xlab="Year" , ylab="Yield" , col=rgb(0.9,0.8,0.3,0.7) , lwd=3 , pch=21 , ylim=c(0,1.5) )
 #plot(globalneeds, type="b" , bty="l" , xlab="Year" , ylab="Global needs" , col=rgb(0.2,0.1,0.3,0.7) , lwd=3 , pch=21 , ylim=c(0,100000) )
 #plot(loanneeds, type="b" , bty="l" , xlab="Year" , ylab="Loan needs" , col=rgb(0.9,0.3,0.3,0.7) , lwd=3 , pch=21 , ylim=c(0,100000), add=TRUE)
 
-#curve(0.501 * log(x) - 1.2179, from=18, to=83, , xlab="x", ylab="yield")
+curve(0.501 * log(x) - 1.2179, from=18, to=83, , xlab="x", ylab="yield")
+
+
+
+
+
+#################################"
+#bigger axis labels for JASSS Paper
+####################################
+
+fontsize <- 1.5
+
+
+ploplo1 <- function(){
+  plot(0,0, type='n', xaxt='n', yaxt='n', xlab='', ylab='', bty='n')  # make an empty plot
+  par(new=T, mar=c(5, 5, 4, 5))
+  plot( fs, type="o" , bty="l" , xlab="Years" , ylab="Food stress" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=20 , ylim=c(0.5,1.5) , cex.lab=fontsize, main = "FoodStress and Rainfall ")
+  par(new=T)
+  plot( rainfall, type="o"  , xlab="" , ylab="", col=rgb(0.2,0.4,0.9,0.7) , lwd=2 , pch=20 , ylim=c(250,800), axes=FALSE)
+  mtext("Rain fall (mm)",side=4,col=rgb(0.2,0.4,0.9,0.7),line=2,cex= fontsize *0.65) 
+  axis(side=4, ylim=c(400,1000), col="black",col.axis="black",)
+}
+ploplo1()
+
+
+
+ploplo2 <- function(){
+  plot(0,0, type='n', xaxt='n', yaxt='n', xlab='', ylab='', bty='n')  # make an empty plot
+  par(new=T, mar=c(5, 5, 4, 4))
+  plot( ef, type="o" , bty="l" , xlab="Years" , ylab="Fallow ratio" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=20 , ylim=c(0.2,1.1) , cex.lab= fontsize, main="Intact fallow ratio and Rainfall")
+  par(new=T)
+  plot( rainfall, type="o"  , xlab="" , ylab="", col=rgb(0.2,0.4,0.9,0.7) , lwd=2 , pch=20 , ylim=c(250,800), axes=FALSE)
+  mtext("Rain fall (mm)",side=4,col=rgb(0.2,0.4,0.9,0.7),line=2,cex= fontsize *0.65) 
+  axis(side=4, ylim=c(400,1000), col="black",col.axis="black",)
+}
+ploplo2()
+
+
+
+
+
+ploplo3 <- function(){
+  plot(0,0, type='n', xaxt='n', yaxt='n', xlab='', ylab='', bty='n')  # make an empty plot
+  par(new=T, mar=c(5, 5, 4, 5))
+  plot( herd, type="o" , bty="l" , xlab="Years" , ylab="Herd size" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=20 , ylim=c(80,95), cex.lab=fontsize, main="Herd size and Rainfall" )
+  
+  par(new=T)
+  plot( rainfall, type="o"  , xlab="" , ylab="", col=rgb(0.2,0.4,0.9,0.7) , lwd=2 , pch=20 , ylim=c(250,800), axes=FALSE)
+  mtext("Rain fall (mm)",side=4,col=rgb(0.2,0.4,0.9,0.7),line=2,cex= fontsize *0.65) 
+  axis(side=4, ylim=c(400,1000), col="black",col.axis="black",)
+}
+ploplo3()
+
+
+ploplo4 <- function(){
+  plot(0,0, type='n', xaxt='n', yaxt='n', xlab='', ylab='', bty='n')  # make an empty plot
+  par(new=T, mar=c(5, 5, 4, 4))
+  plot( milletYield, type="o" , bty="l" , xlab="Years" , ylab="Millet yield (kg/ha)" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=20 , ylim=c(500,950), main= "Millet Yield and Rainfall", cex.lab=fontsize )
+  par(new=T)
+  plot( rainfall, type="o"  , xlab="" , ylab="", col=rgb(0.2,0.4,0.9,0.7) , lwd=2 , pch=20 , ylim=c(250,800), axes=FALSE)
+  mtext("Rain fall (mm)",side=4,col=rgb(0.2,0.4,0.9,0.7),line=2,cex= fontsize *0.65) 
+  axis(side=4, ylim=c(400,1000), col="black",col.axis="black",)
+}
+
+ploplo4()
+
+
+
+ploplo5 <- function(){
+  plot(0,0, type='n', xaxt='n', yaxt='n', xlab='', ylab='', bty='n')  # make an empty plot
+  par(new=T, mar=c(5, 5, 4, 5))
+  plot( asq, type="o" , bty="l" , xlab="Years" , ylab="Annual soil quality" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=20 , ylim=c(70,102), cex.lab=fontsize, main="Annual soil quality and Rainfall" )
+  
+  par(new=T)
+  plot( rainfall, type="o"  , xlab="" , ylab="", col=rgb(0.2,0.4,0.9,0.7) , lwd=2 , pch=20 , ylim=c(250,800), axes=FALSE)
+  mtext("Rain fall (mm)",side=4,col=rgb(0.2,0.4,0.9,0.7),line=2,cex= fontsize *0.65) 
+  axis(side=4, ylim=c(400,1000), col="black",col.axis="black",)
+}
+ploplo5()
+
+
+ploplo6 <- function(){
+  plot(0,0, type='n', xaxt='n', yaxt='n', xlab='', ylab='', bty='n')  # make an empty plot
+  par(new=T, mar=c(5, 5, 4, 4))
+  plot( nitrogen, type="o" , bty="l" , xlab="Years" , ylab="Nitrogen (kg/ha)" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=20 , ylim=c(50,60), cex.lab= fontsize, main = "Available Nitrogen and Rainfall" )
+  par(new=T)
+  plot( rainfall, type="o"  , xlab="" , ylab="", col=rgb(0.2,0.4,0.9,0.7) , lwd=2 , pch=20 , ylim=c(250,800), axes=FALSE)
+  mtext("Rain fall (mm)",side=4,col=rgb(0.2,0.4,0.9,0.7),line=2,cex= fontsize *0.65) 
+  axis(side=4, ylim=c(400,1000), col="black",col.axis="black",)
+}
+ploplo6()
+
+
+
+
+
+ploplo7 <- function(){
+  plot(0,0, type='n', xaxt='n', yaxt='n', xlab='', ylab='', bty='n')  # make an empty plot
+  par(new=T, mar=c(5, 5, 4, 5))
+  plot( pop, type="o" , bty="l" , xlab="Years" , ylab="Population" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=20 , ylim=c(300,550) , cex.lab=fontsize, main ="Simulated vs. observed population")
+  lines(datapop,type="o", pch=20,col=rgb(0.9,0.2,0.1,0.7) , lwd=2)
+  legend("bottomright", legend = c("data", "simulated"),
+         lwd = 3, col = c(rgb(0.9,0.2,0.1,0.7), rgb(0.2,0.4,0.1,0.7)), cex=fontsize*0.65)
+}
+ploplo7()
+
+
+
+ploplo8 <- function(){
+  plot(0,0, type='n', xaxt='n', yaxt='n', xlab='', ylab='', bty='n')  # make an empty plot
+  par(new=T, mar=c(5, 5, 4, 4))
+  plot(loaned, type="o" , bty="l" , xlab="Years" , ylab="Loaned parcels area (ha)" , col=rgb(0.2,0.4,0.1,0.7) , lwd=3 , pch=20 , ylim=c(0.0,60.0), cex.lab= fontsize, main="Total loaned surface and Rainfall")
+  
+  par(new=T)
+  plot( rainfall, type="o"  , xlab="" , ylab="", col=rgb(0.2,0.4,0.9,0.7) , lwd=2 , pch=20 , ylim=c(250,800), axes=FALSE)
+  mtext("Rain fall (mm)",side=4,col=rgb(0.2,0.4,0.9,0.7),line=2,cex= fontsize *0.65) 
+  axis(side=4, ylim=c(400,1000), col="black",col.axis="black",)
+}
+ploplo8()
+
+
+# 4x2 matric of plots
+
+
+png("~/DSCATT/img_article_JASSS/figure10_clean.png",
+    width = 21,
+    height=29,
+    unit="cm",
+    res=200)
+par(mfrow = c(4, 2))
+ploplo1()
+ploplo2()
+ploplo3()
+ploplo4()
+ploplo5()
+ploplo6()
+ploplo7()
+ploplo8()
+dev.off()
+
+
+  
+  
+
+
