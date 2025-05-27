@@ -58,11 +58,11 @@ case class KitchenProfiler(
 object KitchenProfiler:
 
   /*
-  1- solidarity // loan - foodDonation
-  2- soilCare // cropRotation - ownFallowUse - mulching
-  3- herdGrazing // dryHerdGrazing - wetHerdGrazing
-  4- herdUsage // LSU
-  5- faidherbia // #faidherbia
+  1- solidarity // loan - foodDonation (6)
+  2- soilCare // cropRotation - ownFallowUse - mulching (16)
+  3- herdGrazing // dryHerdGrazing - wetHerdGrazing (9)
+  4- herdUsage // LSU (contiunous)
+  5- faidherbia // #faidherbia (12)
   */
 
   //1
@@ -212,10 +212,11 @@ object KitchenProfiler:
           )
 
 
-    val soilCare =
+    val soilCare = {
       distributions.soilCare.map: sc =>
         val mod = soilCareQModalities(sc)
         (mod._1, mod._2, mod._3)
+    }
 
 
     val solidarity =

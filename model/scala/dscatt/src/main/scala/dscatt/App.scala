@@ -90,19 +90,19 @@ object Diohine {
 
     val dist = {
       MeanStd(
-        kitchenMean = 10,
-        kitchenStd = 5,
-        solidarityMean = 4,
-        solidarityStd = 1.5,
-        soilCareMean = 5,
-        soilCareStd = 2,
-        mutualizedHerdGrazingMean = 3,
-        mutualizedHerdGrazingStd = 1,
-        faidherbiaMean = 6,
-        faidherbiaStd = 3,
+        kitchenMean = 13.0,
+        kitchenStd = 8.0,
+        solidarityMean = 5.0,
+        solidarityStd = 1.0,
+        soilCareMean = 10.0,
+        soilCareStd = 5.0,
+        mutualizedHerdGrazingMean = 8.0,
+        mutualizedHerdGrazingStd = 8.0,
+        faidherbiaMean = 12.0,
+        faidherbiaStd = 2.0,
         maxFaidherbia = 12,
-        breederMean = 0.3,
-        breederStd = 0.1,
+        breederMean = 0.5,
+        breederStd = 0.3,
         maxBreeder = 0.7)
     }
 
