@@ -56,7 +56,8 @@ buildImage = function(dynamicName, dirPath) {
     scale_colour_manual(values=custom_pal)+
     labs(color="Scenario")
   
-  pngFileName = str_replace(fifi,".csv",".png")
+  pngFileName = str_replace(fifi,".csv","BIF_new.png")
+  
   ggsave(pngFileName, ploplot, width=1500, height = 891, units = "px", dpi=150)
 }
 
