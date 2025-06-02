@@ -82,56 +82,64 @@ package object utils {
                                                                     constraint: SequenceConstraint,
                                                                     seed: Long
                                                                   ): Seq[A] = {
-    require(n > 1, "n doit être > 1")
-    require(meanTarget >= 0, "meanTarget doit être ≥ 0")
-    val rnd = new Random(seed)
-    val num = implicitly[Numeric[A]]
-    val fromDouble = implicitly[FromDouble[A]]
-    val isInt = implicitly[ClassTag[A]].runtimeClass == classOf[Int]
-
-    // Étape 1 : valeurs uniformes [0, 1]
-    val raw = Vector.fill(n)(rnd.nextDouble())
-
-    // Étape 2 : centrer à 0, std ≈ 1
-    val rawMean = raw.sum / n
-    val centered = raw.map(_ - rawMean)
-    val std = math.sqrt(centered.map(x => x * x).sum / n)
-    val standardized = centered.map(_ / std)
-
-    // Étape 3 : appliquer écart-type et recentrer pour la bonne moyenne
-    val scaled = standardized.map(x => x * e + meanTarget)
-
-    // Étape 4 : forcer toutes les valeurs à être ≥ 0
-    val nonNegative = scaled.map(x => math.max(0.0, x))
-
-    // Étape 5 : appliquer contrainte
-    val constrained: Seq[Double] = constraint match {
-      case SumTarget(sum) =>
-        val factor = sum.toDouble / nonNegative.sum
-        nonNegative.map(_ * factor)
-
-      case MaxElement(maxVal) =>
-        nonNegative.map(x => math.min(x, maxVal))
-    }
-
-    // Étape 6 : conversion + ajustement somme si besoin
-    val rounded: Seq[A] = constrained.map(fromDouble)
-
-    (constraint, isInt) match {
-      case (SumTarget(target), true) =>
-        val intValues = rounded.map(num.toInt)
-        val currentSum = intValues.sum
-        val diff = target - currentSum
-        val sortedIdx = constrained.zipWithIndex.sortBy { case (v, _) => v - v.round }.map(_._2)
-        val updated = intValues.zipWithIndex.map {
-          case (v, i) =>
-            val delta = if (sortedIdx.take(math.abs(diff)).contains(i)) math.signum(diff) else 0
-            v + delta
+    n match
+      case 0=> Seq[A]()
+      case 1 =>
+        val value = constraint match {
+          case SumTarget(sum)    => sum.toDouble
+          case MaxElement(max)   => math.min(meanTarget, max)
         }
-        updated.map(num.fromInt)
 
-      case _ =>
-        rounded
-    }
+        Seq(implicitly[FromDouble[A]].apply(math.max(0.0, value)))
+      case _=>
+        val rnd = new Random(seed)
+        val num = implicitly[Numeric[A]]
+        val fromDouble = implicitly[FromDouble[A]]
+        val isInt = implicitly[ClassTag[A]].runtimeClass == classOf[Int]
+
+        // Étape 1 : valeurs uniformes [0, 1]
+        val raw = Vector.fill(n)(rnd.nextDouble())
+
+        // Étape 2 : centrer à 0, std ≈ 1
+        val rawMean = raw.sum / n
+        val centered = raw.map(_ - rawMean)
+        val std = math.sqrt(centered.map(x => x * x).sum / n)
+        val standardized = centered.map(_ / std)
+
+        // Étape 3 : appliquer écart-type et recentrer pour la bonne moyenne
+        val scaled = standardized.map(x => x * e + meanTarget)
+
+        // Étape 4 : forcer toutes les valeurs à être ≥ 0
+        val nonNegative = scaled.map(x => math.max(0.0, x))
+
+        // Étape 5 : appliquer contrainte
+        val constrained: Seq[Double] = constraint match {
+          case SumTarget(sum) =>
+            val factor = sum.toDouble / nonNegative.sum
+            nonNegative.map(_ * factor)
+
+          case MaxElement(maxVal) =>
+            nonNegative.map(x => math.min(x, maxVal))
+        }
+
+        // Étape 6 : conversion + ajustement somme si besoin
+        val rounded: Seq[A] = constrained.map(fromDouble)
+
+        (constraint, isInt) match {
+          case (SumTarget(target), true) =>
+            val intValues = rounded.map(num.toInt)
+            val currentSum = intValues.sum
+            val diff = target - currentSum
+            val sortedIdx = constrained.zipWithIndex.sortBy { case (v, _) => v - v.round }.map(_._2)
+            val updated = intValues.zipWithIndex.map {
+              case (v, i) =>
+                val delta = if (sortedIdx.take(math.abs(diff)).contains(i)) math.signum(diff) else 0
+                v + delta
+            }
+            updated.map(num.fromInt)
+
+          case _ =>
+            rounded
+        }
   }
 }

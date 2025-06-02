@@ -8,7 +8,7 @@ import dscatt.Fertility.{fallowFullPotential, fallowNRF, peanutNRF, peanutSeedFu
 import dscatt.FoodDonationStrategy.FoodForUsOnlyStrategy
 import dscatt.HerdGrazingStrategy.AnywhereAnyTime
 import dscatt.HerdSizeStrategy.{FullCapacity, LSUByArea}
-import dscatt.KitchenComposer.KitchenProfileBuilder
+import dscatt.KitchenComposer.{KitchenProfileBuilder, noHerd}
 import dscatt.LoanStrategy.Selfish
 import dscatt.MulchingStrategy.CropResidue
 import dscatt.RotationCycle.MilletPeanut
@@ -88,7 +88,7 @@ object Diohine {
       Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Millet
     }
 
-    val dist = {
+    val distributionBuilder =
       MeanStd(
         kitchenMean = 13.0,
         kitchenStd = 8.0,
@@ -103,23 +103,19 @@ object Diohine {
         maxFaidherbia = 12,
         breederMean = 0.5,
         breederStd = 0.3,
-        maxBreeder = 0.7)
-    }
+        maxBreeder = 0.7
+      )
+
 
     val kp = KitchenProfiler.build(
       nbKitchenProfile = 4,
       initialTotalNumberOfKitchen = 31,
       initialKitchenSize = 16,
       drySeasonManureCriteria = manureDepositStategyMilNextYear,
-      distributionBuilder = dist,
+      distributionBuilder = distributionBuilder,
       seed = seed
     )
 
-    println("Sol " + kp.solidarityScore)
-    println("Soil " + kp.soilCareScore)
-    println("Faid " + kp.faidherbiaScore)
-    println("Grazing " + kp.herdGrazingScore)
-    println("Breeder " + kp.breederScore)
     kp
 
 
