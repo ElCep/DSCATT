@@ -107,7 +107,7 @@ object Diohine {
       )
 
 
-    val kp = KitchenProfiler.build(
+    val kp: KitchenProfiler = KitchenProfiler.build(
       nbKitchenProfile = 4,
       initialTotalNumberOfKitchen = 31,
       initialKitchenSize = 16,
@@ -224,6 +224,7 @@ object Diohine {
       rainFall = 527,
       //  stopCriteria = (simS: SimulationState)=> simS.populationTrend(6,3) < 0,
       stopCriteria = (simS: SimulationState) => simS.year >= 3 && (simS.effectiveFallowRatioDynamic.last < 0.5 || simS.foodStress.last < 0.95),
+      dumpProfilesPath = Some("/tmp/profiles.json")
       //  Seq(),
       //Seq(Switcher(26, SwitchType.Solidarity(Selfish, FoodForUsOnlyStrategy)))
     )

@@ -7,6 +7,7 @@ import Kitchen.{Food, parcelFoodProduction}
 import org.apache.commons.math3.random.MersenneTwister
 import Data.*
 import Parcel.*
+import better.files.*
 
 import scala.annotation.tailrec
 
@@ -45,7 +46,8 @@ object Simulation {
              rainFall: Int | MM_PER_YEAR,
              switchers: Seq[Switcher] = Seq(),
              world: Option[World] = None,
-             stopCriteria: SimulationState=> Boolean = _=> true
+             stopCriteria: SimulationState=> Boolean = _=> true,
+             dumpProfilesPath: Option[String] = None
            ) = {
     given MersenneTwister(seed)
 
@@ -89,6 +91,17 @@ object Simulation {
       History.printParcels(finalState, hookParameters, data)
     if (hookParameters.displayKitchens)
       History.printKitckens(finalState, hookParameters)
+    dumpProfilesPath  match {
+      case Some(path)=>
+
+        import org.json4s._
+        import org.json4s.JsonDSL._
+        import org.json4s.jackson.JsonMethods._
+
+        val file = File(path)
+        file.write(pretty(render(KitchenProfiler.kitchenPartitionJsonFormat(kitchenPartition))))
+      case _=>
+    }
 
     (finalState, data)
   }

@@ -15,6 +15,7 @@ lazy val circe = Seq(
 )
 
 lazy val betterFile = libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.9.2"
+lazy val json4sNative = libraryDependencies += "org.json4s" %% "json4s-jackson" % "4.0.7"
 
 lazy val dscatt = project.in(file("dscatt")) enablePlugins SbtOsgi settings(
   name := "DSCATT",
@@ -27,6 +28,7 @@ lazy val dscatt = project.in(file("dscatt")) enablePlugins SbtOsgi settings(
     "io.circe" %% "circe-parser"
   ).map(_ % "0.14.5"),
   betterFile,
+  json4sNative,
   osgiSettings,
   OsgiKeys.exportPackage := Seq("dscatt.*"),
   OsgiKeys.importPackage := Seq("*;resolution:=optional"),

@@ -1,14 +1,17 @@
 package dscatt
 
 import dscatt.Cost.HerdGrazing
+import dscatt.HerdSizeStrategy.LSUByArea
 import dscatt.SwitchType.Mulching
 
-
 sealed trait SequenceConstraint
+
 case class SumTarget(sum: Int) extends SequenceConstraint
+
 case class MaxElement(value: Double) extends SequenceConstraint
 
 sealed trait DistributionBuilder
+
 case class Gini(
                  kitchenGini: Double,
                  solidarityGini: Double,
@@ -56,6 +59,27 @@ case class KitchenProfiler(
                           )
 
 object KitchenProfiler:
+
+  import org.json4s._
+  import org.json4s.JsonDSL._
+  import org.json4s.jackson.JsonMethods._
+
+  def kitchenPartitionJsonFormat(kitchenPartition: KitchenPartition) =
+    kitchenPartition.profiles.map: p =>
+      ("id" -> p._1.id) ~
+      ("numberOfKitchens" -> p._2) ~
+      ("kitchenSize" -> p._1.kitchenSize) ~
+      ("rotationCycle" -> p._1.rotationCycle.toString) ~
+      ("ownFallowUse" -> p._1.ownFallowUse.toString) ~
+      ("loanStrategy" -> p._1.loanStrategy.toString) ~
+      ("foodDonationStrategy" -> p._1.foodDonationStrategy.toString) ~
+      ("drySeasonHerdStrategy" -> p._1.drySeasonHerdStrategy.toString) ~
+      ("wetSeasonHerdStrategy" -> p._1.wetSeasonHerdStrategy.toString) ~
+      ("herdSizeStrategy" -> p._1.herdSizeStrategy.toString) ~
+      ("mulchingStrategy" -> p._1.mulchingStrategy.toString) ~
+      ("nbFaidherbia" -> p._1.nbFaidherbia)
+
+
 
   /*
   1- solidarity // loan - foodDonation (6)
@@ -196,7 +220,7 @@ object KitchenProfiler:
         case ms: MeanStd =>
           val kitchenDist = utils.collectionWithMeanAndStd[Int](nbKitchenProfile, ms.kitchenMean, ms.kitchenStd, SumTarget(initialTotalNumberOfKitchen), seed = seed)
 
-          val solidarityDist = utils.collectionWithMeanAndStd[Int](nbKitchenProfile, ms.solidarityMean, ms.solidarityStd, MaxElement(solidarityModalities.size - 1), seed = seed )
+          val solidarityDist = utils.collectionWithMeanAndStd[Int](nbKitchenProfile, ms.solidarityMean, ms.solidarityStd, MaxElement(solidarityModalities.size - 1), seed = seed)
           val soilCareDist = utils.collectionWithMeanAndStd[Int](nbKitchenProfile, ms.soilCareMean, ms.soilCareStd, MaxElement(soilCareQModalities.size - 1), seed = seed)
           val mutualizedGrazingDist = utils.collectionWithMeanAndStd[Int](nbKitchenProfile, ms.mutualizedHerdGrazingMean, ms.mutualizedHerdGrazingStd, MaxElement(mutualizedHerdGrazingModalities.size - 1), seed = seed)
           val faidherbiaDist = utils.collectionWithMeanAndStd[Int](nbKitchenProfile, ms.faidherbiaMean, ms.faidherbiaStd, MaxElement(ms.maxFaidherbia), seed = seed)
