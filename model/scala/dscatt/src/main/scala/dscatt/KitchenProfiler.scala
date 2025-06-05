@@ -80,14 +80,14 @@ object KitchenProfiler:
       ("nbFaidherbia" -> p._1.nbFaidherbia)
 
 
-  def toJsonFile(kitchenPartition: KitchenPartition, path: String) =
+  def toJsonFile(kitchenPartition: KitchenPartition, path: String): java.io.File =
     import org.json4s._
     import org.json4s.JsonDSL._
     import org.json4s.jackson.JsonMethods._
 
     val file = better.files.File(path)
     file.write(pretty(render(KitchenProfiler.kitchenPartitionJsonFormat(kitchenPartition))))
-    file
+    file.toJava
 
   /*
   1- solidarity // loan - foodDonation (6)
