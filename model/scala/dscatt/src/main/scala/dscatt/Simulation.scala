@@ -92,14 +92,7 @@ object Simulation {
     if (hookParameters.displayKitchens)
       History.printKitckens(finalState, hookParameters)
     dumpProfilesPath  match {
-      case Some(path)=>
-
-        import org.json4s._
-        import org.json4s.JsonDSL._
-        import org.json4s.jackson.JsonMethods._
-
-        val file = File(path)
-        file.write(pretty(render(KitchenProfiler.kitchenPartitionJsonFormat(kitchenPartition))))
+      case Some(path)=> KitchenProfiler.toJsonFile(kitchenPartition, path)
       case _=>
     }
 

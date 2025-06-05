@@ -199,3 +199,6 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       Cost.PopulationGrowth.manpowerEffort(populationGrowth)
     .sum
     / simulationState.kitchens.length
+
+  def kichenProfilesFile =
+    simulationState.kitchens
