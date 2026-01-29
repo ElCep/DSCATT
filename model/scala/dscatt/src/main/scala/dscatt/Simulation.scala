@@ -1,7 +1,7 @@
 package dscatt
 
 import Croping.*
-import Diohine.{HookFile, HookParameters}
+import Diohine.{HookFile, HookParameters, costCombinatory}
 import History.History
 import Kitchen.{Food, parcelFoodProduction}
 import org.apache.commons.math3.random.MersenneTwister

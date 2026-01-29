@@ -21,16 +21,23 @@ enum SwitchType:
   case Demography(populationGrowth: Double) extends SwitchType
   case PeanutSeedToFood(ratio: Double) extends SwitchType
   case PeanutInexcess(ratio: Double) extends SwitchType
+  case SoilCare(soilCareScore: Int, kitchenProfileID: KitchenProfileID) extends SwitchType
 
 import SwitchType._
 
-case class Switcher(time: Int, switchType: SwitchType)
+case class Switcher(time: Int, switchType: SwitchType, onKitchenProfileID: Option[KitchenProfileID] = None)
+case class ScoresForKitchenProfile(kitchenProfileID: KitchenProfileID, scores: Seq[Int])
+
+object Switcher:
+  def fromSoilCareScoresToSwitchers(scores: Seq[Int], kitchenProfileID: KitchenProfileID) =
+    scores.zipWithIndex.map: (s, id) =>
+      Switcher(id, SoilCare(s, kitchenProfileID))
 
 implicit class SimulationStateWrapper(simulationState: SimulationState) {
-  private def kitchenToStateAndData(k: Seq[Kitchen], data: Data)=
+  private def kitchenToStateAndData(k: Seq[Kitchen], data: Data) =
     val switchedState = simulationState.copy(kitchens = k)
     (switchedState, data)
-  
+
   def enventuallySwitch(switcher: Switcher, data: Data): (SimulationState, Data) =
     if (switcher.time == simulationState.year) {
 
@@ -47,41 +54,48 @@ implicit class SimulationStateWrapper(simulationState: SimulationState) {
         case Solidarity(l: LoanStrategy, fd: FoodDonationStrategy) =>
           val newKitchens = simulationState.kitchens.map(_.copy(loanStrategy = l, foodDonationStrategy = fd))
           kitchenToStateAndData(newKitchens, data)
-        case OwnFallow(ofu: OwnFallowUse)=>
+        case OwnFallow(ofu: OwnFallowUse) =>
           val newKitchens = simulationState.kitchens.map(_.copy(ownFallowUse = ofu))
           kitchenToStateAndData(newKitchens, data)
-        case Loan(ls: LoanStrategy)=>
+        case Loan(ls: LoanStrategy) =>
           val newKitchens = simulationState.kitchens.map(_.copy(loanStrategy = ls))
           kitchenToStateAndData(newKitchens, data)
         case FoodDonation(fd: FoodDonationStrategy) =>
           val newKitchens = simulationState.kitchens.map(_.copy(foodDonationStrategy = fd))
           kitchenToStateAndData(newKitchens, data)
-        case Rotation(rC: RotationCycle)=>
+        case Rotation(rC: RotationCycle) =>
           val newKitchens = simulationState.kitchens.map(_.copy(rotationCycle = rC))
           kitchenToStateAndData(newKitchens, data)
-        case Grazing(d: HerdGrazingStrategy, w: HerdGrazingStrategy)=>
+        case Grazing(d: HerdGrazingStrategy, w: HerdGrazingStrategy) =>
           val newKitchens = simulationState.kitchens.map(_.copy(drySeasonHerdStrategy = d, wetSeasonHerdStrategy = w))
           kitchenToStateAndData(newKitchens, data)
-        case DryGrazing(d: HerdGrazingStrategy)=>
+        case DryGrazing(d: HerdGrazingStrategy) =>
           val newKitchens = simulationState.kitchens.map(_.copy(drySeasonHerdStrategy = d))
           kitchenToStateAndData(newKitchens, data)
-        case WetGrazing(w: HerdGrazingStrategy)=>
+        case WetGrazing(w: HerdGrazingStrategy) =>
           val newKitchens = simulationState.kitchens.map(_.copy(wetSeasonHerdStrategy = w))
           kitchenToStateAndData(newKitchens, data)
-        case Mulching(mulchingStrategy: MulchingStrategy)=>
+        case Mulching(mulchingStrategy: MulchingStrategy) =>
           val newKitchens = simulationState.kitchens.map(_.copy(mulchingStrategy = mulchingStrategy))
           kitchenToStateAndData(newKitchens, data)
-        case HerdSize(hsStrategy)=>
+        case HerdSize(hsStrategy) =>
           val newKitchens = simulationState.kitchens.map(_.copy(herdSizeStrategy = hsStrategy))
           kitchenToStateAndData(newKitchens, data)
-        case Demography(populationGrowth)=>
+        case Demography(populationGrowth) =>
           (simulationState, data.copyPopulationGrowth(populationGrowth))
-        case PeanutSeedToFood(ratio: Double)=>
+        case PeanutSeedToFood(ratio: Double) =>
           (simulationState, data.copyPeanutSeedToFood(ratio))
-        case PeanutInexcess(ratio: Double)=>
+        case PeanutInexcess(ratio: Double) =>
           val newKitchens = simulationState.kitchens.map(_.copy(cropingStrategy = CropingStrategy.PeanutForInexcess(ratio)))
           kitchenToStateAndData(newKitchens, data)
+        case SoilCare(score: Int, kitchenProfileID: KitchenProfileID) =>
+          val (rotationCycle, ownFallowUse, mulching) = KitchenProfiler.soilCareQModalities(score)
+          val newKichens =
+            simulationState.kitchens.map: k =>
+              if k.profileID == kitchenProfileID
+              then k.copy(rotationCycle = rotationCycle, ownFallowUse = ownFallowUse, mulchingStrategy = mulching)
+              else k
+          kitchenToStateAndData(newKichens, data)
     }
     else (simulationState, data)
-
 }

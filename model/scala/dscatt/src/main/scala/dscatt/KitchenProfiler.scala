@@ -80,13 +80,17 @@ object KitchenProfiler:
       ("nbFaidherbia" -> p._1.nbFaidherbia)
 
 
-  def toJsonFile(kitchenPartition: KitchenPartition, path: String): java.io.File =
+  def toJsonContent(kitchenPartition: KitchenPartition) =
     import org.json4s._
     import org.json4s.JsonDSL._
     import org.json4s.jackson.JsonMethods._
 
+    pretty(render(KitchenProfiler.kitchenPartitionJsonFormat(kitchenPartition)))
+
+  def toJsonFile(kitchenPartition: KitchenPartition, path: String): java.io.File =
+
     val file = better.files.File(path)
-    file.write(pretty(render(KitchenProfiler.kitchenPartitionJsonFormat(kitchenPartition))))
+    file.write(toJsonContent(kitchenPartition))
     file.toJava
 
   /*
@@ -98,26 +102,26 @@ object KitchenProfiler:
   */
 
   //1
-  private val sortedLoanModalities =
+  val sortedLoanModalities =
     Seq(
       LoanStrategy.Selfish,
       LoanStrategy.ExtraParcelsExceptFallowLoaner,
       LoanStrategy.AllExtraParcelsLoaner
     )
 
-  private val sortedFoodDonationModalities =
+  val sortedFoodDonationModalities =
     Seq(
       FoodDonationStrategy.FoodForUsOnlyStrategy,
       FoodDonationStrategy.FoodForAllStrategy
     )
 
-  private val solidarityModalities =
+  val solidarityModalities =
     for l <- sortedLoanModalities
         f <- sortedFoodDonationModalities
     yield (l, f)
 
   //2
-  private val sortedCultureDiversityModalities =
+  val sortedCultureDiversityModalities =
     Seq(
       RotationCycle.MilletOnly,
       RotationCycle.MilletPeanut,
@@ -125,25 +129,25 @@ object KitchenProfiler:
       RotationCycle.FallowMilletPeanut
     )
 
-  private val sortedOwnFallowUseModalities =
+  val sortedOwnFallowUseModalities =
     Seq(
       OwnFallowUse.UseFallowIfNeeded,
       OwnFallowUse.NeverUseFallow
     )
-  private val sortedMulchingModalities =
+  val sortedMulchingModalities =
     Seq(
       MulchingStrategy.NoMulching,
       MulchingStrategy.CropResidue
     )
 
-  private val soilCareQModalities =
+  val soilCareQModalities =
     for rc <- sortedCultureDiversityModalities
         fu <- sortedOwnFallowUseModalities
         m <- sortedMulchingModalities
     yield (rc, fu, m)
 
   //3 dry / wet
-  private val sortedMutualizedHerdGrazingModalities =
+  val sortedMutualizedHerdGrazingModalities =
     Seq(
       HerdGrazingStrategy.OwnerOnly,
       HerdGrazingStrategy.EverywhereByDayOwnerByNight,
@@ -151,7 +155,7 @@ object KitchenProfiler:
     )
 
   //dry / wet
-  private val mutualizedHerdGrazingModalities =
+  val mutualizedHerdGrazingModalities =
     for dg <- sortedMutualizedHerdGrazingModalities
         wg <- sortedMutualizedHerdGrazingModalities
     yield (dg, wg)
@@ -189,7 +193,7 @@ object KitchenProfiler:
     println("mutualized grazing score " + score[Int](distributions.mutualizeGrazing, distributions.kitchen))
     println("faid score:  " + score[Int](distributions.faidherbia, distributions.kitchen))
     println("breeder score:  " + score[Double](distributions.breeder, distributions.kitchen))
-
+  
   def build(
              nbKitchenProfile: Int,
              initialTotalNumberOfKitchen: Int,
@@ -236,10 +240,10 @@ object KitchenProfiler:
 
           Distributions(
             kitchen = kitchenDist,
-            solidarity = solidarityDist.map(_.toInt),
-            soilCare = soilCareDist.map(_.toInt),
-            mutualizeGrazing = mutualizedGrazingDist.map(_.toInt),
-            faidherbia = faidherbiaDist.map(_.toInt),
+            solidarity = solidarityDist,
+            soilCare = soilCareDist,
+            mutualizeGrazing = mutualizedGrazingDist,
+            faidherbia = faidherbiaDist,
             breeder = breederDist
           )
 
@@ -249,7 +253,6 @@ object KitchenProfiler:
         val mod = soilCareQModalities(sc)
         (mod._1, mod._2, mod._3)
     }
-
 
     val solidarity =
       distributions.solidarity.map: s =>

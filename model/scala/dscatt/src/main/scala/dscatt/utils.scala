@@ -142,4 +142,12 @@ package object utils {
             rounded
         }
   }
+  
+  def fromModalityScoresToSwitchers(
+     scoresForKitchenProfile: Seq[ScoresForKitchenProfile],   // KitchenProfileID x Score
+     modalitySwitch: Int=> SwitchType
+     ) =
+    scoresForKitchenProfile.zipWithIndex.flatMap: (skp,id)=>
+      skp.scores.map:s =>
+        Switcher(id, modalitySwitch(s), Some(skp.kitchenProfileID))
 }
