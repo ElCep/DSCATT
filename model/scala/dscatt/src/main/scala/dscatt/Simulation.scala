@@ -1,7 +1,6 @@
 package dscatt
 
 import Croping.*
-import Diohine.{HookFile, HookParameters, costCombinatory}
 import History.History
 import Kitchen.{Food, parcelFoodProduction}
 import org.apache.commons.math3.random.MersenneTwister
@@ -42,7 +41,7 @@ object Simulation {
              sqrf: Double,
              peanutSeedToFood: Double, // exposed for calibration
              dailyFoodNeedPerPerson: Double,
-             hookParameters: HookParameters,
+             hookParameters: dscatt.launchers.commonSettings.HookParameters,
              rainFall: Int | MM_PER_YEAR,
              switchers: Seq[Switcher] = Seq(),
              world: Option[World] = None,

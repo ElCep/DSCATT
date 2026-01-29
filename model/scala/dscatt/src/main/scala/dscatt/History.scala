@@ -11,6 +11,7 @@ import Simulation.*
 import java.io.File as JFile
 import Data.*
 import dscatt.Fertility.SoilQuality
+import dscatt.launchers.commonSettings.*
 
 object History {
 
@@ -141,7 +142,8 @@ object History {
   // def sortedPopulation(simulationState: SimulationState) =
 
 
-  def printKitckens(state: SimulationState, hookParameters: HookParameters) = {
+  def printKitckens(state: SimulationState,
+                    hookParameters:  HookParameters) = {
     val header = Seq("Year", "KID", "ProfID","Owd pcl", "Owd area", "Lnd pcl", "Lnd area", "Herd", "Manure", "Mulch", "N", "YSQ", "FN", "FFC", "FFL", "FFD", "Balance", "FinX", "Size", "Births", "Migs", "Absor", "Split")
 
     val years = historyByYear(state).map { yearHistory =>
@@ -214,7 +216,8 @@ object History {
 
   }
 
-  def printParcels(state: SimulationState, hookParameters: HookParameters, data: Data) = {
+  def printParcels(state: SimulationState,
+                   hookParameters: HookParameters, data: Data) = {
     val first20 = state.world.parcels.take(20)
 
 

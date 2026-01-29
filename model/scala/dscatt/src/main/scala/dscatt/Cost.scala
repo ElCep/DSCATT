@@ -99,4 +99,48 @@ object Cost:
             case NoMulching => 8
 
 
+    def testCostCombinatory =
+      val social =
+        for {
+          l <- Seq(2, 9, 10)
+          of <- Seq(2, 9)
+          fd <- Seq(1, 10)
+          dhg <- Seq(1, 10)
+          whg <- Seq(1, 10)
+          hs <- Seq(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+          m <- Seq(1, 5)
+          f <- Seq(1, 2, 3, 4, 5)
+          pg <- Seq(0, 1, 2)
+        } yield {
+          l + of + fd + dhg + whg + hs + m + f + pg
+        }
+
+      val mp =
+        for {
+          l <- Seq(0)
+          of <- Seq(0, 9)
+          fd <- Seq(0, 1)
+          dhg <- Seq(2, 3, 9)
+          whg <- Seq(3, 4, 9)
+          hs <- Seq(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+          m <- Seq(1, 8)
+          f <- Seq(0, 1, 2, 3, 4, 5, 6)
+          pg <- Seq(5, 6, 7, 8, 9, 10)
+        } yield {
+          l + of + fd + dhg + whg + hs + m + f + pg
+        }
+
+      val global =
+        for {
+          s <- social.distinct
+          m <- mp.distinct
+        } yield {
+          s + m
+        }
+
+      println(social.distinct)
+      println(mp.distinct)
+      println(global.distinct)
+
+
 

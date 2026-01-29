@@ -1,7 +1,7 @@
 package dscatt
 
 import better.files.File
-import dscatt.Diohine.{HookFile, HookParameters}
+import dscatt.launchers.commonSettings.*
 import dscatt.Fertility.{fallowFullPotential, fallowNRF}
 import dscatt.FoodDonationStrategy.FoodForUsOnlyStrategy
 import dscatt.HerdGrazingStrategy.AnywhereAnyTime
