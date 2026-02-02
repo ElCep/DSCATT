@@ -206,3 +206,8 @@ implicit class HistoryDecorator(simulationState: SimulationState):
 
   def kichenProfilesFile =
     simulationState.kitchens
+    
+  // Mean Sojourn Time (Deffuant 2025)  
+  def mst(dynamic: Array[Double], threshold: Double) =
+    dynamic.count(_ >= threshold)  
+    

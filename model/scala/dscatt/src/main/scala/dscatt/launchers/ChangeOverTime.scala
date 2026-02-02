@@ -68,7 +68,8 @@ object ChangeOverTime:
       //  Seq(),
       switchers = switchers
     )
-    
+
     given data: Data = simulationData
     println("Pop " + simulationState.populationDynamic.toSeq)
     println("Ration profile  " + simulationState.proportionOfKitchenProfile(1).toSeq)
+    println("MST Count if " + simulationState.mst(simulationState.populationDynamic.map(_.toDouble), 31*16))
