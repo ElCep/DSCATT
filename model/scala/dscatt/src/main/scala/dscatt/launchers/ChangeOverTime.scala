@@ -1,9 +1,9 @@
 package dscatt.launchers
 
 import dscatt.Simulation.SimulationState
-import dscatt.{Croping, CropingStrategy, FertilizerStrategy, FoodDonationStrategy, HerdGrazingStrategy, HerdSizeStrategy, KitchenPartition, KitchenProfile, LoanStrategy, MulchingStrategy, OwnFallowUse, Parcel, RotationCycle, Simulation, SupportPolicy, Switcher}
+import dscatt.{Croping, CropingStrategy, Data, FertilizerStrategy, FoodDonationStrategy, HerdGrazingStrategy, HerdSizeStrategy, KitchenPartition, KitchenProfile, LoanStrategy, MulchingStrategy, OwnFallowUse, Parcel, RotationCycle, Simulation, SupportPolicy, Switcher}
 import dscatt.launchers.commonSettings.*
-import dscatt.Simulation.SimulationState
+import dscatt.*
 
 object ChangeOverTime:
 
@@ -62,9 +62,13 @@ object ChangeOverTime:
       hookParameters = hooks,
       //rainFall = Seq(623,623,404,408,388,729,620,528,394,484,395,635,540,526,652,691,720,416,723,536,353,767,527,509,501,501),
       rainFall = 527,
-      //  stopCriteria = (simS: SimulationState)=> simS.populationTrend(6,3) < 0,
+     // stopCriteria = (simS: SimulationState)=> simS.populationTrend(6,3) < 0,
       stopCriteria = (simS: SimulationState) => false,
       //dumpProfilesPath = Some("/tmp/profiles.json")
       //  Seq(),
       switchers = switchers
     )
+    
+    given data: Data = simulationData
+    println("Pop " + simulationState.populationDynamic.toSeq)
+    println("Ration profile  " + simulationState.proportionOfKitchenProfile(1).toSeq)

@@ -6,6 +6,7 @@ import dscatt.OwnFallowUse.{NeverUseFallow, UseFallowIfNeeded}
 import utils.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
 import Cost.*
+import cats.implicits.catsSyntaxMonoid
 import dscatt.History.historyByYear
 
 
@@ -170,7 +171,10 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     kitchenProfileDynamic.map: p=>
       val nbKitchen = p.values.sum
       p.map(x=> x._1 -> x._2.toDouble / nbKitchen)
-
+  
+  def proportionOfKitchenProfile(profileID: KitchenProfileID)=
+    kitchenProfileRatiosDynamic.map(kp=> kp(profileID))
+    
   def socialEffort(populationGrowth: Double) =
     simulationState.kitchens.map: k=>
       k.loanStrategy.socialEffort +
