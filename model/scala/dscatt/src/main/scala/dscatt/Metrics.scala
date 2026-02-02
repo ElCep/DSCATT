@@ -213,4 +213,6 @@ implicit class HistoryDecorator(simulationState: SimulationState):
 
   // Mean first exti time (Deffuant 2025)
   def mfet(dynamic: Array[Double], predicate: Double=> Boolean) =
-    dynamic.indexWhere(predicate)
+    dynamic.indexWhere(predicate) match
+      case -1=> dynamic.size
+      case x => x 
