@@ -171,10 +171,10 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     kitchenProfileDynamic.map: p=>
       val nbKitchen = p.values.sum
       p.map(x=> x._1 -> x._2.toDouble / nbKitchen)
-  
+
   def proportionOfKitchenProfile(profileID: KitchenProfileID)=
     kitchenProfileRatiosDynamic.map(kp=> kp(profileID))
-    
+
   def socialEffort(populationGrowth: Double) =
     simulationState.kitchens.map: k=>
       k.loanStrategy.socialEffort +
@@ -206,8 +206,11 @@ implicit class HistoryDecorator(simulationState: SimulationState):
 
   def kichenProfilesFile =
     simulationState.kitchens
-    
-  // Mean Sojourn Time (Deffuant 2025)  
-  def mst(dynamic: Array[Double], threshold: Double) =
-    dynamic.count(_ >= threshold)  
-    
+
+  // Mean Sojourn Time (Deffuant 2025)
+  def mst(dynamic: Array[Double], predicate: Double=> Boolean) =
+    dynamic.count(predicate)
+
+  // Mean first exti time (Deffuant 2025)
+  def mfet(dynamic: Array[Double], predicate: Double=> Boolean) =
+    dynamic.indexWhere(predicate)

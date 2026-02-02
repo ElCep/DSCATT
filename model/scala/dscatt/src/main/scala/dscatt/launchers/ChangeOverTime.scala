@@ -72,4 +72,5 @@ object ChangeOverTime:
     given data: Data = simulationData
     println("Pop " + simulationState.populationDynamic.toSeq)
     println("Ration profile  " + simulationState.proportionOfKitchenProfile(1).toSeq)
-    println("MST Count if " + simulationState.mst(simulationState.populationDynamic.map(_.toDouble), 31*16))
+    println("MST Count if " + simulationState.mst(simulationState.populationDynamic.map(_.toDouble), (d: Double)=> d >= 31*16))
+    println("Mfet " + simulationState.mfet(simulationState.populationDynamic.map(_.toDouble), (d: Double)=> d < 31*16))
