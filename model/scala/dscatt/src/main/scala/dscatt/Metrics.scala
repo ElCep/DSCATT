@@ -173,7 +173,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       p.map(x=> x._1 -> x._2.toDouble / nbKitchen)
 
   def proportionOfKitchenProfile(profileID: KitchenProfileID)=
-    kitchenProfileRatiosDynamic.map(kp=> kp(profileID))
+    kitchenProfileRatiosDynamic.map(kp=> kp.getOrElse(profileID, 0.0))
 
   def socialEffort(populationGrowth: Double) =
     simulationState.kitchens.map: k=>
