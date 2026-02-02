@@ -12,14 +12,14 @@ import shared.Data
 object App:
 
   @main def run() =
-    //replicateLands("/tmp/lands", 1000)
-    buildLands("/tmp/lands", 7L, 31, Seq(0.2))
+    replicateLands("/tmp/lands", 1000, 31, 0.2)
+   // buildLands("/tmp/lands", 7L, 31, Seq(0.2))
 
-  def replicateLands(dirPath: String, quantity: Int) =
+  def replicateLands(dirPath: String, quantity: Int, nbKitchens: Int, gini: Double) =
       for i <- 1 to quantity
       do
         println("Build  " + i.toLong)
-        buildLand(dirPath, i.toLong, 22, 0.2)
+        buildLand(dirPath, i.toLong, nbKitchens, gini)
 
 
   def buildLands(outputPath: String, seed: Long, nbKitchens: Int, ginis: Seq[Double]) =
