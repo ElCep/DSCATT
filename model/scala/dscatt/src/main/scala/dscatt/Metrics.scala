@@ -175,7 +175,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
   def proportionOfKitchenProfile(profileID: KitchenProfileID)=
     kitchenProfileRatiosDynamic.map(kp=> kp.getOrElse(profileID, 0.0))
 
-  def socialEffort(populationGrowth: Double) =
+  def socialEffortAverage(populationGrowth: Double) =
     simulationState.kitchens.map: k=>
       k.loanStrategy.socialEffort +
       k.ownFallowUse.socialEffort +
@@ -190,7 +190,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     / simulationState.kitchens.length
 
 
-  def manpowerEffort(populationGrowth: Double) =
+  def manpowerEffortAverage(populationGrowth: Double) =
     simulationState.kitchens.map: k=>
       k.loanStrategy.manpowerEffort +
       k.ownFallowUse.manpowerEffort +
@@ -203,6 +203,21 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       Cost.PopulationGrowth.manpowerEffort(populationGrowth)
     .sum
     / simulationState.kitchens.length
+
+  //Sum of soil care social effort for all kitchen profile each year
+  def sumOfSoilCareSocialEfforts =
+    simulationState.history.map: h=>
+      h._2.kitchens.map: ks=>
+        ks.map(_.ownFallowUse.socialEffort) + ks.map(_.rotationCycle.socialEffort) + ks.map(_.mulchingStrategy.socialEffort)
+      .sum
+    .sum
+
+  def soilCareManpowerEffort =
+    simulationState.kitchens.map: k =>
+      k.mulchingStrategy.manpowerEffort +
+      k.rotationCycle.manpowerEffort +
+      k.ownFallowUse.manpowerEffort
+    .sum
 
   def kichenProfilesFile =
     simulationState.kitchens

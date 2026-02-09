@@ -152,6 +152,7 @@ object Simulation {
         val finalHistory = afterFertilizationState.history
           .updateFoods(afterFertilizationState.year, afterDonationFoods)
           .updateEffectiveFallowRatio(afterFertilizationState.year, effectiveFallowParcels / theoriticalFallowParcels)
+          .updateKitchens(afterFertilizationState.year, simulationState.kitchens)
 
         val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
 

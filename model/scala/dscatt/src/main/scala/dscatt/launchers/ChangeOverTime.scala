@@ -37,9 +37,13 @@ object ChangeOverTime:
     val kitchenPartition = KitchenPartition(Seq((kitchenProfile1, 20), (kitchenProfile2, 11)))
 
     val rnd = scala.util.Random
-    val soilCareKP1 = Seq.fill(simulationLength)(rnd.between(0, 16))
-    val soilCareKP2 = Seq.fill(simulationLength)(rnd.between(0, 16))
+//    val soilCareKP1 = Array(0,0,2,1,3,4,12,11,14,12,5,5,4,1,0,5,14,10,10,12,5,5,5,4,5) // Seq.fill(simulationLength)(rnd.between(0, 16))
+//    val soilCareKP2 = Array(2,1,3,4,12,11,14,12,5,5,4,1,0,5,14,10,10,12,5,5,5,4,5,0,11)//Seq.fill(simulationLength)(rnd.between(0, 16))
+    val soilCareKP1 = Array.fill(25)(0)// Seq.fill(simulationLength)(rnd.between(0, 16))
+    val soilCareKP2 = Array.fill(25)(0) //Seq.fill(simulationLength)(rnd.between(0, 16))
+
     val switchers =
+
       Switcher.fromSoilCareScoresToSwitchers(soilCareKP1, 1) ++
         Switcher.fromSoilCareScoresToSwitchers(soilCareKP2, 2)
 
@@ -60,8 +64,9 @@ object ChangeOverTime:
       peanutSeedToFood = 1.954822292357305,
       dailyFoodNeedPerPerson = 0.555,
       hookParameters = hooks,
-      //rainFall = Seq(623,623,404,408,388,729,620,528,394,484,395,635,540,526,652,691,720,416,723,536,353,767,527,509,501,501),
-      rainFall = 527,
+      //rainFall = Seq(623,623,404,408,388,729,620,528,394,484,395,635,540,526,652,691,720,416,723,536,353,767,527,509,501),
+      rainFall = Seq(498,498,323,326,310,583,496,422,315,387,316,508,432,420,521,552,576,332,578,428,282,613,421,407,400),
+      //rainFall = 527,
      // stopCriteria = (simS: SimulationState)=> simS.populationTrend(6,3) < 0,
       stopCriteria = (simS: SimulationState) => false,
       //dumpProfilesPath = Some("/tmp/profiles.json")
@@ -74,3 +79,6 @@ object ChangeOverTime:
     println("Ration profile  " + simulationState.proportionOfKitchenProfile(1).toSeq)
     println("MST Count if " + simulationState.mst(simulationState.populationDynamic.map(_.toDouble), (d: Double)=> d >= 31*16))
     println("Mfet " + simulationState.mfet(simulationState.populationDynamic.map(_.toDouble), (d: Double)=> d < 31*16))
+    println("Soil Care social effort " )
+    println(simulationState.sumOfSoilCareSocialEfforts)
+    println("xx " + simulationState.kitchens.head.mulchingStrategy + " " + simulationState.kitchens.head.ownFallowUse + " " + simulationState.kitchens.head.rotationCycle)

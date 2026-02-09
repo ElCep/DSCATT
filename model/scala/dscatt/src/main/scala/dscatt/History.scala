@@ -29,6 +29,7 @@ object History {
   type Fertilities = Map[KitchenID, Fertility.Metrics]
   type Herds = Map[KitchenID, Int]
   type KitchenProfile = Map[KitchenID, KitchenProfileID]
+  type Kitchens = Seq[Seq[Kitchen]]
 
   def initialize(simulationLenght: Int): History =
     Map(1 -> YearHistory(year = 1))
@@ -49,6 +50,10 @@ object History {
       val historyOfYear = history(year)
       history.updated(year, historyOfYear.copy(population = populations.toMap))
     }
+    
+    def updateKitchens(year: Int, kitchens: Seq[Kitchen]) =
+      val historyOfYear = history(year)
+      history.updated(year, historyOfYear.copy(kitchens = historyOfYear.kitchens :+ kitchens))
 
     def updateKitchenProfile(year: Int, kitchens: Seq[Kitchen]): History =
       val historyOfYear = history(year)
@@ -105,6 +110,7 @@ object History {
 
   protected case class YearHistory(
                                     year: Int,
+                                    kitchens: Seq[Seq[Kitchen]]= Seq(),
                                     population: PopulationStats = Map(),
                                     kitchenProfile: KitchenProfile = Map(),
                                     parcelStats: ParcelStatsByKitchen = Map(),

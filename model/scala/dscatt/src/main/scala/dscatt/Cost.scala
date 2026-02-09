@@ -2,6 +2,7 @@ package dscatt
 
 import dscatt.HerdSizeStrategy.{FullCapacity, LSUByArea}
 import dscatt.MulchingStrategy.{CropResidue, NoMulching}
+import dscatt.RotationCycle.{FallowMilletPeanut, MilletFallow, MilletOnly, MilletPeanut}
 import dscatt.SwitchType.Faidherbia
 
 object Cost:
@@ -73,6 +74,14 @@ object Cost:
           ms match
             case CropResidue=> 5
             case NoMulching=> 1
+        //Estimation since it has not been collected
+        case rc: RotationCycle=>
+          rc match
+            case MilletOnly=> 9
+            case MilletPeanut=> 5
+            case MilletFallow=> 7
+            case FallowMilletPeanut=> 0
+
 
 
     def manpowerEffort: Double =

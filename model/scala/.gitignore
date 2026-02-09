@@ -26,3 +26,5 @@ project/*
 .vscode
 .metals
 .bloop
+.scala-build/
+.scala-build/*
