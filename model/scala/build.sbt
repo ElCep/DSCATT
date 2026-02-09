@@ -47,6 +47,12 @@ lazy val parcelGenerator = project.in(file("parcelGenerator")) settings(
 ) dependsOn data
 
 
+lazy val jsonConverter = project.in(file("jsonConverter")) settings(
+  name := "JSON Converter",
+  scalaVersion := ScalaVersion,
+  libraryDependencies += "com.lihaoyi" %% "ujson" % "3.1.0"
+)
+
 lazy val data = project.in(file("shared")) settings (
   name := "data",
   scalaVersion := ScalaVersion
