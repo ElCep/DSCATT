@@ -43,9 +43,9 @@ object ChangeOverTime:
     val rnd = scala.util.Random
 //    val soilCareKP1 = Array(0,0,2,1,3,4,12,11,14,12,5,5,4,1,0,5,14,10,10,12,5,5,5,4,5) // Seq.fill(simulationLength)(rnd.between(0, 16))
 //    val soilCareKP2 = Array(2,1,3,4,12,11,14,12,5,5,4,1,0,5,14,10,10,12,5,5,5,4,5,0,11)//Seq.fill(simulationLength)(rnd.between(0, 16))
-    val soilCareKP1 = Array(5,11,13,13,13,13,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7)
+    val soilCareKP1 = Array(2,8,6,6,2,2,15,8,1,1,7,7,7,4,4,4,4,0,0,0,0,0,0,0)
     //val soilCareKP1 = Seq.fill(simulationLength)(12)
-    val soilCareKP2 = Array(13,13,13,7,7,7,7,7,9,10,2,3,7,7,7,2,8,7,7,1,7,7,7,7)//Array.fill(24)(12) //Seq.fill(simulationLength)(rnd.between(0, 16))
+    val soilCareKP2 = Array.fill(24)(12)// Array(1,2,13,7,7,7,2,3,7,9,10,2,3,7,7,7,2,8,7,7,1,7,7,7,7)//Array.fill(24)(12) //Seq.fill(simulationLength)(rnd.between(0, 16))
 
 
     @tailrec def nbSwitches(a: Array[Int], nbS: Int): Int =
@@ -99,3 +99,4 @@ object ChangeOverTime:
     println(simulationState.migrantsDynamic.toSeq.sum)
     println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)
     println("\nPOP dynamic  " + simulationState.populationDynamic.toSeq)
+    println("\nMIG dynamic  " + simulationState.migrantsDynamic.toSeq)

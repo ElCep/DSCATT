@@ -28,10 +28,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     )
     )
 
-  def migrantsDynamic =
-    simulationState.population.map(
-      _.values.map(_.emigrants).sum
-    ).toArray
+  def migrantsDynamic = simulationState.totalEmigrants.toArray
 
   def averageKitchenSizeDynamic =
     simulationState.population.map(p =>

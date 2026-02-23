@@ -42,9 +42,9 @@ object History {
       history.updated(year, historyOfYear.copy(loans = loans, parcelStats = parcelStats))
     }
 
-    def updatePopulations(year: Int, populations: Seq[(KitchenID, PopulationStat)]): History = {
+    def updatePopulations(year: Int, populations: Seq[(KitchenID, PopulationStat)], totalEmigrants: Int): History = {
       val historyOfYear = history(year)
-      history.updated(year, historyOfYear.copy(population = populations.toMap))
+      history.updated(year, historyOfYear.copy(population = populations.toMap, totalEmigrants = totalEmigrants))
     }
 
     def updateKitchens(year: Int, kitchens: Seq[Kitchen]) =
@@ -108,6 +108,7 @@ object History {
                                     year: Int,
                                     kitchens: Seq[Seq[Kitchen]]= Seq(),
                                     population: PopulationStats = Map(),
+                                    totalEmigrants: Int = 0,
                                     kitchenProfile: KitchenProfile = Map(),
                                     parcelStats: ParcelStatsByKitchen = Map(),
                                     loans: Loans = Seq(),

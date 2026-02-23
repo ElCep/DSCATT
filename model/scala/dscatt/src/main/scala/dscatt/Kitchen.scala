@@ -103,7 +103,7 @@ object Kitchen {
       world = afterAbsorbtionWorld,
       history =
         simulationState.history
-          .updatePopulations(simulationState.year, populations)
+          .updatePopulations(simulationState.year, populations, nbEmigrants.values.sum)
           .updateParcelStatsAfterPopulationEvolution(simulationState.year, afterAbsorbtionKitchens, afterAbsorbtionWorld)
           .updateKitchenProfile(simulationState.year, afterSplitKitchens)
     )

@@ -17,6 +17,8 @@ object Simulation {
   implicit class SimulationStateWrap(sS: SimulationState):
     def population = History.historyByYear(sS).map(_.population)
 
+    def totalEmigrants = History.historyByYear(sS).map(_.totalEmigrants)
+
     def herds = History.historyByYear(sS).map(_.herds)
 
     def foodStats = History.historyByYear(sS).map(_.foodStats)
@@ -71,8 +73,6 @@ object Simulation {
 
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
-
-    println(kitchens.groupBy(_.profileID).map(_._2.map(_.id)))
 
     val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, lands, data))
 

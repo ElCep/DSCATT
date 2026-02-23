@@ -47,8 +47,6 @@ object World {
             Seq()
           )
 
-        World.printCropRatios(World(parcels, kitchens.size))
-
         //Assign NotAssignedYet parcels
         val profileIDs = kitchens.groupBy(_.profileID)
 
