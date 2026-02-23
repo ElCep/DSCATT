@@ -1,7 +1,7 @@
 package dscatt
 
 import Croping.Crop
-import Croping.*
+import Croping.Crop.*
 import History.History
 import Kitchen.{KitchenID, parcelFoodProduction}
 import Parcel.{ManureDeposit, ParcelID}
@@ -124,7 +124,7 @@ object Fertility {
 
     // SQ / HA
     val fallowBoost = parcel.crop match {
-      case Croping.Fallow => data.FALLOW_BOOST
+      case Fallow => data.FALLOW_BOOST
       case _ => 0.0
     }
 

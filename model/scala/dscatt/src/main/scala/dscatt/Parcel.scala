@@ -1,6 +1,7 @@
 package dscatt
 
-import Croping.*
+import Croping.Crop
+import Croping.Crop.*
 import Kitchen.*
 import Parcel.*
 import Data.*
@@ -24,8 +25,9 @@ implicit class AParcel(parcel: Parcel) {
 case class Parcel(id: ParcelID,
                   ownerID: KitchenID,
                   farmerID: KitchenID,
-                  cropZone: CropZone,
+                  //cropZone: CropZone,
                   crop: Crop,
+                  initiallyPlannedCrop: Option[Crop], // set in case of loan
                   area: HA,
                   faidherbiaTreesByHa: TREE_BY_HA,
                   fertilityHistory: Seq[Fertility.Metrics]

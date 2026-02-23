@@ -14,6 +14,7 @@ import dscatt.RotationCycle.{MilletOnly, MilletPeanut}
 import dscatt.Simulation.SimulationState
 import dscatt.SwitchType.{Demography, Faidherbia, HerdSize, Mulching, OwnFallow, RainFall, Rotation, Solidarity}
 import org.apache.commons.math3.stat.regression.SimpleRegression
+import Croping.Crop.*
 
 // Apply n switchers in n similations (one switcher per simulation)
 object SwitchExplorer:
@@ -31,7 +32,7 @@ object SwitchExplorer:
 
 
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
-      Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Croping.Millet
+      Croping.nextCrop(r, p.crop) == Some(Millet)
     }
 
     val kitchenProfile1 = KitchenProfile(

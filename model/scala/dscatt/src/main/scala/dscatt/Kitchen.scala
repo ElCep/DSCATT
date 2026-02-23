@@ -1,6 +1,6 @@
 package dscatt
 
-import Croping.*
+import Croping.Crop.*
 import Fertility.{milSeedFullPontential, peanutSeedFullPotential}
 import Simulation.SimulationState
 import Data.*
@@ -43,7 +43,9 @@ object Kitchen {
     }
   }
 
-  def kitchen(kitchens: Seq[Kitchen], id: KitchenID) = kitchens.find(_.id == id)
+  def kitchen(kitchens: Seq[Kitchen], id: KitchenID) = {
+    kitchens.find(_.id == id)
+  }
 
   def foodNeeds(kitchen: Kitchen, data: Data) = kitchen.size * data.DAILY_FOOD_NEED_PER_PERSON * 365
 
@@ -166,7 +168,7 @@ object Kitchen {
       if (toBeSplitted.isEmpty) (highestID, offsprings)
       else {
         val kitchenK = toBeSplitted.head
-        val parcelsK = World.ownedParcelsForKitchen(world, kitchenK)
+        val parcelsK = World.parcelsForKitchen(world, kitchenK)
         val targetArea = parcelsK.map(_.area).sum * data.SPLIT_KITCHEN_OFFSPRING_SIZE / kitchenK.size
 
         @tailrec

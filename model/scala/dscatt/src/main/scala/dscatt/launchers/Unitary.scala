@@ -20,7 +20,7 @@ object Unitary:
       populationGrowth = pg,
       kitchenPartition = kitchenPartition,
       supportPolicy = supportPolicy,
-      simulationLength = 100,
+      simulationLength = 20,
       soilQualityBasis = 100,
       fallowBoost = 0.801866457937334,
       cropResidueBoost = 40,
@@ -81,7 +81,9 @@ object Unitary:
     //    println("\nKitchen size  " + simulationState.averageKitchenSizeDynamic.toSeq)
     //    //    println("\nKSA " + average(simulationState.averageKitchenSizeDynamic.toSeq))
     //   println("\nEffective fallow " + simulationState.effectiveFallowRatioDynamic.toSeq)
-    println("\nFood stress " + simulationState.foodStress.toSeq)
+    //println("\nFood stress " + simulationState.foodStress.toSeq)
+    println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq)
+    println("SI " + simulationState.averageMilYieldDynamic.size)
     //   println("\nMil yield dynamic  " + simulationState.averageMilYieldDynamic.toSeq.length + " :" + simulationState.averageMilYieldDynamic.toSeq)
     //   println("\nMil yield average  " + simulationState.averageMilYieldDynamic.sum / simulationState.averageMilYieldDynamic.length)
     //    //    println("\nPeanut yield dynamic  " + simulationState.averagePeanutYieldDynamic.toSeq)
@@ -94,11 +96,11 @@ object Unitary:
     //    println("NB Absorbed " + simulationState.numberOfAbsorbedKitchens)
     //   println("ASQ " + simulationState.averageAnnualSoilQualityDynamic.toSeq)
     //  println("RSQ " + simulationState.averageResidualSoilQualityDynamic.toSeq)
-    println("manpower cost " + simulationState.manpowerEffortAverage(pg))
-    println("Social cost " + simulationState.socialEffortAverage(pg))
-    println("Last food stress " + simulationState.foodStress.last)
-    println("Last Effective Fallow ratio " + simulationState.effectiveFallowRatioDynamic.last)
-    println("End simu " + simulationState.year)
+//    println("manpower cost " + simulationState.manpowerEffortAverage(pg))
+//    println("Social cost " + simulationState.socialEffortAverage(pg))
+//    println("Last food stress " + simulationState.foodStress.last)
+//    println("Last Effective Fallow ratio " + simulationState.effectiveFallowRatioDynamic.last)
+//    println("End simu " + simulationState.year)
 
     //  println("Profile Dyn " + simulationState.kitchenProfileRatiosDynamic.toSeq)
     //println("MIL yield " + simulationState.averageMilYieldDynamic.sum / simulationState.averageMilYieldDynamic.length)

@@ -1,7 +1,7 @@
 package dscatt
 
 
-import Croping.Crop
+import Croping.Crop.*
 import Croping.*
 import dscatt.Data.*
 import dscatt.Kitchen.KitchenID

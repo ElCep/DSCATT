@@ -149,5 +149,5 @@ package object utils {
      ) =
     scoresForKitchenProfile.zipWithIndex.flatMap: (skp,id)=>
       skp.scores.map:s =>
-        Switcher(id, modalitySwitch(s), Some(skp.kitchenProfileID))
+        Switcher(id, modalitySwitch(s))
 }

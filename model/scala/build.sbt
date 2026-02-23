@@ -6,7 +6,7 @@
 
 //libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.9.2"
 
-val ScalaVersion = "3.7.4"
+val ScalaVersion = "3.8.1"
 
 lazy val circe = Seq(
   libraryDependencies += "org.json4s" %% "json4s-jackson" % "4.0.6",

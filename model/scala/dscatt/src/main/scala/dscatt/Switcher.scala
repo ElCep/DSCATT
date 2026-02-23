@@ -25,17 +25,22 @@ enum SwitchType:
 
 import SwitchType._
 
-case class Switcher(time: Int, switchType: SwitchType, onKitchenProfileID: Option[KitchenProfileID] = None)
+case class Switcher(time: Int, switchType: SwitchType)
+
 case class ScoresForKitchenProfile(kitchenProfileID: KitchenProfileID, scores: Seq[Int])
 
 object Switcher:
   def fromSoilCareScoresToSwitchers(scores: Seq[Int], kitchenProfileID: KitchenProfileID) =
     scores.zipWithIndex.map: (s, id) =>
-      Switcher(id, SoilCare(s, kitchenProfileID))
+      Switcher(id + 1, SoilCare(s, kitchenProfileID))
 
 implicit class SimulationStateWrapper(simulationState: SimulationState) {
   private def kitchenToStateAndData(k: Seq[Kitchen], data: Data) =
     val switchedState = simulationState.copy(kitchens = k)
+    (switchedState, data)
+
+  private def kitchenToStateAndWorldAndData(k: Seq[Kitchen], world: World, data: Data) =
+    val switchedState = simulationState.copy(kitchens = k, world = world)
     (switchedState, data)
 
   def enventuallySwitch(switcher: Switcher, data: Data): (SimulationState, Data) =
@@ -90,12 +95,30 @@ implicit class SimulationStateWrapper(simulationState: SimulationState) {
           kitchenToStateAndData(newKitchens, data)
         case SoilCare(score: Int, kitchenProfileID: KitchenProfileID) =>
           val (rotationCycle, ownFallowUse, mulching) = KitchenProfiler.soilCareQModalities(score)
-          val newKichens =
-            simulationState.kitchens.map: k =>
-              if k.profileID == kitchenProfileID
-              then k.copy(rotationCycle = rotationCycle, ownFallowUse = ownFallowUse, mulchingStrategy = mulching)
-              else k
-          kitchenToStateAndData(newKichens, data)
+
+          val (kitchens, otherKitchens) = simulationState.kitchens.partition(_.profileID == kitchenProfileID)
+          val (newKitchens, newWorld) =
+            if kitchens.isEmpty
+            then (simulationState.kitchens, simulationState.world)
+            else
+              val previousRotationCycle = kitchens.head.rotationCycle
+              val parcels = kitchens.flatMap(k => World.parcelsForKitchen(simulationState.world, k))
+              val otherParcels = otherKitchens.flatMap(k => World.parcelsForKitchen(simulationState.world, k))
+
+              val newW = simulationState.world.copy(
+                parcels =
+                  World.reassignCropsInParcels(parcels, previousRotationCycle, rotationCycle)
+                  ++ otherParcels
+              )
+
+              val newK =
+                kitchens.map: k =>
+                    k.copy(rotationCycle = rotationCycle, ownFallowUse = ownFallowUse, mulchingStrategy = mulching)
+                ++ otherKitchens
+
+              (newK, newW)
+
+          kitchenToStateAndWorldAndData(newKitchens, newWorld, data)
     }
     else (simulationState, data)
 }

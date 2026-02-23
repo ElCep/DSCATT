@@ -1,7 +1,7 @@
 package dscatt.launchers
 
 import dscatt.{Croping, KitchenProfiler, MeanStd, Parcel, RotationCycle}
-import Croping.*
+import Croping.Crop.*
 
 package object commonSettings:
   case class HookFile(outputPath: String, parcels: Boolean, kitchens: Boolean, dynamics: Boolean)
@@ -26,7 +26,7 @@ package object commonSettings:
 
   val defaultKitchenProfiler =
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
-      Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Millet
+      Croping.nextCrop(r, p.crop) == Some(Millet)
     }
 
     val distributionBuilder =

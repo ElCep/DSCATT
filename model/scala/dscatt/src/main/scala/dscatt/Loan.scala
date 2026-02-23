@@ -1,16 +1,14 @@
 package dscatt
 
-import Kitchen.{FoodBalance, KitchenID, parcelFoodProduction}
-import Parcel.ParcelID
-import Simulation.SimulationState
-import Croping.AParcel
+import Kitchen.{FoodBalance, KitchenID}
+import Croping.Crop.*
 
 import scala.annotation.tailrec
 
 
 case class Loan(from: KitchenID, to: KitchenID, parcel: Parcel)
 
-object Loan {
+object Loan:
 
   // Every loaned parcel will be used with Mil
   def assign(parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance], data: Data, year: Int): (Seq[Loan], Seq[Parcel]) = {
@@ -23,7 +21,8 @@ object Loan {
 
       else {
         val mostNeedy = demandingKitchens.head
-        val loanedParcel = availableParcels.head.copy(farmerID = mostNeedy.kitchenID, crop = Croping.Millet)
+        val currentParcel = availableParcels.head
+        val loanedParcel = currentParcel.copy(farmerID = mostNeedy.kitchenID, crop = Millet, initiallyPlannedCrop = Some(currentParcel.crop))
 
         val newDemandingKitchens = demandingKitchens
           .updated(0, mostNeedy.copy(balance = mostNeedy.balance + Kitchen.parcelFoodProduction(loanedParcel, data, year)))
@@ -37,6 +36,12 @@ object Loan {
   }
 
 
-  def reset(world: World) = world.copy(parcels = world.parcels.map(p => p.copy(farmerID = p.ownerID).updateCrops))
-
-}
+  def reset(world: World) =
+    world.copy(
+      parcels = world.parcels.map: p =>
+        p.copy(
+          farmerID = p.ownerID,
+          crop = p.initiallyPlannedCrop.getOrElse(p.crop),
+          initiallyPlannedCrop = None
+        )
+    )

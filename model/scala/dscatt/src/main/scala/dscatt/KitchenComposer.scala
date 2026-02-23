@@ -1,7 +1,7 @@
 package dscatt
 
 import dscatt.HerdSizeStrategy.LSUByArea
-
+import Croping.Crop.*
 import scala.annotation.tailrec
 
 object KitchenComposer:
@@ -91,7 +91,7 @@ object KitchenComposer:
     opts.flatten
 
   val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
-    Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Croping.Millet
+    Croping.nextCrop(r, p.crop) == Some(Millet)
   }
 
   def compose(totalPopulation: Int, kitchenProfileBuilders: Seq[KitchenProfileBuilder]): KitchenPartition =

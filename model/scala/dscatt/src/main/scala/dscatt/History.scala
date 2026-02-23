@@ -2,14 +2,10 @@ package dscatt
 
 import utils.CSVWrapper
 import better.files.*
-import File.*
 import Kitchen.*
-import Loan.*
-import Diohine.*
 import Simulation.*
+import Croping.Crop.*
 
-import java.io.File as JFile
-import Data.*
 import dscatt.Fertility.SoilQuality
 import dscatt.launchers.commonSettings.*
 
@@ -50,7 +46,7 @@ object History {
       val historyOfYear = history(year)
       history.updated(year, historyOfYear.copy(population = populations.toMap))
     }
-    
+
     def updateKitchens(year: Int, kitchens: Seq[Kitchen]) =
       val historyOfYear = history(year)
       history.updated(year, historyOfYear.copy(kitchens = historyOfYear.kitchens :+ kitchens))
@@ -77,7 +73,7 @@ object History {
       val historyOfYear = history(year)
       val newKitchens = allKitchens.filterNot(i => historyOfYear.parcelStats.keys.toSeq.contains(i.id))
       val newParcelStats = newKitchens.map { k =>
-        val owned = World.ownedParcelsForKitchen(world, k)
+        val owned = World.parcelsForKitchen(world, k)
         k.id -> ParcelStat(owned.size, owned.map(_.area).sum, 0, 0.0)
       }.toMap
       history.updated(year, historyOfYear.copy(parcelStats = historyOfYear.parcelStats ++ newParcelStats))
@@ -96,7 +92,7 @@ object History {
         val residualSoilQualityMean = parcelFertilities.map(_.agronomicMetrics.soilQuality.residualSoilQuality).sum / parcelFertilities.size
         val availableNitrogenMean = parcelFertilities.map(_.agronomicMetrics.availableNitrogen).sum / parcelFertilities.size
 
-        k.id -> Fertility.Metrics(year, Croping.Fallow, manureMassMean, mulchingMassMean, Fertility.AgronomicMetrics(availableNitrogenMean, SoilQuality(residualSoilQualityMean, annualSoilQualityMean)))
+        k.id -> Fertility.Metrics(year, Fallow, manureMassMean, mulchingMassMean, Fertility.AgronomicMetrics(availableNitrogenMean, SoilQuality(residualSoilQualityMean, annualSoilQualityMean)))
       }.toMap
 
       history.updated(year, historyOfYear.copy(fertilities = historyOfYear.fertilities ++ newFertilities))

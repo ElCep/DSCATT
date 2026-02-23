@@ -13,6 +13,7 @@ import dscatt.RotationCycle.MilletPeanut
 import dscatt.Simulation.SimulationState
 import dscatt.SwitchType.*
 import org.apache.commons.math3.stat.regression.SimpleRegression
+import Croping.Crop.*
 
 // Apply p switchers among n available switchers in one simulation
 object HubExplorer:
@@ -37,7 +38,7 @@ object HubExplorer:
       herdSize, mulching, demography, peanutSeedToFood, peanutForInexcess).map(st => Switcher(switchTime, st))
 
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
-      Croping.evolveCrop(p.crop, r, Croping.evolveCropZone(p.cropZone, r)) == Croping.Millet
+      Croping.nextCrop(r, p.crop) == Some(Millet)
     }
 
     val kitchenProfile1 = KitchenProfile(

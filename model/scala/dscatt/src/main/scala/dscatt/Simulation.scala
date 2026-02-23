@@ -45,15 +45,15 @@ object Simulation {
              rainFall: Int | MM_PER_YEAR,
              switchers: Seq[Switcher] = Seq(),
              world: Option[World] = None,
-             stopCriteria: SimulationState=> Boolean = _=> true,
+             stopCriteria: SimulationState => Boolean = _ => true,
              dumpProfilesPath: Option[String] = None
            ) = {
     given MersenneTwister(seed)
 
     val normalizedRainFall =
       rainFall match
-        case average: Int=> Seq.fill(simulationLength)(average)
-        case mmpy: MM_PER_YEAR=>
+        case average: Int => Seq.fill(simulationLength)(average)
+        case mmpy: MM_PER_YEAR =>
           assert(mmpy.length == simulationLength)
           mmpy
 
@@ -71,6 +71,8 @@ object Simulation {
 
 
     val kitchens = Kitchen.buildKitchens(kitchenPartition)
+
+    println(kitchens.groupBy(_.profileID).map(_._2.map(_.id)))
 
     val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, lands, data))
 
@@ -90,9 +92,9 @@ object Simulation {
       History.printParcels(finalState, hookParameters, data)
     if (hookParameters.displayKitchens)
       History.printKitckens(finalState, hookParameters)
-    dumpProfilesPath  match {
-      case Some(path)=> KitchenProfiler.toJsonFile(kitchenPartition, path)
-      case _=>
+    dumpProfilesPath match {
+      case Some(path) => KitchenProfiler.toJsonFile(kitchenPartition, path)
+      case _ =>
     }
 
     (finalState, data)
@@ -101,10 +103,10 @@ object Simulation {
   @tailrec
   def applySwitchers(switchers: Seq[Switcher], simulationState: SimulationState, data: Data): (SimulationState, Data) =
     if (switchers.isEmpty) (simulationState, data)
-    else 
+    else
       val (newSS, newData) = simulationState.enventuallySwitch(switchers.head, data)
       applySwitchers(switchers.tail, newSS, newData)
-      
+
 
   def evolve(
               simulationState: SimulationState,
@@ -113,7 +115,7 @@ object Simulation {
               emigrationProcess: Boolean,
               data: Data,
               switchers: Seq[Switcher] = Seq(),
-              stopCriteria: SimulationState=> Boolean = _=> true
+              stopCriteria: SimulationState => Boolean = _ => true
             )(using MersenneTwister): SimulationState = {
 
     @tailrec
@@ -125,7 +127,7 @@ object Simulation {
         val yearSimulationState = simulationState.copy(history = simulationState.history.incrementHistory(simulationState.year))
         val (switchedSimulationState, switchedData) = applySwitchers(switchers, yearSimulationState, data)
 
-        val initialFood = simulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k, switchedData)) }
+        val initialFood = switchedSimulationState.kitchens.map { k => Food(k.id, -Kitchen.foodNeeds(k, switchedData)) }
 
         // Evolve rotation including loans
         val (afterRotationsSimulationState, foodAfterRotation, theoriticalFallowParcels) = Rotation.evolve(switchedSimulationState, initialFood, switchedData)
