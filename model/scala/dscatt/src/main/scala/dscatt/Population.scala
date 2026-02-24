@@ -64,7 +64,7 @@ object Population {
           if (theoriticalNbEmigrants <= emigrantThreshold) theoriticalNbEmigrants
           else emigrantThreshold
         }
-        // println("BALANCE " + k.size  + " -- " + nbEmigrants + " == " + (k.size - nbEmigrants))
+        
         (k.copy(size = k.size - nbEmigrants), (k.id, nbEmigrants))
 
       }

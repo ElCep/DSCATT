@@ -7,7 +7,7 @@ import Data.*
 
 object Rotation {
   def evolve(simulationState: SimulationState, initialFood: Seq[Food], data: Data): (SimulationState, Seq[Food], Int) = {
-    
+
     // Compute theoritical crops for coming year before we know if it is in culture or not
     val theoriticalCroping = simulationState.kitchens.map { k =>
       k -> World.parcelsForKitchen(simulationState.world, k).map { p =>
@@ -17,7 +17,6 @@ object Rotation {
       }
     }
     val theoriticalFallowParcels = World.fallowParcels(theoriticalCroping.flatMap(_._2)).length
-
 
     // Loaners process:
     // 1- have a positive foodBalance with all crops in culture
@@ -31,7 +30,8 @@ object Rotation {
     val inexcessFromCultivatedParcelsByKitchen = parcelUsageByKitchen.map { case (k, pu) => k -> pu.inexcessFromCultivatedParcels }
     val allParcelUsages = ParcelUsages(
       parcelUsageByKitchen.flatMap(_._2.cultivated).toSeq,
-      parcelUsageByKitchen.flatMap(_._2.forLoan).toSeq
+      parcelUsageByKitchen.flatMap(_._2.forLoan).toSeq,
+      parcelUsageByKitchen.flatMap(_._2.notLoanable).toSeq
     )
 
     //Collect all demanding kitchens except provisioning crops strategies (a kitchen provisioning food is not supposed to ask for a loan)
@@ -59,7 +59,8 @@ object Rotation {
         tp._2.filterNot(p=> loanedParcelIDs.contains(p.id))
       ++ loanedParcels
 
-    val inCulture = newParcels.filterNot(_.crop == Fallow)
+   // val inCulture = newParcels.filterNot(_.crop == Fallow)
+    val inCulture = allParcelUsages.cultivated ++ allParcelUsages.notLoanable ++ notUsedInLoanProcess
 
     val loanedParcelsByK = loanedParcels.groupBy(_.farmerID)
     val cultivatedParcelsByK = inCulture.groupBy(_.farmerID)
@@ -87,17 +88,17 @@ object Rotation {
     ), food, theoriticalFallowParcels)
   }
 
-
-  case class ParcelUsages(cultivated: Seq[Parcel], forLoan: Seq[Parcel], inexcessFromCultivatedParcels: Double = 0.0)
+  case class ParcelUsages(cultivated: Seq[Parcel], forLoan: Seq[Parcel], notLoanable: Seq[Parcel], inexcessFromCultivatedParcels: Double = 0.0)
+  //case class ParcelUsages(cultivated: Seq[Parcel], forLoan: Seq[Parcel], inexcessFromCultivatedParcels: Double = 0.0)
 
   // Extra is defined as everything except what the kitchen needs
   def getParcelUsages(kitchen: Kitchen, parcels: Seq[Parcel], data: Data, year: Int): ParcelUsages =
-    val parcelCandidatesForCulture =
+    val (fallowsNotCultivated, parcelCandidatesForCulture) =
       val grouped = parcels.groupBy(_.crop)
       val milletAndPeanut = grouped.getOrElse(Millet, Seq()) ++ grouped.getOrElse(Peanut, Seq())
       kitchen.ownFallowUse match
-        case OwnFallowUse.NeverUseFallow => milletAndPeanut
-        case OwnFallowUse.UseFallowIfNeeded => milletAndPeanut ++ grouped.getOrElse(Fallow, Seq())
+        case OwnFallowUse.NeverUseFallow => (grouped.getOrElse(Fallow, Seq()), milletAndPeanut)
+        case OwnFallowUse.UseFallowIfNeeded =>(Seq(), milletAndPeanut ++ grouped.getOrElse(Fallow, Seq()))
 
     val cropNeeded: Kitchen.CropNeeded = kitchen.cropingStrategy match
       case CropingStrategy.PeanutForInexcess(savingRate: Double) =>
@@ -107,12 +108,15 @@ object Rotation {
 
         Kitchen.getCropNeeded(kitchen, parcelCandidatesForCulture, needs, data, year)
 
-    val loanable = kitchen.loanStrategy match {
-      case LoanStrategy.Selfish => Seq()
-      case LoanStrategy.AllExtraParcelsLoaner => cropNeeded.candidatesNotUsed // notInCulture
-      case LoanStrategy.ExtraParcelsExceptFallowLoaner => cropNeeded.candidatesNotUsed.filterNot(_.crop == Fallow)
+    val notInCulture = cropNeeded.candidatesNotUsed ++ fallowsNotCultivated
+
+    val (notLoanable, loanable) = kitchen.loanStrategy match {
+      case LoanStrategy.Selfish => (notInCulture, Seq())
+      case LoanStrategy.AllExtraParcelsLoaner => (Seq(), notInCulture)
+      case LoanStrategy.ExtraParcelsExceptFallowLoaner => (fallowsNotCultivated, cropNeeded.candidatesNotUsed)
     }
 
-    ParcelUsages(cropNeeded.cultivatedParcels, loanable, cropNeeded.inexcessOnCultivatedParcels)
+    ParcelUsages(cropNeeded.cultivatedParcels, loanable, notLoanable, cropNeeded.inexcessOnCultivatedParcels)
+    //ParcelUsages(cropNeeded.cultivatedParcels, loanable, cropNeeded.inexcessOnCultivatedParcels)
 
 }
