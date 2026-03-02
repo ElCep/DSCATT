@@ -22,6 +22,7 @@ enum SwitchType:
   case PeanutSeedToFood(ratio: Double) extends SwitchType
   case PeanutInexcess(ratio: Double) extends SwitchType
   case SoilCare(soilCareScore: Int, kitchenProfileID: KitchenProfileID) extends SwitchType
+  case HerdGrazing(mutualizedHerdGrazingScore: Int, kitchenProfileID: KitchenProfileID) extends SwitchType
 
 import SwitchType._
 
@@ -34,6 +35,10 @@ object Switcher:
     scores.zipWithIndex.map: (s, id) =>
       Switcher(id + 1, SoilCare(s, kitchenProfileID))
 
+  def fromHerdGrazingScoresToSwitchers(scores: Seq[Int], kitchenProfileID: KitchenProfileID) =
+    scores.zipWithIndex.map: (s, id) =>
+      Switcher(id + 1, HerdGrazing(s, kitchenProfileID))
+      
 implicit class SimulationStateWrapper(simulationState: SimulationState) {
   private def kitchenToStateAndData(k: Seq[Kitchen], data: Data) =
     val switchedState = simulationState.copy(kitchens = k)
@@ -93,6 +98,15 @@ implicit class SimulationStateWrapper(simulationState: SimulationState) {
         case PeanutInexcess(ratio: Double) =>
           val newKitchens = simulationState.kitchens.map(_.copy(cropingStrategy = CropingStrategy.PeanutForInexcess(ratio)))
           kitchenToStateAndData(newKitchens, data)
+        case HerdGrazing(score: Int, kitchenProfileID: KitchenProfileID)=>
+          val (dryHerdGrazing, wetHerdGrazing) = KitchenProfiler.mutualizedHerdGrazingModalities(score)
+          val (kitchens, otherKitchens) = simulationState.kitchens.partition(_.profileID == kitchenProfileID)
+          val newK = 
+            kitchens.map: k =>
+                      k.copy(drySeasonHerdStrategy = dryHerdGrazing, wetSeasonHerdStrategy = wetHerdGrazing)
+            ++ otherKitchens
+
+          (simulationState.copy(kitchens = newK), data)
         case SoilCare(score: Int, kitchenProfileID: KitchenProfileID) =>
           val (rotationCycle, ownFallowUse, mulching) = KitchenProfiler.soilCareQModalities(score)
 
