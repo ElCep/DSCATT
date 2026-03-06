@@ -47,7 +47,7 @@ object Simulation {
              rainFall: Int | MM_PER_YEAR,
              switchers: Seq[Switcher] = Seq(),
              world: Option[World] = None,
-             stopCriteria: SimulationState => Boolean = _ => true,
+             stopCriteria: SimulationState => Boolean = _ => false,
              dumpProfilesPath: Option[String] = None
            ) = {
     given MersenneTwister(seed)
@@ -115,7 +115,7 @@ object Simulation {
               emigrationProcess: Boolean,
               data: Data,
               switchers: Seq[Switcher] = Seq(),
-              stopCriteria: SimulationState => Boolean = _ => true
+              stopCriteria: SimulationState => Boolean = _ => false
             )(using MersenneTwister): SimulationState = {
 
     @tailrec
@@ -146,14 +146,15 @@ object Simulation {
         // Process Fertiliy
         val afterFertilizationState = Fertility.assign(resizedSimulationState, switchedData)
 
-        val effectiveFallowParcels =
+        val effectiveFallowRatio =
           val fp = World.fallowParcels(afterFertilizationState.world).length.toDouble
-          if (fp.isNaN) 0.0
-          else fp
+          if fp == 0.0
+          then 0.0
+          else fp / theoriticalFallowParcels
 
         val finalHistory = afterFertilizationState.history
           .updateFoods(afterFertilizationState.year, afterDonationFoods)
-          .updateEffectiveFallowRatio(afterFertilizationState.year, effectiveFallowParcels / theoriticalFallowParcels)
+          .updateEffectiveFallowRatio(afterFertilizationState.year, effectiveFallowRatio)
           .updateKitchens(afterFertilizationState.year, simulationState.kitchens)
 
         val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
