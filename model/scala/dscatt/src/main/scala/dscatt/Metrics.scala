@@ -39,10 +39,11 @@ implicit class HistoryDecorator(simulationState: SimulationState):
 
   def herdDynamic = simulationState.herds.map(_.values.sum).toArray
 
-  def herdsFrom(kitchenProfileID: KitchenProfileID) =
+  def herdsFrom(kitchenProfileID: KitchenProfileID): Array[Int] =
     val kitchensInProfile = simulationState.kitchens.filter(_.profileID == kitchenProfileID).map(_.id)
     simulationState.herds.map(h=>
       h.filter(k=> kitchensInProfile.contains(k._1)).map(_._2).sum)
+    .toArray
 
   def averageNitrogenDynamic =
     simulationState.fertilityHistory.map(fh =>
