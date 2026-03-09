@@ -64,6 +64,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
     yearlyManuredParcelsFromKP(kitchenProfileID)
       .zip(producedManureFrom(kitchenProfileID, data))
       .map(x=> Math.log(x._1 + EPSILON) / (x._2 + EPSILON))
+    .toArray
 
   def foodFromloansFrom(fromKitchenProfileID: KitchenProfileID, data: Data) =
     val kitchensInProfile = simulationState.kitchens.filter(_.profileID == fromKitchenProfileID).map(_.id)
@@ -72,6 +73,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
           .filter(l=> kitchensInProfile.contains(l.from) && !kitchensInProfile.contains(l.to))
           .map(_.parcel)
         loanedParcels.map(p=> parcelFoodProduction(p, data, y)).sum
+    .toArray
 
   def foodDonationFrom(fromKitchenProfileID: KitchenProfileID, data: Data) =
     val kitchensInProfile = simulationState.kitchens.filter(_.profileID == fromKitchenProfileID).map(_.id)
@@ -82,6 +84,7 @@ implicit class HistoryDecorator(simulationState: SimulationState):
           case Some(fd)=> 0.0
           case _=> 0.0
       .sum
+    .toArray
 
   def solidarityFoodFrom(fromKitchenProfileID: KitchenProfileID, data: Data) =
     foodDonationFrom(fromKitchenProfileID, data).zip(foodFromloansFrom(fromKitchenProfileID, data)).map(_ + _)

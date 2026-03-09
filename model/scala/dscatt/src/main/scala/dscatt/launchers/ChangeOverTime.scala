@@ -132,3 +132,6 @@ object ChangeOverTime:
 
     println(" solidarity food from 1 to 2 " + simulationState.solidarityFoodFrom(1, data))
     println(" solidarity food from 2 to 1 " + simulationState.solidarityFoodFrom(2, data))
+
+    println("Mig metric " + simulationState.migrantsDynamic.max  + ", " +  simulationState.migrantsDynamic.count(_ != 0.0) + " => " + simulationState.migrantsDynamic.max * simulationState.migrantsDynamic.count(_ != 0.0))
+
