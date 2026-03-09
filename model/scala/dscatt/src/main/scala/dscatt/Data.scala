@@ -117,9 +117,7 @@ class Data(
   val MIL_SEED_RATIO = 0.3
   val PEANUT_SEED_RATIO = 0.333
   val RAIN_FALL = rainFall
-  def rainFallIn(year: Int) = 
-    //println("RF " + year)
-    RAIN_FALL(year)
+  def rainFallIn(year: Int) = RAIN_FALL(year)
 
   //val MIL_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.MIL_FULL_POTENTIAL_YIELD * Constants.MIL_SEED_RATIO
   //val PEANUT_SEED_FULL_POTENTIAL_YIELD: KG_BY_HA = Constants.PEANUT_FULL_POTENTIAL_YIELD * Constants.PEANUT_SEED_RATIO

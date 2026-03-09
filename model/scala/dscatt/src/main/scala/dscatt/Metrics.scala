@@ -45,6 +45,47 @@ implicit class HistoryDecorator(simulationState: SimulationState):
       h.filter(k=> kitchensInProfile.contains(k._1)).map(_._2).sum)
     .toArray
 
+  def parcelsFrom(kitchenProfileID: KitchenProfileID): Seq[Parcel] =
+    val kitchensInProfile = simulationState.kitchens.filter(_.profileID == kitchenProfileID).map(_.id)
+    simulationState.world.parcels.filter:p =>
+      kitchensInProfile.contains(p.ownerID)
+
+  def yearlyManuredParcelsFromKP(kitchenProfileID: KitchenProfileID) =
+    val parcels = parcelsFrom(kitchenProfileID)
+    parcels.map:p=>
+      p.fertilityHistory.map(_.manureMassByHa * p.area)
+    .transpose.map(_.sum)
+
+  def producedManureFrom(kitchenProfileID: KitchenProfileID, data: Data) =
+    herdsFrom(kitchenProfileID).map(_ * data.KG_OF_MANURE_PER_COW_PER_YEAR)
+
+  def manureStreamLogRatio(kitchenProfileID: KitchenProfileID, data: Data) =
+    val EPSILON = 0.00001
+    yearlyManuredParcelsFromKP(kitchenProfileID)
+      .zip(producedManureFrom(kitchenProfileID, data))
+      .map(x=> Math.log(x._1 + EPSILON) / (x._2 + EPSILON))
+
+  def foodFromloansFrom(fromKitchenProfileID: KitchenProfileID, data: Data) =
+    val kitchensInProfile = simulationState.kitchens.filter(_.profileID == fromKitchenProfileID).map(_.id)
+    (0 to simulationState.year).map: y=>
+        val loanedParcels = simulationState.history(y).loans
+          .filter(l=> kitchensInProfile.contains(l.from) && !kitchensInProfile.contains(l.to))
+          .map(_.parcel)
+        loanedParcels.map(p=> parcelFoodProduction(p, data, y)).sum
+
+  def foodDonationFrom(fromKitchenProfileID: KitchenProfileID, data: Data) =
+    val kitchensInProfile = simulationState.kitchens.filter(_.profileID == fromKitchenProfileID).map(_.id)
+    (0 to simulationState.year).map: y =>
+      simulationState.history(y).foodStats.values.map(_.foodDonation).map: f =>
+        f match
+          case Some(fd) if kitchensInProfile.contains(fd.from) && !kitchensInProfile.contains(fd.to)=> fd.quantity
+          case Some(fd)=> 0.0
+          case _=> 0.0
+      .sum
+
+  def solidarityFoodFrom(fromKitchenProfileID: KitchenProfileID, data: Data) =
+    foodDonationFrom(fromKitchenProfileID, data).zip(foodFromloansFrom(fromKitchenProfileID, data)).map(_ + _)
+
   def averageNitrogenDynamic =
     simulationState.fertilityHistory.map(fh =>
       fh.map(_.agronomicMetrics.availableNitrogen)

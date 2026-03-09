@@ -38,7 +38,7 @@ object FoodDonation {
         val newFoods =
           if (kitchenIndex > -1)
             val currentFood = foods(kitchenIndex)
-            foods.updated(kitchenIndex, currentFood.copy(fromDonation = currentFood.fromDonation + newFoodDonation.quantity))
+            foods.updated(kitchenIndex, currentFood.copy(fromDonation = currentFood.fromDonation + newFoodDonation.quantity, foodDonation = Some(newFoodDonation)))
           else foods
 
         assign0(newHungryList.sortBy(_.balance), newExtraList, newFoods)

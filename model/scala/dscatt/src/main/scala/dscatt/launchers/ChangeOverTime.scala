@@ -111,3 +111,24 @@ object ChangeOverTime:
     println("\nPOP dynamic  " + simulationState.populationDynamic.toSeq)
     println("\nMIG dynamic  " + simulationState.migrantsDynamic.toSeq)
     println("\nFallow dynamic  " + simulationState.effectiveFallowRatioDynamic.toSeq)
+
+
+    println("Produced from KP1 " + simulationState.producedManureFrom(1, data).toSeq + " :: " + simulationState.producedManureFrom(1, data).size)
+    println("Manure Stream KP1 " + simulationState.manureStreamLogRatio(1, data))
+
+    println("-----")
+    println("Manure Stream KP2 " + simulationState.manureStreamLogRatio(2, data))
+
+    println("----------")
+    println(" loans from 1 to 2 " + simulationState.foodFromloansFrom(1, data))
+    println(" loans from 2 to 1 " + simulationState.foodFromloansFrom(2, data))
+
+
+    println("----------")
+    println(" donation from 1 to 2 " + simulationState.foodDonationFrom(1, data))
+    println(" donaiton from 2 to 1 " + simulationState.foodDonationFrom(2, data))
+
+    println("------------")
+
+    println(" solidarity food from 1 to 2 " + simulationState.solidarityFoodFrom(1, data))
+    println(" solidarity food from 2 to 1 " + simulationState.solidarityFoodFrom(2, data))
