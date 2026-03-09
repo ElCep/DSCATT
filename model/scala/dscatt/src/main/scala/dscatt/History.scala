@@ -227,7 +227,7 @@ object History {
     val header = Seq("Year", "ID", "Area", "YQS", "N/ha", "Manure/ha", "Mulch/ha", "#Faid","Yield/ha", "for crop")
     val years = state.history.keys.toSeq.sorted.map { y =>
       first20.map { p =>
-        val fertility = p.fertilityHistory(y - 1)
+        val fertility = p.fertilityHistory(y)
         //val id = p.tinyID
         val area = p.area
 
@@ -240,7 +240,7 @@ object History {
           toDouble(fertility.manureMassByHa / area),
           toDouble(fertility.mulchingMassByHa / area),
           toDouble(p.faidherbiaTreesByHa),
-          toDouble(Kitchen.parcelFoodProduction(p, data, state.year) / area),
+          toDouble(Kitchen.parcelFoodProduction(p, data, y) / area),
           fertility.crop.display
         )
       }

@@ -77,16 +77,16 @@ object Simulation {
     val nakedWorld = world.getOrElse(World.buildWorldGeometry(kitchens, lands, data))
 
     val initialHistory = History.initialize(simulationLength)
-    val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 1)
+    val initialState = SimulationState(nakedWorld, kitchens, initialHistory, 0)
 
     // Two years warming up
     val warmedUpState = evolve(initialState, 0.0, 3, false, data)
       .copy(history = initialHistory,
-        year = 1,
+        year = 0,
         world = initialState.world.copy(parcels = initialState.world.parcels.map(_.resetFertilityHistory))
       )
 
-    val finalState = evolve(warmedUpState, populationGrowth, simulationLength + 1, true, data, switchers, stopCriteria)
+    val finalState = evolve(warmedUpState, populationGrowth, simulationLength, true, data, switchers, stopCriteria)
 
     if (hookParameters.displayParcels)
       History.printParcels(finalState, hookParameters, data)
@@ -111,7 +111,7 @@ object Simulation {
   def evolve(
               simulationState: SimulationState,
               populationGrowth: Double,
-              simulationLenght: Int,
+              simulationLength: Int,
               emigrationProcess: Boolean,
               data: Data,
               switchers: Seq[Switcher] = Seq(),
@@ -121,9 +121,9 @@ object Simulation {
     @tailrec
     def evolve0(simulationState: SimulationState, data: Data): SimulationState = {
 
-      if (simulationLenght - simulationState.year == 0 || simulationState.kitchens.size < 1 || stopCriteria(simulationState)) simulationState
-      else {
-
+      if simulationLength - simulationState.year == 0 || simulationState.kitchens.size < 1 || stopCriteria(simulationState)
+      then  simulationState.copy(year = simulationState.year - 1)
+      else
         val yearSimulationState = simulationState.copy(history = simulationState.history.incrementHistory(simulationState.year))
         val (switchedSimulationState, switchedData) = applySwitchers(switchers, yearSimulationState, data)
 
@@ -160,7 +160,6 @@ object Simulation {
         val finalState = afterFertilizationState.copy(world = Loan.reset(afterFertilizationState.world), year = afterFertilizationState.year + 1, history = finalHistory)
 
         evolve0(finalState, switchedData)
-      }
     }
 
     evolve0(simulationState, data)

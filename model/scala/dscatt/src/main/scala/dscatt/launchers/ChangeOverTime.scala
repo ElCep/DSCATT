@@ -12,7 +12,7 @@ object ChangeOverTime:
 
   def run(seed: Long, lands: java.io.File, pg: Double = 0.014, kitchenPartition: KitchenPartition = defaultKitchenProfiler.kitchenPartition) =
 
-    val simulationLength = 25
+    val simulationLength = 100
 
     val manureDepositStategyMilNextYear = { (p: Parcel, r: RotationCycle) =>
       Croping.nextCrop(r, p.crop) == Some(Millet)
@@ -41,11 +41,15 @@ object ChangeOverTime:
     val kitchenPartition = KitchenPartition(Seq((kitchenProfile1, 21), (kitchenProfile2, 10)))
 
     val rnd = scala.util.Random
-   // val soilCareKP1 = Array(12,12,12,11,12,12,15,9,11,11,9,8,8,12,14,14,14,10,10,10,10,10,10,10)
-    //val soilCareKP1 = Seq.fill(simulationLength)(12)
+
+    def expandScores(sixYearScores: Seq[Int]) =
+      sixYearScores.map(x => Seq.fill(6)(x)).reduce(_ ++ _).dropRight(2)
+
+    val soilCareKP1 = expandScores(Array(15,13,11,11,11,9,9,7,7,9,5,7,7,5,5,5,7))
+    val soilCareKP2 = expandScores(Array(10,14,8,12,2,6,4,8,4,10,10,0,10,0,12,14,4))
   //  val soilCareKP2 = Array.fill(24)(12)// Array(1,2,13,7,7,7,2,3,7,9,10,2,3,7,7,7,2,8,7,7,1,7,7,7,7)//Array.fill(24)(12) //Seq.fill(simulationLength)(rnd.between(0, 16))
-      val herdGrazingScoreKP1 = Array(1,2,2,1,2,2,5,8,1,1,1,8,8,2,4,4,4,0,0,0,0,0,1,1)
-      val herdGrazingScoreKP2 = Array(2,2,5,8,1,1,1,8,8,2,4,4,4,0,0,0,0,0,1,1,5,5,2,3)
+//      val herdGrazingScoreKP1 = Array(1,2,2,1,2,2,5,8,1,1,1,8,8,2,4,4,4,0,0,0,0,0,1,1)
+//      val herdGrazingScoreKP2 = Array(2,2,5,8,1,1,1,8,8,2,4,4,4,0,0,0,0,0,1,1,5,5,2,3)
 
     @tailrec def nbSwitches(a: Array[Int], nbS: Int): Int =
       if a.isEmpty
@@ -61,9 +65,9 @@ object ChangeOverTime:
 //        Switcher.fromSoilCareScoresToSwitchers(soilCareKP2, 2)
 
     val switchers =
-      Switcher.fromHerdGrazingScoresToSwitchers(herdGrazingScoreKP1, 1) ++
-        Switcher.fromHerdGrazingScoresToSwitchers(herdGrazingScoreKP2, 2)
-        
+      Switcher.fromSoilCareScoresToSwitchers(soilCareKP1, 1) ++
+        Switcher.fromSoilCareScoresToSwitchers(soilCareKP2, 2)
+
     val supportPolicy = SupportPolicy(taxPayerRatio = 1, fertilizerWeightPerYear = _ => kitchenPartition.profiles.map(_._2).sum * 20)
     val (simulationState, simulationData) = Simulation(
       seed = seed,
@@ -81,14 +85,18 @@ object ChangeOverTime:
       dailyFoodNeedPerPerson = 0.555,
       hookParameters = hooks,
       //rainFall = Seq(623,623,404,408,388,729,620,528,394,484,395,635,540,526,652,691,720,416,723,536,353,767,527,509,501),
-      rainFall = Seq(498,498,323,326,317,583,496,422,317,387,317,508,432,420,521,552,576,332,578,428,317,613,421,407,400),
+      rainFall = Seq(
+        498,326,578,496,400,317,498,498,613,496,521,552,387,387,508,420,326,578,326,508,326,326,428,420,420,317,613,576,578,498,326,578,498,508,
+        583,317,583,552,508,498,552,326,421,326,498,323,317,576,420,521,317,428,498,508,613,317,407,496,422,613,613,613,428,400,428,317,508,332,
+        498,498,498,552,323,317,498,420,432,508,387,498,428,496,552,317,407,387,332,498,317,422,613,317,576,428,387,332,332,420,496,387
+      ),
       //rainFall = 527,
      // stopCriteria = (simS: SimulationState)=> simS.populationTrend(6,3) < 0,
       stopCriteria = (simS: SimulationState) => false,
       //dumpProfilesPath = Some("/tmp/profiles.json")
       //  Seq(),
       switchers = switchers
-      //switchers = Seq()
+      //switchers = Seq()Seq(498,498,323,326,317,583,496,422,317,387,317,508,432,420,521,552,576,332,578,428,317,613,421,407,400),
     )
 
     given data: Data = simulationData
