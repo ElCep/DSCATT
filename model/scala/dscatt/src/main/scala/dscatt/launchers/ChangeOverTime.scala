@@ -5,6 +5,7 @@ import dscatt.{Croping, CropingStrategy, Data, FertilizerStrategy, FoodDonationS
 import dscatt.launchers.commonSettings.*
 import dscatt.*
 import Croping.Crop.*
+import dscatt.HerdSizeStrategy.LSUByArea
 
 import scala.annotation.tailrec
 
@@ -44,9 +45,14 @@ object ChangeOverTime:
 
     def expandScores(sixYearScores: Seq[Int]) =
       sixYearScores.map(x => Seq.fill(6)(x)).reduce(_ ++ _).dropRight(2)
-
+      
+    def expandHerdSize(sixYearScores: Seq[HerdSizeStrategy]) =
+      sixYearScores.map(x => Seq.fill(6)(x)).reduce(_ ++ _).dropRight(2)
+    
     val soilCareKP1 = expandScores(Array(15,13,11,11,11,9,9,7,7,9,5,7,7,5,5,5,7))
     val soilCareKP2 = expandScores(Array(10,14,8,12,2,6,4,8,4,10,10,0,10,0,12,14,4))
+   // val herdSizeStrategyKP1 = expandHerdSize(Array.fill(10)(HerdSizeStrategy.FullCapacity) ++ Array.fill(7)(HerdSizeStrategy.NoHerd)))
+   // val herdSizeStrategyKP2 = expandHerdSize(Array.fill(17)(LSUByArea(0.42)))
   //  val soilCareKP2 = Array.fill(24)(12)// Array(1,2,13,7,7,7,2,3,7,9,10,2,3,7,7,7,2,8,7,7,1,7,7,7,7)//Array.fill(24)(12) //Seq.fill(simulationLength)(rnd.between(0, 16))
 //      val herdGrazingScoreKP1 = Array(1,2,2,1,2,2,5,8,1,1,1,8,8,2,4,4,4,0,0,0,0,0,1,1)
 //      val herdGrazingScoreKP2 = Array(2,2,5,8,1,1,1,8,8,2,4,4,4,0,0,0,0,0,1,1,5,5,2,3)
