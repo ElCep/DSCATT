@@ -34,10 +34,10 @@ object Herd {
         case HerdSizeStrategy.FullCapacity=> hsMaximum
         case HerdSizeStrategy.NoHerd=> 0.0
       kitchen-> math.min(requiredHerdSize, hsMaximum)
-    }.toSeq
+    }.toArray
 
     // We use the marigot area to fit a herd size as an integer (ex: 1.2 LSU -> 2 LSU while the available quantity in HERD_SIZE_FED_BY_MARIGOT is not null)te
-    def marigotAddOn(requiredHSByKitchen: Seq[(Kitchen, Double)], completedKitchens: Seq[(KitchenID, Int)],marigotStock: Double): Seq[(KitchenID, Int)] =
+    def marigotAddOn(requiredHSByKitchen: Array[(Kitchen, Double)], completedKitchens: Array[(KitchenID, Int)],marigotStock: Double): Array[(KitchenID, Int)] =
       if (requiredHSByKitchen.isEmpty || marigotStock <= 0.0)
         completedKitchens ++ requiredHSByKitchen.map{case (k, hs)=> k.id-> hs.floor.toInt}
       else
@@ -46,6 +46,6 @@ object Herd {
         val diff = upgradedHS - requiredHS
         marigotAddOn(requiredHSByKitchen.tail, completedKitchens :+ (kitchen.id, upgradedHS), marigotStock - diff)
 
-    marigotAddOn(requiredHSByKitchen, Seq(), data.HERD_SIZE_FED_BY_MARIGOT)
+    marigotAddOn(requiredHSByKitchen, Array(), data.HERD_SIZE_FED_BY_MARIGOT)
 
 }

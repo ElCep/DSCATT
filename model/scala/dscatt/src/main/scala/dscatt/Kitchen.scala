@@ -22,8 +22,8 @@ object Kitchen {
 
     def fullProduction = f.fromCulture + f.fromLoan + f.fromDonation
 
-  def buildKitchens(kitchenPartition: KitchenPartition): Seq[Kitchen] = {
-    kitchenPartition.profiles.flatMap { p => Seq.fill[KitchenProfile](p._2)(p._1) }.zipWithIndex.map { case (kp, id) =>
+  def buildKitchens(kitchenPartition: KitchenPartition): Array[Kitchen] = {
+    kitchenPartition.profiles.flatMap { p => Array.fill[KitchenProfile](p._2)(p._1) }.zipWithIndex.map { case (kp, id) =>
       Kitchen(
         id + 1,
         kp.id,
@@ -42,9 +42,9 @@ object Kitchen {
         kp.nbFaidherbia
       )
     }
-  }
+  }.toArray
 
-  def kitchen(kitchens: Seq[Kitchen], id: KitchenID) = {
+  def kitchen(kitchens: Array[Kitchen], id: KitchenID) = {
     kitchens.find(_.id == id)
   }
 
@@ -59,7 +59,7 @@ object Kitchen {
     }) * parcel.area
   }
 
-  def parcelsFoodProduction(parcels: Seq[Parcel], data: Data, year: Int) = {
+  def parcelsFoodProduction(parcels: Array[Parcel], data: Data, year: Int) = {
     parcels.map { p =>
       parcelFoodProduction(p, data, year)
     }.sum
@@ -69,20 +69,20 @@ object Kitchen {
     foodBalance(world.parcels, kitchen, data, year)
   }
 
-  def foodBalance(parcels: Seq[Parcel], kitchen: Kitchen, data: Data, year: Int): FoodBalance = {
+  def foodBalance(parcels: Array[Parcel], kitchen: Kitchen, data: Data, year: Int): FoodBalance = {
     FoodBalance(kitchen.id, parcelsFoodProduction(World.parcelsInCultureForKitchen(parcels, kitchen), data, year) - foodNeeds(kitchen, data))
   }
 
   def evolve(
               simulationState: SimulationState,
-              foodAssessment: Seq[Food],
+              foodAssessment: Array[Food],
               emigrationProcess: Boolean = true,
               data: Data
             )(using mT: MersenneTwister) = {
 
-    val (populationUpdated, births): (Seq[Kitchen], Map[KitchenID, Int]) = Population.evolve(simulationState.kitchens, data)
+    val (populationUpdated, births): (Array[Kitchen], Map[KitchenID, Int]) = Population.evolve(simulationState.kitchens, data)
 
-    val (emigrantsUpdated, nbEmigrants): (Seq[Kitchen], Map[KitchenID, Int]) =
+    val (emigrantsUpdated, nbEmigrants): (Array[Kitchen], Map[KitchenID, Int]) =
       emigrationProcess match {
         case true => Population.evolveEmigrants(populationUpdated, foodAssessment, data)
         case false => (populationUpdated, Map[KitchenID, Int]())
@@ -94,7 +94,7 @@ object Kitchen {
     val populations = afterAbsorbtionKitchens.map { k =>
       val birthK = births.getOrElse(k.id, 0)
       val emigrantsK = nbEmigrants.getOrElse(k.id, 0)
-      val absorbtionsK = absorbingKitchens.getOrElse(k.id, Seq())
+      val absorbtionsK = absorbingKitchens.getOrElse(k.id, Array[KitchenID]())
       val splittedIntoK = splittedInto.get(k.id)
       k.id -> History.PopulationStat(k.size, birthK, emigrantsK, absorbtionsK, splittedIntoK)
     }
@@ -111,22 +111,22 @@ object Kitchen {
 
   }
 
-  case class AbsorbingKitchen(kitchen: Kitchen, absorbedIDs: Seq[KitchenID])
+  case class AbsorbingKitchen(kitchen: Kitchen, absorbedIDs: Array[KitchenID])
 
   def kitchenAbsorption(
-                         kitchens: Seq[Kitchen],
+                         kitchens: Array[Kitchen],
                          world: World,
                          data: Data
-                       ): (Seq[Kitchen], World, Map[KitchenID, Seq[KitchenID]]) = {
+                       ): (Array[Kitchen], World, Map[KitchenID, Array[KitchenID]]) = {
 
     val kitchenSizeThresholdForAbsorption = data.KITCHEN_MAXIMUM_SIZE
     val toBeAbsorbedKitcken = kitchens.filter(k => k.size <= data.KITCHEN_MINIMUM_SIZE)
-    val absorbingCandidateKitchens = kitchens.diff(toBeAbsorbedKitcken).map { k => AbsorbingKitchen(k, Seq()) }
+    val absorbingCandidateKitchens = kitchens.diff(toBeAbsorbedKitcken).map { k => AbsorbingKitchen(k, Array()) }
     // Do not consider too large kitchens to avoid absorbtion/split loops
     val (absorbingKitchens, tooBigKitchens) = absorbingCandidateKitchens.partition(_.kitchen.size <= kitchenSizeThresholdForAbsorption)
 
     @tailrec
-    def absorption(toBeAbsorbed: Seq[Kitchen], absorbing: Seq[AbsorbingKitchen], alreadyAbsorbing: Seq[AbsorbingKitchen]): (Seq[AbsorbingKitchen], Seq[Kitchen]) = {
+    def absorption(toBeAbsorbed: Array[Kitchen], absorbing: Array[AbsorbingKitchen], alreadyAbsorbing: Array[AbsorbingKitchen]): (Array[AbsorbingKitchen], Array[Kitchen]) = {
       if (toBeAbsorbed.length == 0 || absorbing.length < 1)
         (alreadyAbsorbing, toBeAbsorbed ++ absorbing.map(_.kitchen))
       else {
@@ -140,7 +140,7 @@ object Kitchen {
       }
     }
 
-    val (reorganizedKitchens, untouchedKitchens) = absorption(toBeAbsorbedKitcken, absorbingKitchens, Seq())
+    val (reorganizedKitchens, untouchedKitchens) = absorption(toBeAbsorbedKitcken, absorbingKitchens, Array())
 
     val reorganizedWorld = {
       // get the match between each absorbed id and its absorbing id
@@ -156,13 +156,13 @@ object Kitchen {
     }, reorganizedWorld, reorganizedKitchens.map { rK => rK.kitchen.id -> rK.absorbedIDs }.toMap)
   }
 
-  def kitchenSplit(kitchens: Seq[Kitchen], world: World, data: Data):
-  (Seq[Kitchen], World, Map[KitchenID, KitchenID]) = {
+  def kitchenSplit(kitchens: Array[Kitchen], world: World, data: Data):
+  (Array[Kitchen], World, Map[KitchenID, KitchenID]) = {
     val toBeSplittedKitchens = kitchens.filter {
       _.size >= (data.KITCHEN_MAXIMUM_SIZE - data.KITCHEN_MINIMUM_SIZE)
     }
 
-    case class Offspring(kitchen: Kitchen, originKichen: Kitchen, parcels: Seq[Parcel])
+    case class Offspring(kitchen: Kitchen, originKichen: Kitchen, parcels: Array[Parcel])
 
     @tailrec
     def split(toBeSplitted: List[Kitchen], highestID: Int, offsprings: List[Offspring]): (Int, List[Offspring]) = {
@@ -182,10 +182,10 @@ object Kitchen {
         }
 
         val nextID = highestID + 1
-        val acquiredParcelK = acquireParcels(parcelsK.toList.sortBy(_.area), 0.0, List())
+        val acquiredParcelK = acquireParcels(parcelsK.sortBy(_.area).toList, 0.0, List())
         val offspring = Offspring(kitchenK.copy(id = nextID, size = data.SPLIT_KITCHEN_OFFSPRING_SIZE),
           kitchenK.copy(size = kitchenK.size - data.SPLIT_KITCHEN_OFFSPRING_SIZE),
-          acquiredParcelK)
+          acquiredParcelK.toArray)
 
         split(toBeSplitted.tail, nextID, offsprings :+ offspring)
       }
@@ -193,7 +193,7 @@ object Kitchen {
 
     val (nextHighestID, offsprings) = split(toBeSplittedKitchens.toList, world.highestKitckenID, List())
     val parcelsToBeChangedWithID = offsprings.flatMap { o => o.parcels.map { p => p -> o.kitchen.id } }.toMap
-    val parcelsToBeChanged = parcelsToBeChangedWithID.map(_._1).toSeq
+    val parcelsToBeChanged = parcelsToBeChangedWithID.map(_._1).toArray
     val (newKitchenIDParcels, untouchedParcel) = world.parcels.partition(p => parcelsToBeChanged.contains(p))
 
 
@@ -208,11 +208,11 @@ object Kitchen {
     (newKitchens, newWorld, offsprings.map { o => o.originKichen.id -> o.kitchen.id }.toMap)
   }
 
-  case class CropNeeded(cultivatedParcels: Seq[Parcel], candidatesNotUsed: Seq[Parcel], inexcessOnCultivatedParcels: Double)
+  case class CropNeeded(cultivatedParcels: Array[Parcel], candidatesNotUsed: Array[Parcel], inexcessOnCultivatedParcels: Double)
 
   // Returns parcels in culture if required to satisfied needs of the kitchen and not assigned parcels if not
   // If fallows are present in the cultivableParcelForKitchen, it means the fallow can be used as a culture. In that case it is switched to a mil
-  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Seq[Parcel], needs: Double, data: Data, year: Int) = {
+  def getCropNeeded(kitchen: Kitchen, cultivableParcelsForKitchen: Array[Parcel], needs: Double, data: Data, year: Int) = {
 
     @tailrec
     def cropsToBeCultivated(kitchen: Kitchen, production: Double, sortedParcels: List[Parcel], inCulture: List[Parcel]): CropNeeded = {
@@ -220,7 +220,7 @@ object Kitchen {
       val needsCondition = production > needs
 
       if (sortedParcels.isEmpty || needsCondition)
-        CropNeeded(inCulture, sortedParcels, if (needsCondition) production - needs else 0.0)
+        CropNeeded(inCulture.toArray, sortedParcels.toArray, if (needsCondition) production - needs else 0.0)
       else {
         val head = sortedParcels.head
 

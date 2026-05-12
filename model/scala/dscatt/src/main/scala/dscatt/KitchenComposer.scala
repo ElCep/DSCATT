@@ -6,7 +6,7 @@ import scala.annotation.tailrec
 
 object KitchenComposer:
 
-  case class ControlInContext[C <: Control](control: C, incompatibleWith: Seq[Control] = Seq())
+  case class ControlInContext[C <: Control](control: C, incompatibleWith: Array[Control] = Array())
 
   case class RequiredControls(rotation: RotationCycle, ownFallowUse: OwnFallowUse, loan: LoanStrategy, donation: FoodDonationStrategy, herdSizeStrategy: HerdSizeStrategy, dryHerdGrazing: HerdGrazingStrategy, wetHerdGrazing: HerdGrazingStrategy, mulching: MulchingStrategy)
 
@@ -16,17 +16,17 @@ object KitchenComposer:
   val KITCHEN_SIZE = 16
 
   implicit class controlWrapper(c: Control):
-    def toDefaultContext = ControlInContext(c, Seq())
+    def toDefaultContext = ControlInContext(c, Array())
 
-  val milletOnly = ControlInContext(RotationCycle.MilletOnly, Seq(OwnFallowUse.UseFallowIfNeeded, LoanStrategy.ExtraParcelsExceptFallowLoaner))
-  val milletPeanutRotation = ControlInContext(RotationCycle.MilletOnly, Seq(OwnFallowUse.UseFallowIfNeeded, LoanStrategy.ExtraParcelsExceptFallowLoaner))
-  val anywhereAnyTimeHerdGrazing = ControlInContext(HerdGrazingStrategy.AnywhereAnyTime, Seq(HerdSizeStrategy.NoHerd))
-  val ownerOnlyHerdGrazing = ControlInContext(HerdGrazingStrategy.OwnerOnly, Seq(HerdSizeStrategy.NoHerd))
-  val nightAndDyHerdGrazing = ControlInContext(HerdGrazingStrategy.EverywhereByDayOwnerByNight, Seq(HerdSizeStrategy.NoHerd))
-  val noHerd = ControlInContext(HerdSizeStrategy.NoHerd, Seq(HerdGrazingStrategy.AnywhereAnyTime, HerdGrazingStrategy.OwnerOnly, HerdGrazingStrategy.EverywhereByDayOwnerByNight))
+  val milletOnly = ControlInContext(RotationCycle.MilletOnly, Array(OwnFallowUse.UseFallowIfNeeded, LoanStrategy.ExtraParcelsExceptFallowLoaner))
+  val milletPeanutRotation = ControlInContext(RotationCycle.MilletOnly, Array(OwnFallowUse.UseFallowIfNeeded, LoanStrategy.ExtraParcelsExceptFallowLoaner))
+  val anywhereAnyTimeHerdGrazing = ControlInContext(HerdGrazingStrategy.AnywhereAnyTime, Array(HerdSizeStrategy.NoHerd))
+  val ownerOnlyHerdGrazing = ControlInContext(HerdGrazingStrategy.OwnerOnly, Array(HerdSizeStrategy.NoHerd))
+  val nightAndDyHerdGrazing = ControlInContext(HerdGrazingStrategy.EverywhereByDayOwnerByNight, Array(HerdSizeStrategy.NoHerd))
+  val noHerd = ControlInContext(HerdSizeStrategy.NoHerd, Array(HerdGrazingStrategy.AnywhereAnyTime, HerdGrazingStrategy.OwnerOnly, HerdGrazingStrategy.EverywhereByDayOwnerByNight))
 
   val rotationCycleInContext =
-    Seq(
+    Array(
       milletOnly,
       RotationCycle.MilletFallow.toDefaultContext,
       RotationCycle.FallowMilletPeanut.toDefaultContext,
@@ -34,40 +34,40 @@ object KitchenComposer:
     )
 
   val ownFallowUseInContext =
-    Seq(
+    Array(
       OwnFallowUse.UseFallowIfNeeded.toDefaultContext,
       OwnFallowUse.NeverUseFallow.toDefaultContext
     )
 
   val loanStrategyInContext =
-    Seq(
+    Array(
       LoanStrategy.ExtraParcelsExceptFallowLoaner.toDefaultContext,
       LoanStrategy.AllExtraParcelsLoaner.toDefaultContext,
       LoanStrategy.Selfish.toDefaultContext
     )
 
   val foodDonationInContext =
-    Seq(
+    Array(
       FoodDonationStrategy.FoodForUsOnlyStrategy.toDefaultContext,
       FoodDonationStrategy.FoodForAllStrategy.toDefaultContext
     )
 
   val herdSizeInContext =
-    Seq(
+    Array(
       noHerd,
       HerdSizeStrategy.LSUByArea(99).toDefaultContext,
       HerdSizeStrategy.FullCapacity.toDefaultContext
     )
 
   val herdGrazingInContext =
-    Seq(
+    Array(
       anywhereAnyTimeHerdGrazing,
       ownerOnlyHerdGrazing,
       nightAndDyHerdGrazing
     )
 
   val mulchingInContext =
-    Seq(
+    Array(
       MulchingStrategy.NoMulching.toDefaultContext,
       MulchingStrategy.CropResidue.toDefaultContext
     )
@@ -84,8 +84,8 @@ object KitchenComposer:
       m <- mulchingInContext
     yield
       val incompatible = r.incompatibleWith ++ o.incompatibleWith ++ l.incompatibleWith ++ d.incompatibleWith ++ hs.incompatibleWith ++ dh.incompatibleWith ++ wh.incompatibleWith ++ m.incompatibleWith
-      incompatible intersect Seq(r.control, o.control, l.control, d.control, hs.control, dh.control, wh.control, m.control) match
-        case Seq() => Some(RequiredControls(r.control.asInstanceOf[RotationCycle], o.control.asInstanceOf[OwnFallowUse], l.control.asInstanceOf[LoanStrategy], d.control.asInstanceOf[FoodDonationStrategy], hs.control.asInstanceOf[HerdSizeStrategy], dh.control.asInstanceOf[HerdGrazingStrategy], wh.control.asInstanceOf[HerdGrazingStrategy], m.control.asInstanceOf[MulchingStrategy]))
+      incompatible intersect Array(r.control, o.control, l.control, d.control, hs.control, dh.control, wh.control, m.control) match
+        case Array() => Some(RequiredControls(r.control.asInstanceOf[RotationCycle], o.control.asInstanceOf[OwnFallowUse], l.control.asInstanceOf[LoanStrategy], d.control.asInstanceOf[FoodDonationStrategy], hs.control.asInstanceOf[HerdSizeStrategy], dh.control.asInstanceOf[HerdGrazingStrategy], wh.control.asInstanceOf[HerdGrazingStrategy], m.control.asInstanceOf[MulchingStrategy]))
         case _ => None
 
     opts.flatten
@@ -94,11 +94,11 @@ object KitchenComposer:
     Croping.nextCrop(r, p.crop) == Some(Millet)
   }
 
-  def compose(totalPopulation: Int, kitchenProfileBuilders: Seq[KitchenProfileBuilder]): KitchenPartition =
+  def compose(totalPopulation: Int, kitchenProfileBuilders: Array[KitchenProfileBuilder]): KitchenPartition =
 
     // Assume that sum of ratios is 1.0
     @tailrec
-    def assign(kPBuilders: Seq[KitchenProfileBuilder], remainingPop: Int, kp: KitchenPartition): KitchenPartition =
+    def assign(kPBuilders: Array[KitchenProfileBuilder], remainingPop: Int, kp: KitchenPartition): KitchenPartition =
       if (kPBuilders.isEmpty || remainingPop == 0 ) kp
       else
         val kPBuilder = kPBuilders.head

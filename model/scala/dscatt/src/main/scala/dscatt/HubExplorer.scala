@@ -87,7 +87,7 @@ object HubExplorer:
       dailyFoodNeedPerPerson = 0.555,
       hookParameters = hooks,
       rainFall = 600,
-      switchers
+      switchers.toArray
     )
 
     println("Pop " + simulationState.populationDynamic.toSeq)

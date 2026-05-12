@@ -11,10 +11,10 @@ case class Loan(from: KitchenID, to: KitchenID, parcel: Parcel)
 object Loan:
 
   // Every loaned parcel will be used with Mil
-  def assign(parcelsToBeLoaned: Seq[Parcel], demandingKitchens: Seq[FoodBalance], data: Data, year: Int): (Seq[Loan], Seq[Parcel]) = {
+  def assign(parcelsToBeLoaned: Array[Parcel], demandingKitchens: Array[FoodBalance], data: Data, year: Int): (Array[Loan], Array[Parcel]) = {
 
     @tailrec
-    def assign0(demandingKitchens: List[FoodBalance], availableParcels: Seq[Parcel], yearLoans: Seq[Loan]): (Seq[Loan], Seq[Parcel]) = {
+    def assign0(demandingKitchens: Array[FoodBalance], availableParcels: Array[Parcel], yearLoans: Array[Loan]): (Array[Loan], Array[Parcel]) = {
       if (demandingKitchens.isEmpty || availableParcels.isEmpty) {
         (yearLoans, availableParcels)
       }
@@ -32,7 +32,7 @@ object Loan:
       }
 
     }
-    assign0(demandingKitchens.sortBy(_.balance).toList, parcelsToBeLoaned.toList, Seq())
+    assign0(demandingKitchens.sortBy(_.balance), parcelsToBeLoaned, Array[Loan]())
   }
 
 

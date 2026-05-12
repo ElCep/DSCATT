@@ -9,10 +9,10 @@ import scala.annotation.tailrec
 object FoodDonation {
   case class FoodDonation(from: KitchenID, to: KitchenID, quantity: Double)
 
-  def assign(foods: Seq[Food], state: SimulationState): Seq[Food] = {
+  def assign(foods: Array[Food], state: SimulationState): Array[Food] = {
 
     @tailrec
-    def assign0(hungryKitchens: List[FoodBalance], extraFoodKitchens: List[FoodBalance], foods: Seq[Food]): Seq[Food] = {
+    def assign0(hungryKitchens: List[FoodBalance], extraFoodKitchens: List[FoodBalance], foods: Array[Food]): Array[Food] = {
       if (hungryKitchens.isEmpty || extraFoodKitchens.isEmpty) foods
       else {
         val mostNeedy = hungryKitchens.head

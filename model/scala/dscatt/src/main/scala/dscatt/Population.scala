@@ -11,7 +11,7 @@ object Population {
     xs.tail.scanLeft(xs.head)(num.plus)
   }
 
-  def evolve(kitchens: Seq[Kitchen], data: Data)(using mT: MersenneTwister): (Seq[Kitchen], Map[KitchenID, Int]) = {
+  def evolve(kitchens: Array[Kitchen], data: Data)(using mT: MersenneTwister): (Array[Kitchen], Map[KitchenID, Int]) = {
     val totalPopulation = kitchens.map {
       _.size
     }.sum
@@ -45,7 +45,7 @@ object Population {
   }
 
   // Compute for each kitchen the number of births and the number of emigrants based on the food balance
-  def evolveEmigrants(kitchens: Seq[Kitchen], foods: Seq[Food], data: Data): (Seq[Kitchen], Map[KitchenID, Int]) = {
+  def evolveEmigrants(kitchens: Array[Kitchen], foods: Array[Food], data: Data): (Array[Kitchen], Map[KitchenID, Int]) = {
 
     val foodAssessementMap = foods.map(fa => fa.kitchenID -> fa.toBalance).toMap
 

@@ -22,7 +22,7 @@ object Fertility {
 
     val LSUByKitchen = Herd.liveStockUnitByKitchen(state, data).toMap
 
-    def manureVillageForPFor(parcel: Parcel, parcels: Seq[Parcel], state: SimulationState) =
+    def manureVillageForPFor(parcel: Parcel, parcels: Array[Parcel], state: SimulationState) =
       state.kitchens.map { k =>
         LSUByKitchen(k.id)
       }.sum * data.KG_OF_MANURE_PER_COW_PER_YEAR / parcels.map {
@@ -30,7 +30,7 @@ object Fertility {
       }.sum * parcel.area
 
     @tailrec
-    def fertilizeByKitchen(kitchens: Seq[Kitchen], fertilityUpdated: Seq[Parcel]): Seq[Parcel] = {
+    def fertilizeByKitchen(kitchens: Array[Kitchen], fertilityUpdated: Array[Parcel]): Array[Parcel] = {
       if (kitchens.isEmpty) fertilityUpdated
       else {
         val kitchen = kitchens.head
@@ -39,7 +39,7 @@ object Fertility {
         // A parcel is divided into 4 periods of time. First dry (0.7 of the year) and wet (0.3 of the year) season and then
         // night (0.8 of the dung production) and day (0.2 of the dung production).
         @tailrec
-        def fertilize(allParcels: Seq[Parcel], fertilityUpdated: Seq[Parcel]): Seq[Parcel] = {
+        def fertilize(allParcels: Array[Parcel], fertilityUpdated: Array[Parcel]): Array[Parcel] = {
           if (allParcels.isEmpty) fertilityUpdated
           else {
             val parcel = allParcels.head
@@ -102,7 +102,7 @@ object Fertility {
       }
     }
 
-    val newParcels = fertilizeByKitchen(state.kitchens, Seq())
+    val newParcels = fertilizeByKitchen(state.kitchens, Array())
 
     val newWorld = state.world.copy(parcels = newParcels)
     state.copy(world = newWorld,

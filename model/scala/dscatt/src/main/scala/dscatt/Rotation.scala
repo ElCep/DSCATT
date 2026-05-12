@@ -6,7 +6,7 @@ import Croping.Crop.*
 import Data.*
 
 object Rotation {
-  def evolve(simulationState: SimulationState, initialFood: Seq[Food], data: Data): (SimulationState, Seq[Food], Int) = {
+  def evolve(simulationState: SimulationState, initialFood: Array[Food], data: Data): (SimulationState, Array[Food], Int) = {
 
     // Compute theoritical crops for coming year before we know if it is in culture or not
     val theoriticalCroping = simulationState.kitchens.map { k =>
@@ -29,9 +29,9 @@ object Rotation {
 
     val inexcessFromCultivatedParcelsByKitchen = parcelUsageByKitchen.map { case (k, pu) => k -> pu.inexcessFromCultivatedParcels }
     val allParcelUsages = ParcelUsages(
-      parcelUsageByKitchen.flatMap(_._2.cultivated).toSeq,
-      parcelUsageByKitchen.flatMap(_._2.forLoan).toSeq,
-      parcelUsageByKitchen.flatMap(_._2.notLoanable).toSeq
+      parcelUsageByKitchen.flatMap(_._2.cultivated.toSeq).toArray,
+      parcelUsageByKitchen.flatMap(_._2.forLoan.toSeq).toArray,
+      parcelUsageByKitchen.flatMap(_._2.notLoanable.toSeq).toArray
     )
 
     //Collect all demanding kitchens except provisioning crops strategies (a kitchen provisioning food is not supposed to ask for a loan)
@@ -40,15 +40,15 @@ object Rotation {
       case _ => true
     }).map { case (k, parcelUsage) =>
       Kitchen.foodBalance(parcelUsage.cultivated, k, data, simulationState.year)
-    }.filter(_.balance < 0).toSeq
+    }.filter(_.balance < 0).toArray
 
     // Compute loans and store them in history sequence
     //Sort parcel for loan in crop priority order (Mil>Peanut>Fallow)
     val groupedForLoan = allParcelUsages.forLoan.groupBy(_.crop)
     val sortedForLoan =
-      groupedForLoan.getOrElse(Millet, Seq()).sortBy(_.farmerID) ++
-      groupedForLoan.getOrElse(Peanut, Seq()).sortBy(_.farmerID) ++
-      groupedForLoan.getOrElse(Fallow, Seq()).sortBy(_.farmerID)
+      groupedForLoan.getOrElse(Millet, Array[Parcel]()).sortBy(_.farmerID) ++
+      groupedForLoan.getOrElse(Peanut, Array[Parcel]()).sortBy(_.farmerID) ++
+      groupedForLoan.getOrElse(Fallow, Array[Parcel]()).sortBy(_.farmerID)
 
     val (yearLoans, notUsedInLoanProcess) = Loan.assign(sortedForLoan, demandingKitchens.sortBy(_.kitchenID), data, simulationState.year)
 
@@ -69,16 +69,16 @@ object Rotation {
     val peanutParcels = World.peanutParcels(newParcels).groupBy(_.farmerID)
 
     val food = initialFood.map { f =>
-      val cultivatedK = cultivatedParcelsByK.getOrElse(f.kitchenID, Seq())
-      val loanedK = loanedParcelsByK.getOrElse(f.kitchenID, Seq())
+      val cultivatedK = cultivatedParcelsByK.getOrElse(f.kitchenID, Array[Parcel]())
+      val loanedK = loanedParcelsByK.getOrElse(f.kitchenID, Array[Parcel]())
       f.copy(
         fromCulture = parcelsFoodProduction(cultivatedK, data, simulationState.year),
         fromLoan = parcelsFoodProduction(loanedK, data, simulationState.year),
         inexess = inexcessFromCultivatedParcelsByKitchen.getOrElse(Kitchen.kitchen(simulationState.kitchens, f.kitchenID).get, 0.0),
-        fromMil = parcelsFoodProduction(milParcels.getOrElse(f.kitchenID, Seq()), data, simulationState.year),
-        milInCultureArea = milParcels.getOrElse(f.kitchenID, Seq()).map(_.area).sum,
-        fromPeanut = parcelsFoodProduction(peanutParcels.getOrElse(f.kitchenID, Seq()), data, simulationState.year),
-        peanutInCultureArea = peanutParcels.getOrElse(f.kitchenID, Seq()).map(_.area).sum
+        fromMil = parcelsFoodProduction(milParcels.getOrElse(f.kitchenID, Array[Parcel]()), data, simulationState.year),
+        milInCultureArea = milParcels.getOrElse(f.kitchenID, Array[Parcel]()).map(_.area).sum,
+        fromPeanut = parcelsFoodProduction(peanutParcels.getOrElse(f.kitchenID, Array()), data, simulationState.year),
+        peanutInCultureArea = peanutParcels.getOrElse(f.kitchenID, Array[Parcel]()).map(_.area).sum
       )
     }
 
@@ -88,17 +88,17 @@ object Rotation {
     ), food, theoriticalFallowParcels)
   }
 
-  case class ParcelUsages(cultivated: Seq[Parcel], forLoan: Seq[Parcel], notLoanable: Seq[Parcel], inexcessFromCultivatedParcels: Double = 0.0)
-  //case class ParcelUsages(cultivated: Seq[Parcel], forLoan: Seq[Parcel], inexcessFromCultivatedParcels: Double = 0.0)
+  case class ParcelUsages(cultivated: Array[Parcel], forLoan: Array[Parcel], notLoanable: Array[Parcel], inexcessFromCultivatedParcels: Double = 0.0)
+  //case class ParcelUsages(cultivated: Array[Parcel], forLoan: Array[Parcel], inexcessFromCultivatedParcels: Double = 0.0)
 
   // Extra is defined as everything except what the kitchen needs
-  def getParcelUsages(kitchen: Kitchen, parcels: Seq[Parcel], data: Data, year: Int): ParcelUsages =
+  def getParcelUsages(kitchen: Kitchen, parcels: Array[Parcel], data: Data, year: Int): ParcelUsages =
     val (fallowsNotCultivated, parcelCandidatesForCulture) =
       val grouped = parcels.groupBy(_.crop)
-      val milletAndPeanut = grouped.getOrElse(Millet, Seq()) ++ grouped.getOrElse(Peanut, Seq())
+      val milletAndPeanut = grouped.getOrElse(Millet, Array[Parcel]()) ++ grouped.getOrElse(Peanut, Array[Parcel]())
       kitchen.ownFallowUse match
-        case OwnFallowUse.NeverUseFallow => (grouped.getOrElse(Fallow, Seq()), milletAndPeanut)
-        case OwnFallowUse.UseFallowIfNeeded =>(Seq(), milletAndPeanut ++ grouped.getOrElse(Fallow, Seq()))
+        case OwnFallowUse.NeverUseFallow => (grouped.getOrElse(Fallow, Array[Parcel]()), milletAndPeanut)
+        case OwnFallowUse.UseFallowIfNeeded =>(Array[Parcel](), milletAndPeanut ++ grouped.getOrElse(Fallow, Array[Parcel]()))
 
     val cropNeeded: Kitchen.CropNeeded = kitchen.cropingStrategy match
       case CropingStrategy.PeanutForInexcess(savingRate: Double) =>
@@ -111,8 +111,8 @@ object Rotation {
     val notInCulture = cropNeeded.candidatesNotUsed ++ fallowsNotCultivated
 
     val (notLoanable, loanable) = kitchen.loanStrategy match {
-      case LoanStrategy.Selfish => (notInCulture, Seq())
-      case LoanStrategy.AllExtraParcelsLoaner => (Seq(), notInCulture)
+      case LoanStrategy.Selfish => (notInCulture, Array[Parcel]())
+      case LoanStrategy.AllExtraParcelsLoaner => (Array[Parcel](), notInCulture)
       case LoanStrategy.ExtraParcelsExceptFallowLoaner => (fallowsNotCultivated, cropNeeded.candidatesNotUsed)
     }
 

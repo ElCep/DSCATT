@@ -39,7 +39,7 @@ object ChangeOverTime:
 
     val kitchenProfile2 = kitchenProfile1.copy(id = 2)
 
-    val kitchenPartition = KitchenPartition(Seq((kitchenProfile1, 21), (kitchenProfile2, 10)))
+    val kitchenPartition = KitchenPartition(Seq((kitchenProfile1, 21), (kitchenProfile2, 10)).toArray)
 
     val rnd = scala.util.Random
 
@@ -101,7 +101,7 @@ object ChangeOverTime:
       stopCriteria = (simS: SimulationState) => false,
       //dumpProfilesPath = Some("/tmp/profiles.json")
       //  Seq(),
-      switchers = switchers
+      switchers = switchers.toArray
       //switchers = Seq()Seq(498,498,323,326,317,583,496,422,317,387,317,508,432,420,521,552,576,332,578,428,317,613,421,407,400),
     )
 

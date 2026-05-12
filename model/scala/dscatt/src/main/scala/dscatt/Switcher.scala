@@ -41,11 +41,11 @@ object Switcher:
       Switcher(id + 1, HerdGrazing(s, kitchenProfileID))
       
 implicit class SimulationStateWrapper(simulationState: SimulationState) {
-  private def kitchenToStateAndData(k: Seq[Kitchen], data: Data) =
+  private def kitchenToStateAndData(k: Array[Kitchen], data: Data) =
     val switchedState = simulationState.copy(kitchens = k)
     (switchedState, data)
 
-  private def kitchenToStateAndWorldAndData(k: Seq[Kitchen], world: World, data: Data) =
+  private def kitchenToStateAndWorldAndData(k: Array[Kitchen], world: World, data: Data) =
     val switchedState = simulationState.copy(kitchens = k, world = world)
     (switchedState, data)
 

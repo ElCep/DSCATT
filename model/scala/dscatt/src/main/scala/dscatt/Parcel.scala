@@ -30,8 +30,8 @@ case class Parcel(id: ParcelID,
                   initiallyPlannedCrop: Option[Crop], // set in case of loan
                   area: HA,
                   faidherbiaTreesByHa: TREE_BY_HA,
-                  fertilityHistory: Seq[Fertility.Metrics]
+                  fertilityHistory: Array[Fertility.Metrics]
                  )
 
 implicit class ParcelDecorator(p: Parcel):
-  def resetFertilityHistory: Parcel = p.copy(fertilityHistory = Seq())
+  def resetFertilityHistory: Parcel = p.copy(fertilityHistory = Array())

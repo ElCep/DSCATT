@@ -12,7 +12,7 @@ import scala.annotation.tailrec
 
 object Simulation {
 
-  case class SimulationState(world: World, kitchens: Seq[Kitchen], history: History, year: Int)
+  case class SimulationState(world: World, kitchens: Array[Kitchen], history: History, year: Int)
 
   implicit class SimulationStateWrap(sS: SimulationState):
     def population = History.historyByYear(sS).map(_.population)
@@ -33,7 +33,7 @@ object Simulation {
              seed: Long,
              lands: java.io.File,
              populationGrowth: Double,
-             kitchenPartition: KitchenPartition = KitchenPartition(Seq((KitchenProfile.default, 1))),
+             kitchenPartition: KitchenPartition = KitchenPartition(Array((KitchenProfile.default, 1))),
              supportPolicy: SupportPolicy,
              simulationLength: Int = 20,
              soilQualityBasis: SOIL_QUALITY_BY_HA, // exposed for calibration
@@ -45,7 +45,7 @@ object Simulation {
              dailyFoodNeedPerPerson: Double,
              hookParameters: dscatt.launchers.commonSettings.HookParameters,
              rainFall: Int | MM_PER_YEAR,
-             switchers: Seq[Switcher] = Seq(),
+             switchers: Array[Switcher] = Array(),
              world: Option[World] = None,
              stopCriteria: SimulationState => Boolean = _ => false,
              dumpProfilesPath: Option[String] = None
@@ -101,7 +101,7 @@ object Simulation {
   }
 
   @tailrec
-  def applySwitchers(switchers: Seq[Switcher], simulationState: SimulationState, data: Data): (SimulationState, Data) =
+  def applySwitchers(switchers: Array[Switcher], simulationState: SimulationState, data: Data): (SimulationState, Data) =
     if (switchers.isEmpty) (simulationState, data)
     else
       val (newSS, newData) = simulationState.enventuallySwitch(switchers.head, data)
@@ -114,7 +114,7 @@ object Simulation {
               simulationLength: Int,
               emigrationProcess: Boolean,
               data: Data,
-              switchers: Seq[Switcher] = Seq(),
+              switchers: Array[Switcher] = Array(),
               stopCriteria: SimulationState => Boolean = _ => false
             )(using MersenneTwister): SimulationState = {
 

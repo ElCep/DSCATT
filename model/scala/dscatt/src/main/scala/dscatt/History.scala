@@ -122,7 +122,7 @@ object History {
 
     val cultivated = parcels.groupBy(_.farmerID).map {
       case (kid, ps) =>
-        val pInCulture = World.parcelsInCultureForKitchenID(ps, kid)
+        val pInCulture = World.parcelsInCultureForKitchenID(ps.toArray, kid)
         kid -> (pInCulture.size, pInCulture.map(_.area).sum)
     }
     val loaned = yearLoans.groupBy(_.to).map { case (kid, l) =>
